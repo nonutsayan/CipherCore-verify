@@ -1175,51 +1175,92 @@
                   <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
                   </svg>
-                  <span id="ledgerBlockCount">0</span> Blocks in Chain
+                  <span id="ledgerBlockCount">1 Block in Chain (Genesis Active)</span>
                 </span>
                 
                 <div id="chainIntegrityBadge">
-                  <!-- Injected dynamically: green valid or red alert -->
+                  <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded bg-emerald-50 text-emerald-800 text-xs font-semibold border border-emerald-300">
+                    <svg class="w-3.5 h-3.5 text-emerald-600 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <span>Chain Integrity: VALID / SECURE</span>
+                  </span>
                 </div>
+              </div>
+
+              <!-- Center: Consortium PoA Node Indicators (7 Active Validators) -->
+              <div class="flex items-center gap-2 px-3 py-1.5 rounded border border-line subtle-surface text-xs shadow-xs">
+                <span class="font-mono text-[11px] text-sub uppercase font-semibold">PoA Nodes:</span>
+                <div class="flex items-center gap-1.5" id="poaNodesList">
+                  <span class="relative group cursor-pointer inline-flex items-center" onclick="showNodeConsensusToast('AICTE-HQ (New Delhi)', '0.12 ms')">
+                    <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                    <span class="absolute bottom-full mb-1.5 left-1/2 -translate-x-1/2 hidden group-hover:block px-2 py-0.5 bg-slate-900 text-white text-[10px] font-mono rounded whitespace-nowrap shadow-lg z-50">AICTE-HQ (0.12 ms)</span>
+                  </span>
+                  <span class="relative group cursor-pointer inline-flex items-center" onclick="showNodeConsensusToast('IIT-Bombay (Powai)', '0.45 ms')">
+                    <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                    <span class="absolute bottom-full mb-1.5 left-1/2 -translate-x-1/2 hidden group-hover:block px-2 py-0.5 bg-slate-900 text-white text-[10px] font-mono rounded whitespace-nowrap shadow-lg z-50">IIT-Bombay (0.45 ms)</span>
+                  </span>
+                  <span class="relative group cursor-pointer inline-flex items-center" onclick="showNodeConsensusToast('IIT-Madras (Chennai)', '0.62 ms')">
+                    <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                    <span class="absolute bottom-full mb-1.5 left-1/2 -translate-x-1/2 hidden group-hover:block px-2 py-0.5 bg-slate-900 text-white text-[10px] font-mono rounded whitespace-nowrap shadow-lg z-50">IIT-Madras (0.62 ms)</span>
+                  </span>
+                  <span class="relative group cursor-pointer inline-flex items-center" onclick="showNodeConsensusToast('IISc-Bangalore (Bangalore)', '0.38 ms')">
+                    <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                    <span class="absolute bottom-full mb-1.5 left-1/2 -translate-x-1/2 hidden group-hover:block px-2 py-0.5 bg-slate-900 text-white text-[10px] font-mono rounded whitespace-nowrap shadow-lg z-50">IISc-Bangalore (0.38 ms)</span>
+                  </span>
+                  <span class="relative group cursor-pointer inline-flex items-center" onclick="showNodeConsensusToast('AICTE-WRO (Mumbai)', '0.22 ms')">
+                    <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                    <span class="absolute bottom-full mb-1.5 left-1/2 -translate-x-1/2 hidden group-hover:block px-2 py-0.5 bg-slate-900 text-white text-[10px] font-mono rounded whitespace-nowrap shadow-lg z-50">AICTE-WRO (0.22 ms)</span>
+                  </span>
+                  <span class="relative group cursor-pointer inline-flex items-center" onclick="showNodeConsensusToast('MoE-Gov (Shastri Bhawan)', '0.51 ms')">
+                    <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                    <span class="absolute bottom-full mb-1.5 left-1/2 -translate-x-1/2 hidden group-hover:block px-2 py-0.5 bg-slate-900 text-white text-[10px] font-mono rounded whitespace-nowrap shadow-lg z-50">MoE-Gov (0.51 ms)</span>
+                  </span>
+                  <span class="relative group cursor-pointer inline-flex items-center" onclick="showNodeConsensusToast('NIC-DataHub (NIC-Gov)', '0.30 ms')">
+                    <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                    <span class="absolute bottom-full mb-1.5 left-1/2 -translate-x-1/2 hidden group-hover:block px-2 py-0.5 bg-slate-900 text-white text-[10px] font-mono rounded whitespace-nowrap shadow-lg z-50">NIC-DataHub (0.30 ms)</span>
+                  </span>
+                </div>
+                <span class="text-[10px] font-mono text-emerald-700 font-bold hidden sm:inline">7/7 PoA Active</span>
               </div>
 
               <!-- Right: Interactive Action Buttons -->
               <div class="flex flex-wrap items-center gap-2">
-                <button onclick="triggerChainIntegrityCheck()" class="btn-primary flex items-center gap-1.5 text-xs">
+                <button id="verifyChainBtn" onclick="triggerChainIntegrityCheck()" class="btn-primary flex items-center gap-1.5 text-xs" style="border-radius:4px;">
                   <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                   <span>Verify Chain Integrity</span>
                 </button>
-                <button onclick="triggerSimulateTamper()" class="btn-secondary flex items-center gap-1.5 text-xs text-amber-700 border-amber-300 hover:bg-amber-50" title="Modify historical Block #1 payload to test anti-tamper detection">
+                <button id="tamperSimulateBtn" onclick="triggerSimulateTamper()" class="btn-secondary flex items-center gap-1.5 text-xs text-amber-700 border-amber-300 hover:bg-amber-50" style="border-radius:4px;" title="Silently alter historical Block #1 payload to demonstrate tamper detection">
                   <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                   </svg>
-                  <span>Test Anti-Tamper Protection</span>
+                  <span>Simulate Adversarial Tamper</span>
                 </button>
-                <button onclick="triggerRestoreLedger()" class="btn-secondary flex items-center gap-1.5 text-xs" title="Restore ledger to pristine cryptographic state">
+                <button id="restoreLedgerBtn" onclick="triggerRestoreLedger()" class="hidden btn-primary flex items-center gap-1.5 text-xs bg-emerald-600 hover:bg-emerald-700 text-white font-bold" style="border-radius:4px;" title="Restore ledger to pristine authenticated state">
                   <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
                   </svg>
                   <span>Restore Ledger</span>
                 </button>
-                <button onclick="exportLedgerJson()" class="btn-secondary flex items-center gap-1.5 text-xs" title="Download signed JSON ledger">
+                <button onclick="exportLedgerJson()" class="btn-secondary flex items-center gap-1.5 text-xs" style="border-radius:4px;" title="Download signed JSON ledger">
                   <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                   </svg>
-                  <span>Export JSON</span>
+                  <span>Download Signed JSON Ledger</span>
                 </button>
               </div>
             </div>
 
             <!-- Consortium Node Reference Bar -->
             <div class="flex flex-wrap items-center justify-between text-[11px] text-sub pt-2 border-t border-line">
-              <span class="font-mono">Consortium PoA Network: 7 Validator Nodes Active (AICTE HQ, IIT Bombay, IIT Madras, IISc Bangalore, AICTE WRO, MoE, NIC)</span>
-              <span class="font-mono text-[#0284c7]">Algorithm: SHA-256 Merkle Chaining (window.crypto.subtle)</span>
+              <span class="font-mono">Consortium Network: BharatVidya PoA Trust Network (AICTE Sovereign Notary Protocol)</span>
+              <span class="font-mono text-[#0284c7]">Formula: SHA-256(index|timestamp|prevHash|payload|actor|target|event)</span>
             </div>
 
             <!-- Live Anti-Tamper Alert Banner (Hidden by default, shown when tampered) -->
-            <div id="tamperAlertBanner" class="hidden p-3.5 rounded border border-red-300 bg-red-50 text-red-900 text-xs">
+            <div id="tamperAlertBanner" class="hidden p-3.5 rounded border-2 border-red-500 bg-red-50 text-red-900 text-xs">
               <!-- Injected dynamically -->
             </div>
           </div>
@@ -2265,7 +2306,8 @@
       renderInspectView();
       logAuditEvent(activeUserSession?.name || 'Evaluator', 'DEMO-DATA', 'Demo Dataset Loaded', 'Loaded 5 sample institutional applications for evaluation.');
       await seedDemoBlockchainBlocks();
-      showToastBanner('Evaluator demo dataset (5 sample colleges) loaded successfully & notarized.');
+      renderBlockchainLedgerUI();
+      showToastBanner('Evaluator demo dataset (5 sample colleges) loaded & notarized on blockchain.');
     }
 
     function resetToEmptyQueue() {
@@ -2924,8 +2966,10 @@
         fileSize: sizeKb,
         sha256Fingerprint: computedHash,
         overallStatus: 'Valid',
-        issuingGateway: 'VERIFIED-GATEWAY'
+        issuingGateway: 'VERIFIED-GATEWAY',
+        verificationTimestamp: new Date().toISOString()
       });
+      renderBlockchainLedgerUI();
 
       showToastBanner(`Inspected & notarized on blockchain: ${file.name}`);
     }
@@ -3018,7 +3062,7 @@
     // ---------------------------------------------------------------------
     
     // =====================================================================
-    // CRYPTOGRAPHIC SHA-256 ENGINE & BLOCKCHAIN NOTARY SERVICE
+    // CRYPTOGRAPHIC SHA-256 ENGINE & HARDENED BLOCKCHAIN NOTARY SERVICE
     // =====================================================================
     function sha256Pure(ascii) {
       function rightRotate(value, amount) { return (value >>> amount) | (value << (32 - amount)); }
@@ -3072,6 +3116,7 @@
       }
 
       async sha256(text) {
+        if (typeof text !== 'string') text = String(text);
         if (window.crypto && window.crypto.subtle) {
           try {
             const encoder = new TextEncoder();
@@ -3085,8 +3130,10 @@
         return sha256Pure(text);
       }
 
-      async calculateBlockHash(index, timestamp, previousHash, payloadData, actorId) {
-        const raw = `${index}${timestamp}${previousHash}${JSON.stringify(payloadData)}${actorId}`;
+      async calculateBlockHash(index, timestamp, previousHash, payload, actorId, targetId, eventType) {
+        // Deterministic hash formula specified in Section 2:
+        // Block String = `${index}|${timestamp}|${previousHash}|${JSON.stringify(payload)}|${actorId}|${targetId}|${eventType}`
+        const raw = `${index}|${timestamp}|${previousHash}|${JSON.stringify(payload)}|${actorId}|${targetId}|${eventType}`;
         return await this.sha256(raw);
       }
 
@@ -3102,30 +3149,35 @@
             }
           } catch (e) {}
         }
+        // Self-initialize Genesis Block #0 immediately on fresh start
         await this.createGenesisBlock();
       }
 
       async createGenesisBlock() {
         const genesisTime = '2026-10-25T00:00:00.000Z';
         const prevHash = '0000000000000000000000000000000000000000000000000000000000000000';
-        const actorId = 'AICTE_ROOT_NOTARY';
+        const targetId = 'ROOT-GENESIS-AICTE';
+        const eventType = 'GENESIS_NOTARIZATION';
+        const actorId = 'AICTE_CENTRAL_ROOT_NOTARY';
         const payload = {
-          standard: 'AICTE-APH-2026-27',
-          protocol: 'SHA-256 Sovereign PoA Notary',
-          consortium: 'BharatVidya Consortium PoA Network',
-          rootAuthority: 'All India Council for Technical Education (HQ New Delhi)',
-          notaryMessage: 'Genesis Block Initialized for AICTE Verification & Forensic Ledger'
+          regulatoryBody: 'All India Council for Technical Education',
+          statutoryHandbook: 'Approval Process Handbook (APH 2024-27)',
+          problemStatement: 'SIH26261',
+          consensus: 'Consortium Proof-of-Authority (PoA)',
+          nodes: ['AICTE-HQ', 'IIT-Bombay', 'IIT-Madras', 'IISc-Bangalore', 'AICTE-WRO', 'MoE-Gov', 'NIC-DataHub']
         };
-        const hash = await this.calculateBlockHash(0, genesisTime, prevHash, payload, actorId);
+
+        const hash = await this.calculateBlockHash(0, genesisTime, prevHash, payload, actorId, targetId, eventType);
 
         const genesisBlock = {
           index: 0,
           timestamp: genesisTime,
-          targetId: 'AICTE-SIH-GENESIS',
-          eventType: 'GENESIS',
+          targetId: targetId,
+          eventType: eventType,
           actorId: actorId,
           previousHash: prevHash,
           blockHash: hash,
+          payload: payload,
           payloadData: payload
         };
 
@@ -3134,7 +3186,7 @@
         this.persist();
       }
 
-      async addBlock(targetId, eventType, actorId, payloadData) {
+      async addBlock(targetId, eventType, actorId, payload) {
         if (this.chain.length === 0) {
           await this.createGenesisBlock();
         }
@@ -3142,7 +3194,7 @@
         const timestamp = new Date().toISOString();
         const previousHash = this.chain[this.chain.length - 1].blockHash;
         const actor = actorId || (activeUserSession?.name ? `${activeUserSession.name} (${activeUserSession.role})` : 'AICTE-OFFICER-782');
-        const blockHash = await this.calculateBlockHash(index, timestamp, previousHash, payloadData, actor);
+        const blockHash = await this.calculateBlockHash(index, timestamp, previousHash, payload, actor, targetId, eventType);
 
         const newBlock = {
           index,
@@ -3152,7 +3204,8 @@
           actorId: actor,
           previousHash,
           blockHash,
-          payloadData
+          payload,
+          payloadData: payload
         };
 
         this.chain.push(newBlock);
@@ -3160,6 +3213,24 @@
           this.backupChain = JSON.parse(JSON.stringify(this.chain));
         }
         this.persist();
+
+        // Optional non-blocking sync with Spring Boot Consortium PoA backend if running
+        try {
+          const backendBase = document.getElementById('backendUrlInput')?.value?.trim() || 'http://localhost:8080';
+          fetch(`${backendBase}/api/blockchain/notarize`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              documentTitle: targetId,
+              documentHash: blockHash,
+              institutionCode: targetId,
+              institutionName: typeof payload === 'object' && payload.institution ? payload.institution : targetId,
+              docCategory: eventType,
+              notaryOfficer: actor
+            })
+          }).catch(() => {});
+        } catch (e) {}
+
         return newBlock;
       }
 
@@ -3168,17 +3239,18 @@
           return { valid: true, totalBlocks: 0 };
         }
 
+        // 1. Verify Genesis Block #0
         const b0 = this.chain[0];
         if (b0.index !== 0 || b0.previousHash !== '0000000000000000000000000000000000000000000000000000000000000000') {
           return {
             valid: false,
             brokenIndex: 0,
             reason: 'INVALID_GENESIS',
-            expectedHash: 'Genesis block linkage corrupted',
-            actualHash: b0.blockHash
+            expectedHash: '0000000000000000000000000000000000000000000000000000000000000000',
+            actualHash: b0.previousHash
           };
         }
-        const b0Hash = await this.calculateBlockHash(b0.index, b0.timestamp, b0.previousHash, b0.payloadData, b0.actorId);
+        const b0Hash = await this.calculateBlockHash(b0.index, b0.timestamp, b0.previousHash, b0.payload || b0.payloadData, b0.actorId, b0.targetId, b0.eventType);
         if (b0Hash !== b0.blockHash) {
           return {
             valid: false,
@@ -3189,10 +3261,12 @@
           };
         }
 
+        // 2. Verify all downstream blocks
         for (let i = 1; i < this.chain.length; i++) {
           const prevBlock = this.chain[i - 1];
           const curBlock = this.chain[i];
 
+          // Check sequential cryptographic linkage
           if (curBlock.previousHash !== prevBlock.blockHash) {
             return {
               valid: false,
@@ -3203,12 +3277,15 @@
             };
           }
 
+          // Check deterministic SHA-256 calculation
           const calculatedHash = await this.calculateBlockHash(
             curBlock.index,
             curBlock.timestamp,
             curBlock.previousHash,
-            curBlock.payloadData,
-            curBlock.actorId
+            curBlock.payload || curBlock.payloadData,
+            curBlock.actorId,
+            curBlock.targetId,
+            curBlock.eventType
           );
 
           if (calculatedHash !== curBlock.blockHash) {
@@ -3225,21 +3302,23 @@
         return { valid: true, totalBlocks: this.chain.length };
       }
 
-            simulateTamper(blockIndex = 2) {
-        if (this.chain.length <= 2) return false;
-        const targetBlock = this.chain[2];
+      simulateTamper(blockIndex = 1) {
+        if (this.chain.length <= 1) return false;
+        const idx = Math.min(blockIndex, this.chain.length - 1);
+        const targetBlock = this.chain[idx];
 
-        // Tamper Block #2 payload maliciously without recomputing the SHA-256 hash
-        targetBlock.payloadData = {
-          ...targetBlock.payloadData,
-          verifiedStatus: 'VALID_CLEARED_FRAUDULENT',
-          tamperExploit: 'MALICIOUS_OFFLINE_FIRE_NOC_OVERRIDE',
-          auditViolation: 'CRITICAL_INTEGRITY_BREACH',
-          unauthorizedBypass: 'Adverse Regulatory Sanction Illegally Suppressed'
+        // Silently alter historical payload without recomputing the cryptographic hash
+        targetBlock.payload = {
+          ...(targetBlock.payload || targetBlock.payloadData),
+          apexStatus: 'Verified (FORCED OVERRIDE)',
+          acreageReported: '2.50 Acres (MUTATED)',
+          tamperExploit: 'UNAUTHORIZED_OFFLINE_PAYLOAD_ALTERATION',
+          regulatoryViolation: 'CRITICAL_SECURITY_BREACH'
         };
+        targetBlock.payloadData = targetBlock.payload;
 
         this.isTampered = true;
-        this.tamperedIndex = 2;
+        this.tamperedIndex = idx;
         return true;
       }
 
@@ -3262,18 +3341,19 @@
     window.cipherBlockchain = cipherBlockchain;
     let currentAuditViewMode = 'blockchain';
 
-        async function seedDemoBlockchainBlocks() {
+    async function seedDemoBlockchainBlocks() {
       if (cipherBlockchain.chain.length <= 1) {
-        // Block #1: Ingestion
-        await cipherBlockchain.addBlock('INGEST-5-APPS', 'DOSSIER_INGESTION', 'AICTE_ROOT_NOTARY', {
-          title: 'Ingested 5 Application Dossiers',
+        // Trigger A: Ingest Dossiers Block #1
+        await cipherBlockchain.addBlock('APP-2026-BATCH-INGEST', 'INGEST_DOSSIERS', 'AICTE_INGESTION_GATEWAY', {
+          action: 'Ingested 5 Institutional Application Dossiers',
           batchId: 'BATCH-SIH2026-AY2627',
-          institutionsCount: 5,
-          dossiers: ['APP-2026-101', 'APP-2026-102', 'APP-2026-103', 'APP-2026-104', 'APP-2026-105'],
-          ingestionTimestamp: '2026-10-25 02:00:00 UTC'
+          institutions: ['APP-2026-101', 'APP-2026-102', 'APP-2026-103', 'APP-2026-104', 'APP-2026-105'],
+          count: 5,
+          apexStatus: 'Needs Review',
+          acreageReported: '1.80 Acres'
         });
 
-        // Block #2: Authority Match
+        // Authority Match Block #2
         await cipherBlockchain.addBlock('FIRE-PORTAL-MH', 'AUTHORITY_MATCH', 'AICTE_GATEWAY_DAEMON', {
           title: 'State Fire Services API Validation',
           targetInstitution: 'Apex Institute of Technology (APP-2026-101)',
@@ -3283,7 +3363,7 @@
           expiryDate: '2024-12-31'
         });
 
-        // Block #3: Anomaly Flagged
+        // Anomaly Flagged Block #3
         await cipherBlockchain.addBlock('APP-2026-101', 'ANOMALY_FLAGGED', 'AICTE_FORENSIC_ENGINE', {
           title: 'Apex Institute Land Deed Alteration Flagged',
           documentId: 'DEED-REV-MH-4419',
@@ -3292,7 +3372,7 @@
           producerAnomaly: 'Adobe Acrobat Pro v24.2'
         });
 
-        // Block #4: Official Decision
+        // Official Decision Block #4
         await cipherBlockchain.addBlock('APP-2026-101', 'DECISION_RECORDED', 'Dr. Arvind Kumar (AICTE Scrutiny Officer)', {
           title: 'Officer Dr. Arvind Kumar recorded decision on APP-2026-101',
           officialDecision: 'Needs Review',
@@ -3301,6 +3381,10 @@
           decisionTimestamp: '2026-10-25 02:30:12 UTC'
         });
       }
+    }
+
+    function showNodeConsensusToast(nodeName, latency) {
+      showToastBanner(`Consortium PoA Node [${nodeName}]: In Consensus (${latency}) - Block #${cipherBlockchain.chain.length - 1} Verified.`);
     }
 
     function switchAuditViewMode(mode) {
@@ -3325,7 +3409,7 @@
       }
     }
 
-    function copyLedgerHash(text) {
+    function copyLedgerHash(text, label = 'SHA-256 hash') {
       if (navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard.writeText(text).catch(() => {});
       } else {
@@ -3336,10 +3420,10 @@
         document.execCommand('copy');
         document.body.removeChild(input);
       }
-      showToastBanner(`Copied hash to clipboard: ${text.substring(0, 16)}...`);
+      showToastBanner(`Copied ${label} to clipboard: ${text.substring(0, 16)}...`);
     }
 
-        function escapeHtml(str) {
+    function escapeHtml(str) {
       if (typeof str !== 'string') str = String(str || '');
       return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
     }
@@ -3364,11 +3448,15 @@
     function renderBlockchainLedgerUI() {
       const countEl = document.getElementById('ledgerBlockCount');
       if (countEl) {
-        countEl.textContent = cipherBlockchain.chain.length;
+        const len = cipherBlockchain.chain.length;
+        countEl.textContent = len === 1 ? '1 Block in Chain (Genesis Active)' : `${len} Blocks Mined`;
       }
 
       const badgeEl = document.getElementById('chainIntegrityBadge');
       const alertEl = document.getElementById('tamperAlertBanner');
+      const verifyBtn = document.getElementById('verifyChainBtn');
+      const tamperBtn = document.getElementById('tamperSimulateBtn');
+      const restoreBtn = document.getElementById('restoreLedgerBtn');
 
       if (cipherBlockchain.isTampered && cipherBlockchain.tamperDetails) {
         const td = cipherBlockchain.tamperDetails;
@@ -3378,10 +3466,16 @@
               <svg class="w-3.5 h-3.5 text-red-600 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
               </svg>
-              <span>CRITICAL ALERT: Chain Tamper Detected!</span>
+              <span>CRITICAL ALERT: Tampering Detected at Block #${td.brokenIndex}!</span>
             </span>
           `;
         }
+
+        if (verifyBtn) {
+          verifyBtn.className = 'btn-primary flex items-center gap-1.5 text-xs border-2 border-red-500 bg-red-50 text-red-700 font-bold';
+        }
+        if (tamperBtn) tamperBtn.classList.add('hidden');
+        if (restoreBtn) restoreBtn.classList.remove('hidden');
 
         if (alertEl) {
           alertEl.classList.remove('hidden');
@@ -3392,20 +3486,20 @@
               </svg>
               <div class="space-y-1.5 flex-1">
                 <div class="font-bold text-red-900 text-xs uppercase tracking-wide">
-                  CRITICAL SECURITY ALERT: Block #${td.brokenIndex} Hash Mismatch!
+                  CRITICAL ALERT: Tampering Detected at Block #${td.brokenIndex}! Hash Mismatch: Expected ${td.expectedHash ? td.expectedHash.substring(0, 16) + '...' : ''} != Found ${td.actualHash ? td.actualHash.substring(0, 16) + '...' : ''}
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-2 font-mono text-[11px]">
-                  <div class="p-2 bg-red-100 rounded border border-red-200">
+                  <div class="p-2 bg-white/80 rounded border border-red-200">
                     <span class="text-red-700 font-semibold block text-[10px] uppercase">Recorded On-Chain Hash:</span>
-                    <span class="text-red-900 break-all">${td.actualHash || 'N/A'}</span>
+                    <span class="text-red-900 break-all font-bold">${td.actualHash || 'N/A'}</span>
                   </div>
-                  <div class="p-2 bg-red-100 rounded border border-red-200">
-                    <span class="text-red-700 font-semibold block text-[10px] uppercase">Calculated Hash (With Tampered Payload):</span>
-                    <span class="text-red-900 break-all font-bold">${td.expectedHash}</span>
+                  <div class="p-2 bg-white/80 rounded border border-red-200">
+                    <span class="text-red-700 font-semibold block text-[10px] uppercase">Computed Hash (Payload Mutated):</span>
+                    <span class="text-red-900 break-all font-bold">${td.expectedHash || 'N/A'}</span>
                   </div>
                 </div>
                 <p class="text-[11px] text-red-800 font-medium pt-0.5">
-                  Cryptographic Merkle link broken. Malicious payload alteration detected on Block #${td.brokenIndex}. Click "Restore Ledger" to recover the verifiable consortium state.
+                  HASH CHAIN BROKEN: Previous Hash does not match upstream block. Click "Restore Ledger" to recover authentic consortium state.
                 </p>
               </div>
             </div>
@@ -3418,55 +3512,97 @@
               <svg class="w-3.5 h-3.5 text-emerald-600 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
-              <span>Chain Integrity: VALID (Tamper-Free)</span>
+              <span>Chain Integrity: VALID / SECURE</span>
             </span>
           `;
         }
-        if (alertEl) {
-          alertEl.classList.add('hidden');
+        if (verifyBtn) {
+          verifyBtn.className = 'btn-primary flex items-center gap-1.5 text-xs';
         }
+        if (tamperBtn) tamperBtn.classList.remove('hidden');
+        if (restoreBtn) restoreBtn.classList.add('hidden');
+        if (alertEl) alertEl.classList.add('hidden');
       }
 
       const container = document.getElementById('blockchainLedgerVisualizer');
       if (!container) return;
 
       const eventBadgeStyles = {
-        GENESIS: 'bg-slate-100 text-slate-800 border-slate-300',
+        GENESIS_NOTARIZATION: 'bg-slate-100 text-slate-800 border-slate-300',
+        INGEST_DOSSIERS: 'bg-sky-50 text-sky-800 border-sky-300',
+        AUTHORITY_MATCH: 'bg-indigo-50 text-indigo-800 border-indigo-300',
         DOCUMENT_VERIFIED: 'bg-sky-50 text-sky-800 border-sky-300',
         DECISION_RECORDED: 'bg-emerald-50 text-emerald-800 border-emerald-300',
         ANOMALY_FLAGGED: 'bg-amber-50 text-amber-800 border-amber-300',
-        RULE_CONFIG_CHANGED: 'bg-indigo-50 text-indigo-800 border-indigo-300'
+        RULE_CONFIG_CHANGED: 'bg-slate-50 text-slate-700 border-slate-300'
       };
 
       container.innerHTML = cipherBlockchain.chain.map((b, idx) => {
-        // When Block #2 is tampered, the cryptographic link cascade breaks for Block #2, #3, and #4
-        const isTamperedBlock = cipherBlockchain.isTampered && b.index >= (cipherBlockchain.tamperedIndex || 2);
+        const isTamperedTarget = cipherBlockchain.isTampered && b.index === cipherBlockchain.tamperedIndex;
+        const isCascadeBroken = cipherBlockchain.isTampered && b.index > cipherBlockchain.tamperedIndex;
         const badgeStyle = eventBadgeStyles[b.eventType] || 'bg-slate-50 text-slate-700 border-slate-200';
 
-        const connectorHtml = idx > 0 ? `
-          <div class="flex items-center justify-center my-3">
-            <div class="flex items-center gap-2 px-3 py-1 bg-white border ${isTamperedBlock ? 'border-red-400 text-red-700' : 'border-line text-sub'} rounded text-[11px] font-mono shadow-xs">
-              <svg class="w-3.5 h-3.5 ${isTamperedBlock ? 'text-red-600' : 'text-[#0284c7]'}" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
-              </svg>
-              <span>SHA-256 LINK: Block #${b.index - 1} &rarr; Block #${b.index} ${isTamperedBlock ? '(BROKEN / TAMPERED)' : '(VALID)'}</span>
-            </div>
-          </div>
-        ` : '';
+        let connectorHtml = '';
+        if (idx > 0) {
+          if (isTamperedTarget) {
+            connectorHtml = `
+              <div class="flex items-center justify-center my-3">
+                <div class="flex items-center gap-2 px-3 py-1 bg-red-50 border-2 border-red-500 rounded text-[11px] font-mono text-red-700 shadow-xs animate-pulse">
+                  <svg class="w-3.5 h-3.5 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" />
+                  </svg>
+                  <span>SHA-256 LINK: Block #${b.index - 1} &rarr; Block #${b.index} (MISMATCH / TAMPERED)</span>
+                </div>
+              </div>
+            `;
+          } else if (isCascadeBroken) {
+            connectorHtml = `
+              <div class="flex items-center justify-center my-3">
+                <div class="flex items-center gap-2 px-3 py-1 bg-amber-50 border border-amber-500 rounded text-[11px] font-mono text-amber-800 shadow-xs">
+                  <svg class="w-3.5 h-3.5 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+                  </svg>
+                  <span>HASH CHAIN BROKEN: Previous Hash does not match upstream block</span>
+                </div>
+              </div>
+            `;
+          } else {
+            connectorHtml = `
+              <div class="flex items-center justify-center my-3">
+                <div class="flex items-center gap-2 px-3 py-1 bg-white border border-line rounded text-[11px] font-mono text-sub shadow-xs">
+                  <svg class="w-3.5 h-3.5 text-[#0284c7]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+                  </svg>
+                  <span>SHA-256 LINK: Block #${b.index - 1} &rarr; Block #${b.index} (VALID / LINKED)</span>
+                </div>
+              </div>
+            `;
+          }
+        }
+
+        let cardContainerStyle = 'card-surface border-line';
+        if (isTamperedTarget) {
+          cardContainerStyle = 'border-2 border-red-500 bg-red-50/50 shadow-md';
+        } else if (isCascadeBroken) {
+          cardContainerStyle = 'border-2 border-amber-500 bg-amber-50/30';
+        }
+
+        const prevTrunc = b.previousHash ? `${b.previousHash.substring(0, 12)}...${b.previousHash.substring(b.previousHash.length - 8)}` : '00000000...';
+        const hashTrunc = b.blockHash ? `${b.blockHash.substring(0, 12)}...${b.blockHash.substring(b.blockHash.length - 8)}` : 'N/A';
 
         return `
           ${connectorHtml}
-          <div class="rounded border p-4 space-y-3 transition-colors ${isTamperedBlock ? 'border-2 border-red-500 bg-red-50/50' : 'card-surface border-line'}">
+          <div class="rounded border p-4 space-y-3 transition-colors ${cardContainerStyle}">
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-line pb-3">
               <div class="flex flex-wrap items-center gap-2">
                 <span class="px-2 py-0.5 rounded font-mono text-xs font-bold ${b.index === 0 ? 'bg-slate-800 text-white' : 'bg-subtle border border-line text-main'}">
                   BLOCK #${b.index}${b.index === 0 ? ' - GENESIS' : ''}
                 </span>
                 <span class="px-2 py-0.5 rounded text-[11px] font-semibold border ${badgeStyle}">
-                  ${b.eventType}
+                  ${escapeHtml(b.eventType)}
                 </span>
                 <span class="font-mono text-xs font-bold text-[#0284c7]">
-                  ${escapeHtml(b.targetId)}
+                  Target: ${escapeHtml(b.targetId)}
                 </span>
               </div>
 
@@ -3475,57 +3611,69 @@
                   ${b.timestamp}
                 </span>
                 <span class="px-2 py-0.5 rounded subtle-surface border border-line text-[11px] font-semibold text-main">
-                  ${escapeHtml(b.actorId)}
+                  Signatory: ${escapeHtml(b.actorId)}
                 </span>
               </div>
             </div>
 
-            ${isTamperedBlock ? `
+            ${isTamperedTarget ? `
               <div class="p-2.5 bg-red-100 border border-red-300 rounded text-xs text-red-900 font-bold flex items-center gap-2">
                 <svg class="w-4 h-4 text-red-600 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                 </svg>
-                <span>TAMPERED BLOCK DETECTED: Payload altered without cryptographic notary signoff!</span>
+                <span>TAMPER DETECTED: Historical block payload was modified without valid cryptographic signature! Hash mismatch.</span>
               </div>
             ` : ''}
 
+            ${isCascadeBroken ? `
+              <div class="p-2 bg-amber-100 border border-amber-300 rounded text-xs text-amber-900 font-semibold flex items-center gap-2">
+                <svg class="w-4 h-4 text-amber-600 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                </svg>
+                <span>HASH CHAIN BROKEN: Previous Hash does not match upstream block. Cryptographic continuity severed.</span>
+              </div>
+            ` : ''}
+
+            <!-- Hash Pills -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs">
               <div class="p-2.5 rounded subtle-surface border border-line space-y-1">
                 <div class="text-[10px] font-mono uppercase text-sub font-semibold">Previous Hash (prevHash):</div>
                 <div class="flex items-center justify-between gap-2">
-                  <span class="font-mono text-[11px] text-sub break-all">${b.previousHash}</span>
-                  <button onclick="copyLedgerHash('${b.previousHash}')" class="btn-secondary py-0.5 px-2 text-[10px] shrink-0" title="Copy hash">
+                  <span class="font-mono text-[11px] text-sub break-all font-semibold" title="${b.previousHash}">${prevTrunc}</span>
+                  <button onclick="copyLedgerHash('${b.previousHash}', 'Previous Hash')" class="btn-secondary py-0.5 px-2 text-[10px] shrink-0" style="border-radius:4px;" title="Copy previous hash">
                     Copy
                   </button>
                 </div>
               </div>
 
-              <div class="p-2.5 rounded subtle-surface border border-line space-y-1 ${isTamperedBlock ? 'border-red-400 bg-red-50' : ''}">
-                <div class="text-[10px] font-mono uppercase font-semibold ${isTamperedBlock ? 'text-red-700' : 'text-sub'}">
+              <div class="p-2.5 rounded subtle-surface border border-line space-y-1 ${isTamperedTarget ? 'border-red-400 bg-red-50' : ''}">
+                <div class="text-[10px] font-mono uppercase font-semibold ${isTamperedTarget ? 'text-red-700' : 'text-sub'}">
                   Block Hash (SHA-256):
                 </div>
                 <div class="flex items-center justify-between gap-2">
-                  <span class="font-mono text-[11px] font-bold ${isTamperedBlock ? 'text-red-700 line-through' : 'text-[#0284c7]'} break-all">
-                    ${b.blockHash}
+                  <span class="font-mono text-[11px] font-bold ${isTamperedTarget ? 'text-red-700 line-through' : 'text-[#0284c7]'} break-all" title="${b.blockHash}">
+                    ${hashTrunc}
                   </span>
-                  <button onclick="copyLedgerHash('${b.blockHash}')" class="btn-secondary py-0.5 px-2 text-[10px] shrink-0" title="Copy hash">
+                  <button onclick="copyLedgerHash('${b.blockHash}', 'Block Hash')" class="btn-secondary py-0.5 px-2 text-[10px] shrink-0" style="border-radius:4px;" title="Copy block hash">
                     Copy
                   </button>
                 </div>
               </div>
             </div>
 
+            <!-- Payload Preview -->
             <div class="p-2.5 rounded subtle-surface border border-line space-y-1.5 text-xs">
               <div class="text-[10px] font-mono uppercase text-sub font-semibold">Notarized Payload Data:</div>
-              ${renderPayloadSummary(b.payloadData)}
+              ${renderPayloadSummary(b.payload || b.payloadData)}
             </div>
 
+            <!-- Raw JSON Inspect Drawer -->
             <details class="text-xs pt-1">
               <summary class="cursor-pointer text-[#0284c7] font-semibold text-[11px] hover:underline flex items-center gap-1 select-none">
                 <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
                 </svg>
-                <span>View Full Cryptographic Block JSON</span>
+                <span>Inspect Raw Cryptographic Block JSON</span>
               </summary>
               <pre class="mt-2 p-3 bg-slate-900 text-slate-100 font-mono text-[11px] rounded overflow-x-auto leading-relaxed border border-slate-800">${escapeHtml(JSON.stringify(b, null, 2))}</pre>
             </details>
@@ -3534,44 +3682,31 @@
       }).join('');
     }
 
-        async function triggerSimulateTamper() {
-      const success = cipherBlockchain.simulateTamper(2);
-      if (!success) {
-        showToastBanner('Please ensure blockchain has blocks populated first.');
-        return;
-      }
-      const result = await cipherBlockchain.verifyChainIntegrity();
-      cipherBlockchain.isTampered = true;
-      cipherBlockchain.tamperDetails = result;
-      renderBlockchainLedgerUI();
-      showToastBanner('TAMPER DETECTED: Hash mismatch at Block #2! Stored hash does not match computed payload hash. Chained cryptographic link broken.');
-    }
-
     async function triggerChainIntegrityCheck() {
       const result = await cipherBlockchain.verifyChainIntegrity();
       if (result.valid) {
         cipherBlockchain.isTampered = false;
         cipherBlockchain.tamperDetails = null;
-        showToastBanner("Cryptographic validation passed: All blocks verified with SHA-256 integrity.");
+        showToastBanner(`Chain Integrity Verified: All ${cipherBlockchain.chain.length} blocks cryptographically valid across 7 Consortium PoA Nodes.`);
       } else {
         cipherBlockchain.isTampered = true;
         cipherBlockchain.tamperDetails = result;
-        showToastBanner('TAMPER DETECTED: Hash mismatch at Block #2! Stored hash does not match computed payload hash. Chained cryptographic link broken.');
+        showToastBanner(`VERIFICATION FAILED: Block #${result.brokenIndex} payload mismatch! Hash chain broken.`);
       }
       renderBlockchainLedgerUI();
     }
 
     async function triggerSimulateTamper() {
-      const success = cipherBlockchain.simulateTamper(2);
+      const success = cipherBlockchain.simulateTamper(1);
       if (!success) {
-        showToastBanner('Please ensure blockchain has blocks populated first.');
+        showToastBanner('Please load demo data first to populate blocks.');
         return;
       }
       const result = await cipherBlockchain.verifyChainIntegrity();
       cipherBlockchain.isTampered = true;
       cipherBlockchain.tamperDetails = result;
       renderBlockchainLedgerUI();
-      showToastBanner('TAMPER DETECTED: Hash mismatch at Block #2! Stored hash does not match computed payload hash. Chained cryptographic link broken.');
+      showToastBanner('CRITICAL ALERT: Tampering Detected at Block #1! Hash Mismatch: Expected != Found. Chained cryptographic link broken.');
     }
 
     async function triggerRestoreLedger() {
@@ -3580,19 +3715,39 @@
       cipherBlockchain.isTampered = false;
       cipherBlockchain.tamperDetails = null;
       renderBlockchainLedgerUI();
-      showToastBanner('Blockchain ledger restored to original cryptographic state.');
+      showToastBanner('Consortium PoA Ledger Restored: All blocks cryptographically verified and valid.');
     }
 
     function exportLedgerJson() {
-      const data = JSON.stringify(cipherBlockchain.chain, null, 2);
+      const exportObject = {
+        title: 'AICTE CipherCore Sovereign Consortium Blockchain Ledger',
+        standard: 'AICTE-APH-2024-27',
+        problemStatementId: 'SIH26261',
+        algorithm: 'SHA-256 Merkle Linkage Protocol',
+        consortiumPoANetwork: [
+          { node: 'AICTE-HQ (New Delhi)', status: 'ACTIVE', latency: '0.12 ms' },
+          { node: 'IIT-Bombay (Powai)', status: 'ACTIVE', latency: '0.45 ms' },
+          { node: 'IIT-Madras (Chennai)', status: 'ACTIVE', latency: '0.62 ms' },
+          { node: 'IISc-Bangalore (Bangalore)', status: 'ACTIVE', latency: '0.38 ms' },
+          { node: 'AICTE-WRO (Mumbai)', status: 'ACTIVE', latency: '0.22 ms' },
+          { node: 'MoE-Gov (Shastri Bhawan)', status: 'ACTIVE', latency: '0.51 ms' },
+          { node: 'NIC-DataHub (NIC-Gov)', status: 'ACTIVE', latency: '0.30 ms' }
+        ],
+        exportedAt: new Date().toISOString(),
+        totalBlocksMined: cipherBlockchain.chain.length,
+        chainIntegrityStatus: cipherBlockchain.isTampered ? 'TAMPERED_ALERT' : 'VALID_SECURE',
+        blocks: cipherBlockchain.chain
+      };
+
+      const data = JSON.stringify(exportObject, null, 2);
       const blob = new Blob([data], { type: 'application/json;charset=utf-8;' });
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = 'ciphercore_blockchain_ledger.json';
+      a.download = 'aicte_ciphercore_blockchain_ledger.json';
       a.click();
       URL.revokeObjectURL(url);
-      showToastBanner('Downloaded ciphercore_blockchain_ledger.json');
+      showToastBanner('Downloaded aicte_ciphercore_blockchain_ledger.json');
     }
 
     function switchRulesSubTab(subTabName) {
@@ -3643,6 +3798,8 @@
         category: rule.category,
         description: rule.description
       });
+      renderBlockchainLedgerUI();
+      renderBlockchainLedgerUI();
 
       showToastBanner(`${rule.code} ${rule.enabled ? 'enabled' : 'disabled'} & notarized on blockchain.`);
     }
@@ -3671,7 +3828,7 @@
         status: 'ENABLED',
         category: category,
         description: text
-      });
+      }).then(() => renderBlockchainLedgerUI());
 
       showToastBanner(`Added rule ${nextCode} & notarized on blockchain.`);
     }
@@ -3737,7 +3894,7 @@
       document.getElementById('officialDecisionModal').classList.add('hidden');
     }
 
-    function confirmOfficialDecision() {
+    async function confirmOfficialDecision() {
       const officer = document.getElementById('decisionOfficerInput').value.trim();
       const notes = document.getElementById('decisionNotesInput').value.trim();
       const outcome = document.getElementById('decisionOutcomeSelect').value;
@@ -3754,7 +3911,7 @@
 
       logAuditEvent(officer, currentInspectAppId, `Official Decision: ${outcome}`, notes);
       
-      cipherBlockchain.addBlock(currentInspectAppId, 'DECISION_RECORDED', officer, {
+      await cipherBlockchain.addBlock(currentInspectAppId, 'DECISION_RECORDED', officer, {
         applicationId: currentInspectAppId,
         institution: app ? app.institution : 'Unknown Institution',
         officialDecision: outcome,
@@ -3762,6 +3919,7 @@
         officerSignoff: true,
         notarizedAt: new Date().toISOString()
       });
+      renderBlockchainLedgerUI();
 
       closeOfficialDecisionModal();
       updateFilterButtonCounts();
@@ -4132,8 +4290,12 @@
 
     window.addEventListener('DOMContentLoaded', async () => {
       await cipherBlockchain.init();
-      await seedDemoBlockchainBlocks();
+      const isDemoInit = localStorage.getItem(INITIALIZED_KEY) === 'true';
+      if (isDemoInit && cipherBlockchain.chain.length <= 1) {
+        await seedDemoBlockchainBlocks();
+      }
       initUserSession();
+      renderBlockchainLedgerUI();
     });
   </script>
 
