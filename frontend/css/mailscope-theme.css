@@ -1,0 +1,289 @@
+/* ==========================================================================
+   MAILSCOPE CYBER-THEME DESIGN SYSTEM FOR CIPHERCORE
+   Aesthetic: Ultra-Dark Glassmorphic Cyber Intelligence Operations Centre
+   Inspired by MailScope (https://mailscope.dpdns.org/)
+   ========================================================================== */
+
+:root {
+  /* MailScope Pure Black & Carbon Palette */
+  --bg-pure: #000000;
+  --bg-base: #06080F;
+  --bg-surface: #0B0F19;
+  --bg-panel: #111728;
+  --bg-card: rgba(14, 19, 34, 0.78);
+  --bg-card-hover: rgba(22, 30, 52, 0.88);
+  
+  /* Borders */
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-glass: rgba(255, 255, 255, 0.14);
+  --border-glow-cyan: rgba(0, 240, 255, 0.35);
+  --border-glow-emerald: rgba(0, 245, 160, 0.35);
+  --border-glow-violet: rgba(139, 92, 246, 0.35);
+  --border-glow-rose: rgba(255, 59, 105, 0.35);
+
+  /* Neon Accents */
+  --accent-cyan: #00F0FF;
+  --accent-cyan-bright: #57E8FF;
+  --accent-emerald: #00F5A0;
+  --accent-violet: #8B5CF6;
+  --accent-blue: #3B82F6;
+  --accent-amber: #F59E0B;
+  --accent-rose: #FF3B69;
+
+  /* Typography Colors */
+  --text-main: #FFFFFF;
+  --text-muted: #8E9BAE;
+  --text-dim: #546274;
+
+  /* Fonts */
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  --font-display: 'Space Grotesk', -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+
+  /* Backward Compatibility Aliases */
+  --bg-dark: var(--bg-base);
+  --cyan: var(--accent-cyan);
+  --cyan-bright: var(--accent-cyan-bright);
+  --emerald: var(--accent-emerald);
+  --amber: var(--accent-amber);
+  --rose: var(--accent-rose);
+  --violet: var(--accent-violet);
+  --blue: var(--accent-blue);
+  --chimera-bg: var(--bg-base);
+  --chimera-surface: var(--bg-surface);
+  --chimera-panel: var(--bg-panel);
+  --chimera-card: var(--bg-card);
+  --chimera-border: var(--border-subtle);
+  --chimera-cyan: var(--accent-cyan);
+  --chimera-emerald: var(--accent-emerald);
+  --chimera-violet: var(--accent-violet);
+  --chimera-rose: var(--accent-rose);
+  --chimera-amber: var(--accent-amber);
+  --chimera-muted: var(--text-muted);
+}
+
+/* Universal Box Sizing & Reset */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  background-color: var(--bg-pure);
+  color: var(--text-main);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background-color: var(--bg-base);
+  background-image: 
+    radial-gradient(ellipse at 50% 0%, rgba(0, 240, 255, 0.07) 0%, transparent 60%),
+    radial-gradient(ellipse at 85% 30%, rgba(139, 92, 246, 0.05) 0%, transparent 50%),
+    radial-gradient(circle at 10% 70%, rgba(0, 245, 160, 0.04) 0%, transparent 50%);
+  background-attachment: fixed;
+  color: var(--text-main);
+  font-family: var(--font-sans);
+  min-height: 100vh;
+  overflow-x: hidden;
+  line-height: 1.55;
+}
+
+/* Custom Cyber Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-pure);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 240, 255, 0.22);
+  border-radius: 99px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 240, 255, 0.48);
+}
+
+/* MailScope Glass Cards & Analysis States */
+.glass-card {
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 16px;
+  padding: 22px;
+  box-shadow: 0 10px 32px rgba(0, 0, 0, 0.55);
+  transition: all 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.glass-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.12), transparent);
+}
+
+.glass-card.interactive {
+  cursor: pointer;
+}
+
+.glass-card.interactive:hover {
+  transform: translateY(-3px);
+  border-color: var(--border-glow-cyan);
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.65), 0 0 20px rgba(0, 240, 255, 0.15);
+}
+
+/* MailScope 4 Analysis Card Statuses */
+.analysis-card-neutral {
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  background: rgba(14, 18, 32, 0.75);
+  border: 1px solid var(--border-subtle);
+  border-radius: 14px;
+  padding: 18px;
+  transition: all 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+  cursor: pointer;
+}
+.analysis-card-neutral:hover {
+  border-color: var(--border-glow-cyan);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4), 0 0 12px rgba(0, 240, 255, 0.12);
+}
+
+.analysis-card-satisfied {
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  background: rgba(0, 245, 160, 0.05);
+  border: 1px solid rgba(0, 245, 160, 0.28);
+  border-radius: 14px;
+  padding: 18px;
+  transition: all 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+  cursor: pointer;
+}
+.analysis-card-satisfied:hover {
+  border-color: var(--accent-emerald);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4), 0 0 15px rgba(0, 245, 160, 0.18);
+}
+
+.analysis-card-warning {
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  background: rgba(245, 158, 11, 0.05);
+  border: 1px solid rgba(245, 158, 11, 0.28);
+  border-radius: 14px;
+  padding: 18px;
+  transition: all 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+  cursor: pointer;
+}
+.analysis-card-warning:hover {
+  border-color: var(--accent-amber);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4), 0 0 15px rgba(245, 158, 11, 0.18);
+}
+
+.analysis-card-violated {
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  background: rgba(255, 59, 105, 0.06);
+  border: 1px solid rgba(255, 59, 105, 0.32);
+  border-radius: 14px;
+  padding: 18px;
+  transition: all 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+  cursor: pointer;
+}
+.analysis-card-violated:hover {
+  border-color: var(--accent-rose);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4), 0 0 15px rgba(255, 59, 105, 0.22);
+}
+
+/* MailScope Status Pills & Badges */
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 10px;
+  border-radius: 99px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.status-pill.satisfied {
+  background: rgba(0, 245, 160, 0.12);
+  color: var(--accent-emerald);
+  border: 1px solid rgba(0, 245, 160, 0.28);
+}
+.status-pill.warning {
+  background: rgba(245, 158, 11, 0.12);
+  color: var(--accent-amber);
+  border: 1px solid rgba(245, 158, 11, 0.28);
+}
+.status-pill.violated {
+  background: rgba(255, 59, 105, 0.14);
+  color: var(--accent-rose);
+  border: 1px solid rgba(255, 59, 105, 0.32);
+}
+.status-pill.neutral {
+  background: rgba(255, 255, 255, 0.08);
+  color: #E2E8F0;
+  border: 1px solid var(--border-subtle);
+}
+
+/* Neon Pulse Dot */
+.pulse-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent-cyan);
+  box-shadow: 0 0 8px var(--accent-cyan);
+  display: inline-block;
+  animation: pulseAnim 2s infinite;
+}
+.pulse-dot.emerald {
+  background: var(--accent-emerald);
+  box-shadow: 0 0 8px var(--accent-emerald);
+}
+.pulse-dot.amber {
+  background: var(--accent-amber);
+  box-shadow: 0 0 8px var(--accent-amber);
+}
+.pulse-dot.rose {
+  background: var(--accent-rose);
+  box-shadow: 0 0 8px var(--accent-rose);
+}
+
+@keyframes pulseAnim {
+  0% { transform: scale(0.95); opacity: 0.7; }
+  50% { transform: scale(1.3); opacity: 1; }
+  100% { transform: scale(0.95); opacity: 0.7; }
+}
+
+/* Click-to-Slide Hint Pill */
+.slide-inspect-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.72rem;
+  color: var(--accent-cyan);
+  font-weight: 600;
+  padding: 2px 8px;
+  background: rgba(0, 240, 255, 0.08);
+  border: 1px solid rgba(0, 240, 255, 0.2);
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+.slide-inspect-pill:hover {
+  background: rgba(0, 240, 255, 0.18);
+  border-color: var(--accent-cyan);
+}

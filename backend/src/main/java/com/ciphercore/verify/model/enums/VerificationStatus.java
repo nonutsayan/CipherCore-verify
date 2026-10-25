@@ -1,0 +1,21 @@
+package com.ciphercore.verify.model.enums;
+
+/**
+ * Section 16 & 17: Reference & Cryptographic Verification Status
+ */
+public enum VerificationStatus {
+    VERIFIED_MATCH,
+    PARTIAL_MATCH,
+    RECORD_CONFLICT,
+    RECORD_NOT_FOUND,
+    SOURCE_UNAVAILABLE,
+    SOURCE_NOT_CONFIGURED,
+    MANUAL_REVIEW_REQUIRED,
+    SIGNATURE_VALID_TRUSTED,
+    SIGNATURE_VALID_UNTRUSTED,
+    SIGNATURE_NOT_PRESENT,
+    SIGNATURE_CONTENT_CHANGED,
+    SIGNATURE_EXPIRED,
+    SIGNATURE_REVOCATION_UNKNOWN,
+    SIGNATURE_VALIDATION_FAILED
+}

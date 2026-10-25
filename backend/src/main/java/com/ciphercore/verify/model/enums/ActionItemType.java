@@ -1,0 +1,17 @@
+package com.ciphercore.verify.model.enums;
+
+/**
+ * Deliverable 6: Unified Action Queue Task Types
+ */
+public enum ActionItemType {
+    MISSING_DOCUMENT,
+    EXPIRED_EVIDENCE,
+    VALIDATION_INCONSISTENCY,
+    VERIFICATION_PENDING,
+    VERIFICATION_UNAVAILABLE,
+    ANOMALY_REVIEW,
+    COMPLIANCE_DEFICIENCY,
+    INFRASTRUCTURE_INSPECTION,
+    ADDITIONAL_EVIDENCE_REQUESTED,
+    FINAL_DECISION_PENDING
+}

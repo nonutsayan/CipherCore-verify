@@ -1,0 +1,37 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Maven: Run All 16 Automated Tests",
+      "type": "shell",
+      "command": "mvn test",
+      "options": {
+        "cwd": "${workspaceFolder}/backend"
+      },
+      "group": {
+        "kind": "test",
+        "isDefault": true
+      },
+      "problemMatcher": "$maven"
+    },
+    {
+      "label": "Maven: Clean & Compile (Java 21)",
+      "type": "shell",
+      "command": "mvn clean compile",
+      "options": {
+        "cwd": "${workspaceFolder}/backend"
+      },
+      "group": "build",
+      "problemMatcher": "$maven"
+    },
+    {
+      "label": "Start Spring Boot (mvn spring-boot:run)",
+      "type": "shell",
+      "command": "mvn spring-boot:run",
+      "options": {
+        "cwd": "${workspaceFolder}/backend"
+      },
+      "problemMatcher": "$maven"
+    }
+  ]
+}

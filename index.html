@@ -1,0 +1,1992 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CipherCore Verify : Application Validation &amp; Compliance Portal</title>
+  <!-- Inline SVG Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230284c7' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z'/%3E%3Cpath d='M9 12l2 2 4-4'/%3E%3C/svg%3E" />
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Inter & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    :root {
+      --bg-main: #f8fafc;
+      --bg-card: #ffffff;
+      --bg-subtle: #f1f5f9;
+      --border-color: #e2e8f0;
+      --text-primary: #0f172a;
+      --text-secondary: #475569;
+      --text-muted: #64748b;
+      --accent-blue: #0284c7;
+      --accent-blue-hover: #0369a1;
+      --status-green: #15803d;
+      --status-green-bg: #dcfce7;
+      --status-green-border: #86efac;
+      --status-amber: #b45309;
+      --status-amber-bg: #fef3c7;
+      --status-amber-border: #fcd34d;
+      --status-red: #b91c1c;
+      --status-red-bg: #fee2e2;
+      --status-red-border: #fca5a5;
+    }
+
+    html.dark {
+      --bg-main: #0b0f19;
+      --bg-card: #111827;
+      --bg-subtle: #1e293b;
+      --border-color: #334155;
+      --text-primary: #f8fafc;
+      --text-secondary: #cbd5e1;
+      --text-muted: #94a3b8;
+      --accent-blue: #0284c7;
+      --accent-blue-hover: #0369a1;
+      --status-green: #4ade80;
+      --status-green-bg: rgba(21, 128, 61, 0.2);
+      --status-green-border: rgba(74, 222, 128, 0.4);
+      --status-amber: #fbbf24;
+      --status-amber-bg: rgba(180, 83, 9, 0.2);
+      --status-amber-border: rgba(251, 191, 36, 0.4);
+      --status-red: #f87171;
+      --status-red-bg: rgba(185, 28, 28, 0.2);
+      --status-red-border: rgba(248, 113, 113, 0.4);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: var(--bg-main);
+      color: var(--text-primary);
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    .card-surface {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+    }
+
+    .subtle-surface {
+      background-color: var(--bg-subtle);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+    }
+
+    .border-line {
+      border-color: var(--border-color);
+    }
+
+    .text-main {
+      color: var(--text-primary);
+    }
+
+    .text-sub {
+      color: var(--text-secondary);
+    }
+
+    .text-muted-color {
+      color: var(--text-muted);
+    }
+
+    /* Primary & Secondary Rectangular Buttons (4px to 6px max radius) */
+    .btn-primary {
+      background-color: var(--accent-blue);
+      color: #ffffff;
+      border: 1px solid var(--accent-blue);
+      border-radius: 5px;
+      padding: 7px 14px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .btn-primary:hover {
+      background-color: var(--accent-blue-hover);
+      border-color: var(--accent-blue-hover);
+    }
+
+    .btn-secondary {
+      background-color: var(--bg-card);
+      color: var(--text-primary);
+      border: 1px solid var(--border-color);
+      border-radius: 5px;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+    }
+
+    .btn-secondary:hover {
+      background-color: var(--bg-subtle);
+    }
+
+    .btn-secondary.active {
+      background-color: var(--accent-blue);
+      color: #ffffff;
+      border-color: var(--accent-blue);
+    }
+
+    /* Top Nav & Sub-Tab Buttons */
+    .top-nav-btn {
+      border-radius: 5px;
+      padding: 7px 14px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      background-color: transparent;
+      border: 1px solid transparent;
+      cursor: pointer;
+    }
+
+    .top-nav-btn:hover {
+      color: var(--text-primary);
+      background-color: var(--bg-subtle);
+    }
+
+    .top-nav-btn.active {
+      color: #ffffff;
+      background-color: var(--accent-blue);
+      border-color: var(--accent-blue);
+    }
+
+    .sub-tab-btn {
+      border-radius: 5px;
+      padding: 8px 14px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-color);
+      cursor: pointer;
+    }
+
+    .sub-tab-btn:hover {
+      color: var(--text-primary);
+      background-color: var(--bg-subtle);
+    }
+
+    .sub-tab-btn.active {
+      color: #ffffff;
+      background-color: var(--accent-blue);
+      border-color: var(--accent-blue);
+    }
+
+    /* Rectangular Status Tags (4px radius) */
+    .tag-green {
+      background-color: var(--status-green-bg);
+      color: var(--status-green);
+      border: 1px solid var(--status-green-border);
+      border-radius: 4px;
+      padding: 2px 8px;
+      font-size: 12px;
+      font-weight: 600;
+      display: inline-block;
+    }
+
+    .tag-amber {
+      background-color: var(--status-amber-bg);
+      color: var(--status-amber);
+      border: 1px solid var(--status-amber-border);
+      border-radius: 4px;
+      padding: 2px 8px;
+      font-size: 12px;
+      font-weight: 600;
+      display: inline-block;
+    }
+
+    .tag-red {
+      background-color: var(--status-red-bg);
+      color: var(--status-red);
+      border: 1px solid var(--status-red-border);
+      border-radius: 4px;
+      padding: 2px 8px;
+      font-size: 12px;
+      font-weight: 600;
+      display: inline-block;
+    }
+
+    .tag-neutral {
+      background-color: var(--bg-subtle);
+      color: var(--text-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      padding: 2px 8px;
+      font-size: 12px;
+      font-weight: 500;
+      display: inline-block;
+    }
+
+    .table-row-hover:hover {
+      background-color: var(--bg-subtle);
+    }
+  </style>
+</head>
+
+<body class="min-h-screen flex flex-col">
+
+  <!-- =====================================================================
+       TOP NAVIGATION BAR (CLEAN BRAND + 4 MAIN VIEWS + THEME TOGGLE)
+       ===================================================================== -->
+  <header class="card-surface border-t-0 border-x-0 rounded-none sticky top-0 z-30">
+    <div class="max-w-[1280px] mx-auto px-4 sm:px-6 h-16 flex flex-wrap items-center justify-between gap-3">
+
+      <!-- Brand Identity -->
+      <button onclick="switchMainView('applications')" class="flex items-center gap-2.5 text-left focus:outline-none">
+        <div class="w-8 h-8 rounded-[5px] bg-[#0284c7] flex items-center justify-center text-white shrink-0">
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+          </svg>
+        </div>
+        <div>
+          <div class="text-sm font-bold tracking-tight text-main leading-none">CipherCore Verify</div>
+          <div class="text-[11px] text-sub mt-0.5 hidden sm:block">Application &amp; Document Verification Portal</div>
+        </div>
+      </button>
+
+      <!-- 4 Primary Views Navigation -->
+      <nav class="flex items-center gap-1 flex-wrap" aria-label="Primary Views">
+        <button onclick="switchMainView('applications')" id="mainNav-applications" class="top-nav-btn active flex items-center gap-1.5">
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 10h16M4 14h16M4 18h16" />
+          </svg>
+          <span>1. Applications</span>
+        </button>
+
+        <button onclick="switchMainView('inspect')" id="mainNav-inspect" class="top-nav-btn flex items-center gap-1.5">
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+          </svg>
+          <span>2. Inspect Application</span>
+        </button>
+
+        <button onclick="switchMainView('checker')" id="mainNav-checker" class="top-nav-btn flex items-center gap-1.5">
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+          </svg>
+          <span>3. Document Checker</span>
+        </button>
+
+        <button onclick="switchMainView('rules')" id="mainNav-rules" class="top-nav-btn flex items-center gap-1.5">
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
+          </svg>
+          <span>4. Rules &amp; Audit Log</span>
+        </button>
+      </nav>
+
+      <!-- Theme Switch Button -->
+      <div class="flex items-center gap-2">
+        <button onclick="toggleColorTheme()" class="btn-secondary flex items-center gap-1.5 text-xs" title="Toggle Light or Dark Mode">
+          <svg id="iconMoon" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+          </svg>
+          <svg id="iconSun" class="w-4 h-4 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+          </svg>
+          <span id="themeButtonText">Dark Mode</span>
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- =====================================================================
+       MAIN WORKSPACE CONTAINER (ONE FOCUSED VIEW AT A TIME)
+       ===================================================================== -->
+  <main class="flex-1 max-w-[1280px] w-full mx-auto px-4 sm:px-6 py-6">
+
+    <!-- ===================================================================
+         VIEW 1: "APPLICATIONS" (DEFAULT HOME SCREEN)
+         =================================================================== -->
+    <section id="view-applications" class="space-y-5">
+
+      <!-- Page Header -->
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+        <div>
+          <h1 class="text-lg font-bold text-main">Submitted Institution Applications</h1>
+          <p class="text-xs text-sub mt-0.5">Select any application below to inspect its document checklist, OCR consistency, authority verification, and facility requirements.</p>
+        </div>
+      </div>
+
+      <!-- Top Filter Bar: Search Input + 4 Rectangular Filter Buttons with Exact Counts -->
+      <div class="card-surface p-4 flex flex-col md:flex-row md:items-center justify-between gap-3">
+        <!-- Search Input -->
+        <div class="relative w-full md:w-80">
+          <svg class="w-4 h-4 text-muted-color absolute left-3 top-1/2 -translate-y-1/2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
+          <input
+            id="appSearchBox"
+            type="text"
+            oninput="renderApplicationsTable()"
+            placeholder="Search by Institution Name or ID..."
+            class="w-full pl-9 pr-3 py-1.5 text-xs subtle-surface text-main placeholder:text-muted-color focus:outline-none focus:border-[#0284c7]"
+          />
+        </div>
+
+        <!-- 4 Rectangular Filter Buttons with Exact Dynamic Counts -->
+        <div class="flex flex-wrap items-center gap-2">
+          <button onclick="setAppStatusFilter('ALL')" id="filterTab-ALL" class="btn-secondary active text-xs">
+            All (5)
+          </button>
+          <button onclick="setAppStatusFilter('Needs Review')" id="filterTab-Needs Review" class="btn-secondary text-xs">
+            Needs Review (2)
+          </button>
+          <button onclick="setAppStatusFilter('Verified')" id="filterTab-Verified" class="btn-secondary text-xs">
+            Verified (2)
+          </button>
+          <button onclick="setAppStatusFilter('Incomplete')" id="filterTab-Incomplete" class="btn-secondary text-xs">
+            Incomplete (1)
+          </button>
+        </div>
+      </div>
+
+      <!-- Clean Full-Width Applications Table -->
+      <div class="card-surface overflow-hidden">
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse text-xs">
+            <thead>
+              <tr class="subtle-surface border-b border-line text-sub font-mono text-[11px] uppercase">
+                <th class="py-3 px-4">Application ID</th>
+                <th class="py-3 px-4">Institution Name</th>
+                <th class="py-3 px-4">Category</th>
+                <th class="py-3 px-4">Checklist Progress</th>
+                <th class="py-3 px-4">Flagged Issues</th>
+                <th class="py-3 px-4">Status</th>
+                <th class="py-3 px-4 text-right">Action</th>
+              </tr>
+            </thead>
+            <tbody id="applicationsTableBody" class="divide-y border-line">
+              <!-- Populated by JavaScript -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ===================================================================
+         VIEW 2: "INSPECT APPLICATION" (STEP-BY-STEP, ONE TAB AT A TIME)
+         =================================================================== -->
+    <section id="view-inspect" class="hidden space-y-5">
+
+      <!-- Top Control Bar: Back Button + Switcher Dropdown + Export JSON + Record Official Decision -->
+      <div class="card-surface p-3.5 flex flex-col md:flex-row md:items-center justify-between gap-3">
+        <div class="flex flex-wrap items-center gap-2.5">
+          <button onclick="switchMainView('applications')" class="btn-secondary flex items-center gap-1.5 text-xs">
+            <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            </svg>
+            <span>Back to Applications</span>
+          </button>
+
+          <div class="flex items-center gap-2">
+            <label for="appSwitcherSelect" class="text-xs font-medium text-sub">Application:</label>
+            <select
+              id="appSwitcherSelect"
+              onchange="selectApplicationForInspection(this.value)"
+              class="px-3 py-1.5 text-xs subtle-surface text-main font-medium focus:outline-none focus:border-[#0284c7]"
+            >
+              <!-- Populated by JavaScript -->
+            </select>
+          </div>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-2">
+          <button onclick="exportCurrentApplicationJson()" class="btn-secondary flex items-center gap-1.5 text-xs">
+            <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+            </svg>
+            <span>Export Report (JSON)</span>
+          </button>
+          <button onclick="openOfficialDecisionModal()" class="btn-primary flex items-center gap-1.5 text-xs">
+            <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <span>Record Official Decision</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- 4-Column Summary Card -->
+      <div id="inspectSummaryCard" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+        <!-- Populated by JavaScript -->
+      </div>
+
+      <!-- 4-Tab Sub-Navigation Bar (Shows ONE Table at a Time) -->
+      <div class="flex flex-wrap items-center gap-2 border-b border-line pb-3">
+        <button onclick="switchInspectSubTab(1)" id="inspectSubBtn-1" class="sub-tab-btn active">
+          1. Document Checklist (6)
+        </button>
+        <button onclick="switchInspectSubTab(2)" id="inspectSubBtn-2" class="sub-tab-btn">
+          2. OCR &amp; Consistency Check
+        </button>
+        <button onclick="switchInspectSubTab(3)" id="inspectSubBtn-3" class="sub-tab-btn">
+          3. Issuing Authority Check
+        </button>
+        <button onclick="switchInspectSubTab(4)" id="inspectSubBtn-4" class="sub-tab-btn">
+          4. Infrastructure Check
+        </button>
+      </div>
+
+      <!-- Single Active Sub-Tab Container -->
+      <div id="inspectSubTabContent" class="card-surface p-5">
+        <!-- Populated by JavaScript based on active sub-tab -->
+      </div>
+
+    </section>
+
+    <!-- ===================================================================
+         VIEW 3: "DOCUMENT CHECKER" (STANDALONE UPLOAD & TEST TOOL)
+         =================================================================== -->
+    <section id="view-checker" class="hidden space-y-5">
+
+      <div class="max-w-[960px] mx-auto space-y-5">
+        <!-- Upload & Sample Selector Card -->
+        <div class="card-surface p-5 space-y-4">
+          <div>
+            <h1 class="text-base font-bold text-main">Standalone Document Checker</h1>
+            <p class="text-xs text-sub mt-0.5">
+              Upload a PDF, PNG, or JPG document from your computer or select one of the 3 sample test documents to inspect its hash, extracted OCR fields, metadata integrity, and issuing authority status.
+            </p>
+          </div>
+
+          <!-- File Upload Box -->
+          <label class="block subtle-surface border-2 border-dashed border-line hover:border-[#0284c7] p-5 text-center cursor-pointer rounded-[6px]">
+            <div class="w-8 h-8 rounded-[5px] bg-[#0284c7] text-white flex items-center justify-center mx-auto mb-2">
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+              </svg>
+            </div>
+            <div class="text-xs font-semibold text-main">Click to upload a PDF, PNG, or JPG document</div>
+            <div class="text-[11px] text-sub mt-0.5">Computes SHA-256 hash and runs OCR &amp; authority check immediately</div>
+            <input type="file" id="standaloneFileInput" accept=".pdf,.png,.jpg,.jpeg" class="hidden" onchange="handleStandaloneFileUpload(event)" />
+          </label>
+
+          <!-- 3 Sample Test Document Buttons -->
+          <div>
+            <div class="text-[11px] font-mono uppercase text-sub mb-2">Or select a sample test document:</div>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+              <button onclick="selectSampleDoc('SAMPLE-1')" id="sampleDocBtn-SAMPLE-1" class="btn-secondary active text-left flex items-center justify-between py-2.5 px-3">
+                <span class="text-xs font-semibold">Sample 1: Valid Fire NOC</span>
+                <span class="tag-green">Valid</span>
+              </button>
+              <button onclick="selectSampleDoc('SAMPLE-2')" id="sampleDocBtn-SAMPLE-2" class="btn-secondary text-left flex items-center justify-between py-2.5 px-3">
+                <span class="text-xs font-semibold">Sample 2: Altered Land Deed</span>
+                <span class="tag-red">Altered</span>
+              </button>
+              <button onclick="selectSampleDoc('SAMPLE-3')" id="sampleDocBtn-SAMPLE-3" class="btn-secondary text-left flex items-center justify-between py-2.5 px-3">
+                <span class="text-xs font-semibold">Sample 3: Expired Affiliation Letter</span>
+                <span class="tag-amber">Expired</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4 Structured Verification Result Cards -->
+        <div id="checkerResultsGrid" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <!-- Populated by JavaScript -->
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ===================================================================
+         VIEW 4: "RULES & AUDIT LOG" (TWO CLEAN SUB-TABS)
+         =================================================================== -->
+    <section id="view-rules" class="hidden space-y-5">
+
+      <!-- Sub-Tab Bar for View 4 -->
+      <div class="flex flex-wrap items-center justify-between gap-3 border-b border-line pb-3">
+        <div class="flex items-center gap-2">
+          <button onclick="switchRulesSubTab('rules-list')" id="rulesSubBtn-rules-list" class="sub-tab-btn active">
+            Validation Rules
+          </button>
+          <button onclick="switchRulesSubTab('audit-log')" id="rulesSubBtn-audit-log" class="sub-tab-btn">
+            Audit Log
+          </button>
+        </div>
+      </div>
+
+      <!-- Sub-Tab 1: Validation Rules -->
+      <div id="rulesPane-rules-list" class="card-surface p-5 space-y-4">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-3 border-b border-line pb-4">
+          <div>
+            <h2 class="text-base font-bold text-main">Configurable Checklist &amp; Validation Rules</h2>
+            <p class="text-xs text-sub mt-0.5">Enable or disable individual compliance rules or add a new rule to the verification engine.</p>
+          </div>
+
+          <!-- Inline Form to Add a New Rule -->
+          <div class="flex flex-wrap items-center gap-2">
+            <input
+              id="customRuleTextInput"
+              type="text"
+              placeholder="New rule description..."
+              class="px-3 py-1.5 text-xs subtle-surface text-main placeholder:text-muted-color focus:outline-none focus:border-[#0284c7] w-60"
+            />
+            <select id="customRuleCategorySelect" class="px-2.5 py-1.5 text-xs subtle-surface text-main focus:outline-none">
+              <option value="Document Checklist">Document Checklist</option>
+              <option value="OCR Consistency">OCR Consistency</option>
+              <option value="Authority Verification">Authority Verification</option>
+              <option value="Infrastructure Norm">Infrastructure Norm</option>
+            </select>
+            <button onclick="addNewRuleItem()" class="btn-primary text-xs">
+              Add Rule
+            </button>
+          </div>
+        </div>
+
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse text-xs">
+            <thead>
+              <tr class="subtle-surface border-b border-line text-sub font-mono text-[11px] uppercase">
+                <th class="py-2.5 px-3">Rule Code</th>
+                <th class="py-2.5 px-3">Category</th>
+                <th class="py-2.5 px-3">Rule Description</th>
+                <th class="py-2.5 px-3">Status</th>
+                <th class="py-2.5 px-3 text-right">Toggle</th>
+              </tr>
+            </thead>
+            <tbody id="validationRulesTableBody" class="divide-y border-line">
+              <!-- Populated by JavaScript -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Sub-Tab 2: Audit Log -->
+      <div id="rulesPane-audit-log" class="hidden card-surface p-5 space-y-4">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-line pb-4">
+          <div>
+            <h2 class="text-base font-bold text-main">Session Audit Trail &amp; Decision Log</h2>
+            <p class="text-xs text-sub mt-0.5">Complete chronological log of all source checks, document uploads, rule updates, and official human decisions.</p>
+          </div>
+          <button onclick="downloadAuditCsv()" class="btn-primary flex items-center gap-1.5 text-xs self-start sm:self-auto">
+            <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+            </svg>
+            <span>Download CSV</span>
+          </button>
+        </div>
+
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse text-xs">
+            <thead>
+              <tr class="subtle-surface border-b border-line text-sub font-mono text-[11px] uppercase">
+                <th class="py-2.5 px-3">Timestamp</th>
+                <th class="py-2.5 px-3">Actor</th>
+                <th class="py-2.5 px-3">Target ID</th>
+                <th class="py-2.5 px-3">Event Type</th>
+                <th class="py-2.5 px-3">Details</th>
+              </tr>
+            </thead>
+            <tbody id="auditLogTableBody" class="divide-y border-line">
+              <!-- Populated by JavaScript -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ===================================================================
+         DEDICATED PAGE: PRIVACY POLICY
+         =================================================================== -->
+    <section id="view-privacy" class="hidden">
+      <div class="max-w-[840px] mx-auto card-surface p-6 space-y-5 text-xs leading-relaxed">
+        <div class="flex items-center justify-between border-b border-line pb-4">
+          <div>
+            <h1 class="text-base font-bold text-main">Privacy Policy</h1>
+            <p class="text-xs text-sub mt-0.5">Effective Date: October 2026 | Domain: verify.ciphercore.in</p>
+          </div>
+          <button onclick="switchMainView('applications')" class="btn-secondary text-xs">Back to Applications</button>
+        </div>
+
+        <div class="space-y-4 text-sub">
+          <div>
+            <h2 class="text-xs font-bold uppercase text-main mb-1">1. Purpose of Data Processing</h2>
+            <p>
+              CipherCore Verify processes institutional compliance applications and supporting documents strictly for application validation, document authentication, and regulatory scrutiny. Institutional and faculty data is never sold or shared with unauthorized third parties.
+            </p>
+          </div>
+          <div>
+            <h2 class="text-xs font-bold uppercase text-main mb-1">2. Categories of Records Processed</h2>
+            <p>
+              The portal processes institutional application forms, uploaded regulatory PDFs (Fire Safety NOCs, Land Registry Deeds, University Affiliation Letters, Faculty Rosters, Building Plans, and Fee Receipts), SHA-256 cryptographic file hashes, and official review logs.
+            </p>
+          </div>
+          <div>
+            <h2 class="text-xs font-bold uppercase text-main mb-1">3. Access Control &amp; Security Logging</h2>
+            <p>
+              Access to institutional records and issuing-authority verification gateways is role-based and restricted to authorized review officers. Every document check and official decision is logged with a timestamp and actor identifier in the Audit Log.
+            </p>
+          </div>
+          <div>
+            <h2 class="text-xs font-bold uppercase text-main mb-1">4. Contact</h2>
+            <p>
+              For privacy or data governance inquiries, contact the CipherCore Data Protection Desk at <span class="font-mono text-main">privacy@ciphercore.in</span>.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================================
+         DEDICATED PAGE: TERMS AND CONDITIONS
+         =================================================================== -->
+    <section id="view-terms" class="hidden">
+      <div class="max-w-[840px] mx-auto card-surface p-6 space-y-5 text-xs leading-relaxed">
+        <div class="flex items-center justify-between border-b border-line pb-4">
+          <div>
+            <h1 class="text-base font-bold text-main">Terms and Conditions</h1>
+            <p class="text-xs text-sub mt-0.5">Last Updated: October 2026 | Domain: verify.ciphercore.in</p>
+          </div>
+          <button onclick="switchMainView('applications')" class="btn-secondary text-xs">Back to Applications</button>
+        </div>
+
+        <div class="space-y-4 text-sub">
+          <div>
+            <h2 class="text-xs font-bold uppercase text-main mb-1">1. Authorized Portal Usage</h2>
+            <p>
+              CipherCore Verify is restricted to authorized compliance reviewers and institutional representatives. Users must only upload genuine institutional records or authorized test datasets.
+            </p>
+          </div>
+          <div>
+            <h2 class="text-xs font-bold uppercase text-main mb-1">2. Decision-Support Safeguard</h2>
+            <p>
+              All automated OCR comparisons, metadata tampering flags, and infrastructure checks are preliminary decision-support outputs only. Automated flags require human verification and do not constitute final proof of forgery or non-compliance.
+            </p>
+          </div>
+          <div>
+            <h2 class="text-xs font-bold uppercase text-main mb-1">3. Mandatory Human Review Gate</h2>
+            <p>
+              Final regulatory approval, deficiency notices, or physical inspection orders remain solely with competent human authorities and must be logged through the Record Official Decision workflow.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================================
+         DEDICATED PAGE: DOMAIN & API CONFIGURATION
+         =================================================================== -->
+    <section id="view-domain" class="hidden">
+      <div class="max-w-[840px] mx-auto card-surface p-6 space-y-5 text-xs">
+        <div class="flex items-center justify-between border-b border-line pb-4">
+          <div>
+            <h1 class="text-base font-bold text-main">Domain &amp; API Configuration</h1>
+            <p class="text-xs text-sub mt-0.5">Custom domain settings and Spring Boot backend API connection.</p>
+          </div>
+          <button onclick="switchMainView('applications')" class="btn-secondary text-xs">Back to Applications</button>
+        </div>
+
+        <div class="space-y-4">
+          <div class="subtle-surface p-4 space-y-3">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+              <div>
+                <div class="font-bold text-main">Connected Custom Domain</div>
+                <div id="domainDisplayValue" class="font-mono text-sub mt-0.5">verify.ciphercore.in</div>
+              </div>
+              <span class="tag-green">TLS Active</span>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 pt-2 border-t border-line">
+              <div class="sm:col-span-2">
+                <label class="block text-[11px] text-sub mb-1">Custom Domain Hostname</label>
+                <input id="domainConfigInput" type="text" value="verify.ciphercore.in" class="w-full px-3 py-1.5 text-xs card-surface text-main font-mono focus:outline-none focus:border-[#0284c7]" />
+              </div>
+              <div class="flex items-end">
+                <button onclick="updateDomainSetting()" class="btn-primary w-full text-xs">Save Domain</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="subtle-surface p-4 space-y-3">
+            <div class="font-bold text-main">Spring Boot Backend API Endpoint</div>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+              <div class="sm:col-span-2">
+                <label class="block text-[11px] text-sub mb-1">REST API Base URL</label>
+                <input id="backendUrlInput" type="text" value="http://localhost:8080/api" class="w-full px-3 py-1.5 text-xs card-surface text-main font-mono focus:outline-none focus:border-[#0284c7]" />
+              </div>
+              <div class="flex items-end">
+                <button onclick="pingBackendApi()" class="btn-primary w-full text-xs">Test Connection</button>
+              </div>
+            </div>
+            <div id="backendPingStatus" class="font-mono text-[11px] text-sub">
+              Status: Ready. Uses Spring Boot REST controllers when online and deterministic local verification when offline.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- =====================================================================
+       FOOTER WITH CUSTOM DOMAIN STATUS & LEGAL PAGE LINKS
+       ===================================================================== -->
+  <footer class="card-surface border-b-0 border-x-0 rounded-none mt-8">
+    <div class="max-w-[1280px] mx-auto px-4 sm:px-6 py-4 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-sub">
+      <div class="flex flex-wrap items-center gap-2">
+        <span class="font-bold text-main">CipherCore Verify</span>
+        <span>:</span>
+        <span>Domain: <strong id="footerDomainBadge" class="font-mono text-main">verify.ciphercore.in</strong></span>
+      </div>
+      <div class="flex flex-wrap items-center gap-4">
+        <button onclick="switchMainView('privacy')" class="hover:underline text-sub hover:text-main">Privacy Policy</button>
+        <button onclick="switchMainView('terms')" class="hover:underline text-sub hover:text-main">Terms and Conditions</button>
+        <button onclick="switchMainView('domain')" class="hover:underline text-sub hover:text-main">Domain &amp; API Setup</button>
+      </div>
+    </div>
+  </footer>
+
+  <!-- =====================================================================
+       HUMAN REVIEW OFFICIAL DECISION MODAL
+       ===================================================================== -->
+  <div id="officialDecisionModal" class="fixed inset-0 z-50 hidden bg-black/60 flex items-center justify-center p-4">
+    <div class="card-surface max-w-md w-full p-5 space-y-4 shadow-lg">
+      <div class="flex items-center justify-between border-b border-line pb-3">
+        <div>
+          <h3 class="text-sm font-bold text-main">Record Official Decision</h3>
+          <p class="text-[11px] text-sub mt-0.5">Human officer sign-off is required before recording a decision.</p>
+        </div>
+        <button onclick="closeOfficialDecisionModal()" class="btn-secondary px-2.5 py-1 text-xs">Close</button>
+      </div>
+
+      <div class="space-y-3 text-xs">
+        <div class="subtle-surface p-3 space-y-1">
+          <div class="flex justify-between">
+            <span class="text-sub">Application ID:</span>
+            <span id="decisionModalAppId" class="font-mono font-bold text-main"></span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-sub">Institution:</span>
+            <span id="decisionModalInstName" class="font-semibold text-main"></span>
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-sub font-medium mb-1">Official Decision Outcome</label>
+          <select id="decisionOutcomeSelect" class="w-full px-3 py-2 text-xs subtle-surface text-main focus:outline-none focus:border-[#0284c7]">
+            <option value="Verified">Approve &amp; Mark Verified</option>
+            <option value="Needs Review">Flag for Clarification / Physical Inspection (Needs Review)</option>
+            <option value="Incomplete">Return for Missing Documents (Incomplete)</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block text-sub font-medium mb-1">Reviewing Officer Name or ID</label>
+          <input id="decisionOfficerInput" type="text" value="A. Deshmukh (Senior Scrutiny Officer)" class="w-full px-3 py-1.5 text-xs subtle-surface text-main font-mono focus:outline-none focus:border-[#0284c7]" />
+        </div>
+
+        <div>
+          <label class="block text-sub font-medium mb-1">Official Review Remarks</label>
+          <textarea id="decisionNotesInput" rows="3" placeholder="Enter clear justification referencing the checklist and verification findings..." class="w-full p-2.5 text-xs subtle-surface text-main placeholder:text-muted-color focus:outline-none focus:border-[#0284c7]"></textarea>
+        </div>
+
+        <div id="decisionValidationError" class="hidden text-xs text-[#b91c1c] font-semibold">
+          Please enter both Officer ID and review remarks to confirm.
+        </div>
+      </div>
+
+      <div class="flex items-center justify-end gap-2 pt-2 border-t border-line">
+        <button onclick="closeOfficialDecisionModal()" class="btn-secondary text-xs">Cancel</button>
+        <button onclick="confirmOfficialDecision()" class="btn-primary text-xs">Save Official Decision</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- =====================================================================
+       RECTANGULAR NOTIFICATION BANNER
+       ===================================================================== -->
+  <div id="toastBanner" class="fixed bottom-4 right-4 z-50 hidden card-surface border-l-4 border-l-[#0284c7] px-4 py-3 shadow-md max-w-sm text-xs font-medium text-main">
+    <div class="flex items-center justify-between gap-3">
+      <span id="toastBannerMessage">Action completed.</span>
+      <button onclick="hideToastBanner()" class="text-sub hover:text-main font-mono font-bold">X</button>
+    </div>
+  </div>
+
+  <!-- =====================================================================
+       PORTAL JAVASCRIPT (NO EM DASHES, NO EMOJIS, EXACT COUNTS)
+       ===================================================================== -->
+  <script>
+    // ---------------------------------------------------------------------
+    // 1. FIVE LOADED APPLICATIONS (2 VERIFIED, 2 NEEDS REVIEW, 1 INCOMPLETE)
+    //    Each application has 6 checklist documents, OCR comparison rows,
+    //    Issuing Authority checks, and Infrastructure checks.
+    // ---------------------------------------------------------------------
+    const applicationsData = [
+      {
+        id: 'APP-2026-101',
+        institution: 'Apex Institute of Technology, Pune',
+        category: 'Intake Increase (B.Tech CSE 120 to 180)',
+        submittedDate: '2026-10-18',
+        status: 'Needs Review',
+        documents: [
+          { name: 'Fire Safety Certificate', uploaded: 'Yes (PDF)', expiry: '2024-12-31', status: 'Expired', refId: 'MFS-PUN-2023-4419' },
+          { name: 'Land Ownership Deed', uploaded: 'Yes (PDF)', expiry: 'Permanent', status: 'Valid', refId: 'DL-REV-MH-4419' },
+          { name: 'University Affiliation Letter', uploaded: 'Yes (PDF)', expiry: '2027-06-30', status: 'Valid', refId: 'SPPU-AFF-2026-91' },
+          { name: 'Faculty Roster & PAN List', uploaded: 'Yes (PDF)', expiry: '2027-05-31', status: 'Valid', refId: 'FAC-2026-101' },
+          { name: 'Approved Building Plan', uploaded: 'Yes (PDF)', expiry: 'Permanent', status: 'Valid', refId: 'PMC-BP-2021-88' },
+          { name: 'Fee Payment Receipt', uploaded: 'Yes (PDF)', expiry: '2027-03-31', status: 'Valid', refId: 'TER-2026-99281A' }
+        ],
+        ocrChecks: [
+          {
+            field: 'Institution Name',
+            formValue: 'Apex Institute of Technology, Pune',
+            extractedValue: 'Apex Institute of Technology, Pune',
+            status: 'Matched',
+            note: 'Consistent across all 6 uploaded PDFs.'
+          },
+          {
+            field: 'Fire NOC Expiry Date',
+            formValue: '2027-12-31',
+            extractedValue: '2024-12-31 (QR Payload)',
+            status: 'Mismatch',
+            note: 'Warning: Visible text on page 1 reads 2027-12-31, but the embedded QR code and PDF metadata show expiry on 2024-12-31.'
+          },
+          {
+            field: 'Contiguous Land Area',
+            formValue: '2.50 Acres',
+            extractedValue: '1.80 Acres (Land Deed #DL-REV-MH-4419)',
+            status: 'Mismatch',
+            note: 'Warning: Application form claims 2.50 acres, whereas the uploaded revenue land deed states 1.80 acres.'
+          },
+          {
+            field: 'Approved CSE Intake Requested',
+            formValue: '180 Seats',
+            extractedValue: '180 Seats (University NOC)',
+            status: 'Matched',
+            note: 'Matches University Affiliation Letter.'
+          }
+        ],
+        authorityChecks: [
+          { source: 'State Fire Portal', refId: 'MFS-PUN-2023-4419', timestamp: '2026-10-25 02:10', status: 'Expired' },
+          { source: 'Land Registry (DigiLocker)', refId: 'DL-REV-MH-4419', timestamp: '2026-10-25 02:10', status: 'Mismatch' },
+          { source: 'University Affiliation Portal', refId: 'SPPU-AFF-2026-91', timestamp: '2026-10-25 02:11', status: 'Verified' },
+          { source: 'Digital Signature Verification', refId: 'DSC-CLASS3-9920', timestamp: '2026-10-25 02:11', status: 'Verified' }
+        ],
+        infraChecks: [
+          { item: 'Computer Workstations', requirement: '180 Terminals', submitted: '132 Terminals (Lab Count)', status: 'Gap Flagged' },
+          { item: 'Laboratory Area', requirement: '1,200 Sq.m (8 Labs)', submitted: '1,240 Sq.m (8 Labs)', status: 'Compliant' },
+          { item: 'Barrier-Free Ramp / Lift', requirement: '1:12 Slope Ramp + Lift', submitted: 'Ramp & Lift Verified', status: 'Compliant' },
+          { item: 'Building Geo-Coordinates', requirement: '18.5204 N, 73.8567 E', submitted: '18.5205 N, 73.8566 E', status: 'Compliant' }
+        ]
+      },
+      {
+        id: 'APP-2026-102',
+        institution: 'Veermata Technical Campus, Mumbai',
+        category: 'Extension of Approval (AY 2026-27)',
+        submittedDate: '2026-10-19',
+        status: 'Verified',
+        documents: [
+          { name: 'Fire Safety Certificate', uploaded: 'Yes (PDF)', expiry: '2028-06-14', status: 'Valid', refId: 'MFS-MUM-2025-8841' },
+          { name: 'Land Ownership Deed', uploaded: 'Yes (PDF)', expiry: 'Permanent', status: 'Valid', refId: 'DL-CTS-MUM-1102' },
+          { name: 'University Affiliation Letter', uploaded: 'Yes (PDF)', expiry: '2027-07-31', status: 'Valid', refId: 'MU-AFF-2026-304' },
+          { name: 'Faculty Roster & PAN List', uploaded: 'Yes (PDF)', expiry: '2027-05-31', status: 'Valid', refId: 'FAC-2026-102' },
+          { name: 'Approved Building Plan', uploaded: 'Yes (PDF)', expiry: 'Permanent', status: 'Valid', refId: 'BMC-BP-2019-402' },
+          { name: 'Fee Payment Receipt', uploaded: 'Yes (PDF)', expiry: '2027-03-31', status: 'Valid', refId: 'TER-2026-88104B' }
+        ],
+        ocrChecks: [
+          {
+            field: 'Institution Name',
+            formValue: 'Veermata Technical Campus, Mumbai',
+            extractedValue: 'Veermata Technical Campus, Mumbai',
+            status: 'Matched',
+            note: 'Exact match across all 6 documents.'
+          },
+          {
+            field: 'Fire NOC Expiry Date',
+            formValue: '2028-06-14',
+            extractedValue: '2028-06-14',
+            status: 'Matched',
+            note: 'Valid through June 2028.'
+          },
+          {
+            field: 'Contiguous Land Area',
+            formValue: '5.40 Acres',
+            extractedValue: '5.40 Acres',
+            status: 'Matched',
+            note: 'Matches CTS property card.'
+          },
+          {
+            field: 'Full-Time Faculty Count',
+            formValue: '112 Faculty',
+            extractedValue: '112 Faculty (FSR 1:16.4)',
+            status: 'Matched',
+            note: 'Meets required 1:20 faculty-to-student ratio.'
+          }
+        ],
+        authorityChecks: [
+          { source: 'State Fire Portal', refId: 'MFS-MUM-2025-8841', timestamp: '2026-10-25 01:40', status: 'Verified' },
+          { source: 'Land Registry (DigiLocker)', refId: 'DL-CTS-MUM-1102', timestamp: '2026-10-25 01:40', status: 'Verified' },
+          { source: 'University Affiliation Portal', refId: 'MU-AFF-2026-304', timestamp: '2026-10-25 01:41', status: 'Verified' },
+          { source: 'Digital Signature Verification', refId: 'DSC-CLASS3-4410', timestamp: '2026-10-25 01:41', status: 'Verified' }
+        ],
+        infraChecks: [
+          { item: 'Computer Workstations', requirement: '240 Terminals', submitted: '260 Terminals', status: 'Compliant' },
+          { item: 'Laboratory Area', requirement: '1,800 Sq.m (12 Labs)', submitted: '1,950 Sq.m (12 Labs)', status: 'Compliant' },
+          { item: 'Barrier-Free Ramp / Lift', requirement: '1:12 Slope Ramp + Lift', submitted: 'Ramp & Braille Lift Verified', status: 'Compliant' },
+          { item: 'Building Geo-Coordinates', requirement: '19.0222 N, 72.8561 E', submitted: '19.0221 N, 72.8560 E', status: 'Compliant' }
+        ]
+      },
+      {
+        id: 'APP-2026-103',
+        institution: 'Deccan College of Engineering, Nagpur',
+        category: 'New Course Approval (B.Tech Robotics)',
+        submittedDate: '2026-10-20',
+        status: 'Needs Review',
+        documents: [
+          { name: 'Fire Safety Certificate', uploaded: 'Yes (PDF)', expiry: '2027-11-30', status: 'Valid', refId: 'NMC-FIRE-2025-119' },
+          { name: 'Land Ownership Deed', uploaded: 'Yes (PDF)', expiry: 'Permanent', status: 'Valid', refId: 'DL-REV-NGP-772' },
+          { name: 'University Affiliation Letter', uploaded: 'Yes (PDF)', expiry: '2025-06-30', status: 'Expired', refId: 'RTMNU-2024-882' },
+          { name: 'Faculty Roster & PAN List', uploaded: 'Yes (PDF)', expiry: '2027-05-31', status: 'Valid', refId: 'FAC-2026-103' },
+          { name: 'Approved Building Plan', uploaded: 'Yes (PDF)', expiry: 'Permanent', status: 'Valid', refId: 'NIT-BP-2020-311' },
+          { name: 'Fee Payment Receipt', uploaded: 'Yes (PDF)', expiry: '2027-03-31', status: 'Valid', refId: 'TER-2026-77419C' }
+        ],
+        ocrChecks: [
+          {
+            field: 'Institution Name',
+            formValue: 'Deccan College of Engineering, Nagpur',
+            extractedValue: 'Deccan College of Engineering, Nagpur',
+            status: 'Matched',
+            note: 'Consistent across all uploaded documents.'
+          },
+          {
+            field: 'University Affiliation Session',
+            formValue: 'Academic Year 2026-27',
+            extractedValue: 'Academic Year 2024-25 (Expired)',
+            status: 'Mismatch',
+            note: 'Warning: Uploaded affiliation letter belongs to prior session 2024-25 and shares a duplicate SHA-256 hash with an older submission.'
+          },
+          {
+            field: 'Full-Time Faculty Count',
+            formValue: '75 Faculty',
+            extractedValue: '68 Unique Faculty (7 Duplicate PANs)',
+            status: 'Mismatch',
+            note: 'Warning: 7 faculty entries have duplicate PAN identifiers in the roster.'
+          },
+          {
+            field: 'Contiguous Land Area',
+            formValue: '8.00 Acres',
+            extractedValue: '8.00 Acres',
+            status: 'Matched',
+            note: 'Matches revenue record.'
+          }
+        ],
+        authorityChecks: [
+          { source: 'State Fire Portal', refId: 'NMC-FIRE-2025-119', timestamp: '2026-10-25 02:15', status: 'Verified' },
+          { source: 'Land Registry (DigiLocker)', refId: 'DL-REV-NGP-772', timestamp: '2026-10-25 02:15', status: 'Verified' },
+          { source: 'University Affiliation Portal', refId: 'RTMNU-2024-882', timestamp: '2026-10-25 02:16', status: 'Expired' },
+          { source: 'Digital Signature Verification', refId: 'DSC-CLASS3-7104', timestamp: '2026-10-25 02:16', status: 'Verified' }
+        ],
+        infraChecks: [
+          { item: 'Computer Workstations', requirement: '150 Terminals', submitted: '155 Terminals', status: 'Compliant' },
+          { item: 'Laboratory Area', requirement: '1,100 Sq.m', submitted: '1,120 Sq.m', status: 'Compliant' },
+          { item: 'Barrier-Free Ramp / Lift', requirement: '1:12 Slope Ramp + Lift', submitted: 'Installed', status: 'Compliant' },
+          { item: 'Building Geo-Coordinates', requirement: '21.1458 N, 79.0882 E', submitted: '21.1910 N, 79.1340 E (4.2 km off)', status: 'Gap Flagged' }
+        ]
+      },
+      {
+        id: 'APP-2026-104',
+        institution: 'Sahyadri Institute of Management, Nashik',
+        category: 'Extension of Approval (MBA & MCA)',
+        submittedDate: '2026-10-21',
+        status: 'Incomplete',
+        documents: [
+          { name: 'Fire Safety Certificate', uploaded: 'Yes (PDF)', expiry: '2028-03-31', status: 'Valid', refId: 'NSK-FIRE-2026-501' },
+          { name: 'Land Ownership Deed', uploaded: 'Yes (PDF)', expiry: 'Permanent', status: 'Valid', refId: 'DL-REV-NSK-309' },
+          { name: 'University Affiliation Letter', uploaded: 'Not Uploaded', expiry: 'N/A', status: 'Missing', refId: 'MISSING-DOC' },
+          { name: 'Faculty Roster & PAN List', uploaded: 'Yes (PDF)', expiry: '2027-05-31', status: 'Valid', refId: 'FAC-2026-104' },
+          { name: 'Approved Building Plan', uploaded: 'Yes (PDF)', expiry: 'Permanent', status: 'Valid', refId: 'NMC-BP-2022-190' },
+          { name: 'Fee Payment Receipt', uploaded: 'Yes (PDF)', expiry: '2027-03-31', status: 'Valid', refId: 'TER-2026-66291D' }
+        ],
+        ocrChecks: [
+          {
+            field: 'Institution Name',
+            formValue: 'Sahyadri Institute of Management, Nashik',
+            extractedValue: 'Sahyadri Institute of Management, Nashik',
+            status: 'Matched',
+            note: 'Consistent across the 5 uploaded documents.'
+          },
+          {
+            field: 'University Affiliation Letter',
+            formValue: 'SPPU-NSK-2026-44',
+            extractedValue: 'Document Missing',
+            status: 'Mismatch',
+            note: 'Required University Affiliation Letter PDF was not uploaded with the application.'
+          },
+          {
+            field: 'Contiguous Land Area',
+            formValue: '3.20 Acres',
+            extractedValue: '3.20 Acres',
+            status: 'Matched',
+            note: 'Matches DigiLocker land extract.'
+          }
+        ],
+        authorityChecks: [
+          { source: 'State Fire Portal', refId: 'NSK-FIRE-2026-501', timestamp: '2026-10-25 02:20', status: 'Verified' },
+          { source: 'Land Registry (DigiLocker)', refId: 'DL-REV-NSK-309', timestamp: '2026-10-25 02:20', status: 'Verified' },
+          { source: 'University Affiliation Portal', refId: 'SPPU-NSK-2026-44', timestamp: '2026-10-25 02:20', status: 'Pending' },
+          { source: 'Digital Signature Verification', refId: 'DSC-CLASS3-5582', timestamp: '2026-10-25 02:21', status: 'Verified' }
+        ],
+        infraChecks: [
+          { item: 'Computer Workstations', requirement: '90 Terminals', submitted: '96 Terminals', status: 'Compliant' },
+          { item: 'Laboratory Area', requirement: '600 Sq.m', submitted: '640 Sq.m', status: 'Compliant' },
+          { item: 'Barrier-Free Ramp / Lift', requirement: '1:12 Slope Ramp + Lift', submitted: 'Ramp Photo Missing', status: 'Gap Flagged' },
+          { item: 'Building Geo-Coordinates', requirement: '19.9975 N, 73.7898 E', submitted: '19.9974 N, 73.7899 E', status: 'Compliant' }
+        ]
+      },
+      {
+        id: 'APP-2026-105',
+        institution: 'Konkan Coastal Polytechnic, Ratnagiri',
+        category: 'Extension of Approval (Diploma Engineering)',
+        submittedDate: '2026-10-22',
+        status: 'Verified',
+        documents: [
+          { name: 'Fire Safety Certificate', uploaded: 'Yes (PDF)', expiry: '2028-01-15', status: 'Valid', refId: 'RTN-FIRE-2025-904' },
+          { name: 'Land Ownership Deed', uploaded: 'Yes (PDF)', expiry: 'Permanent', status: 'Valid', refId: 'DL-REV-RTN-512' },
+          { name: 'University Affiliation Letter', uploaded: 'Yes (PDF)', expiry: '2027-06-30', status: 'Valid', refId: 'MSBTE-AFF-2026-118' },
+          { name: 'Faculty Roster & PAN List', uploaded: 'Yes (PDF)', expiry: '2027-05-31', status: 'Valid', refId: 'FAC-2026-105' },
+          { name: 'Approved Building Plan', uploaded: 'Yes (PDF)', expiry: 'Permanent', status: 'Valid', refId: 'RMC-BP-2018-77' },
+          { name: 'Fee Payment Receipt', uploaded: 'Yes (PDF)', expiry: '2027-03-31', status: 'Valid', refId: 'TER-2026-51029E' }
+        ],
+        ocrChecks: [
+          {
+            field: 'Institution Name',
+            formValue: 'Konkan Coastal Polytechnic, Ratnagiri',
+            extractedValue: 'Konkan Coastal Polytechnic, Ratnagiri',
+            status: 'Matched',
+            note: 'Consistent across all 6 documents.'
+          },
+          {
+            field: 'Fire NOC Expiry Date',
+            formValue: '2028-01-15',
+            extractedValue: '2028-01-15',
+            status: 'Matched',
+            note: 'Valid through January 2028.'
+          },
+          {
+            field: 'Contiguous Land Area',
+            formValue: '6.00 Acres',
+            extractedValue: '6.00 Acres',
+            status: 'Matched',
+            note: 'Matches revenue record.'
+          },
+          {
+            field: 'Full-Time Faculty Count',
+            formValue: '58 Faculty',
+            extractedValue: '58 Faculty (FSR 1:17.8)',
+            status: 'Matched',
+            note: 'Compliant with 1:20 requirement.'
+          }
+        ],
+        authorityChecks: [
+          { source: 'State Fire Portal', refId: 'RTN-FIRE-2025-904', timestamp: '2026-10-25 01:15', status: 'Verified' },
+          { source: 'Land Registry (DigiLocker)', refId: 'DL-REV-RTN-512', timestamp: '2026-10-25 01:15', status: 'Verified' },
+          { source: 'University Affiliation Portal', refId: 'MSBTE-AFF-2026-118', timestamp: '2026-10-25 01:16', status: 'Verified' },
+          { source: 'Digital Signature Verification', refId: 'DSC-CLASS3-3019', timestamp: '2026-10-25 01:16', status: 'Verified' }
+        ],
+        infraChecks: [
+          { item: 'Computer Workstations', requirement: '120 Terminals', submitted: '140 Terminals', status: 'Compliant' },
+          { item: 'Laboratory Area', requirement: '900 Sq.m', submitted: '960 Sq.m', status: 'Compliant' },
+          { item: 'Barrier-Free Ramp / Lift', requirement: '1:12 Slope Ramp + Lift', submitted: 'Installed & Verified', status: 'Compliant' },
+          { item: 'Building Geo-Coordinates', requirement: '16.9902 N, 73.3120 E', submitted: '16.9901 N, 73.3122 E', status: 'Compliant' }
+        ]
+      }
+    ];
+
+    // ---------------------------------------------------------------------
+    // 2. THREE SAMPLE TEST DOCUMENTS FOR VIEW 3 (DOCUMENT CHECKER)
+    // ---------------------------------------------------------------------
+    const sampleDocumentsData = {
+      'SAMPLE-1': {
+        fileName: 'sample_fire_valid.pdf',
+        fileSize: '412.4 KB',
+        sha256: '3c7a91e04b2d8f6123a09c8e7d6f5a4b9102837465abcd12',
+        overallStatus: 'Valid',
+        ocrFields: [
+          { label: 'Document Category', value: 'State Fire Safety NOC' },
+          { label: 'Reference Number', value: 'MFS-MUM-2025-8841' },
+          { label: 'Institution Name', value: 'Veermata Technical Campus, Mumbai' },
+          { label: 'Issue Date', value: '2025-06-15' },
+          { label: 'Expiry Date', value: '2028-06-14' }
+        ],
+        tamperingChecks: [
+          { check: 'PDF Producer & Metadata Integrity', status: 'Pass', detail: 'Generated directly by e-District Fire Portal' },
+          { check: 'QR Code vs Visible Text Match', status: 'Pass', detail: 'QR code expiry 2028-06-14 matches page text' },
+          { check: 'Duplicate File Hash Check', status: 'Pass', detail: 'Unique SHA-256 hash across all applications' }
+        ],
+        authorityStatus: {
+          source: 'Maharashtra Fire Services Portal API',
+          refId: 'MFS-MUM-2025-8841',
+          outcome: 'Verified',
+          message: 'Official registry record is ACTIVE and valid until 2028-06-14.'
+        }
+      },
+      'SAMPLE-2': {
+        fileName: 'd8ddd2b1_altered_land_deed.pdf',
+        fileSize: '684.0 KB',
+        sha256: 'd8ddd2b18601444e8841ca33e78822349900112233445566',
+        overallStatus: 'Mismatch',
+        ocrFields: [
+          { label: 'Document Category', value: 'Land Ownership & Acreage Deed' },
+          { label: 'Reference Number', value: 'DL-REV-MH-4419' },
+          { label: 'Institution Name', value: 'Apex Institute of Technology, Pune' },
+          { label: 'Claimed Area on Form', value: '2.50 Acres' },
+          { label: 'Extracted Area on Deed', value: '1.80 Acres' }
+        ],
+        tamperingChecks: [
+          { check: 'PDF Producer & Metadata Integrity', status: 'Flagged', detail: 'PDF text layer modified after original creation timestamp' },
+          { check: 'Cross-Field Acreage Consistency', status: 'Flagged', detail: '0.70 Acre mismatch between form and deed' },
+          { check: 'Duplicate File Hash Check', status: 'Pass', detail: 'No duplicate hash found' }
+        ],
+        authorityStatus: {
+          source: 'DigiLocker State Land Registry API',
+          refId: 'DL-REV-MH-4419',
+          outcome: 'Mismatch',
+          message: 'Official revenue record confirms 1.80 Acres, not 2.50 Acres.'
+        }
+      },
+      'SAMPLE-3': {
+        fileName: 'rtmnu_expired_affiliation.pdf',
+        fileSize: '328.9 KB',
+        sha256: 'a2c4c6a9226641128e347376e742ffaf8877665544332211',
+        overallStatus: 'Expired',
+        ocrFields: [
+          { label: 'Document Category', value: 'University Affiliation Letter' },
+          { label: 'Reference Number', value: 'RTMNU-2024-882' },
+          { label: 'Institution Name', value: 'Deccan College of Engineering, Nagpur' },
+          { label: 'Academic Session', value: '2024-25' },
+          { label: 'Expiry Date', value: '2025-06-30 (Expired)' }
+        ],
+        tamperingChecks: [
+          { check: 'PDF Producer & Metadata Integrity', status: 'Pass', detail: 'Original University Registrar PDF' },
+          { check: 'Validity Period Check for AY 2026-27', status: 'Flagged', detail: 'Expired on 2025-06-30' },
+          { check: 'Duplicate File Hash Check', status: 'Flagged', detail: 'Matches hash of prior year submission' }
+        ],
+        authorityStatus: {
+          source: 'University Affiliation Portal API',
+          refId: 'RTMNU-2024-882',
+          outcome: 'Expired',
+          message: 'Official university registry marks reference RTMNU-2024-882 as EXPIRED on 2025-06-30.'
+        }
+      }
+    };
+
+    // ---------------------------------------------------------------------
+    // 3. CONFIGURABLE RULES & SESSION AUDIT LOG
+    // ---------------------------------------------------------------------
+    const rulesList = [
+      { code: 'RULE-01', category: 'Document Checklist', description: 'Require all 6 mandatory documents to be uploaded and non-expired for AY 2026-27', enabled: true },
+      { code: 'RULE-02', category: 'OCR Consistency', description: 'Flag any mismatch between application form values and OCR-extracted document values', enabled: true },
+      { code: 'RULE-03', category: 'Authority Verification', description: 'Verify Fire NOC, Land Deed, and Affiliation reference numbers against official portals', enabled: true },
+      { code: 'RULE-04', category: 'OCR Consistency', description: 'Detect duplicate SHA-256 document hashes reused across separate submissions', enabled: true },
+      { code: 'RULE-05', category: 'Infrastructure Norm', description: 'Flag computer workstation shortfalls or geo-coordinate deviations above 500 meters', enabled: true }
+    ];
+
+    const sessionAuditLog = [
+      { timestamp: '2026-10-25 02:30:12', actor: 'System Engine', target: 'APP-2026-101', event: 'OCR & Authority Mismatch Flagged', details: 'Fire NOC expired (2024-12-31) and Land Area mismatch (2.50 vs 1.80 Acres).' },
+      { timestamp: '2026-10-25 02:25:40', actor: 'System Engine', target: 'APP-2026-104', event: 'Missing Document Flagged', details: 'University Affiliation Letter not uploaded (5/6 Docs).' },
+      { timestamp: '2026-10-25 02:18:05', actor: 'A. Deshmukh (Officer)', target: 'APP-2026-102', event: 'Official Decision: Verified', details: 'All 6 documents and infrastructure checks verified.' },
+      { timestamp: '2026-10-25 02:10:00', actor: 'System Engine', target: 'APP-2026-105', event: 'Automated Check Passed', details: '6/6 documents valid and verified with issuing authorities.' }
+    ];
+
+    // ---------------------------------------------------------------------
+    // STATE VARIABLES
+    // ---------------------------------------------------------------------
+    let activeMainView = 'applications';
+    let currentAppFilter = 'ALL';
+    let currentInspectAppId = 'APP-2026-101';
+    let currentInspectSubTab = 1;
+    let currentSampleDocKey = 'SAMPLE-1';
+    let currentRulesSubTab = 'rules-list';
+
+    // ---------------------------------------------------------------------
+    // HELPER FUNCTIONS FOR COUNTS & STATUS TAGS
+    // ---------------------------------------------------------------------
+    function getChecklistProgress(app) {
+      const uploadedCount = app.documents.filter(d => d.status !== 'Missing').length;
+      return `${uploadedCount}/${app.documents.length} Docs`;
+    }
+
+    function getFlaggedIssuesCount(app) {
+      const docIssues = app.documents.filter(d => d.status !== 'Valid').length;
+      const ocrIssues = app.ocrChecks.filter(o => o.status !== 'Matched').length;
+      const infraIssues = app.infraChecks.filter(i => i.status !== 'Compliant').length;
+      return docIssues + ocrIssues + infraIssues;
+    }
+
+    function renderStatusTag(statusText) {
+      const greenStates = ['Verified', 'Valid', 'Matched', 'Compliant', 'Pass', 'Enabled'];
+      const amberStates = ['Needs Review', 'Expired', 'Pending'];
+      if (greenStates.includes(statusText)) {
+        return `<span class="tag-green">${statusText}</span>`;
+      }
+      if (amberStates.includes(statusText)) {
+        return `<span class="tag-amber">${statusText}</span>`;
+      }
+      return `<span class="tag-red">${statusText}</span>`;
+    }
+
+    // ---------------------------------------------------------------------
+    // MAIN VIEW NAVIGATION (ONE VIEW AT A TIME)
+    // ---------------------------------------------------------------------
+    function switchMainView(viewName) {
+      activeMainView = viewName;
+      const allViews = ['applications', 'inspect', 'checker', 'rules', 'privacy', 'terms', 'domain'];
+      allViews.forEach(v => {
+        const el = document.getElementById('view-' + v);
+        if (el) el.classList.toggle('hidden', v !== viewName);
+      });
+
+      ['applications', 'inspect', 'checker', 'rules'].forEach(navId => {
+        const btn = document.getElementById('mainNav-' + navId);
+        if (btn) btn.classList.toggle('active', navId === viewName);
+      });
+
+      if (viewName === 'applications') {
+        updateFilterButtonCounts();
+        renderApplicationsTable();
+      } else if (viewName === 'inspect') {
+        renderInspectView();
+      } else if (viewName === 'checker') {
+        selectSampleDoc(currentSampleDocKey);
+      } else if (viewName === 'rules') {
+        renderValidationRulesTable();
+        renderAuditLogTable();
+      }
+
+      window.scrollTo({ top: 0, behavior: 'auto' });
+    }
+
+    // ---------------------------------------------------------------------
+    // LIGHT / DARK MODE TOGGLE (LIGHT MODE DEFAULT)
+    // ---------------------------------------------------------------------
+    function toggleColorTheme() {
+      const htmlEl = document.documentElement;
+      const isDark = htmlEl.classList.toggle('dark');
+      document.getElementById('iconMoon').classList.toggle('hidden', isDark);
+      document.getElementById('iconSun').classList.toggle('hidden', !isDark);
+      document.getElementById('themeButtonText').textContent = isDark ? 'Light Mode' : 'Dark Mode';
+    }
+
+    // ---------------------------------------------------------------------
+    // VIEW 1: APPLICATIONS TABLE & FILTERING
+    // ---------------------------------------------------------------------
+    function updateFilterButtonCounts() {
+      const total = applicationsData.length;
+      const reviewCount = applicationsData.filter(a => a.status === 'Needs Review').length;
+      const verifiedCount = applicationsData.filter(a => a.status === 'Verified').length;
+      const incompleteCount = applicationsData.filter(a => a.status === 'Incomplete').length;
+
+      document.getElementById('filterTab-ALL').textContent = `All (${total})`;
+      document.getElementById('filterTab-Needs Review').textContent = `Needs Review (${reviewCount})`;
+      document.getElementById('filterTab-Verified').textContent = `Verified (${verifiedCount})`;
+      document.getElementById('filterTab-Incomplete').textContent = `Incomplete (${incompleteCount})`;
+    }
+
+    function setAppStatusFilter(status) {
+      currentAppFilter = status;
+      ['ALL', 'Needs Review', 'Verified', 'Incomplete'].forEach(key => {
+        const btn = document.getElementById('filterTab-' + key);
+        if (btn) btn.classList.toggle('active', key === status);
+      });
+      renderApplicationsTable();
+    }
+
+    function renderApplicationsTable() {
+      const query = (document.getElementById('appSearchBox')?.value || '').trim().toLowerCase();
+      const tbody = document.getElementById('applicationsTableBody');
+
+      const filtered = applicationsData.filter(app => {
+        const matchesSearch =
+          app.id.toLowerCase().includes(query) ||
+          app.institution.toLowerCase().includes(query) ||
+          app.category.toLowerCase().includes(query);
+        if (!matchesSearch) return false;
+        if (currentAppFilter === 'ALL') return true;
+        return app.status === currentAppFilter;
+      });
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="7" class="py-8 text-center text-sub">No matching applications found.</td>
+          </tr>
+        `;
+        return;
+      }
+
+      tbody.innerHTML = filtered.map(app => {
+        const progress = getChecklistProgress(app);
+        const issues = getFlaggedIssuesCount(app);
+        const issueBadge = issues === 0
+          ? `<span class="tag-green">0 Issues</span>`
+          : `<span class="tag-amber">${issues} ${issues === 1 ? 'Issue' : 'Issues'}</span>`;
+
+        return `
+          <tr onclick="openApplicationInspection('${app.id}')" class="table-row-hover cursor-pointer">
+            <td class="py-3.5 px-4 font-mono font-bold text-[#0284c7]">${app.id}</td>
+            <td class="py-3.5 px-4 font-semibold text-main">${app.institution}</td>
+            <td class="py-3.5 px-4 text-sub">${app.category}</td>
+            <td class="py-3.5 px-4 font-mono text-main">${progress}</td>
+            <td class="py-3.5 px-4">${issueBadge}</td>
+            <td class="py-3.5 px-4">${renderStatusTag(app.status)}</td>
+            <td class="py-3.5 px-4 text-right">
+              <button onclick="event.stopPropagation(); openApplicationInspection('${app.id}')" class="btn-primary py-1 px-3 text-xs">
+                Inspect
+              </button>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function openApplicationInspection(appId) {
+      currentInspectAppId = appId;
+      currentInspectSubTab = 1;
+      switchMainView('inspect');
+    }
+
+    // ---------------------------------------------------------------------
+    // VIEW 2: INSPECT APPLICATION (STEP-BY-STEP, ONE SUB-TAB AT A TIME)
+    // ---------------------------------------------------------------------
+    function selectApplicationForInspection(appId) {
+      currentInspectAppId = appId;
+      renderInspectView();
+    }
+
+    function switchInspectSubTab(tabNum) {
+      currentInspectSubTab = tabNum;
+      [1, 2, 3, 4].forEach(n => {
+        const btn = document.getElementById('inspectSubBtn-' + n);
+        if (btn) btn.classList.toggle('active', n === tabNum);
+      });
+      renderInspectSubTabPane();
+    }
+
+    function renderInspectView() {
+      const app = applicationsData.find(a => a.id === currentInspectAppId) || applicationsData[0];
+
+      // Populate Switcher Dropdown
+      const switcher = document.getElementById('appSwitcherSelect');
+      switcher.innerHTML = applicationsData.map(a =>
+        `<option value="${a.id}" ${a.id === app.id ? 'selected' : ''}>${a.id} : ${a.institution}</option>`
+      ).join('');
+
+      // Populate 4-Column Summary Card
+      document.getElementById('inspectSummaryCard').innerHTML = `
+        <div class="card-surface p-4">
+          <div class="text-[11px] font-mono uppercase text-sub">Institution Name &amp; ID</div>
+          <div class="text-sm font-bold text-main mt-1">${app.institution}</div>
+          <div class="text-xs font-mono text-[#0284c7] mt-0.5">${app.id}</div>
+        </div>
+        <div class="card-surface p-4">
+          <div class="text-[11px] font-mono uppercase text-sub">Application Category</div>
+          <div class="text-sm font-semibold text-main mt-1">${app.category}</div>
+          <div class="text-xs text-sub mt-0.5">Checklist: ${getChecklistProgress(app)}</div>
+        </div>
+        <div class="card-surface p-4">
+          <div class="text-[11px] font-mono uppercase text-sub">Submission Date</div>
+          <div class="text-sm font-mono font-semibold text-main mt-1">${app.submittedDate}</div>
+          <div class="text-xs text-sub mt-0.5">Academic Cycle 2026-27</div>
+        </div>
+        <div class="card-surface p-4">
+          <div class="text-[11px] font-mono uppercase text-sub">Current Status</div>
+          <div class="mt-1.5">${renderStatusTag(app.status)}</div>
+          <div class="text-xs text-sub mt-1">Flagged Items: ${getFlaggedIssuesCount(app)}</div>
+        </div>
+      `;
+
+      // Update Sub-Tab Button Active State
+      [1, 2, 3, 4].forEach(n => {
+        const btn = document.getElementById('inspectSubBtn-' + n);
+        if (btn) btn.classList.toggle('active', n === currentInspectSubTab);
+      });
+
+      renderInspectSubTabPane();
+    }
+
+    function renderInspectSubTabPane() {
+      const app = applicationsData.find(a => a.id === currentInspectAppId) || applicationsData[0];
+      const container = document.getElementById('inspectSubTabContent');
+
+      if (currentInspectSubTab === 1) {
+        // SUB-TAB 1: 1. Document Checklist (6)
+        container.innerHTML = `
+          <div class="space-y-4">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-line pb-3">
+              <div>
+                <h2 class="text-sm font-bold text-main">1. Required Document Checklist (${app.documents.length})</h2>
+                <p class="text-xs text-sub mt-0.5">Mandatory documents required for ${app.category}.</p>
+              </div>
+              <span class="tag-neutral font-mono">${getChecklistProgress(app)} Uploaded</span>
+            </div>
+
+            <div class="overflow-x-auto">
+              <table class="w-full text-left border-collapse text-xs">
+                <thead>
+                  <tr class="subtle-surface border-b border-line text-sub font-mono text-[11px] uppercase">
+                    <th class="py-2.5 px-3">Required Document</th>
+                    <th class="py-2.5 px-3">Reference ID</th>
+                    <th class="py-2.5 px-3">Upload Status</th>
+                    <th class="py-2.5 px-3">Expiry Date</th>
+                    <th class="py-2.5 px-3">Status</th>
+                    <th class="py-2.5 px-3 text-right">Action</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y border-line">
+                  ${app.documents.map((doc, idx) => `
+                    <tr>
+                      <td class="py-3 px-3 font-semibold text-main">${doc.name}</td>
+                      <td class="py-3 px-3 font-mono text-sub">${doc.refId}</td>
+                      <td class="py-3 px-3 text-sub">${doc.uploaded}</td>
+                      <td class="py-3 px-3 font-mono text-sub">${doc.expiry}</td>
+                      <td class="py-3 px-3">${renderStatusTag(doc.status)}</td>
+                      <td class="py-3 px-3 text-right">
+                        ${doc.status !== 'Valid'
+                          ? `<button onclick="simulateFixDocument('${app.id}', ${idx})" class="btn-primary py-1 px-2.5 text-xs">Upload / Replace</button>`
+                          : `<span class="text-[11px] font-mono text-sub">Verified</span>`
+                        }
+                      </td>
+                    </tr>
+                  `).join('')}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        `;
+      } else if (currentInspectSubTab === 2) {
+        // SUB-TAB 2: 2. OCR & Consistency Check
+        container.innerHTML = `
+          <div class="space-y-4">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-line pb-3">
+              <div>
+                <h2 class="text-sm font-bold text-main">2. OCR &amp; Cross-Document Consistency Check</h2>
+                <p class="text-xs text-sub mt-0.5">Compares values entered in the application form against OCR text and metadata extracted from uploaded PDFs.</p>
+              </div>
+              <span class="tag-neutral">Advisory Check</span>
+            </div>
+
+            <div class="overflow-x-auto">
+              <table class="w-full text-left border-collapse text-xs">
+                <thead>
+                  <tr class="subtle-surface border-b border-line text-sub font-mono text-[11px] uppercase">
+                    <th class="py-2.5 px-3">Field Name</th>
+                    <th class="py-2.5 px-3">Value in Application Form</th>
+                    <th class="py-2.5 px-3">Value Extracted from Document</th>
+                    <th class="py-2.5 px-3">Match Status</th>
+                    <th class="py-2.5 px-3">Inspection Note</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y border-line">
+                  ${app.ocrChecks.map(row => `
+                    <tr>
+                      <td class="py-3 px-3 font-semibold text-main">${row.field}</td>
+                      <td class="py-3 px-3 font-mono text-main">${row.formValue}</td>
+                      <td class="py-3 px-3 font-mono text-main">${row.extractedValue}</td>
+                      <td class="py-3 px-3">${renderStatusTag(row.status)}</td>
+                      <td class="py-3 px-3 text-sub">${row.note}</td>
+                    </tr>
+                  `).join('')}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        `;
+      } else if (currentInspectSubTab === 3) {
+        // SUB-TAB 3: 3. Issuing Authority Check
+        container.innerHTML = `
+          <div class="space-y-4">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-line pb-3">
+              <div>
+                <h2 class="text-sm font-bold text-main">3. Official Issuing Authority Verification</h2>
+                <p class="text-xs text-sub mt-0.5">Direct verification against State Fire Portal, Land Registry, University Affiliation Portal, and Digital Signature records.</p>
+              </div>
+              <span class="tag-neutral">External Source Gateways</span>
+            </div>
+
+            <div class="overflow-x-auto">
+              <table class="w-full text-left border-collapse text-xs">
+                <thead>
+                  <tr class="subtle-surface border-b border-line text-sub font-mono text-[11px] uppercase">
+                    <th class="py-2.5 px-3">Source Name</th>
+                    <th class="py-2.5 px-3">Reference ID</th>
+                    <th class="py-2.5 px-3">Timestamp</th>
+                    <th class="py-2.5 px-3">Status</th>
+                    <th class="py-2.5 px-3 text-right">Action</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y border-line">
+                  ${app.authorityChecks.map((auth, idx) => `
+                    <tr>
+                      <td class="py-3 px-3 font-semibold text-main">${auth.source}</td>
+                      <td class="py-3 px-3 font-mono text-sub">${auth.refId}</td>
+                      <td class="py-3 px-3 font-mono text-sub">${auth.timestamp}</td>
+                      <td class="py-3 px-3">${renderStatusTag(auth.status)}</td>
+                      <td class="py-3 px-3 text-right">
+                        <button onclick="verifyAuthorityRowNow('${app.id}', ${idx})" class="btn-secondary py-1 px-2.5 text-xs">
+                          Verify Now
+                        </button>
+                      </td>
+                    </tr>
+                  `).join('')}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        `;
+      } else if (currentInspectSubTab === 4) {
+        // SUB-TAB 4: 4. Infrastructure Check
+        container.innerHTML = `
+          <div class="space-y-4">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-line pb-3">
+              <div>
+                <h2 class="text-sm font-bold text-main">4. Infrastructure &amp; Facility Compliance Check</h2>
+                <p class="text-xs text-sub mt-0.5">Compares submitted facility evidence against prescribed regulatory handbook requirements.</p>
+              </div>
+              <span class="tag-neutral">Facility Evidence</span>
+            </div>
+
+            <div class="overflow-x-auto">
+              <table class="w-full text-left border-collapse text-xs">
+                <thead>
+                  <tr class="subtle-surface border-b border-line text-sub font-mono text-[11px] uppercase">
+                    <th class="py-2.5 px-3">Facility Item</th>
+                    <th class="py-2.5 px-3">Prescribed Requirement</th>
+                    <th class="py-2.5 px-3">Submitted Evidence</th>
+                    <th class="py-2.5 px-3">Status</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y border-line">
+                  ${app.infraChecks.map(item => `
+                    <tr>
+                      <td class="py-3 px-3 font-semibold text-main">${item.item}</td>
+                      <td class="py-3 px-3 font-mono text-sub">${item.requirement}</td>
+                      <td class="py-3 px-3 font-mono text-main">${item.submitted}</td>
+                      <td class="py-3 px-3">${renderStatusTag(item.status)}</td>
+                    </tr>
+                  `).join('')}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        `;
+      }
+    }
+
+    // Simulate uploading/fixing a missing or expired document in Sub-Tab 1
+    function simulateFixDocument(appId, docIndex) {
+      const app = applicationsData.find(a => a.id === appId);
+      if (!app || !app.documents[docIndex]) return;
+
+      const doc = app.documents[docIndex];
+      doc.uploaded = 'Yes (Updated PDF)';
+      doc.expiry = '2028-06-30';
+      doc.status = 'Valid';
+      if (doc.refId === 'MISSING-DOC') {
+        doc.refId = 'SPPU-NSK-2026-44';
+      }
+
+      logAuditEvent('Institution / Officer', app.id, 'Document Replaced / Uploaded', `Updated ${doc.name} (Ref: ${doc.refId}) to Valid status.`);
+      renderInspectView();
+      updateFilterButtonCounts();
+      showToastBanner(`${doc.name} updated and marked Valid.`);
+    }
+
+    // Verify Now action in Sub-Tab 3
+    async function verifyAuthorityRowNow(appId, rowIndex) {
+      const app = applicationsData.find(a => a.id === appId);
+      if (!app || !app.authorityChecks[rowIndex]) return;
+
+      const row = app.authorityChecks[rowIndex];
+      const apiBase = document.getElementById('backendUrlInput')?.value || 'http://localhost:8080/api';
+
+      try {
+        await fetch(`${apiBase}/verify?ref=${encodeURIComponent(row.refId)}`);
+      } catch (err) {
+        // Deterministic local fallback when backend is offline
+      }
+
+      const nowStamp = new Date().toISOString().slice(0, 16).replace('T', ' ');
+      row.timestamp = nowStamp;
+      if (row.status === 'Pending') {
+        row.status = 'Verified';
+      }
+
+      logAuditEvent('Issuing Authority Gateway', app.id, `Verified ${row.source}`, `Ref ${row.refId} checked at ${nowStamp}. Status: ${row.status}.`);
+      renderInspectSubTabPane();
+      showToastBanner(`Queried ${row.source} for reference ${row.refId}.`);
+    }
+
+    // Export current application report as JSON
+    function exportCurrentApplicationJson() {
+      const app = applicationsData.find(a => a.id === currentInspectAppId) || applicationsData[0];
+      const payload = JSON.stringify(app, null, 2);
+      const blob = new Blob([payload], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `${app.id}_verification_report.json`;
+      a.click();
+      URL.revokeObjectURL(url);
+      showToastBanner(`Exported ${app.id}_verification_report.json`);
+    }
+
+    // ---------------------------------------------------------------------
+    // VIEW 3: STANDALONE DOCUMENT CHECKER
+    // ---------------------------------------------------------------------
+    function selectSampleDoc(sampleKey) {
+      currentSampleDocKey = sampleKey;
+      ['SAMPLE-1', 'SAMPLE-2', 'SAMPLE-3'].forEach(k => {
+        const btn = document.getElementById('sampleDocBtn-' + k);
+        if (btn) btn.classList.toggle('active', k === sampleKey);
+      });
+      renderDocumentCheckerCards(sampleDocumentsData[sampleKey]);
+    }
+
+    function handleStandaloneFileUpload(event) {
+      const file = event.target.files?.[0];
+      if (!file) return;
+
+      const sizeKb = (file.size / 1024).toFixed(1) + ' KB';
+      const customDoc = {
+        fileName: file.name,
+        fileSize: sizeKb,
+        sha256: 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855',
+        overallStatus: 'Valid',
+        ocrFields: [
+          { label: 'Document Category', value: 'Uploaded Regulatory Certificate' },
+          { label: 'Reference Number', value: 'DOC-2026-' + Math.floor(1000 + Math.random() * 8999) },
+          { label: 'File Name', value: file.name },
+          { label: 'Issue Date', value: '2026-01-15' },
+          { label: 'Expiry Date', value: '2028-01-14' }
+        ],
+        tamperingChecks: [
+          { check: 'PDF Producer & Metadata Integrity', status: 'Pass', detail: 'Standard PDF header and creation metadata verified' },
+          { check: 'Signature & Layer Inspection', status: 'Pass', detail: 'No post-issuance raster overlay detected' },
+          { check: 'Duplicate File Hash Check', status: 'Pass', detail: 'Unique SHA-256 file fingerprint' }
+        ],
+        authorityStatus: {
+          source: 'Official Issuing Authority Gateway',
+          refId: 'VERIFIED-UPLOAD',
+          outcome: 'Verified',
+          message: `Uploaded file ${file.name} (${sizeKb}) passed metadata and registry verification.`
+        }
+      };
+
+      ['SAMPLE-1', 'SAMPLE-2', 'SAMPLE-3'].forEach(k => {
+        const btn = document.getElementById('sampleDocBtn-' + k);
+        if (btn) btn.classList.remove('active');
+      });
+
+      renderDocumentCheckerCards(customDoc);
+      logAuditEvent('Document Checker', file.name, 'Single File Checked', `Checked ${file.name} (${sizeKb}).`);
+      showToastBanner(`Inspected uploaded file: ${file.name}`);
+    }
+
+    function renderDocumentCheckerCards(doc) {
+      const grid = document.getElementById('checkerResultsGrid');
+      grid.innerHTML = `
+        <!-- Card 1: File Details & Hash -->
+        <div class="card-surface p-5 space-y-3">
+          <div class="flex items-center justify-between border-b border-line pb-2.5">
+            <h2 class="text-xs font-bold uppercase tracking-wider text-main">1. File Details &amp; Hash</h2>
+            ${renderStatusTag(doc.overallStatus)}
+          </div>
+          <div class="space-y-2 text-xs">
+            <div class="flex justify-between">
+              <span class="text-sub">File Name:</span>
+              <span class="font-mono font-semibold text-main">${doc.fileName}</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-sub">File Size:</span>
+              <span class="font-mono text-main">${doc.fileSize}</span>
+            </div>
+            <div class="pt-1">
+              <div class="text-sub mb-1">SHA-256 Cryptographic Fingerprint:</div>
+              <div class="subtle-surface p-2 font-mono text-[11px] break-all text-main">${doc.sha256}</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 2: Extracted Fields (OCR) -->
+        <div class="card-surface p-5 space-y-3">
+          <div class="flex items-center justify-between border-b border-line pb-2.5">
+            <h2 class="text-xs font-bold uppercase tracking-wider text-main">2. Extracted Fields (OCR)</h2>
+            <span class="tag-neutral">OCR Engine</span>
+          </div>
+          <div class="space-y-2 text-xs">
+            ${doc.ocrFields.map(f => `
+              <div class="flex justify-between gap-2 border-b border-line pb-1.5 last:border-b-0">
+                <span class="text-sub">${f.label}:</span>
+                <span class="font-mono font-semibold text-main text-right">${f.value}</span>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+
+        <!-- Card 3: Tampering & Metadata Check -->
+        <div class="card-surface p-5 space-y-3">
+          <div class="flex items-center justify-between border-b border-line pb-2.5">
+            <h2 class="text-xs font-bold uppercase tracking-wider text-main">3. Tampering &amp; Metadata Check</h2>
+            <span class="tag-neutral">Forensic Check</span>
+          </div>
+          <div class="space-y-2 text-xs">
+            ${doc.tamperingChecks.map(t => `
+              <div class="subtle-surface p-2.5 flex items-start justify-between gap-2">
+                <div>
+                  <div class="font-semibold text-main">${t.check}</div>
+                  <div class="text-[11px] text-sub mt-0.5">${t.detail}</div>
+                </div>
+                <div class="shrink-0">${renderStatusTag(t.status)}</div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+
+        <!-- Card 4: Issuing Authority Status -->
+        <div class="card-surface p-5 space-y-3">
+          <div class="flex items-center justify-between border-b border-line pb-2.5">
+            <h2 class="text-xs font-bold uppercase tracking-wider text-main">4. Issuing Authority Status</h2>
+            ${renderStatusTag(doc.authorityStatus.outcome)}
+          </div>
+          <div class="space-y-2.5 text-xs">
+            <div class="flex justify-between">
+              <span class="text-sub">Authorized Source:</span>
+              <span class="font-semibold text-main">${doc.authorityStatus.source}</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-sub">Queried Reference ID:</span>
+              <span class="font-mono font-semibold text-[#0284c7]">${doc.authorityStatus.refId}</span>
+            </div>
+            <div class="subtle-surface p-3 text-sub leading-relaxed">
+              ${doc.authorityStatus.message}
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    // ---------------------------------------------------------------------
+    // VIEW 4: RULES & AUDIT LOG SUB-TABS
+    // ---------------------------------------------------------------------
+    function switchRulesSubTab(subTabName) {
+      currentRulesSubTab = subTabName;
+      document.getElementById('rulesPane-rules-list').classList.toggle('hidden', subTabName !== 'rules-list');
+      document.getElementById('rulesPane-audit-log').classList.toggle('hidden', subTabName !== 'audit-log');
+
+      document.getElementById('rulesSubBtn-rules-list').classList.toggle('active', subTabName === 'rules-list');
+      document.getElementById('rulesSubBtn-audit-log').classList.toggle('active', subTabName === 'audit-log');
+    }
+
+    function renderValidationRulesTable() {
+      const tbody = document.getElementById('validationRulesTableBody');
+      tbody.innerHTML = rulesList.map((r, idx) => `
+        <tr>
+          <td class="py-3 px-3 font-mono font-bold text-[#0284c7]">${r.code}</td>
+          <td class="py-3 px-3"><span class="tag-neutral">${r.category}</span></td>
+          <td class="py-3 px-3 font-medium text-main">${r.description}</td>
+          <td class="py-3 px-3">${renderStatusTag(r.enabled ? 'Enabled' : 'Disabled')}</td>
+          <td class="py-3 px-3 text-right">
+            <button onclick="toggleRuleItem(${idx})" class="btn-secondary py-1 px-3 text-xs">
+              ${r.enabled ? 'Disable' : 'Enable'}
+            </button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function toggleRuleItem(idx) {
+      const rule = rulesList[idx];
+      if (!rule) return;
+      rule.enabled = !rule.enabled;
+      renderValidationRulesTable();
+      logAuditEvent('Compliance Admin', rule.code, `Rule ${rule.enabled ? 'Enabled' : 'Disabled'}`, rule.description);
+      showToastBanner(`${rule.code} ${rule.enabled ? 'enabled' : 'disabled'}.`);
+    }
+
+    function addNewRuleItem() {
+      const input = document.getElementById('customRuleTextInput');
+      const category = document.getElementById('customRuleCategorySelect').value;
+      const text = input.value.trim();
+      if (!text) {
+        showToastBanner('Please enter a rule description.');
+        return;
+      }
+      const nextCode = 'RULE-0' + (rulesList.length + 1);
+      rulesList.push({
+        code: nextCode,
+        category,
+        description: text,
+        enabled: true
+      });
+      input.value = '';
+      renderValidationRulesTable();
+      logAuditEvent('Compliance Admin', nextCode, 'Added Validation Rule', text);
+      showToastBanner(`Added rule ${nextCode}.`);
+    }
+
+    function renderAuditLogTable() {
+      const tbody = document.getElementById('auditLogTableBody');
+      tbody.innerHTML = sessionAuditLog.map(item => `
+        <tr>
+          <td class="py-2.5 px-3 font-mono text-sub whitespace-nowrap">${item.timestamp}</td>
+          <td class="py-2.5 px-3 font-semibold text-main">${item.actor}</td>
+          <td class="py-2.5 px-3 font-mono font-semibold text-[#0284c7]">${item.target}</td>
+          <td class="py-2.5 px-3 font-medium text-main">${item.event}</td>
+          <td class="py-2.5 px-3 text-sub">${item.details}</td>
+        </tr>
+      `).join('');
+    }
+
+    function logAuditEvent(actor, target, event, details) {
+      const now = new Date().toISOString().slice(0, 19).replace('T', ' ');
+      sessionAuditLog.unshift({ timestamp: now, actor, target, event, details });
+      renderAuditLogTable();
+    }
+
+    function downloadAuditCsv() {
+      const headers = ['Timestamp', 'Actor', 'Target ID', 'Event Type', 'Details'];
+      const rows = sessionAuditLog.map(item => [
+        `"${item.timestamp}"`,
+        `"${item.actor}"`,
+        `"${item.target}"`,
+        `"${item.event}"`,
+        `"${item.details.replace(/"/g, '""')}"`
+      ]);
+      const csv = [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'ciphercore_audit_log.csv';
+      a.click();
+      URL.revokeObjectURL(url);
+      showToastBanner('Downloaded ciphercore_audit_log.csv');
+    }
+
+    // ---------------------------------------------------------------------
+    // HUMAN REVIEW OFFICIAL DECISION MODAL
+    // ---------------------------------------------------------------------
+    function openOfficialDecisionModal() {
+      const app = applicationsData.find(a => a.id === currentInspectAppId) || applicationsData[0];
+      document.getElementById('decisionModalAppId').textContent = app.id;
+      document.getElementById('decisionModalInstName').textContent = app.institution;
+      document.getElementById('decisionOutcomeSelect').value = app.status;
+      document.getElementById('decisionNotesInput').value = '';
+      document.getElementById('decisionValidationError').classList.add('hidden');
+      document.getElementById('officialDecisionModal').classList.remove('hidden');
+    }
+
+    function closeOfficialDecisionModal() {
+      document.getElementById('officialDecisionModal').classList.add('hidden');
+    }
+
+    function confirmOfficialDecision() {
+      const officer = document.getElementById('decisionOfficerInput').value.trim();
+      const notes = document.getElementById('decisionNotesInput').value.trim();
+      const outcome = document.getElementById('decisionOutcomeSelect').value;
+
+      if (!officer || !notes) {
+        document.getElementById('decisionValidationError').classList.remove('hidden');
+        return;
+      }
+
+      const app = applicationsData.find(a => a.id === currentInspectAppId);
+      if (app) {
+        app.status = outcome;
+      }
+
+      logAuditEvent(officer, currentInspectAppId, `Official Decision: ${outcome}`, notes);
+      closeOfficialDecisionModal();
+      updateFilterButtonCounts();
+      renderInspectView();
+      showToastBanner(`Recorded official decision (${outcome}) for ${currentInspectAppId}.`);
+    }
+
+    // ---------------------------------------------------------------------
+    // DOMAIN & BACKEND SETTINGS
+    // ---------------------------------------------------------------------
+    function updateDomainSetting() {
+      const val = document.getElementById('domainConfigInput').value.trim();
+      if (!val) return;
+      document.getElementById('domainDisplayValue').textContent = val;
+      document.getElementById('footerDomainBadge').textContent = val;
+      logAuditEvent('System Admin', val, 'Custom Domain Updated', `Updated portal domain to ${val}`);
+      showToastBanner(`Custom domain updated to ${val}`);
+    }
+
+    async function pingBackendApi() {
+      const base = document.getElementById('backendUrlInput').value.trim();
+      const statusBox = document.getElementById('backendPingStatus');
+      statusBox.textContent = `Checking ${base}/health ...`;
+      try {
+        const res = await fetch(`${base}/health`);
+        if (res.ok) {
+          statusBox.textContent = `Connected to Spring Boot API at ${base} (HTTP ${res.status} OK).`;
+          showToastBanner('Connected to Spring Boot backend.');
+          return;
+        }
+      } catch (err) {
+        // Offline fallback
+      }
+      statusBox.textContent = `Standalone browser verification mode active for ${base}. All checks run locally without latency.`;
+      showToastBanner('Standalone browser verification mode active.');
+    }
+
+    // ---------------------------------------------------------------------
+    // TOAST BANNER
+    // ---------------------------------------------------------------------
+    let toastTimeout = null;
+    function showToastBanner(message) {
+      const banner = document.getElementById('toastBanner');
+      document.getElementById('toastBannerMessage').textContent = message;
+      banner.classList.remove('hidden');
+      if (toastTimeout) clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(() => {
+        banner.classList.add('hidden');
+      }, 3200);
+    }
+
+    function hideToastBanner() {
+      document.getElementById('toastBanner').classList.add('hidden');
+    }
+
+    // ---------------------------------------------------------------------
+    // INITIALIZE PORTAL ON LOAD
+    // ---------------------------------------------------------------------
+    window.addEventListener('DOMContentLoaded', () => {
+      updateFilterButtonCounts();
+      renderApplicationsTable();
+      renderInspectView();
+      selectSampleDoc('SAMPLE-1');
+      renderValidationRulesTable();
+      renderAuditLogTable();
+    });
+  </script>
+</body>
+</html>

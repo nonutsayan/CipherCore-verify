@@ -1,0 +1,64 @@
+# Target & compiled files
+target/
+backend/target/
+*.class
+*.jar
+*.war
+
+# Database & Runtime Data
+*.mv.db
+*.trace.db
+*.lock.db
+data/
+uploads/
+
+# Node & Package Managers
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Python caches & temporary test scripts
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyc
+
+# Local backup files & archives
+*.backup*
+*.zip
+candidate_index.html
+current_story.html
+tab_overview_snippet.html
+
+# Scratch scripts (keep package_project.py)
+analyze_*.py
+apply_*.py
+assemble_*.py
+build_*.py
+check_*.py
+check_frontend_syntax.js
+debug_*.py
+extract_*.py
+find_*.py
+fix_*.py
+generate_*.py
+insert_*.py
+inspect_*.py
+promote_*.py
+read_*.py
+sync_*.py
+test_*.py
+test_dom_interactions.js
+test_master_syntax.js
+update_*.py
+upgrade_*.py
+verify_*.py
+
+# OS & Editor generated files
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+.idea/
+*.iml

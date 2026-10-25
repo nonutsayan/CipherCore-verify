@@ -1,0 +1,21 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Spring Boot - CipherCore Backend (Port 8080)",
+      "request": "launch",
+      "mainClass": "com.ciphercore.verify.CipherCoreApplication",
+      "projectName": "ciphercore-backend",
+      "vmArgs": "-Dspring.classformat.ignore=true",
+      "cwd": "${workspaceFolder}/backend"
+    },
+    {
+      "type": "node",
+      "name": "Node Server - Frontend (Port 3000)",
+      "request": "launch",
+      "program": "${workspaceFolder}/server.js",
+      "cwd": "${workspaceFolder}"
+    }
+  ]
+}
