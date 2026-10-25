@@ -51,11 +51,12 @@
       --status-red-border: #fca5a5;
     }
 
-    /* Modal Backdrop & Bulletproof Visibility */
+    /* Modal Backdrop & Container Architecture */
     .modal-backdrop,
     #cvEvidenceModal,
     #cvInspectionModal,
     #forensicDiffModal,
+    #reportModal,
     #aicteScrutinyReportModal {
       position: fixed !important;
       top: 0 !important;
@@ -75,6 +76,7 @@
     #cvEvidenceModal.active,
     #cvInspectionModal.active,
     #forensicDiffModal.active,
+    #reportModal.active,
     #aicteScrutinyReportModal.active {
       display: flex !important;
       visibility: visible !important;
@@ -84,8 +86,20 @@
     #cvEvidenceModal:not(.active),
     #cvInspectionModal:not(.active),
     #forensicDiffModal:not(.active),
+    #reportModal:not(.active),
     #aicteScrutinyReportModal:not(.active) {
       display: none !important;
+    }
+    .modal-container {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+      width: 100%;
+      max-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
     }
     html.dark .modal-backdrop {
       background-color: rgba(0, 0, 0, 0.88) !important;
@@ -138,11 +152,12 @@
       --status-red-border: #fca5a5;
     }
 
-    /* Modal Backdrop & Bulletproof Visibility */
+    /* Modal Backdrop & Container Architecture */
     .modal-backdrop,
     #cvEvidenceModal,
     #cvInspectionModal,
     #forensicDiffModal,
+    #reportModal,
     #aicteScrutinyReportModal {
       position: fixed !important;
       top: 0 !important;
@@ -162,6 +177,7 @@
     #cvEvidenceModal.active,
     #cvInspectionModal.active,
     #forensicDiffModal.active,
+    #reportModal.active,
     #aicteScrutinyReportModal.active {
       display: flex !important;
       visibility: visible !important;
@@ -171,8 +187,20 @@
     #cvEvidenceModal:not(.active),
     #cvInspectionModal:not(.active),
     #forensicDiffModal:not(.active),
+    #reportModal:not(.active),
     #aicteScrutinyReportModal:not(.active) {
       display: none !important;
+    }
+    .modal-container {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+      width: 100%;
+      max-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
     }
     html.dark .modal-backdrop {
       background-color: rgba(0, 0, 0, 0.88) !important;
@@ -4320,113 +4348,90 @@
     let cvGeofenceVisible = true;
 
     // Bulletproof Window Modal Controllers
-    function getCvModal() {
-      return document.getElementById('cvEvidenceModal') || document.getElementById('cvInspectionModal');
-    }
-    function getDiffModal() {
-      return document.getElementById('forensicDiffModal');
-    }
-    function getReportModal() {
-      return document.getElementById('aicteScrutinyReportModal') || document.getElementById('reportModal');
-    }
-
     window.openCvEvidenceModal = function(appId, facilityType) {
-      console.log('Opening CV Evidence Modal for', appId, facilityType);
-      const modal = getCvModal();
-      if (!modal) {
-        console.error('CV modal element not found!');
-        return;
-      }
-      modal.classList.add('active');
-      modal.classList.remove('hidden');
-      modal.style.display = 'flex';
-      if (modal.style.setProperty) {
-        modal.style.setProperty('display', 'flex', 'important');
-        modal.style.setProperty('visibility', 'visible', 'important');
-        modal.style.setProperty('opacity', '1', 'important');
-      }
-      document.body.style.overflow = 'hidden';
-      setTimeout(drawCvCanvas, 30);
-      setTimeout(drawCvCanvas, 150);
+        const m = document.getElementById('cvEvidenceModal');
+        if (m) {
+            m.style.display = 'flex';
+            m.classList.add('active');
+            m.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+            if (typeof drawCvCanvas === 'function') {
+                setTimeout(drawCvCanvas, 30);
+                setTimeout(drawCvCanvas, 150);
+            }
+        } else {
+            console.error('cvEvidenceModal element not found in DOM');
+        }
     };
 
     window.closeCvEvidenceModal = function() {
-      const modal = getCvModal();
-      if (!modal) return;
-      modal.classList.remove('active');
-      modal.classList.add('hidden');
-      modal.style.display = 'none';
-      if (modal.style.setProperty) {
-        modal.style.setProperty('display', 'none', 'important');
-      }
-      document.body.style.overflow = '';
+        const m = document.getElementById('cvEvidenceModal');
+        if (m) {
+            m.style.display = 'none';
+            m.classList.remove('active');
+            m.classList.add('hidden');
+            document.body.style.overflow = '';
+        }
     };
 
     window.openForensicDiffModal = function(appId, docType) {
-      console.log('Opening Forensic Diff Modal for', appId, docType);
-      const modal = getDiffModal();
-      if (!modal) {
-        console.error('Forensic Diff modal element not found!');
-        return;
-      }
-      modal.classList.add('active');
-      modal.classList.remove('hidden');
-      modal.style.display = 'flex';
-      if (modal.style.setProperty) {
-        modal.style.setProperty('display', 'flex', 'important');
-        modal.style.setProperty('visibility', 'visible', 'important');
-        modal.style.setProperty('opacity', '1', 'important');
-      }
-      document.body.style.overflow = 'hidden';
+        const m = document.getElementById('forensicDiffModal');
+        if (m) {
+            m.style.display = 'flex';
+            m.classList.add('active');
+            m.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        } else {
+            console.error('forensicDiffModal element not found in DOM');
+        }
     };
 
     window.closeForensicDiffModal = function() {
-      const modal = getDiffModal();
-      if (!modal) return;
-      modal.classList.remove('active');
-      modal.classList.add('hidden');
-      modal.style.display = 'none';
-      if (modal.style.setProperty) {
-        modal.style.setProperty('display', 'none', 'important');
-      }
-      document.body.style.overflow = '';
+        const m = document.getElementById('forensicDiffModal');
+        if (m) {
+            m.style.display = 'none';
+            m.classList.remove('active');
+            m.classList.add('hidden');
+            document.body.style.overflow = '';
+        }
     };
 
     window.openReportModal = function(appId) {
-      console.log('Opening Report Modal for', appId);
-      const modal = getReportModal();
-      if (!modal) {
-        console.error('Report modal element not found!');
-        return;
-      }
-      modal.classList.add('active');
-      modal.classList.remove('hidden');
-      modal.style.display = 'flex';
-      if (modal.style.setProperty) {
-        modal.style.setProperty('display', 'flex', 'important');
-        modal.style.setProperty('visibility', 'visible', 'important');
-        modal.style.setProperty('opacity', '1', 'important');
-      }
-      document.body.style.overflow = 'hidden';
+        const m = document.getElementById('reportModal') || document.getElementById('aicteScrutinyReportModal');
+        if (m) {
+            m.style.display = 'flex';
+            m.classList.add('active');
+            m.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        } else {
+            console.error('reportModal element not found in DOM');
+        }
     };
 
     window.closeReportModal = function() {
-      const modal = getReportModal();
-      if (!modal) return;
-      modal.classList.remove('active');
-      modal.classList.add('hidden');
-      modal.style.display = 'none';
-      if (modal.style.setProperty) {
-        modal.style.setProperty('display', 'none', 'important');
-      }
-      document.body.style.overflow = '';
+        const m = document.getElementById('reportModal') || document.getElementById('aicteScrutinyReportModal');
+        if (m) {
+            m.style.display = 'none';
+            m.classList.remove('active');
+            m.classList.add('hidden');
+            document.body.style.overflow = '';
+        }
     };
 
-    // Global backwards-compatibility aliases
+    // Backward-compatibility aliases
     window.openCvInspectionModal = window.openCvEvidenceModal;
     window.closeCvInspectionModal = window.closeCvEvidenceModal;
     window.openAicteScrutinyReportModal = window.openReportModal;
     window.closeAicteScrutinyReportModal = window.closeReportModal;
+
+    // Global escape key listener to close active modals
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            window.closeCvEvidenceModal();
+            window.closeForensicDiffModal();
+            window.closeReportModal();
+        }
+    });
 
     window.toggleCvBoundingBoxes = function(val) {
       cvBoundingBoxesVisible = (typeof val === 'boolean') ? val : !cvBoundingBoxesVisible;
@@ -4794,13 +4799,10 @@
   </script>
 
   <!-- =====================================================================
-       MODULE 1: INTERACTIVE COMPUTER VISION (CV) LAB & INFRASTRUCTURE MODAL
+       MODAL 1: INTERACTIVE COMPUTER VISION (CV) LAB & INFRASTRUCTURE MODAL
        ===================================================================== -->
-  <!-- =====================================================================
-       MODULE 1: INTERACTIVE COMPUTER VISION (CV) LAB & INFRASTRUCTURE MODAL
-       ===================================================================== -->
-  <div id="cvEvidenceModal" class="modal-backdrop fixed inset-0 z-50 bg-black/60 flex items-center justify-center p-3 sm:p-4" style="display:none;" onclick="if(event.target === this) window.closeCvEvidenceModal()">
-    <div class="card-surface max-w-5xl w-full p-5 space-y-4 shadow-2xl border border-line rounded flex flex-col max-h-[92vh]" onclick="event.stopPropagation()">
+  <div id="cvEvidenceModal" class="modal-backdrop" style="display:none;" onclick="if(event.target===this)closeCvEvidenceModal()">
+    <div class="modal-container card-surface max-w-[1000px] w-full p-5 space-y-4 shadow-2xl border border-line rounded-[6px] flex flex-col max-h-[90vh] overflow-y-auto" onclick="event.stopPropagation()">
       <!-- Header -->
       <div class="flex items-center justify-between border-b border-line pb-3">
         <div>
@@ -4813,8 +4815,8 @@
           </div>
         </div>
         <div class="flex items-center gap-2">
-          <button onclick="window.closeCvEvidenceModal()" class="btn-secondary px-2.5 py-1 text-xs" style="border-radius:4px;">Close</button>
-          <button onclick="window.closeCvEvidenceModal()" class="text-sub hover:text-main p-1 rounded" title="Close Modal">
+          <button onclick="closeCvEvidenceModal()" class="btn-secondary px-2.5 py-1 text-xs" style="border-radius:4px;">Close</button>
+          <button onclick="closeCvEvidenceModal()" class="text-sub hover:text-main p-1 rounded" title="Close Modal">
             <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
               <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
             </svg>
@@ -4842,12 +4844,12 @@
         </div>
       </div>
 
-      <!-- Main Body: Viewport & Inference Drawer -->
+      <!-- Body: Two-Column Grid -->
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 flex-1 overflow-y-auto">
-        <!-- Left: Interactive Canvas Viewport (65% / 8 Cols) -->
+        <!-- Left Column: Canvas & Evidence View (65% width / 8 Cols) -->
         <div class="lg:col-span-8 flex flex-col space-y-2">
           <div class="relative w-full rounded border border-slate-700 overflow-hidden bg-slate-900 shadow-inner flex items-center justify-center">
-            <canvas id="cvInspectionCanvas" width="760" height="440" class="w-full h-auto block"></canvas>
+            <canvas id="cvInspectionCanvas" width="760" height="380" class="w-full h-[380px] block" style="background:#0f172a;"></canvas>
             
             <!-- Live Model Pill -->
             <div class="absolute top-2.5 left-2.5 px-2 py-0.5 rounded bg-black/75 text-emerald-400 font-mono text-[10px] border border-emerald-500/40 flex items-center gap-1.5">
@@ -4856,20 +4858,20 @@
             </div>
           </div>
 
-          <!-- Canvas Viewport Controls: 3 Checkbox Toggles -->
+          <!-- Viewport Controls (3 Checkboxes) -->
           <div class="flex flex-wrap items-center justify-between gap-3 p-2.5 rounded subtle-surface border border-line text-xs">
             <div class="flex flex-wrap items-center gap-3">
               <label class="inline-flex items-center gap-1.5 cursor-pointer font-medium text-main text-xs">
                 <input type="checkbox" id="cvBoxesCheckbox" checked onchange="toggleCvBoundingBoxes(this.checked)" class="rounded text-[#0284c7]">
-                <span>Show Bounding Boxes (YOLOv8)</span>
+                <span>Show YOLOv8 Bounding Boxes</span>
               </label>
               <label class="inline-flex items-center gap-1.5 cursor-pointer font-medium text-main text-xs">
                 <input type="checkbox" id="cvHeatmapCheckbox" onchange="toggleCvHeatmap(this.checked)" class="rounded text-[#0284c7]">
-                <span>Show Terminal Heatmap</span>
+                <span>Show Thermal Density Heatmap</span>
               </label>
               <label class="inline-flex items-center gap-1.5 cursor-pointer font-medium text-main text-xs">
                 <input type="checkbox" id="cvGeofenceCheckbox" checked onchange="toggleCvGeofence(this.checked)" class="rounded text-[#0284c7]">
-                <span>Overlay Geofence Coordinates (18.5204 N, 73.8567 E)</span>
+                <span>Geofence Verification (18.5204 N, 73.8567 E - Match)</span>
               </label>
             </div>
             <div class="text-[11px] font-mono text-sub">
@@ -4878,16 +4880,16 @@
           </div>
         </div>
 
-        <!-- Right: CV Inference Analytics Drawer (35% / 4 Cols) -->
+        <!-- Right Column: CV Inference Stats Drawer (35% width / 4 Cols) -->
         <div class="lg:col-span-4 space-y-3 text-xs">
-          <!-- Workstation Tally -->
+          <!-- Terminal Count Card -->
           <div class="p-3 rounded subtle-surface border border-line space-y-1.5">
             <div class="flex items-center justify-between">
-              <span class="text-sub font-semibold">Workstation Tally:</span>
-              <span class="tag-red font-bold">DEFICIENT (-8 Units Required for 180 Intake)</span>
+              <span class="text-sub font-semibold">Terminal Count:</span>
+              <span class="tag-red font-bold" style="background:#fee2e2;color:#dc2626;border:1px solid #fca5a5;">DEFICIENT (-8 Units for 180 Intake)</span>
             </div>
             <div class="text-lg font-mono font-bold text-main">
-              142 Terminals <span class="text-xs text-sub font-normal">/ 150 AICTE APH Prescribed</span>
+              142 Terminals <span class="text-xs text-sub font-normal">/ 150 APH Requirement</span>
             </div>
             <div class="w-full bg-slate-200 h-1.5 rounded overflow-hidden">
               <div class="bg-amber-500 h-full" style="width: 94.6%;"></div>
@@ -4897,34 +4899,34 @@
             </div>
           </div>
 
-          <!-- Carpet Area Density -->
+          <!-- Carpet Area Density Card -->
           <div class="p-3 rounded subtle-surface border border-line space-y-1">
             <div class="flex items-center justify-between">
               <span class="text-sub font-semibold">Carpet Area Density:</span>
-              <span class="tag-green font-bold">COMPLIANT</span>
+              <span class="tag-green font-bold" style="background:#dcfce7;color:#16a34a;border:1px solid #86efac;">COMPLIANT</span>
             </div>
             <div class="text-sm font-mono font-bold text-main">
-              Measured: 1.25 sq.m per terminal
+              Measured: 1.25 sq.m / Terminal
             </div>
             <div class="text-[11px] text-sub">
-              Meets AICTE Norm (&gt;= 1.20 sq.m per workstation). Adequate circulation aisle spacing verified.
+              Norm: &gt;= 1.20 sq.m per workstation. Adequate circulation aisle spacing verified.
             </div>
           </div>
 
-          <!-- Life Safety & Accessibility -->
+          <!-- Safety Compliance Card -->
           <div class="p-3 rounded subtle-surface border border-line space-y-1.5">
             <div class="flex items-center justify-between">
-              <span class="text-sub font-semibold">Life Safety &amp; Accessibility:</span>
+              <span class="text-sub font-semibold">Safety Compliance:</span>
               <span class="tag-amber font-bold">Action Required</span>
             </div>
             <ul class="text-[11px] space-y-1.5 text-main">
               <li class="flex items-center gap-1.5 text-emerald-700">
                 <svg class="w-3.5 h-3.5 text-emerald-600 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
-                <span>Fire Extinguishers: 2 Detected (Compliant)</span>
+                <span>Fire Extinguishers: 2 Units Detected (Valid)</span>
               </li>
               <li class="flex items-center gap-1.5 text-red-700">
                 <svg class="w-3.5 h-3.5 text-red-600 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
-                <span>Emergency Illumination: Missing (Non-Compliant)</span>
+                <span>Emergency Exit Signage: Not Detected (Flagged)</span>
               </li>
             </ul>
           </div>
@@ -4934,7 +4936,7 @@
             <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
               <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
             </svg>
-            <span>Append CV Finding to Official Scrutiny Dossier</span>
+            <span>Append Finding to Scrutiny Dossier</span>
           </button>
         </div>
       </div>
@@ -4942,16 +4944,16 @@
       <!-- Footer -->
       <div class="flex items-center justify-between pt-2 border-t border-line text-xs">
         <span class="text-[11px] text-sub font-mono">SIH Problem ID: 26261 | AICTE Regulatory Decision-Support</span>
-        <button onclick="window.closeCvEvidenceModal()" class="btn-secondary text-xs" style="border-radius:4px;">Close Inspection</button>
+        <button onclick="closeCvEvidenceModal()" class="btn-secondary text-xs" style="border-radius:4px;">Close Inspection</button>
       </div>
     </div>
   </div>
 
   <!-- =====================================================================
-       MODULE 2: SIDE-BY-SIDE FORENSIC DOCUMENT DIFF MODAL
+       MODAL 2: SIDE-BY-SIDE FORENSIC DOCUMENT DIFF MODAL
        ===================================================================== -->
-  <div id="forensicDiffModal" class="modal-backdrop fixed inset-0 z-50 bg-black/60 flex items-center justify-center p-3 sm:p-4" style="display:none;" onclick="if(event.target === this) window.closeForensicDiffModal()">
-    <div class="card-surface max-w-5xl w-full p-5 space-y-4 shadow-2xl border border-line rounded flex flex-col max-h-[92vh]" onclick="event.stopPropagation()">
+  <div id="forensicDiffModal" class="modal-backdrop" style="display:none;" onclick="if(event.target===this)closeForensicDiffModal()">
+    <div class="modal-container card-surface max-w-[1000px] w-full p-5 space-y-4 shadow-2xl border border-line rounded-[6px] flex flex-col max-h-[90vh] overflow-y-auto" onclick="event.stopPropagation()">
       <!-- Header -->
       <div class="flex items-center justify-between border-b border-line pb-3">
         <div>
@@ -4959,11 +4961,11 @@
             <span class="px-2 py-0.5 rounded text-[10px] font-bold font-mono bg-red-100 text-red-800 border border-red-300">Forensic Tamper Detection</span>
             <h3 class="text-sm font-bold text-main">Cryptographic &amp; Forensic Document Diff Viewer</h3>
           </div>
-          <p class="text-[11px] text-sub mt-0.5">Document Comparison: Institution Submitted Upload vs. DigiLocker State Land Registry Record</p>
+          <p class="text-[11px] text-sub mt-0.5">Side-by-Side Comparison: Submitted PDF vs. DigiLocker State Land Registry</p>
         </div>
         <div class="flex items-center gap-2">
-          <button onclick="window.closeForensicDiffModal()" class="btn-secondary px-2.5 py-1 text-xs" style="border-radius:4px;">Close</button>
-          <button onclick="window.closeForensicDiffModal()" class="text-sub hover:text-main p-1 rounded" title="Close Modal">
+          <button onclick="closeForensicDiffModal()" class="btn-secondary px-2.5 py-1 text-xs" style="border-radius:4px;">Close</button>
+          <button onclick="closeForensicDiffModal()" class="text-sub hover:text-main p-1 rounded" title="Close Modal">
             <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
               <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
             </svg>
@@ -4971,13 +4973,13 @@
         </div>
       </div>
 
-      <!-- Split-Screen Comparison Grid -->
+      <!-- Body: Split View (Two Columns) -->
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4 flex-1 overflow-y-auto">
-        <!-- Column A (Left: Institution Submitted PDF - Land Deed) -->
+        <!-- Column 1: Institution Submitted Land Deed -->
         <div class="p-4 rounded border-2 border-red-400 bg-red-50/20 space-y-3">
           <div class="flex items-center justify-between border-b border-red-200 pb-2">
             <div>
-              <span class="tag-red font-bold text-[10px]">Institution Submitted PDF - Land Deed</span>
+              <span class="tag-red font-bold text-[10px]">Institution Submitted Land Deed</span>
               <div class="font-mono text-[11px] text-main font-semibold mt-0.5">Land Sale Deed No. 1849/2018</div>
             </div>
             <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-red-100 text-red-800 border border-red-300 font-bold">Altered Layer</span>
@@ -5000,8 +5002,8 @@
                 <div class="font-mono font-bold text-red-900 text-xs">
                   Survey No: 42/B (Contiguous Land Area: 5.20 Acres)
                 </div>
-                <div class="text-[10px] text-red-700 font-sans">
-                  Callout Box: Altered Layer Detected | Error Level Analysis (ELA) score: 88.4% (Post-scan digital raster modification detected)
+                <div class="text-[10px] text-red-700 font-sans font-medium">
+                  Altered Layer Detected | Error Level Analysis (ELA): 88.4% (Post-scan digital raster modification)
                 </div>
               </div>
 
@@ -5016,7 +5018,7 @@
           </div>
         </div>
 
-        <!-- Column B (Right: DigiLocker / State Revenue Dept Record) -->
+        <!-- Column 2: DigiLocker / State Revenue Dept Record -->
         <div class="p-4 rounded border-2 border-emerald-400 bg-emerald-50/20 space-y-3">
           <div class="flex items-center justify-between border-b border-emerald-200 pb-2">
             <div>
@@ -5043,8 +5045,8 @@
                 <div class="font-mono font-bold text-emerald-900 text-xs">
                   Survey No: 42/A (Contiguous Land Area: 2.10 Acres)
                 </div>
-                <div class="text-[10px] text-emerald-700 font-sans">
-                  Callout Box: Authentic Record Verified via Maharashtra Land Registry API | Hash: 3e8b...910a
+                <div class="text-[10px] text-emerald-700 font-sans font-medium">
+                  Authentic Record Verified via Maharashtra Land Registry API (HTTP 200 OK)
                 </div>
               </div>
 
@@ -5060,7 +5062,7 @@
         </div>
       </div>
 
-      <!-- Bottom Forensic Metadata Comparison Table -->
+      <!-- Forensic Findings Table -->
       <div class="overflow-x-auto rounded border border-line">
         <table class="w-full text-left border-collapse text-xs">
           <thead>
@@ -5075,19 +5077,19 @@
             <tr>
               <td class="py-2.5 px-3 font-semibold">Font Stream</td>
               <td class="py-2.5 px-3 font-mono text-red-600">Helvetica-Bold (Digital Overlay)</td>
-              <td class="py-2.5 px-3 font-mono text-emerald-600">Monospaced Typewriter Courier</td>
+              <td class="py-2.5 px-3 font-mono text-emerald-600">Monospaced Courier (Scanned)</td>
               <td class="py-2.5 px-3"><span class="tag-red font-bold">MISMATCH</span></td>
             </tr>
             <tr>
               <td class="py-2.5 px-3 font-semibold">Software Producer</td>
-              <td class="py-2.5 px-3 font-mono text-red-600">Adobe Acrobat Pro v24.2</td>
+              <td class="py-2.5 px-3 font-mono text-red-600">Adobe Acrobat Pro v24.2 (Modified 14 days post-issue)</td>
               <td class="py-2.5 px-3 font-mono text-emerald-600">Government C-DAC Digital Stamp</td>
-              <td class="py-2.5 px-3"><span class="tag-red font-bold">IRREGULAR</span></td>
+              <td class="py-2.5 px-3"><span class="tag-red font-bold">ANOMALY</span></td>
             </tr>
             <tr>
-              <td class="py-2.5 px-3 font-semibold">Contiguous Acreage</td>
-              <td class="py-2.5 px-3 font-mono text-red-600 font-bold">5.20 Acres</td>
-              <td class="py-2.5 px-3 font-mono text-emerald-600 font-bold">2.10 Acres</td>
+              <td class="py-2.5 px-3 font-semibold">Land Acreage</td>
+              <td class="py-2.5 px-3 font-mono text-red-600 font-bold">5.20 Acres Claimed</td>
+              <td class="py-2.5 px-3 font-mono text-emerald-600 font-bold">2.10 Acres Actual</td>
               <td class="py-2.5 px-3"><span class="tag-red font-bold">REGULATORY DEFICIENCY (-3.10 Acres)</span></td>
             </tr>
           </tbody>
@@ -5096,24 +5098,27 @@
 
       <!-- Footer -->
       <div class="flex items-center justify-between pt-2 border-t border-line text-xs">
-        <button onclick="window.attachForensicProofToDossier()" class="btn-primary flex items-center gap-1.5" style="border-radius:4px;">
+        <button onclick="attachForensicProofToDossier()" class="btn-primary flex items-center gap-1.5" style="border-radius:4px;">
           <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
             <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
           <span>Attach Forensic Proof to Dossier</span>
         </button>
-        <button onclick="window.closeForensicDiffModal()" class="btn-secondary text-xs" style="border-radius:4px;">Close Inspector</button>
+        <button onclick="closeForensicDiffModal()" class="btn-secondary text-xs" style="border-radius:4px;">Close Inspector</button>
       </div>
     </div>
   </div>
 
-  <div id="aicteScrutinyReportModal" class="modal-backdrop fixed inset-0 z-50 bg-black/60 flex items-center justify-center p-3 sm:p-4" style="display:none;" onclick="if(event.target === this) window.closeReportModal()">
-    <div class="card-surface max-w-4xl w-full p-6 space-y-5 shadow-2xl border border-line rounded flex flex-col max-h-[94vh]">
-      <!-- Controls Bar (Hidden in Print) -->
+  <!-- =====================================================================
+       MODAL 3: 1-CLICK OFFICIAL AICTE SCRUTINY DEFICIENCY REPORT MODAL
+       ===================================================================== -->
+  <div id="reportModal" class="modal-backdrop" style="display:none;" onclick="if(event.target===this)closeReportModal()">
+    <div class="modal-container card-surface max-w-[850px] w-full p-6 space-y-5 shadow-2xl border border-line rounded-[6px] flex flex-col max-h-[90vh] overflow-y-auto" onclick="event.stopPropagation()">
+      <!-- Header Controls -->
       <div class="flex items-center justify-between border-b border-line pb-3 no-print">
         <div>
-          <span class="px-2 py-0.5 rounded text-[10px] font-bold font-mono bg-[#0284c7]/10 text-[#0284c7] border border-[#0284c7]/30">Official Regulatory Document</span>
-          <h3 class="text-sm font-bold text-main">AICTE Scrutiny Committee Assessment Report</h3>
+          <span class="px-2 py-0.5 rounded text-[10px] font-bold font-mono bg-[#0284c7]/10 text-[#0284c7] border border-[#0284c7]/30">Statutory Assessment</span>
+          <h3 class="text-sm font-bold text-main">AICTE Official Scrutiny Assessment Report (AY 2026-27)</h3>
         </div>
         <div class="flex items-center gap-2">
           <button onclick="printAicteScrutinyReport()" class="btn-primary flex items-center gap-1.5 text-xs" style="border-radius:4px;">
@@ -5124,189 +5129,131 @@
           </button>
           <button onclick="exportScrutinyReportJson()" class="btn-secondary flex items-center gap-1.5 text-xs" style="border-radius:4px;">
             <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
             </svg>
             <span>Export JSON</span>
           </button>
-          <button onclick="closeAicteScrutinyReportModal()" class="btn-secondary px-2.5 py-1 text-xs" style="border-radius:4px;">Close</button>
+          <button onclick="closeReportModal()" class="btn-secondary px-2.5 py-1 text-xs" style="border-radius:4px;">Close</button>
         </div>
       </div>
 
-      <!-- Printable Regulatory Document Body -->
+      <!-- Printable Content -->
       <div id="aictePrintableDocument" class="bg-white p-6 rounded border border-line text-slate-900 space-y-5 overflow-y-auto font-sans leading-normal">
-        <!-- Official Government Header -->
-        <div class="flex items-center justify-between border-b-2 border-slate-900 pb-4">
-          <div class="flex items-center gap-3">
-            <!-- AICTE Emblem Vector Shield -->
-            <div class="w-12 h-12 flex-shrink-0 flex items-center justify-center rounded bg-slate-900 text-white font-bold text-xl">
-              <svg class="w-8 h-8 text-amber-400" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 2L3 7v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-9-5zm0 4a3 3 0 110 6 3 3 0 010-6zm5 11.2c-1.3-.8-3.1-1.2-5-1.2s-3.7.4-5 1.2V15c1.4-.9 3.3-1.4 5-1.4s3.6.5 5 1.4v2.2z"/>
-              </svg>
-            </div>
-            <div>
-              <div class="text-sm font-bold tracking-wide uppercase text-slate-950 font-serif">All India Council for Technical Education</div>
-              <div class="text-[11px] text-slate-600 font-serif">A Statutory Body of the Ministry of Education, Government of India</div>
-              <div class="text-xs font-bold text-[#0284c7] mt-0.5">Scrutiny Committee Assessment Report (AY 2026-27)</div>
-            </div>
+        <!-- AICTE Header Emblem & Body Title -->
+        <div class="text-center border-b-2 border-slate-900 pb-4 space-y-1">
+          <div class="flex items-center justify-center gap-2 mb-1">
+            <svg class="w-8 h-8 text-[#0284c7]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+            </svg>
+            <span class="font-bold text-base tracking-wider uppercase text-slate-900">All India Council for Technical Education</span>
           </div>
-          <div class="text-right text-[11px] font-mono">
-            <div class="font-bold text-slate-900">SIH PS ID: 26261</div>
-            <div class="text-slate-500">Ref: AICTE-WRO/2026/SCR-8812</div>
-            <div class="text-slate-500">Date: 2026-10-25 11:24 UTC</div>
-          </div>
+          <div class="text-xs uppercase tracking-wide font-semibold text-slate-700">Statutory Scrutiny Committee Assessment Report (AY 2026-27)</div>
+          <div class="text-[11px] font-mono text-slate-500">Ministry of Education, Government of India | Problem Statement SIH26261</div>
         </div>
 
-        <!-- Section 1: Institution & Application Summary Box -->
-        <div class="p-3.5 bg-slate-50 border border-slate-300 rounded text-xs space-y-2">
-          <div class="font-bold uppercase tracking-wider text-slate-800 text-[11px] border-b border-slate-200 pb-1">
-            Section I: Institution &amp; Application Profile
-          </div>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-1.5 text-[11px]">
-            <div><span class="text-slate-500">Permanent Institute ID:</span> <span class="font-mono font-bold text-slate-900">1-3329012411</span></div>
-            <div><span class="text-slate-500">Regional Office:</span> <span class="font-semibold text-slate-900">Western Regional Office (WRO, Mumbai)</span></div>
-            <div><span class="text-slate-500">Institution Name:</span> <span class="font-bold text-slate-950">Apex Institute of Technology, Pune</span></div>
-            <div><span class="text-slate-500">Application Category:</span> <span class="font-semibold text-slate-900">Extension of Approval (EoA) &amp; CSE Intake Increase</span></div>
-            <div><span class="text-slate-500">Scrutiny Assessment Status:</span> <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-100 text-amber-900 border border-amber-300">Needs Review (Conditional Deficiencies Flagged)</span></div>
-            <div><span class="text-slate-500">Inspecting Officer ID:</span> <span class="font-mono font-bold text-[#0284c7]">AICTE-OFFICER-782 (Dr. Arvind Kumar)</span></div>
-          </div>
+        <!-- Institutional Details Grid -->
+        <div class="grid grid-cols-2 gap-3 text-xs p-3 rounded bg-slate-50 border border-slate-200 font-mono">
+          <div><span class="text-slate-500">Institution:</span> <strong class="text-slate-900">Apex Institute of Technology, Pune</strong></div>
+          <div><span class="text-slate-500">Permanent AICTE ID:</span> <strong class="text-slate-900">1-33249112</strong></div>
+          <div><span class="text-slate-500">Application Number:</span> <strong class="text-[#0284c7]">APP-2026-101</strong></div>
+          <div><span class="text-slate-500">Category:</span> <strong class="text-slate-900">Intake Increase (B.Tech CSE 120 to 180)</strong></div>
         </div>
 
-        <!-- Section 2: 6 Mandatory Documents Summary Table -->
-        <div class="space-y-1.5 text-xs">
-          <div class="font-bold uppercase tracking-wider text-slate-800 text-[11px]">
-            Section II: Mandatory Statutory Documents Verification Status
-          </div>
-          <table class="w-full text-left border-collapse text-[11px] border border-slate-300">
+        <!-- 6 Mandatory Documents Summary Table -->
+        <div class="space-y-2">
+          <div class="text-xs font-bold uppercase tracking-wider text-slate-800 border-b border-slate-300 pb-1">1. Mandatory Regulatory Documents Verification (6/6 Ingested)</div>
+          <table class="w-full text-left border-collapse text-xs">
             <thead>
-              <tr class="bg-slate-100 border-b border-slate-300 text-slate-700 font-mono text-[10px] uppercase">
-                <th class="p-2 border-r border-slate-300">#</th>
-                <th class="p-2 border-r border-slate-300">Mandatory Document</th>
-                <th class="p-2 border-r border-slate-300">Issuing Authority Gateway</th>
-                <th class="p-2 border-r border-slate-300">SHA-256 Fingerprint</th>
-                <th class="p-2">Scrutiny Verdict</th>
+              <tr class="bg-slate-100 text-slate-700 font-mono text-[11px] uppercase border-b border-slate-300">
+                <th class="py-1.5 px-2">Document Name</th>
+                <th class="py-1.5 px-2">Uploaded File</th>
+                <th class="py-1.5 px-2">Status</th>
+                <th class="py-1.5 px-2">SHA-256 Fingerprint</th>
               </tr>
             </thead>
-            <tbody class="divide-y divide-slate-200">
+            <tbody class="divide-y divide-slate-200 font-mono text-[11px]">
               <tr>
-                <td class="p-2 font-mono border-r border-slate-300">1</td>
-                <td class="p-2 font-semibold border-r border-slate-300">Fire Safety NOC</td>
-                <td class="p-2 font-mono text-slate-600 border-r border-slate-300">Maharashtra Fire Portal (MFS-PUN-2023)</td>
-                <td class="p-2 font-mono text-slate-500 text-[10px] border-r border-slate-300">e82a...91b2</td>
-                <td class="p-2 font-bold text-red-600">Expired (2024-12-31)</td>
+                <td class="py-1.5 px-2 font-sans font-semibold">Fire Safety Certificate</td>
+                <td class="py-1.5 px-2">SYNTH_FIRE_NOC_MH_2026.pdf</td>
+                <td class="py-1.5 px-2 text-emerald-700 font-bold">Valid (2029-01-09)</td>
+                <td class="py-1.5 px-2 text-slate-500">e3b0c442...b855</td>
               </tr>
               <tr>
-                <td class="p-2 font-mono border-r border-slate-300">2</td>
-                <td class="p-2 font-semibold border-r border-slate-300">Land Ownership Deed</td>
-                <td class="p-2 font-mono text-slate-600 border-r border-slate-300">DigiLocker / State Revenue Gateway</td>
-                <td class="p-2 font-mono text-slate-500 text-[10px] border-r border-slate-300">3a9e...8b42</td>
-                <td class="p-2 font-bold text-red-600">Acreage Mismatch (1.80 vs 2.50)</td>
+                <td class="py-1.5 px-2 font-sans font-semibold">Land Ownership Deed</td>
+                <td class="py-1.5 px-2">SYNTH_LAND_DEED_PUNE_ALTERED.pdf</td>
+                <td class="py-1.5 px-2 text-red-700 font-bold">Altered (Survey 42/B)</td>
+                <td class="py-1.5 px-2 text-slate-500">9b8769a4...7b8b</td>
               </tr>
               <tr>
-                <td class="p-2 font-mono border-r border-slate-300">3</td>
-                <td class="p-2 font-semibold border-r border-slate-300">University Affiliation NOC</td>
-                <td class="p-2 font-mono text-slate-600 border-r border-slate-300">SPPU Affiliation API Gateway</td>
-                <td class="p-2 font-mono text-slate-500 text-[10px] border-r border-slate-300">9b3c...4a21</td>
-                <td class="p-2 font-bold text-emerald-600">Verified &amp; Valid</td>
+                <td class="py-1.5 px-2 font-sans font-semibold">University Affiliation Order</td>
+                <td class="py-1.5 px-2">SYNTH_SPPU_AFFILIATION_2026.pdf</td>
+                <td class="py-1.5 px-2 text-amber-700 font-bold">Mismatch (120 vs 180)</td>
+                <td class="py-1.5 px-2 text-slate-500">4a2d81f0...d287</td>
               </tr>
               <tr>
-                <td class="p-2 font-mono border-r border-slate-300">4</td>
-                <td class="p-2 font-semibold border-r border-slate-300">Faculty Roster &amp; Form 16</td>
-                <td class="p-2 font-mono text-slate-600 border-r border-slate-300">TRACES / DSC Trust Service</td>
-                <td class="p-2 font-mono text-slate-500 text-[10px] border-r border-slate-300">c41a...7102</td>
-                <td class="p-2 font-bold text-emerald-600">Verified (1:15 Ratio Pass)</td>
+                <td class="py-1.5 px-2 font-sans font-semibold">Faculty Roster &amp; PANs</td>
+                <td class="py-1.5 px-2">SYNTH_FACULTY_ROSTER_DUPLICATE_PAN.pdf</td>
+                <td class="py-1.5 px-2 text-red-700 font-bold">Duplicate PAN Flagged</td>
+                <td class="py-1.5 px-2 text-slate-500">7c9d4a19...0912</td>
               </tr>
               <tr>
-                <td class="p-2 font-mono border-r border-slate-300">5</td>
-                <td class="p-2 font-semibold border-r border-slate-300">Building Sanction Plan</td>
-                <td class="p-2 font-mono text-slate-600 border-r border-slate-300">PMC Town Planning Directorate</td>
-                <td class="p-2 font-mono text-slate-500 text-[10px] border-r border-slate-300">f910...2281</td>
-                <td class="p-2 font-bold text-emerald-600">Compliant (1,240 Sq.m)</td>
+                <td class="py-1.5 px-2 font-sans font-semibold">Approved Building Plan</td>
+                <td class="py-1.5 px-2">SYNTH_BUILDING_PLAN_MUNICIPAL.pdf</td>
+                <td class="py-1.5 px-2 text-amber-700 font-bold">Deficient (-320 sq.m)</td>
+                <td class="py-1.5 px-2 text-slate-500">81fa023e...8102</td>
               </tr>
               <tr>
-                <td class="p-2 font-mono border-r border-slate-300">6</td>
-                <td class="p-2 font-semibold border-r border-slate-300">Scrutiny Fee Receipt</td>
-                <td class="p-2 font-mono text-slate-600 border-r border-slate-300">Bharat Kosh Payment Gateway</td>
-                <td class="p-2 font-mono text-slate-500 text-[10px] border-r border-slate-300">d120...9911</td>
-                <td class="p-2 font-bold text-emerald-600">Reconciled (Rs. 2,00,000)</td>
+                <td class="py-1.5 px-2 font-sans font-semibold">TER Fee Receipt</td>
+                <td class="py-1.5 px-2">SYNTH_AICTE_TER_RECEIPT_VERIFIED.pdf</td>
+                <td class="py-1.5 px-2 text-emerald-700 font-bold">Valid (UTR Settled)</td>
+                <td class="py-1.5 px-2 text-slate-500">12a4b889...1239</td>
               </tr>
             </tbody>
           </table>
         </div>
 
-        <!-- Section 3: Flagged Deficiencies -->
-        <div class="p-3.5 bg-red-50/50 border border-red-200 rounded text-xs space-y-2">
-          <div class="font-bold uppercase tracking-wider text-red-900 text-[11px] border-b border-red-200 pb-1">
-            Section III: Summary of Flagged Deficiencies &amp; Forensic Findings
-          </div>
-          <ul class="space-y-1.5 text-[11px] text-red-900 list-disc list-inside">
-            <li><strong>Land Acreage Shortfall &amp; Layer Alteration:</strong> Revenue land deed states 1.80 Acres contiguous land whereas 2.50 Acres was claimed. Forensic font inspection revealed a Helvetica-Bold raster overlay on Survey No 42/B.</li>
-            <li><strong>Computer Center Workstation Shortfall:</strong> Computer Vision inspection of CCF Lab-3 detected 142 operational terminals against the prescribed APH norm of 150 terminals (-8 terminals deficit).</li>
-            <li><strong>Fire NOC Validity Gap:</strong> State Fire Portal indicates Fire Certificate expired on 2024-12-31 without proof of statutory renewal.</li>
-            <li><strong>Safety Asset Warning:</strong> Missing emergency luminaire above rear egress path in computing facility.</li>
-          </ul>
-        </div>
-
-        <!-- Section 4: Blockchain Stamp & Verification QR Code -->
-        <div class="flex flex-col sm:flex-row items-center justify-between gap-4 p-3.5 bg-slate-50 border border-slate-300 rounded text-xs">
-          <!-- Blockchain Notarization Stamp -->
-          <div class="space-y-1 text-[11px] font-mono">
-            <div class="font-bold text-slate-800 uppercase tracking-wider">Blockchain PoA Notarization Stamp:</div>
-            <div>Notarized Block: <span class="font-bold text-[#0284c7]">Block #4 (Consortium Ledger)</span></div>
-            <div>Transaction Hash: <span class="text-slate-600 text-[10px] break-all">0x7a8f192b8d0c41258671e982103847a82b910123</span></div>
-            <div>Signed By: <span class="font-bold text-slate-900">Dr. Arvind Kumar (AICTE Scrutiny Officer)</span></div>
-            <div>Proof-of-Authority Network: <span class="text-emerald-700 font-semibold">BharatVidya Consortium (7 Nodes Active)</span></div>
-          </div>
-
-          <!-- Verifiable SVG QR Code -->
-          <div class="flex flex-col items-center shrink-0 text-center space-y-1">
-            <div class="p-1.5 bg-white border border-slate-300 rounded shadow-xs">
-              <svg class="w-20 h-20 text-slate-900" viewBox="0 0 100 100" fill="currentColor">
-                <!-- Outer Corners -->
-                <rect x="5" y="5" width="28" height="28" fill="black"/>
-                <rect x="9" y="9" width="20" height="20" fill="white"/>
-                <rect x="13" y="13" width="12" height="12" fill="black"/>
-                
-                <rect x="67" y="5" width="28" height="28" fill="black"/>
-                <rect x="71" y="9" width="20" height="20" fill="white"/>
-                <rect x="75" y="13" width="12" height="12" fill="black"/>
-                
-                <rect x="5" y="67" width="28" height="28" fill="black"/>
-                <rect x="9" y="71" width="20" height="20" fill="white"/>
-                <rect x="13" y="75" width="12" height="12" fill="black"/>
-
-                <!-- QR Data Matrix Pixels -->
-                <rect x="37" y="10" width="6" height="6" fill="black"/>
-                <rect x="47" y="10" width="6" height="6" fill="black"/>
-                <rect x="57" y="10" width="6" height="6" fill="black"/>
-                <rect x="37" y="20" width="6" height="6" fill="black"/>
-                <rect x="47" y="24" width="6" height="6" fill="black"/>
-                <rect x="10" y="37" width="6" height="6" fill="black"/>
-                <rect x="20" y="37" width="6" height="6" fill="black"/>
-                <rect x="37" y="37" width="8" height="8" fill="black"/>
-                <rect x="53" y="37" width="6" height="6" fill="black"/>
-                <rect x="67" y="37" width="6" height="6" fill="black"/>
-                <rect x="83" y="37" width="6" height="6" fill="black"/>
-                <rect x="43" y="47" width="6" height="6" fill="black"/>
-                <rect x="63" y="47" width="6" height="6" fill="black"/>
-                <rect x="73" y="47" width="6" height="6" fill="black"/>
-                <rect x="37" y="57" width="6" height="6" fill="black"/>
-                <rect x="53" y="57" width="8" height="8" fill="black"/>
-                <rect x="73" y="57" width="6" height="6" fill="black"/>
-                <rect x="37" y="73" width="6" height="6" fill="black"/>
-                <rect x="47" y="73" width="6" height="6" fill="black"/>
-                <rect x="63" y="73" width="6" height="6" fill="black"/>
-                <rect x="73" y="73" width="6" height="6" fill="black"/>
-                <rect x="83" y="73" width="6" height="6" fill="black"/>
-                <rect x="47" y="83" width="8" height="8" fill="black"/>
-                <rect x="63" y="83" width="6" height="6" fill="black"/>
-              </svg>
+        <!-- Flagged Deficiencies -->
+        <div class="space-y-2">
+          <div class="text-xs font-bold uppercase tracking-wider text-slate-800 border-b border-slate-300 pb-1">2. Scrutiny Findings &amp; Regulatory Deficiencies Flagged</div>
+          <div class="space-y-1.5 text-xs">
+            <div class="p-2.5 rounded bg-red-50 border border-red-200 text-red-900 space-y-0.5">
+              <div class="font-bold flex items-center gap-1.5">
+                <span class="w-2 h-2 rounded-full bg-red-600"></span>
+                <span>Critical Deficiency: Land Area &amp; Survey Discrepancy</span>
+              </div>
+              <div class="text-[11px] text-red-800">
+                Application claims 5.20 Acres on Survey 42/B. Official DigiLocker Maharashtra Land Registry extract confirms only 2.10 Acres on Survey 42/A. Net deficiency: -3.10 Acres against APH mandatory norm. Font raster overlay detected (ELA: 88.4%).
+              </div>
             </div>
-            <span class="text-[9px] font-mono text-slate-500">verify.ciphercore.in/audit?id=APP-2026-101</span>
+
+            <div class="p-2.5 rounded bg-amber-50 border border-amber-200 text-amber-900 space-y-0.5">
+              <div class="font-bold flex items-center gap-1.5">
+                <span class="w-2 h-2 rounded-full bg-amber-600"></span>
+                <span>Infrastructure Shortfall: Computing Workstation Deficit</span>
+              </div>
+              <div class="text-[11px] text-amber-800">
+                AI Computer Vision (YOLOv8x) audit of CCF Lab-3 detected 142 functional workstations against APH prescribed norm of 150 units for 180 intake. Shortfall: 8 units. Emergency exit luminaire missing.
+              </div>
+            </div>
           </div>
         </div>
 
-        <!-- Mandatory Statutory Footer -->
-        <div class="border-t border-slate-300 pt-3 text-[10px] text-slate-500 flex flex-col sm:flex-row items-center justify-between gap-1">
+        <!-- Blockchain Notarization Stamp -->
+        <div class="p-3 rounded border border-slate-300 bg-slate-50 text-xs font-mono space-y-1">
+          <div class="flex items-center justify-between border-b border-slate-200 pb-1 text-[11px]">
+            <span class="font-bold text-slate-900">IMMUTABLE BLOCKCHAIN NOTARIZATION STAMP</span>
+            <span class="text-emerald-700 font-bold">PoA Consensus: 7/7 Nodes Validated</span>
+          </div>
+          <div class="grid grid-cols-2 gap-2 text-[11px] pt-1">
+            <div><span class="text-slate-500">Block Index:</span> <strong>Block #4</strong></div>
+            <div><span class="text-slate-500">Transaction Hash:</span> <strong>0x7a8f192b...910123</strong></div>
+            <div><span class="text-slate-500">Timestamp:</span> <strong>2026-10-25 02:30:12 UTC</strong></div>
+            <div><span class="text-slate-500">Signatory Officer:</span> <strong>Dr. Arvind Kumar (AICTE-OFFICER-782)</strong></div>
+          </div>
+        </div>
+
+        <!-- Statutory Footer -->
+        <div class="border-t border-slate-300 pt-3 text-[10px] text-slate-500 flex flex-col sm:flex-row items-center justify-between">
           <div>This is an official AICTE Scrutiny Committee Assessment record generated under SIH 2026.</div>
           <div>Page 1 of 1 | Authorized Electronic Signature</div>
         </div>
@@ -5314,5 +5261,8 @@
     </div>
   </div>
 
-</body>
+  <!-- Fallback ID alias for any legacy scripts -->
+  <div id="aicteScrutinyReportModal" style="display:none;" data-alias="reportModal"></div>
+
+  </body>
 </html>
