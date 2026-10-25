@@ -3,7 +3,11 @@ fetch('https://nonutsayan.github.io/CipherCore-verify/?t=' + Date.now()).then(r 
   return r.text();
 }).then(html => {
   console.log('GitHub Pages length:', html.length);
-  console.log('Has Launch Forensic Diff Viewer?', html.includes('Launch Forensic Diff Viewer'));
-  console.log('Has Launch CV Evidence Audit?', html.includes('Launch CV Evidence Audit'));
-  console.log('Has getCvModal in JS?', html.includes('getCvModal'));
+  console.log('Has cvEvidenceModal?', html.includes('id="cvEvidenceModal"'));
+  console.log('Has forensicDiffModal?', html.includes('id="forensicDiffModal"'));
+  console.log('Has reportModal?', html.includes('id="reportModal"'));
+  console.log('Has openCvEvidenceModal?', html.includes('openCvEvidenceModal'));
+  console.log('Has openForensicDiffModal?', html.includes('openForensicDiffModal'));
+  console.log('Has openReportModal?', html.includes('openReportModal'));
+  console.log('Has SYNTH_LAND_DEED_PUNE_ALTERED?', html.includes('SYNTH_LAND_DEED_PUNE_ALTERED.pdf'));
 });
