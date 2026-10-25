@@ -52,21 +52,130 @@
     }
 
     /* Modal Backdrop & Bulletproof Visibility */
-    .modal-backdrop {
-      position: fixed;
-      inset: 0;
-      z-index: 9999;
-      background-color: rgba(0, 0, 0, 0.65);
+    .modal-backdrop,
+    #cvEvidenceModal,
+    #cvInspectionModal,
+    #forensicDiffModal,
+    #aicteScrutinyReportModal {
+      position: fixed !important;
+      top: 0 !important;
+      left: 0 !important;
+      right: 0 !important;
+      bottom: 0 !important;
+      width: 100vw !important;
+      height: 100vh !important;
+      z-index: 999999 !important;
+      background-color: rgba(0, 0, 0, 0.75) !important;
       display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 1rem;
+      align-items: center !important;
+      justify-content: center !important;
+      padding: 1rem !important;
     }
-    .modal-backdrop.active {
+    .modal-backdrop.active,
+    #cvEvidenceModal.active,
+    #cvInspectionModal.active,
+    #forensicDiffModal.active,
+    #aicteScrutinyReportModal.active {
       display: flex !important;
+      visibility: visible !important;
+      opacity: 1 !important;
+    }
+    .modal-backdrop:not(.active),
+    #cvEvidenceModal:not(.active),
+    #cvInspectionModal:not(.active),
+    #forensicDiffModal:not(.active),
+    #aicteScrutinyReportModal:not(.active) {
+      display: none !important;
     }
     html.dark .modal-backdrop {
-      background-color: rgba(0, 0, 0, 0.85);
+      background-color: rgba(0, 0, 0, 0.88) !important;
+    }me="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CipherCore Verify : AI-Powered Regulatory Scrutiny &amp; Document Verification Portal</title>
+  <!-- Inline SVG Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230284c7' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z'/%3E%3Cpath d='M9 12l2 2 4-4'/%3E%3C/svg%3E" />
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Google Fonts: Inter & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    :root {
+      --bg-main: #f8fafc;
+      --bg-card: #ffffff;
+      --bg-subtle: #f1f5f9;
+      --border-color: #e2e8f0;
+      --text-primary: #0f172a;
+      --text-secondary: #475569;
+      --text-muted: #64748b;
+      --accent-blue: #0284c7;
+      --accent-blue-hover: #0369a1;
+      --status-green: #15803d;
+      --status-green-bg: #dcfce7;
+      --status-green-border: #86efac;
+      --status-amber: #b45309;
+      --status-amber-bg: #fef3c7;
+      --status-amber-border: #fcd34d;
+      --status-red: #b91c1c;
+      --status-red-bg: #fee2e2;
+      --status-red-border: #fca5a5;
+    }
+
+    /* Modal Backdrop & Bulletproof Visibility */
+    .modal-backdrop,
+    #cvEvidenceModal,
+    #cvInspectionModal,
+    #forensicDiffModal,
+    #aicteScrutinyReportModal {
+      position: fixed !important;
+      top: 0 !important;
+      left: 0 !important;
+      right: 0 !important;
+      bottom: 0 !important;
+      width: 100vw !important;
+      height: 100vh !important;
+      z-index: 999999 !important;
+      background-color: rgba(0, 0, 0, 0.75) !important;
+      display: none;
+      align-items: center !important;
+      justify-content: center !important;
+      padding: 1rem !important;
+    }
+    .modal-backdrop.active,
+    #cvEvidenceModal.active,
+    #cvInspectionModal.active,
+    #forensicDiffModal.active,
+    #aicteScrutinyReportModal.active {
+      display: flex !important;
+      visibility: visible !important;
+      opacity: 1 !important;
+    }
+    .modal-backdrop:not(.active),
+    #cvEvidenceModal:not(.active),
+    #cvInspectionModal:not(.active),
+    #forensicDiffModal:not(.active),
+    #aicteScrutinyReportModal:not(.active) {
+      display: none !important;
+    }
+    html.dark .modal-backdrop {
+      background-color: rgba(0, 0, 0, 0.88) !important;
     }
 
     html.dark {
@@ -967,7 +1076,20 @@
         </div>
 
         <div class="flex flex-wrap items-center gap-2">
-                    <button onclick="openAicteScrutinyReportModal()" class="btn-primary flex items-center gap-1.5 text-xs bg-[#0284c7] text-white">
+                    <button onclick="window.openForensicDiffModal('APP-2026-101', 'Land Ownership Deed')" class="btn-secondary flex items-center gap-1.5 text-xs" style="border-radius:4px;">
+            <svg class="w-3.5 h-3.5 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
+            </svg>
+            <span>Inspect Forensic Diff</span>
+          </button>
+          <button onclick="window.openCvEvidenceModal('APP-2026-101', 'Computer Center / Lab')" class="btn-secondary flex items-center gap-1.5 text-xs" style="border-radius:4px;">
+            <svg class="w-3.5 h-3.5 text-[#0284c7]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+              <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+            </svg>
+            <span>View CV Evidence</span>
+          </button>
+          <button onclick="openAicteScrutinyReportModal()" class="btn-primary flex items-center gap-1.5 text-xs bg-[#0284c7] text-white" >
             <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
               <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
             </svg>
@@ -2799,10 +2921,24 @@
                       <td class="py-3 px-3 font-mono text-sub">${doc.expiry}</td>
                       <td class="py-3 px-3">${renderStatusTag(doc.status)}</td>
                       <td class="py-3 px-3 text-right">
-                        ${doc.status !== 'Valid'
-                          ? `<button onclick="simulateFixDocument('${app.id}', ${idx})" class="btn-primary py-1 px-2.5 text-xs">Upload / Replace</button>`
-                          : `<span class="text-[11px] font-mono text-sub">Verified</span>`
-                        }
+                        <div class="flex items-center justify-end gap-1.5">
+                          ${doc.name.toLowerCase().includes('land') ? `
+                            <button onclick="window.openForensicDiffModal('${app.id}', '${doc.name}')" class="btn-secondary py-1 px-2 text-xs flex items-center gap-1" style="border-radius:4px;" title="Inspect Forensic Diff">
+                              <svg class="w-3 h-3 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" /></svg>
+                              <span>Diff</span>
+                            </button>
+                          ` : ''}
+                          ${doc.name.toLowerCase().includes('building') || doc.name.toLowerCase().includes('plan') ? `
+                            <button onclick="window.openCvEvidenceModal('${app.id}', '${doc.name}')" class="btn-secondary py-1 px-2 text-xs flex items-center gap-1" style="border-radius:4px;" title="View CV Evidence">
+                              <svg class="w-3 h-3 text-[#0284c7]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
+                              <span>CV</span>
+                            </button>
+                          ` : ''}
+                          ${doc.status !== 'Valid'
+                            ? `<button onclick="simulateFixDocument('${app.id}', ${idx})" class="btn-primary py-1 px-2.5 text-xs">Upload / Replace</button>`
+                            : `<span class="text-[11px] font-mono text-sub">Verified</span>`
+                          }
+                        </div>
                       </td>
                     </tr>
                   `).join('')}
@@ -3169,6 +3305,48 @@
                 <div class="shrink-0">${renderStatusTag(t.status)}</div>
               </div>
             `).join('')}
+            ${doc.overallStatus === 'Altered' || doc.fileName.includes('LAND_DEED') ? `
+              <div class="pt-2 border-t border-line">
+                <button onclick="window.openForensicDiffModal('SAMPLE-2', 'Land Deed')" class="btn-primary w-full py-2 text-xs flex items-center justify-center gap-1.5" style="border-radius:4px;">
+                  <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
+                  </svg>
+                  <span>Open Interactive Side-by-Side Forensic Diff</span>
+                </button>
+              </div>
+            ` : ''}
+            ${doc.fileName.includes('BUILDING_PLAN') ? `
+              <div class="pt-2 border-t border-line">
+                <button onclick="window.openCvEvidenceModal('SAMPLE-5', 'Building Plan')" class="btn-primary w-full py-2 text-xs flex items-center justify-center gap-1.5" style="border-radius:4px;">
+                  <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                  </svg>
+                  <span>Open Interactive CV Infrastructure Inspection</span>
+                </button>
+              </div>
+            ` : ''}
+            ${doc.overallStatus === 'Altered' || doc.fileName.includes('LAND_DEED') ? `
+              <div class="pt-2 border-t border-line">
+                <button onclick="window.openForensicDiffModal('SAMPLE-2', 'Land Deed')" class="btn-primary w-full py-2 text-xs flex items-center justify-center gap-1.5" style="border-radius:4px;">
+                  <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
+                  </svg>
+                  <span>Open Interactive Side-by-Side Forensic Diff</span>
+                </button>
+              </div>
+            ` : ''}
+            ${doc.fileName.includes('BUILDING_PLAN') ? `
+              <div class="pt-2 border-t border-line">
+                <button onclick="window.openCvEvidenceModal('SAMPLE-5', 'Building Plan')" class="btn-primary w-full py-2 text-xs flex items-center justify-center gap-1.5" style="border-radius:4px;">
+                  <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                  </svg>
+                  <span>Open Interactive CV Infrastructure Inspection</span>
+                </button>
+              </div>
+            ` : ''}
           </div>
         </div>
 
@@ -4125,62 +4303,109 @@
     let cvGeofenceVisible = true;
 
     // Bulletproof Window Modal Controllers
+    function getCvModal() {
+      return document.getElementById('cvEvidenceModal') || document.getElementById('cvInspectionModal');
+    }
+    function getDiffModal() {
+      return document.getElementById('forensicDiffModal');
+    }
+    function getReportModal() {
+      return document.getElementById('aicteScrutinyReportModal') || document.getElementById('reportModal');
+    }
+
     window.openCvEvidenceModal = function(appId, facilityType) {
-      const modal = document.getElementById('cvEvidenceModal') || document.getElementById('cvInspectionModal');
-      if (!modal) return;
-      modal.style.display = 'flex';
+      console.log('Opening CV Evidence Modal for', appId, facilityType);
+      const modal = getCvModal();
+      if (!modal) {
+        console.error('CV modal element not found!');
+        return;
+      }
       modal.classList.add('active');
       modal.classList.remove('hidden');
+      modal.style.display = 'flex';
+      if (modal.style.setProperty) {
+        modal.style.setProperty('display', 'flex', 'important');
+        modal.style.setProperty('visibility', 'visible', 'important');
+        modal.style.setProperty('opacity', '1', 'important');
+      }
       document.body.style.overflow = 'hidden';
-      setTimeout(drawCvCanvas, 60);
+      setTimeout(drawCvCanvas, 30);
+      setTimeout(drawCvCanvas, 150);
     };
 
     window.closeCvEvidenceModal = function() {
-      const modal = document.getElementById('cvEvidenceModal') || document.getElementById('cvInspectionModal');
+      const modal = getCvModal();
       if (!modal) return;
-      modal.style.display = 'none';
       modal.classList.remove('active');
       modal.classList.add('hidden');
+      modal.style.display = 'none';
+      if (modal.style.setProperty) {
+        modal.style.setProperty('display', 'none', 'important');
+      }
       document.body.style.overflow = '';
     };
 
     window.openForensicDiffModal = function(appId, docType) {
-      const modal = document.getElementById('forensicDiffModal');
-      if (!modal) return;
-      modal.style.display = 'flex';
+      console.log('Opening Forensic Diff Modal for', appId, docType);
+      const modal = getDiffModal();
+      if (!modal) {
+        console.error('Forensic Diff modal element not found!');
+        return;
+      }
       modal.classList.add('active');
       modal.classList.remove('hidden');
+      modal.style.display = 'flex';
+      if (modal.style.setProperty) {
+        modal.style.setProperty('display', 'flex', 'important');
+        modal.style.setProperty('visibility', 'visible', 'important');
+        modal.style.setProperty('opacity', '1', 'important');
+      }
       document.body.style.overflow = 'hidden';
     };
 
     window.closeForensicDiffModal = function() {
-      const modal = document.getElementById('forensicDiffModal');
+      const modal = getDiffModal();
       if (!modal) return;
-      modal.style.display = 'none';
       modal.classList.remove('active');
       modal.classList.add('hidden');
+      modal.style.display = 'none';
+      if (modal.style.setProperty) {
+        modal.style.setProperty('display', 'none', 'important');
+      }
       document.body.style.overflow = '';
     };
 
     window.openReportModal = function(appId) {
-      const modal = document.getElementById('aicteScrutinyReportModal') || document.getElementById('reportModal');
-      if (!modal) return;
-      modal.style.display = 'flex';
+      console.log('Opening Report Modal for', appId);
+      const modal = getReportModal();
+      if (!modal) {
+        console.error('Report modal element not found!');
+        return;
+      }
       modal.classList.add('active');
       modal.classList.remove('hidden');
+      modal.style.display = 'flex';
+      if (modal.style.setProperty) {
+        modal.style.setProperty('display', 'flex', 'important');
+        modal.style.setProperty('visibility', 'visible', 'important');
+        modal.style.setProperty('opacity', '1', 'important');
+      }
       document.body.style.overflow = 'hidden';
     };
 
     window.closeReportModal = function() {
-      const modal = document.getElementById('aicteScrutinyReportModal') || document.getElementById('reportModal');
+      const modal = getReportModal();
       if (!modal) return;
-      modal.style.display = 'none';
       modal.classList.remove('active');
       modal.classList.add('hidden');
+      modal.style.display = 'none';
+      if (modal.style.setProperty) {
+        modal.style.setProperty('display', 'none', 'important');
+      }
       document.body.style.overflow = '';
     };
 
-    // Backward-compatibility aliases
+    // Global backwards-compatibility aliases
     window.openCvInspectionModal = window.openCvEvidenceModal;
     window.closeCvInspectionModal = window.closeCvEvidenceModal;
     window.openAicteScrutinyReportModal = window.openReportModal;
