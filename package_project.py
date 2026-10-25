@@ -18,7 +18,7 @@ with zipfile.ZipFile(zip_filepath, 'w', zipfile.ZIP_DEFLATED) as zipf:
         dirs[:] = [d for d in dirs if d not in exclude_dirs and not d.startswith('.git')]
         
         for file in files:
-            if file in exclude_files or file.endswith('.tmp') or file.endswith('.log'):
+            if file in exclude_files or file.endswith('.tmp') or file.endswith('.log') or file.endswith('.exe'):
                 continue
             full_path = os.path.join(root, file)
             rel_path = os.path.relpath(full_path, src_dir)
