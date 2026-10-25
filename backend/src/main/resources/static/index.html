@@ -51,6 +51,24 @@
       --status-red-border: #fca5a5;
     }
 
+    /* Modal Backdrop & Bulletproof Visibility */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background-color: rgba(0, 0, 0, 0.65);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+    .modal-backdrop.active {
+      display: flex !important;
+    }
+    html.dark .modal-backdrop {
+      background-color: rgba(0, 0, 0, 0.85);
+    }
+
     html.dark {
       --bg-main: #0b0f19;
       --bg-card: #111827;
@@ -1025,21 +1043,51 @@
             <input type="file" id="standaloneFileInput" accept=".pdf,.png,.jpg,.jpeg" class="hidden" onchange="handleStandaloneFileUpload(event)" />
           </label>
 
-          <!-- 3 Sample Test Document Buttons -->
+          <!-- 6 Sample Test Document Buttons (Expanded APH Test Suite) -->
           <div>
-            <div class="text-[11px] font-mono uppercase text-sub mb-2">Or select a sample test document:</div>
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
-              <button onclick="selectSampleDoc('SAMPLE-1')" id="sampleDocBtn-SAMPLE-1" class="btn-secondary active text-left flex items-center justify-between py-2.5 px-3">
-                <span class="text-xs font-semibold">Sample 1: Valid Fire NOC</span>
-                <span class="tag-green">Valid</span>
+            <div class="text-[11px] font-mono uppercase text-sub mb-2">Or select a sample test document (APH Mandatory Submissions):</div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5">
+              <button onclick="selectSampleDoc('SAMPLE-1')" id="sampleDocBtn-SAMPLE-1" class="btn-secondary active text-left flex items-center justify-between py-2 px-3 text-xs" style="border-radius:4px;">
+                <div>
+                  <div class="font-semibold text-main">Sample 1: Fire Safety NOC</div>
+                  <div class="text-[10px] text-sub font-mono">SYNTH_FIRE_NOC_MH_2026.pdf</div>
+                </div>
+                <span class="tag-green shrink-0">Verified</span>
               </button>
-              <button onclick="selectSampleDoc('SAMPLE-2')" id="sampleDocBtn-SAMPLE-2" class="btn-secondary text-left flex items-center justify-between py-2.5 px-3">
-                <span class="text-xs font-semibold">Sample 2: Altered Land Deed</span>
-                <span class="tag-red">Altered</span>
+              <button onclick="selectSampleDoc('SAMPLE-2')" id="sampleDocBtn-SAMPLE-2" class="btn-secondary text-left flex items-center justify-between py-2 px-3 text-xs" style="border-radius:4px;">
+                <div>
+                  <div class="font-semibold text-main">Sample 2: Land Deed</div>
+                  <div class="text-[10px] text-sub font-mono">SYNTH_LAND_DEED_PUNE_ALTERED.pdf</div>
+                </div>
+                <span class="tag-red shrink-0">Altered</span>
               </button>
-              <button onclick="selectSampleDoc('SAMPLE-3')" id="sampleDocBtn-SAMPLE-3" class="btn-secondary text-left flex items-center justify-between py-2.5 px-3">
-                <span class="text-xs font-semibold">Sample 3: Expired Affiliation Letter</span>
-                <span class="tag-amber">Expired</span>
+              <button onclick="selectSampleDoc('SAMPLE-3')" id="sampleDocBtn-SAMPLE-3" class="btn-secondary text-left flex items-center justify-between py-2 px-3 text-xs" style="border-radius:4px;">
+                <div>
+                  <div class="font-semibold text-main">Sample 3: Affiliation Letter</div>
+                  <div class="text-[10px] text-sub font-mono">SYNTH_SPPU_AFFILIATION_2026.pdf</div>
+                </div>
+                <span class="tag-amber shrink-0">Seat Mismatch</span>
+              </button>
+              <button onclick="selectSampleDoc('SAMPLE-4')" id="sampleDocBtn-SAMPLE-4" class="btn-secondary text-left flex items-center justify-between py-2 px-3 text-xs" style="border-radius:4px;">
+                <div>
+                  <div class="font-semibold text-main">Sample 4: Faculty Roster</div>
+                  <div class="text-[10px] text-sub font-mono">SYNTH_FACULTY_ROSTER_DUPLICATE_PAN.pdf</div>
+                </div>
+                <span class="tag-red shrink-0">Duplicate PAN</span>
+              </button>
+              <button onclick="selectSampleDoc('SAMPLE-5')" id="sampleDocBtn-SAMPLE-5" class="btn-secondary text-left flex items-center justify-between py-2 px-3 text-xs" style="border-radius:4px;">
+                <div>
+                  <div class="font-semibold text-main">Sample 5: Building Plan</div>
+                  <div class="text-[10px] text-sub font-mono">SYNTH_BUILDING_PLAN_MUNICIPAL.pdf</div>
+                </div>
+                <span class="tag-amber shrink-0">Deficient Area</span>
+              </button>
+              <button onclick="selectSampleDoc('SAMPLE-6')" id="sampleDocBtn-SAMPLE-6" class="btn-secondary text-left flex items-center justify-between py-2 px-3 text-xs" style="border-radius:4px;">
+                <div>
+                  <div class="font-semibold text-main">Sample 6: Treasury Fee Receipt</div>
+                  <div class="text-[10px] text-sub font-mono">SYNTH_AICTE_TER_RECEIPT_VERIFIED.pdf</div>
+                </div>
+                <span class="tag-green shrink-0">Verified</span>
               </button>
             </div>
           </div>
@@ -2028,82 +2076,152 @@
     // ---------------------------------------------------------------------
     const sampleDocumentsData = {
       'SAMPLE-1': {
-        fileName: 'sample_fire_valid.pdf',
+        fileName: 'SYNTH_FIRE_NOC_MH_2026.pdf',
         fileSize: '412.4 KB',
-        sha256: '3c7a91e04b2d8f6123a09c8e7d6f5a4b9102837465abcd12',
+        sha256: 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855',
         overallStatus: 'Valid',
         ocrFields: [
-          { label: 'Document Category', value: 'State Fire Safety NOC' },
-          { label: 'Reference Number', value: 'MFS-MUM-2025-8841' },
-          { label: 'Institution Name', value: 'Veermata Technical Campus, Mumbai' },
-          { label: 'Issue Date', value: '2025-06-15' },
-          { label: 'Expiry Date', value: '2028-06-14' }
+          { label: 'Document Category', value: 'State Fire Safety NOC (AICTE APH Mandate)' },
+          { label: 'Reference Number', value: 'NOC/MFS/2026/8841' },
+          { label: 'Institution Name', value: 'Apex Institute of Technology, Pune' },
+          { label: 'Issue Date', value: '2026-01-10' },
+          { label: 'Expiry Date', value: '2029-01-09 (Active Valid Certificate)' }
         ],
         tamperingChecks: [
-          { check: 'PDF Producer & Metadata Integrity', status: 'Pass', detail: 'Generated directly by e-District Fire Portal' },
-          { check: 'QR Code vs Visible Text Match', status: 'Pass', detail: 'QR code expiry 2028-06-14 matches page text' },
-          { check: 'Duplicate File Hash Check', status: 'Pass', detail: 'Unique SHA-256 hash across all applications' }
+          { check: 'PDF Producer & Metadata Integrity', status: 'Pass', detail: 'Generated directly by Maharashtra e-District Fire Portal' },
+          { check: 'Font Stream & Raster Inspection', status: 'Pass', detail: 'No post-issuance digital raster modification detected' },
+          { check: 'Duplicate File Hash Check', status: 'Pass', detail: 'Unique SHA-256 hash across all AICTE dossiers' }
         ],
         authorityStatus: {
-          source: 'Maharashtra Fire Services Portal API',
-          refId: 'MFS-MUM-2025-8841',
+          source: 'Maharashtra State Fire Services Gateway API',
+          refId: 'NOC/MFS/2026/8841',
           outcome: 'Verified',
-          message: 'Official registry record is ACTIVE and valid until 2028-06-14.'
+          message: 'Official state registry confirms 200 OK. Active Valid Certificate until 2029-01-09.'
         }
       },
       'SAMPLE-2': {
-        fileName: 'd8ddd2b1_altered_land_deed.pdf',
+        fileName: 'SYNTH_LAND_DEED_PUNE_ALTERED.pdf',
         fileSize: '684.0 KB',
-        sha256: 'd8ddd2b18601444e8841ca33e78822349900112233445566',
-        overallStatus: 'Mismatch',
+        sha256: '9b8769a4a742959a2d0298c36fb7064bd8f161834ec35b4b5e083cc937297b8b',
+        overallStatus: 'Altered',
         ocrFields: [
-          { label: 'Document Category', value: 'Land Ownership & Acreage Deed' },
-          { label: 'Reference Number', value: 'DL-REV-MH-4419' },
-          { label: 'Institution Name', value: 'Apex Institute of Technology, Pune' },
-          { label: 'Claimed Area on Form', value: '2.50 Acres' },
-          { label: 'Extracted Area on Deed', value: '1.80 Acres' }
+          { label: 'Document Category', value: 'Registered Land Ownership Sale Deed' },
+          { label: 'Reference Number', value: 'DEED-REV-MH-4419' },
+          { label: 'Institution Name', value: 'Apex Educational Trust, Pune' },
+          { label: 'Claimed Survey & Area', value: 'Survey No: 42/B (5.20 Acres)' },
+          { label: 'Registry Survey & Area', value: 'Survey No: 42/A (2.10 Acres)' }
         ],
         tamperingChecks: [
-          { check: 'PDF Producer & Metadata Integrity', status: 'Flagged', detail: 'PDF text layer modified after original creation timestamp' },
-          { check: 'Cross-Field Acreage Consistency', status: 'Flagged', detail: '0.70 Acre mismatch between form and deed' },
-          { check: 'Duplicate File Hash Check', status: 'Pass', detail: 'No duplicate hash found' }
+          { check: 'Font Encoding & Stream Analysis', status: 'Flagged', detail: 'Font mismatch: Helvetica-Bold overlay over scanned Courier baseline' },
+          { check: 'Error Level Analysis (ELA)', status: 'Flagged', detail: 'ELA score 88.4%: Post-scan digital raster modification detected' },
+          { check: 'Survey & Acreage Consistency', status: 'Flagged', detail: 'Survey 42/B vs 42/A mismatch (-3.10 Acres regulatory shortfall)' }
         ],
         authorityStatus: {
-          source: 'DigiLocker State Land Registry API',
-          refId: 'DL-REV-MH-4419',
+          source: 'State Land Registry API (DigiLocker)',
+          refId: 'DEED-REV-MH-4419',
           outcome: 'Mismatch',
-          message: 'Official revenue record confirms 1.80 Acres, not 2.50 Acres.'
+          message: 'Official revenue records confirm Survey No 42/A with 2.10 Acres, not 5.20 Acres. Discrepancy flagged.'
         }
       },
       'SAMPLE-3': {
-        fileName: 'rtmnu_expired_affiliation.pdf',
-        fileSize: '328.9 KB',
-        sha256: 'a2c4c6a9226641128e347376e742ffaf8877665544332211',
-        overallStatus: 'Expired',
+        fileName: 'SYNTH_SPPU_AFFILIATION_2026.pdf',
+        fileSize: '389.2 KB',
+        sha256: '4a2d81f08726588a8910798ca7a65b7f12e8b61c94d01a35798c81e5b290d287',
+        overallStatus: 'Mismatch',
         ocrFields: [
-          { label: 'Document Category', value: 'University Affiliation Letter' },
-          { label: 'Reference Number', value: 'RTMNU-2024-882' },
-          { label: 'Institution Name', value: 'Deccan College of Engineering, Nagpur' },
-          { label: 'Academic Session', value: '2024-25' },
-          { label: 'Expiry Date', value: '2025-06-30 (Expired)' }
+          { label: 'Document Category', value: 'University Annual Affiliation Order' },
+          { label: 'Reference Number', value: 'SPPU/AFF/2026/1042' },
+          { label: 'Institution Name', value: 'Apex Institute of Technology, Pune' },
+          { label: 'Sanctioned Program', value: 'B.Tech Computer Science & Engineering' },
+          { label: 'Approved vs Claimed Intake', value: '120 Approved vs 180 Claimed Seats' }
         ],
         tamperingChecks: [
-          { check: 'PDF Producer & Metadata Integrity', status: 'Pass', detail: 'Original University Registrar PDF' },
-          { check: 'Validity Period Check for AY 2026-27', status: 'Flagged', detail: 'Expired on 2025-06-30' },
-          { check: 'Duplicate File Hash Check', status: 'Flagged', detail: 'Matches hash of prior year submission' }
+          { check: 'Sanctioned Seat Capacity Check', status: 'Flagged', detail: 'Discrepancy: 120 Approved vs 180 Claimed Seats' },
+          { check: 'Numerical Glyph Font Metric', status: 'Flagged', detail: 'Digit 8 raster modification detected over baseline digit 2' },
+          { check: 'Digital Signature & University Seal', status: 'Pass', detail: 'University Registrar digital certificate signature present' }
         ],
         authorityStatus: {
-          source: 'University Affiliation Portal API',
-          refId: 'RTMNU-2024-882',
-          outcome: 'Expired',
-          message: 'Official university registry marks reference RTMNU-2024-882 as EXPIRED on 2025-06-30.'
+          source: 'Savitribai Phule Pune University Registry Portal API',
+          refId: 'SPPU/AFF/2026/1042',
+          outcome: 'Mismatch',
+          message: 'Senate Affiliation Order validates 120 intake seats. Claimed 180 seats exceeds sanctioned capacity.'
+        }
+      },
+      'SAMPLE-4': {
+        fileName: 'SYNTH_FACULTY_ROSTER_DUPLICATE_PAN.pdf',
+        fileSize: '512.6 KB',
+        sha256: '7c9d4a19b88234ea7208d98cf142a781045e781198fba014c2b9981a54ec0912',
+        overallStatus: 'Flagged',
+        ocrFields: [
+          { label: 'Document Category', value: 'Endorsed Faculty Roster & Teaching Cadre' },
+          { label: 'Reference Number', value: 'FAC-2026-ROSTER-04' },
+          { label: 'Total Faculty Claimed', value: '28 Faculty Members' },
+          { label: 'Duplicate PAN 1', value: 'ABCDE1234F (Prof. Rajesh Verma - Also at Sinhgad Inst)' },
+          { label: 'Duplicate PAN 2', value: 'PQRSK5678L (Dr. Sunita Patil - Also at DY Patil COE)' }
+        ],
+        tamperingChecks: [
+          { check: 'Central Faculty Database Check', status: 'Flagged', detail: '2 Faculty PAN numbers (ABCDE1234F, PQRSK5678L) already registered under another college' },
+          { check: 'Income Tax TDS Form 16 Sync', status: 'Flagged', detail: 'Concurrent full-time salary disbursement reported from multiple technical institutions' },
+          { check: 'Cadre Ratio Distribution', status: 'Pass', detail: 'Cadre ratio meets 1:2:6 distribution norm' }
+        ],
+        authorityStatus: {
+          source: 'Income Tax Dept / AICTE Central Faculty Database API',
+          refId: 'FAC-2026-ROSTER-04',
+          outcome: 'Flagged',
+          message: 'Dual employment violation: 2 Faculty PAN numbers are actively listed in concurrent faculty rolls.'
+        }
+      },
+      'SAMPLE-5': {
+        fileName: 'SYNTH_BUILDING_PLAN_MUNICIPAL.pdf',
+        fileSize: '892.1 KB',
+        sha256: '81fa023e981bc8819024c088ef7721ab98234ec89124a98b7123984afcb78102',
+        overallStatus: 'Deficient',
+        ocrFields: [
+          { label: 'Document Category', value: 'Sanctioned Architectural Building & Carpet Plan' },
+          { label: 'Reference Number', value: 'PMC/BP/SANCTION/2021-992' },
+          { label: 'Sanctioning Municipal Body', value: 'Pune Municipal Corporation Town Planning' },
+          { label: 'Required Instructional Area', value: '4,200 sq.m (APH 2024-27 Norm)' },
+          { label: 'Sanctioned Actual Area', value: '3,880 sq.m (Deficit: 320 sq.m)' }
+        ],
+        tamperingChecks: [
+          { check: 'Instructional Carpet Area Check', status: 'Flagged', detail: 'Instructional carpet area short by 320 sq.m against APH intake requirements' },
+          { check: 'Council of Architecture Seal', status: 'Pass', detail: 'Registered architect digital license valid' },
+          { check: 'Municipal Occupancy Certificate', status: 'Pass', detail: 'PMC occupancy sanction reference verified' }
+        ],
+        authorityStatus: {
+          source: 'Town Planning & Municipal Sanction Authority API',
+          refId: 'PMC/BP/SANCTION/2021-992',
+          outcome: 'Deficient',
+          message: 'Sanctioned floor plans indicate 3,880 sq.m instructional built-up area. Deficit of 320 sq.m against 4,200 sq.m requirement.'
+        }
+      },
+      'SAMPLE-6': {
+        fileName: 'SYNTH_AICTE_TER_RECEIPT_VERIFIED.pdf',
+        fileSize: '245.8 KB',
+        sha256: '12a4b8890cb1e22998f41029cba881024e0981ba23589cf8810924ec12871239',
+        overallStatus: 'Valid',
+        ocrFields: [
+          { label: 'Document Category', value: 'AICTE Technical Education Regulatory (TER) Fee' },
+          { label: 'Reference Number', value: 'BHARATKOSH-UTR-99214710' },
+          { label: 'Institution Name', value: 'Apex Institute of Technology, Pune' },
+          { label: 'TER Fee Amount', value: 'INR 3,00,000 (Extension of Approval Fee)' },
+          { label: 'Payment Timestamp', value: '2026-02-04 14:22:18 IST' }
+        ],
+        tamperingChecks: [
+          { check: 'Central Treasury Gateway Reconciliation', status: 'Pass', detail: '0 Detected: Transaction UTR Verified via Bharatkosh API' },
+          { check: 'Bank Challan Digital Stamp', status: 'Pass', detail: 'SBI Payment Gateway digital cryptographic seal verified' },
+          { check: 'Duplicate Transaction Check', status: 'Pass', detail: 'Unique UTR receipt across all national applications' }
+        ],
+        authorityStatus: {
+          source: 'Bharatkosh AICTE Treasury Gateway API',
+          refId: 'BHARATKOSH-UTR-99214710',
+          outcome: 'Verified',
+          message: 'Treasury transaction confirmed settled in AICTE Consolidated Regulatory Account. Payment valid.'
         }
       }
     };
+    window.sampleDocumentsData = sampleDocumentsData;
 
-    // ---------------------------------------------------------------------
-    // 3. CONFIGURABLE RULES & SESSION AUDIT LOG
-    // ---------------------------------------------------------------------
     const rulesList = [
       { code: 'RULE-01', category: 'Document Checklist', description: 'Require all 6 mandatory documents to be uploaded and non-expired for AY 2026-27', enabled: true },
       { code: 'RULE-02', category: 'OCR Consistency', description: 'Flag any mismatch between application form values and OCR-extracted document values', enabled: true },
@@ -2729,7 +2847,7 @@
                           <div class="flex items-center justify-between gap-2">
                             <span>${row.note}</span>
                             ${isLandDiff ? `
-                              <button onclick="openForensicDiffModal()" class="btn-primary py-1 px-2.5 text-xs shrink-0 flex items-center gap-1.5" style="border-radius:4px;">
+                              <button onclick="window.openForensicDiffModal('${app.id}', 'Land Ownership Deed')" class="btn-primary py-1 px-2.5 text-xs shrink-0 flex items-center gap-1.5" style="border-radius:4px;">
                                 <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                   <path stroke-linecap="round" stroke-linejoin="round" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
                                 </svg>
@@ -2821,7 +2939,7 @@
                           <div class="flex items-center justify-between gap-2">
                             <span>${item.submitted}</span>
                             ${isLabWorkstation ? `
-                              <button onclick="openCvInspectionModal()" class="btn-primary py-1 px-2.5 text-xs shrink-0 flex items-center gap-1.5" style="border-radius:4px;">
+                              <button onclick="window.openCvEvidenceModal('${app.id}', 'Computer Center / Lab')" class="btn-primary py-1 px-2.5 text-xs shrink-0 flex items-center gap-1.5" style="border-radius:4px;">
                                 <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                   <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                                   <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
@@ -2905,14 +3023,32 @@
     // ---------------------------------------------------------------------
     // VIEW 3: STANDALONE DOCUMENT CHECKER
     // ---------------------------------------------------------------------
-    function selectSampleDoc(sampleKey) {
+    async function selectSampleDoc(sampleKey) {
       currentSampleDocKey = sampleKey;
-      ['SAMPLE-1', 'SAMPLE-2', 'SAMPLE-3'].forEach(k => {
-        const btn = document.getElementById('sampleDocBtn-' + k);
-        if (btn) btn.classList.toggle('active', k === sampleKey);
-      });
-      renderDocumentCheckerCards(sampleDocumentsData[sampleKey]);
+      for (let i = 1; i <= 6; i++) {
+        const btn = document.getElementById('sampleDocBtn-SAMPLE-' + i);
+        if (btn) btn.classList.toggle('active', ('SAMPLE-' + i) === sampleKey);
+      }
+      const doc = sampleDocumentsData[sampleKey];
+      if (!doc) return;
+      renderDocumentCheckerCards(doc);
+      logAuditEvent(activeUserSession?.name || 'Document Checker', doc.fileName, 'Sample Document Verified', `Verified ${doc.fileName} via ${doc.authorityStatus?.source || 'Issuing Gateway'} (${doc.overallStatus})`);
+      
+      if (window.cipherBlockchain) {
+        await cipherBlockchain.addBlock(doc.fileName, 'DOCUMENT_VERIFIED', activeUserSession?.name || 'AICTE_VERIFY_GATEWAY', {
+          fileName: doc.fileName,
+          fileSize: doc.fileSize,
+          sha256Fingerprint: doc.sha256,
+          overallStatus: doc.overallStatus,
+          issuingGateway: doc.authorityStatus?.source,
+          verificationOutcome: doc.authorityStatus?.outcome,
+          tamperFlagsCount: doc.tamperingChecks.filter(c => c.status !== 'Pass').length
+        });
+        renderBlockchainLedgerUI();
+      }
+      showToastBanner(`Inspected & notarized on blockchain: ${doc.fileName}`);
     }
+    window.selectSampleDoc = selectSampleDoc;
 
     async function handleStandaloneFileUpload(event) {
       const file = event.target.files?.[0];
@@ -2953,23 +3089,25 @@
         }
       };
 
-      ['SAMPLE-1', 'SAMPLE-2', 'SAMPLE-3'].forEach(k => {
-        const btn = document.getElementById('sampleDocBtn-' + k);
+      for (let i = 1; i <= 6; i++) {
+        const btn = document.getElementById('sampleDocBtn-SAMPLE-' + i);
         if (btn) btn.classList.remove('active');
-      });
+      }
 
       renderDocumentCheckerCards(customDoc);
       logAuditEvent(activeUserSession?.name || 'Document Checker', file.name, 'Single File Checked', `Checked ${file.name} (${sizeKb}) with SHA-256: ${computedHash.substring(0, 16)}...`);
       
-      await cipherBlockchain.addBlock(file.name, 'DOCUMENT_VERIFIED', activeUserSession?.name || 'AICTE_VERIFY_GATEWAY', {
-        fileName: file.name,
-        fileSize: sizeKb,
-        sha256Fingerprint: computedHash,
-        overallStatus: 'Valid',
-        issuingGateway: 'VERIFIED-GATEWAY',
-        verificationTimestamp: new Date().toISOString()
-      });
-      renderBlockchainLedgerUI();
+      if (window.cipherBlockchain) {
+        await cipherBlockchain.addBlock(file.name, 'DOCUMENT_VERIFIED', activeUserSession?.name || 'AICTE_VERIFY_GATEWAY', {
+          fileName: file.name,
+          fileSize: sizeKb,
+          sha256Fingerprint: computedHash,
+          overallStatus: 'Valid',
+          issuingGateway: 'VERIFIED-GATEWAY',
+          verificationTimestamp: new Date().toISOString()
+        });
+        renderBlockchainLedgerUI();
+      }
 
       showToastBanner(`Inspected & notarized on blockchain: ${file.name}`);
     }
@@ -3984,37 +4122,93 @@
     // =====================================================================
     let cvBoundingBoxesVisible = true;
     let cvHeatmapVisible = false;
+    let cvGeofenceVisible = true;
 
-    function openCvInspectionModal() {
-      document.getElementById('cvInspectionModal').classList.remove('hidden');
+    // Bulletproof Window Modal Controllers
+    window.openCvEvidenceModal = function(appId, facilityType) {
+      const modal = document.getElementById('cvEvidenceModal') || document.getElementById('cvInspectionModal');
+      if (!modal) return;
+      modal.style.display = 'flex';
+      modal.classList.add('active');
+      modal.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
       setTimeout(drawCvCanvas, 60);
-    }
+    };
 
-    function closeCvInspectionModal() {
-      document.getElementById('cvInspectionModal').classList.add('hidden');
-    }
+    window.closeCvEvidenceModal = function() {
+      const modal = document.getElementById('cvEvidenceModal') || document.getElementById('cvInspectionModal');
+      if (!modal) return;
+      modal.style.display = 'none';
+      modal.classList.remove('active');
+      modal.classList.add('hidden');
+      document.body.style.overflow = '';
+    };
 
-    function toggleCvBoundingBoxes() {
-      cvBoundingBoxesVisible = !cvBoundingBoxesVisible;
-      const btn = document.getElementById('cvToggleBoxesBtn');
-      if (btn) {
-        btn.textContent = cvBoundingBoxesVisible ? 'Toggle Bounding Boxes (Active)' : 'Toggle Bounding Boxes (Off)';
-        btn.className = cvBoundingBoxesVisible ? 'btn-primary py-1 px-2.5 text-xs' : 'btn-secondary py-1 px-2.5 text-xs';
-      }
+    window.openForensicDiffModal = function(appId, docType) {
+      const modal = document.getElementById('forensicDiffModal');
+      if (!modal) return;
+      modal.style.display = 'flex';
+      modal.classList.add('active');
+      modal.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    };
+
+    window.closeForensicDiffModal = function() {
+      const modal = document.getElementById('forensicDiffModal');
+      if (!modal) return;
+      modal.style.display = 'none';
+      modal.classList.remove('active');
+      modal.classList.add('hidden');
+      document.body.style.overflow = '';
+    };
+
+    window.openReportModal = function(appId) {
+      const modal = document.getElementById('aicteScrutinyReportModal') || document.getElementById('reportModal');
+      if (!modal) return;
+      modal.style.display = 'flex';
+      modal.classList.add('active');
+      modal.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    };
+
+    window.closeReportModal = function() {
+      const modal = document.getElementById('aicteScrutinyReportModal') || document.getElementById('reportModal');
+      if (!modal) return;
+      modal.style.display = 'none';
+      modal.classList.remove('active');
+      modal.classList.add('hidden');
+      document.body.style.overflow = '';
+    };
+
+    // Backward-compatibility aliases
+    window.openCvInspectionModal = window.openCvEvidenceModal;
+    window.closeCvInspectionModal = window.closeCvEvidenceModal;
+    window.openAicteScrutinyReportModal = window.openReportModal;
+    window.closeAicteScrutinyReportModal = window.closeReportModal;
+
+    window.toggleCvBoundingBoxes = function(val) {
+      cvBoundingBoxesVisible = (typeof val === 'boolean') ? val : !cvBoundingBoxesVisible;
+      const chk = document.getElementById('cvBoxesCheckbox');
+      if (chk) chk.checked = cvBoundingBoxesVisible;
       drawCvCanvas();
-      showToastBanner(`Computer Vision Bounding Boxes: ${cvBoundingBoxesVisible ? 'ON' : 'OFF'}`);
-    }
+      showToastBanner(`YOLOv8 Bounding Boxes: ${cvBoundingBoxesVisible ? 'ON' : 'OFF'}`);
+    };
 
-    function toggleCvHeatmap() {
-      cvHeatmapVisible = !cvHeatmapVisible;
-      const btn = document.getElementById('cvToggleHeatmapBtn');
-      if (btn) {
-        btn.textContent = cvHeatmapVisible ? 'Toggle Heatmap (Active)' : 'Toggle Heatmap Overlay';
-        btn.className = cvHeatmapVisible ? 'btn-primary py-1 px-2.5 text-xs' : 'btn-secondary py-1 px-2.5 text-xs';
-      }
+    window.toggleCvHeatmap = function(val) {
+      cvHeatmapVisible = (typeof val === 'boolean') ? val : !cvHeatmapVisible;
+      const chk = document.getElementById('cvHeatmapCheckbox');
+      if (chk) chk.checked = cvHeatmapVisible;
       drawCvCanvas();
-      showToastBanner(`Heatmap Density View: ${cvHeatmapVisible ? 'ON' : 'OFF'}`);
-    }
+      showToastBanner(`Terminal Heatmap Density: ${cvHeatmapVisible ? 'ON' : 'OFF'}`);
+    };
+
+    window.toggleCvGeofence = function(val) {
+      cvGeofenceVisible = (typeof val === 'boolean') ? val : !cvGeofenceVisible;
+      const chk = document.getElementById('cvGeofenceCheckbox');
+      if (chk) chk.checked = cvGeofenceVisible;
+      drawCvCanvas();
+      showToastBanner(`Geofence Overlay: ${cvGeofenceVisible ? 'ON' : 'OFF'}`);
+    };
 
     function drawCvCanvas() {
       const canvas = document.getElementById('cvInspectionCanvas');
@@ -4051,13 +4245,16 @@
 
       // Whiteboard / Front Projector Screen
       ctx.fillStyle = '#f8fafc';
-      ctx.fillRect(200, 20, 360, 90);
+      ctx.fillRect(180, 20, 400, 90);
       ctx.strokeStyle = '#64748b';
-      ctx.lineWidth = 3;
-      ctx.strokeRect(200, 20, 360, 90);
+      ctx.lineWidth = 2;
+      ctx.strokeRect(180, 20, 400, 90);
       ctx.fillStyle = '#0284c7';
       ctx.font = 'bold 12px monospace';
-      ctx.fillText('AICTE CCF LAB-3 | 180 INTAKE B.TECH CSE', 230, 65);
+      ctx.fillText('AICTE CCF LAB-03 | 180 INTAKE B.TECH CSE', 205, 55);
+      ctx.fillStyle = '#64748b';
+      ctx.font = '10px monospace';
+      ctx.fillText('REQUIRED TERMINALS: 150 | DETECTED UNITS: 142', 205, 75);
 
       // Rear Doorway (Left Wall)
       ctx.fillStyle = '#090d16';
@@ -4072,6 +4269,12 @@
       ctx.fillStyle = '#94a3b8';
       ctx.fillRect(w - 48, 38, 6, 8);
       ctx.fillRect(w - 58, 48, 5, 20);
+
+      // Second Fire Extinguisher near front entrance
+      ctx.fillStyle = '#dc2626';
+      ctx.fillRect(95, 70, 16, 40);
+      ctx.fillStyle = '#94a3b8';
+      ctx.fillRect(100, 64, 5, 6);
 
       // Draw 3 Rows of Computer Benches
       const rows = [
@@ -4092,68 +4295,71 @@
           ctx.strokeRect(bx - 5, by + 20, r.w + 10, r.h - 15);
 
           // Monitor
-          const isEmptyBay = (r.y === 250 && (i === 2 || i === 4));
+          const isEmptyBay = (r.y === 250 && (i === 2 || i === 4)) || (r.y === 340 && i === 3);
           if (!isEmptyBay) {
-            ctx.fillStyle = '#0284c7';
-            ctx.fillRect(bx + 12, by - 5, r.w - 24, r.h - 22);
-            ctx.strokeStyle = '#94a3b8';
+            ctx.fillStyle = '#0f172a';
+            ctx.fillRect(bx + 8, by - 6, r.w - 16, r.h - 14);
+            ctx.strokeStyle = '#0284c7';
             ctx.lineWidth = 1.5;
-            ctx.strokeRect(bx + 12, by - 5, r.w - 24, r.h - 22);
+            ctx.strokeRect(bx + 8, by - 6, r.w - 16, r.h - 14);
+
+            // Screen glow
+            ctx.fillStyle = '#0369a1';
+            ctx.fillRect(bx + 11, by - 3, r.w - 22, r.h - 20);
 
             // Stand
             ctx.fillStyle = '#64748b';
-            ctx.fillRect(bx + r.w / 2 - 4, by + r.h - 27, 8, 8);
+            ctx.fillRect(bx + r.w / 2 - 3, by + r.h - 20, 6, 12);
+            ctx.fillRect(bx + r.w / 2 - 12, by + r.h - 8, 24, 3);
           } else {
-            // Empty slot marker
-            ctx.strokeStyle = '#f59e0b';
-            ctx.setLineDash([4, 4]);
-            ctx.strokeRect(bx + 10, by - 5, r.w - 20, r.h - 20);
-            ctx.setLineDash([]);
+            // Vacant desk mark
+            ctx.fillStyle = '#475569';
+            ctx.font = '9px monospace';
+            ctx.fillText('VACANT', bx + 16, by + 14);
           }
 
           // Chair
           ctx.fillStyle = '#1e293b';
           ctx.beginPath();
-          ctx.arc(bx + r.w / 2, by + r.h + 5, 12, 0, Math.PI * 2);
+          ctx.arc(bx + r.w / 2, by + r.h + 8, 11, 0, Math.PI * 2);
           ctx.fill();
+          ctx.strokeStyle = '#475569';
+          ctx.stroke();
         }
       });
 
-      // 2. Heatmap Density Overlay (If Enabled)
+      // 2. Heatmap Density Layer
       if (cvHeatmapVisible) {
-        ctx.save();
-        ctx.globalAlpha = 0.45;
-        const heatGradients = [
-          { x: 200, y: 220, r: 120, color: 'rgba(239, 68, 68, 0.8)' },
-          { x: 420, y: 240, r: 140, color: 'rgba(245, 158, 11, 0.8)' },
-          { x: 600, y: 360, r: 130, color: 'rgba(16, 185, 129, 0.8)' }
-        ];
-        heatGradients.forEach(hg => {
-          const rad = ctx.createRadialGradient(hg.x, hg.y, 10, hg.x, hg.y, hg.r);
-          rad.addColorStop(0, hg.color);
-          rad.addColorStop(1, 'rgba(0,0,0,0)');
-          ctx.fillStyle = rad;
-          ctx.beginPath();
-          ctx.arc(hg.x, hg.y, hg.r, 0, Math.PI * 2);
-          ctx.fill();
+        rows.forEach(r => {
+          for (let i = 0; i < r.count; i++) {
+            const bx = r.startX + i * r.spacing + r.w / 2;
+            const by = r.y + 15;
+            const grad = ctx.createRadialGradient(bx, by, 5, bx, by, 48);
+            grad.addColorStop(0, 'rgba(16, 185, 129, 0.45)');
+            grad.addColorStop(0.5, 'rgba(6, 182, 212, 0.3)');
+            grad.addColorStop(1, 'rgba(15, 23, 42, 0)');
+            ctx.fillStyle = grad;
+            ctx.beginPath();
+            ctx.arc(bx, by, 48, 0, Math.PI * 2);
+            ctx.fill();
+          }
         });
-        ctx.restore();
       }
 
-      // 3. YOLOv8 Object Detection Bounding Boxes (If Enabled)
+      // 3. YOLOv8 Object Detection Bounding Boxes
       if (cvBoundingBoxesVisible) {
-        // Draw workstation boxes
         rows.forEach(r => {
           for (let i = 0; i < r.count; i++) {
             const bx = r.startX + i * r.spacing;
             const by = r.y;
-            const isEmpty = (r.y === 250 && (i === 2 || i === 4));
+            const isEmptyBay = (r.y === 250 && (i === 2 || i === 4)) || (r.y === 340 && i === 3);
 
-            if (!isEmpty) {
-              // Green Box: Terminal
+            if (!isEmptyBay) {
+              // 142 Green Boxes: Terminal Detected
               ctx.strokeStyle = '#10b981';
               ctx.lineWidth = 1.8;
-              ctx.strokeRect(bx + 6, by - 10, r.w - 12, r.h + 20);
+              ctx.setLineDash([]);
+              ctx.strokeRect(bx + 6, by - 10, r.w - 12, r.h + 16);
 
               ctx.fillStyle = '#10b981';
               ctx.fillRect(bx + 6, by - 22, 74, 12);
@@ -4161,77 +4367,112 @@
               ctx.font = 'bold 9px monospace';
               ctx.fillText('terminal: 0.94', bx + 8, by - 13);
             } else {
-              // Orange / Red Box: Unoccupied Bay Shortfall
-              ctx.strokeStyle = '#f59e0b';
+              // 8 Dashed Red Boxes: Unoccupied Bay Shortfall
+              ctx.strokeStyle = '#ef4444';
               ctx.lineWidth = 2;
-              ctx.strokeRect(bx + 4, by - 12, r.w - 8, r.h + 24);
+              ctx.setLineDash([5, 4]);
+              ctx.strokeRect(bx + 4, by - 12, r.w - 8, r.h + 20);
+              ctx.setLineDash([]);
 
-              ctx.fillStyle = '#f59e0b';
-              ctx.fillRect(bx + 4, by - 24, 100, 12);
-              ctx.fillStyle = '#000000';
+              ctx.fillStyle = '#ef4444';
+              ctx.fillRect(bx + 4, by - 24, 102, 12);
+              ctx.fillStyle = '#ffffff';
               ctx.font = 'bold 9px monospace';
-              ctx.fillText('unoccupied_bay: 0.88', bx + 6, by - 15);
+              ctx.fillText('unoccupied_bay: 0.89', bx + 6, by - 15);
             }
           }
         });
 
-        // Blue Box: Fire Extinguisher
+        // 2 Blue Boxes: Fire Extinguishers
+        // Right wall
         ctx.strokeStyle = '#0284c7';
         ctx.lineWidth = 2;
+        ctx.setLineDash([]);
         ctx.strokeRect(w - 62, 34, 32, 68);
         ctx.fillStyle = '#0284c7';
-        ctx.fillRect(w - 62, 22, 114, 12);
+        ctx.fillRect(w - 62, 22, 150, 12);
         ctx.fillStyle = '#ffffff';
         ctx.font = 'bold 9px monospace';
-        ctx.fillText('fire_extinguisher_ab: 0.96', w - 60, 31);
+        ctx.fillText('fire_extinguisher_type_abc: 0.97', w - 60, 31);
 
-        // Dashed Yellow Box: Missing Exit Luminaire (above doorway)
-        ctx.strokeStyle = '#eab308';
+        // Entrance
+        ctx.strokeStyle = '#0284c7';
+        ctx.lineWidth = 2;
+        ctx.strokeRect(90, 58, 26, 56);
+        ctx.fillStyle = '#0284c7';
+        ctx.fillRect(90, 46, 150, 12);
+        ctx.fillStyle = '#ffffff';
+        ctx.font = 'bold 9px monospace';
+        ctx.fillText('fire_extinguisher_type_abc: 0.96', 92, 55);
+
+        // 1 Dashed Amber Box: Missing Exit Luminaire (above doorway)
+        ctx.strokeStyle = '#f59e0b';
         ctx.lineWidth = 2;
         ctx.setLineDash([5, 4]);
         ctx.strokeRect(20, 8, 68, 24);
         ctx.setLineDash([]);
-        ctx.fillStyle = '#eab308';
-        ctx.fillRect(20, -2, 126, 12);
+        ctx.fillStyle = '#f59e0b';
+        ctx.fillRect(20, -2, 136, 12);
         ctx.fillStyle = '#000000';
         ctx.font = 'bold 9px monospace';
         ctx.fillText('missing_exit_luminaire: 0.91', 22, 7);
       }
+
+      // 4. Geofence Overlay HUD
+      if (cvGeofenceVisible) {
+        ctx.fillStyle = 'rgba(15, 23, 42, 0.85)';
+        ctx.fillRect(10, h - 34, w - 20, 24);
+        ctx.strokeStyle = '#0284c7';
+        ctx.lineWidth = 1;
+        ctx.strokeRect(10, h - 34, w - 20, 24);
+
+        ctx.fillStyle = '#10b981';
+        ctx.beginPath();
+        ctx.arc(22, h - 22, 4, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.fillStyle = '#f8fafc';
+        ctx.font = 'bold 10px monospace';
+        ctx.fillText('GEOFENCE LOCKED: 18.5204 N, 73.8567 E | Apex Institute Registered Polygon Match | Accuracy: ±1.2m', 32, h - 18);
+      }
     }
 
-    function attachCvFindingToDossier() {
-      logAuditEvent(activeUserSession?.name || 'CV Scrutiny Engine', 'APP-2026-101', 'CV Infrastructure Finding Attached', 'Attached shortfall (-8 workstations) and missing exit luminaire to Official Dossier.');
-      showToastBanner('Attached CV infrastructure findings to Official Scrutiny Dossier.');
-      closeCvInspectionModal();
-    }
+    window.appendCvFindingToDossier = async function() {
+      logAuditEvent(activeUserSession?.name || 'CV Scrutiny Officer', 'APP-2026-101', 'CV Finding Notarized', 'Shortfall (-8 workstations) and missing exit luminaire attached to official dossier.');
+      if (window.cipherBlockchain) {
+        await cipherBlockchain.addBlock('APP-2026-101', 'ANOMALY_FLAGGED', activeUserSession?.name || 'CV_SCRUTINY_ENGINE', {
+          target: 'Lab 03 (Central Computing Facility)',
+          finding: 'Workstation Shortfall (-8 units) & Missing Exit Luminaire',
+          detectedWorkstations: 142,
+          prescribedNorm: 150,
+          geotag: '18.5204 N, 73.8567 E',
+          inferenceConfidence: 'YOLOv8x (94.2% mean confidence)'
+        });
+        renderBlockchainLedgerUI();
+      }
+      showToastBanner('Attached CV finding to official scrutiny dossier & notarized on blockchain.');
+      window.closeCvEvidenceModal();
+    };
+    window.attachCvFindingToDossier = window.appendCvFindingToDossier;
 
     // =====================================================================
     // MODULE 2: SIDE-BY-SIDE FORENSIC DOCUMENT DIFF VIEWER
     // =====================================================================
-    function openForensicDiffModal() {
-      document.getElementById('forensicDiffModal').classList.remove('hidden');
-    }
-
-    function closeForensicDiffModal() {
-      document.getElementById('forensicDiffModal').classList.add('hidden');
-    }
-
-    function attachForensicProofToDossier() {
-      logAuditEvent(activeUserSession?.name || 'Forensic Officer', 'APP-2026-101', 'Forensic Diff Proof Attached', 'Land Deed font overlay and acreage gap (1.80 vs 2.50) notarized as regulatory deficiency.');
-      showToastBanner('Attached Forensic Land Deed proof to Official Dossier.');
-      closeForensicDiffModal();
-    }
-
-    // =====================================================================
-    // MODULE 4: 1-CLICK OFFICIAL AICTE SCRUTINY DEFICIENCY REPORT
-    // =====================================================================
-    function openAicteScrutinyReportModal() {
-      document.getElementById('aicteScrutinyReportModal').classList.remove('hidden');
-    }
-
-    function closeAicteScrutinyReportModal() {
-      document.getElementById('aicteScrutinyReportModal').classList.add('hidden');
-    }
+    window.attachForensicProofToDossier = async function() {
+      logAuditEvent(activeUserSession?.name || 'Forensic Officer', 'APP-2026-101', 'Forensic Proof Attached', 'Land Deed font overlay and acreage gap (5.20 vs 2.10 Acres) notarized as regulatory deficiency.');
+      if (window.cipherBlockchain) {
+        await cipherBlockchain.addBlock('APP-2026-101', 'ANOMALY_FLAGGED', activeUserSession?.name || 'FORENSIC_SCRUTINY_OFFICER', {
+          documentId: 'DEED-REV-MH-4419',
+          finding: 'Land Deed Alteration: Survey 42/B (5.20 Acres) vs Official 42/A (2.10 Acres)',
+          elaScore: '88.4% digital raster modification',
+          producerAnomaly: 'Adobe Acrobat Pro v24.2',
+          regulatoryDeficiency: '-3.10 Contiguous Acres'
+        });
+        renderBlockchainLedgerUI();
+      }
+      showToastBanner('Attached Forensic Land Deed proof to Official Dossier & notarized on blockchain.');
+      window.closeForensicDiffModal();
+    };
 
     function printAicteScrutinyReport() {
       window.print();
@@ -4277,11 +4518,22 @@
     }
 
     // Global Escape Key & Modal Backdrop Handling
-    window.addEventListener('keydown', (e) => {
+        document.addEventListener('click', function(e) {
+      if (e.target && e.target.classList && e.target.classList.contains('modal-backdrop')) {
+        if (e.target.id === 'cvEvidenceModal' || e.target.id === 'cvInspectionModal') window.closeCvEvidenceModal();
+        else if (e.target.id === 'forensicDiffModal') window.closeForensicDiffModal();
+        else if (e.target.id === 'aicteScrutinyReportModal' || e.target.id === 'reportModal') window.closeReportModal();
+        else if (e.target.id === 'officialDecisionModal') closeOfficialDecisionModal();
+        else if (e.target.id === 'uploadDossierModal') closeUploadDossierModal();
+        else if (e.target.id === 'authModal') closeAuthModal();
+      }
+    });
+
+    document.addEventListener('keydown', function(e) {
       if (e.key === 'Escape') {
-        closeCvInspectionModal();
-        closeForensicDiffModal();
-        closeAicteScrutinyReportModal();
+        window.closeCvEvidenceModal();
+        window.closeForensicDiffModal();
+        window.closeReportModal();
         closeOfficialDecisionModal();
         closeUploadDossierModal();
         closeAuthModal();
@@ -4302,25 +4554,37 @@
   <!-- =====================================================================
        MODULE 1: INTERACTIVE COMPUTER VISION (CV) LAB & INFRASTRUCTURE MODAL
        ===================================================================== -->
-  <div id="cvInspectionModal" class="fixed inset-0 z-50 hidden bg-black/60 flex items-center justify-center p-3 sm:p-4">
-    <div class="card-surface max-w-5xl w-full p-5 space-y-4 shadow-2xl border border-line rounded flex flex-col max-h-[92vh]">
+  <!-- =====================================================================
+       MODULE 1: INTERACTIVE COMPUTER VISION (CV) LAB & INFRASTRUCTURE MODAL
+       ===================================================================== -->
+  <div id="cvEvidenceModal" class="modal-backdrop fixed inset-0 z-50 bg-black/60 flex items-center justify-center p-3 sm:p-4" style="display:none;" onclick="if(event.target === this) window.closeCvEvidenceModal()">
+    <div class="card-surface max-w-5xl w-full p-5 space-y-4 shadow-2xl border border-line rounded flex flex-col max-h-[92vh]" onclick="event.stopPropagation()">
       <!-- Header -->
       <div class="flex items-center justify-between border-b border-line pb-3">
         <div>
           <div class="flex items-center gap-2">
-            <span class="px-2 py-0.5 rounded text-[10px] font-bold font-mono bg-[#0284c7]/10 text-[#0284c7] border border-[#0284c7]/30">YOLOv8x Edge CV</span>
-            <h3 class="text-sm font-bold text-main">AI Computer Vision Infrastructure Audit</h3>
+            <span class="px-2 py-0.5 rounded text-[10px] font-bold font-mono bg-[#0284c7]/10 text-[#0284c7] border border-[#0284c7]/30">YOLOv8 Edge CV</span>
+            <h3 class="text-sm font-bold text-main">AI Computer Vision Infrastructure Audit | APH 2024-27 Norm Validation</h3>
           </div>
-          <p class="text-[11px] text-sub mt-0.5">Automated spatial &amp; workstation asset scrutiny (Edge Object Detection &amp; Geofence Verification).</p>
+          <div class="flex items-center gap-2 mt-1">
+            <span class="tag-neutral text-[10px] font-semibold">Apex Institute of Technology (AP-2026-101) - Lab 03 (Computing Facility)</span>
+          </div>
         </div>
-        <button onclick="closeCvInspectionModal()" class="btn-secondary px-2.5 py-1 text-xs" style="border-radius:4px;">Close</button>
+        <div class="flex items-center gap-2">
+          <button onclick="window.closeCvEvidenceModal()" class="btn-secondary px-2.5 py-1 text-xs" style="border-radius:4px;">Close</button>
+          <button onclick="window.closeCvEvidenceModal()" class="text-sub hover:text-main p-1 rounded" title="Close Modal">
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
       </div>
 
       <!-- Top Metadata Bar -->
       <div class="p-2.5 rounded subtle-surface border border-line text-xs grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 font-mono">
         <div>
           <span class="text-sub block text-[10px] uppercase font-semibold">Target Facility:</span>
-          <span class="text-main font-bold">Apex IT - Lab 3 (CCF)</span>
+          <span class="text-main font-bold">Apex IT - Lab 3 (Computing Facility)</span>
         </div>
         <div>
           <span class="text-sub block text-[10px] uppercase font-semibold">Sensor / Resolution:</span>
@@ -4338,7 +4602,7 @@
 
       <!-- Main Body: Viewport & Inference Drawer -->
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 flex-1 overflow-y-auto">
-        <!-- Left: Interactive Canvas Viewport (8 Cols) -->
+        <!-- Left: Interactive Canvas Viewport (65% / 8 Cols) -->
         <div class="lg:col-span-8 flex flex-col space-y-2">
           <div class="relative w-full rounded border border-slate-700 overflow-hidden bg-slate-900 shadow-inner flex items-center justify-center">
             <canvas id="cvInspectionCanvas" width="760" height="440" class="w-full h-auto block"></canvas>
@@ -4350,79 +4614,85 @@
             </div>
           </div>
 
-          <!-- Canvas Viewport Controls -->
-          <div class="flex flex-wrap items-center justify-between gap-2 p-2 rounded subtle-surface border border-line text-xs">
-            <div class="flex items-center gap-2">
-              <button id="cvToggleBoxesBtn" onclick="toggleCvBoundingBoxes()" class="btn-primary py-1 px-2.5 text-xs" style="border-radius:4px;">
-                Toggle Bounding Boxes (Active)
-              </button>
-              <button id="cvToggleHeatmapBtn" onclick="toggleCvHeatmap()" class="btn-secondary py-1 px-2.5 text-xs" style="border-radius:4px;">
-                Toggle Heatmap Overlay
-              </button>
+          <!-- Canvas Viewport Controls: 3 Checkbox Toggles -->
+          <div class="flex flex-wrap items-center justify-between gap-3 p-2.5 rounded subtle-surface border border-line text-xs">
+            <div class="flex flex-wrap items-center gap-3">
+              <label class="inline-flex items-center gap-1.5 cursor-pointer font-medium text-main text-xs">
+                <input type="checkbox" id="cvBoxesCheckbox" checked onchange="toggleCvBoundingBoxes(this.checked)" class="rounded text-[#0284c7]">
+                <span>Show Bounding Boxes (YOLOv8)</span>
+              </label>
+              <label class="inline-flex items-center gap-1.5 cursor-pointer font-medium text-main text-xs">
+                <input type="checkbox" id="cvHeatmapCheckbox" onchange="toggleCvHeatmap(this.checked)" class="rounded text-[#0284c7]">
+                <span>Show Terminal Heatmap</span>
+              </label>
+              <label class="inline-flex items-center gap-1.5 cursor-pointer font-medium text-main text-xs">
+                <input type="checkbox" id="cvGeofenceCheckbox" checked onchange="toggleCvGeofence(this.checked)" class="rounded text-[#0284c7]">
+                <span>Overlay Geofence Coordinates (18.5204 N, 73.8567 E)</span>
+              </label>
             </div>
             <div class="text-[11px] font-mono text-sub">
-              Confidence Threshold: <span class="font-bold text-main">&gt;= 0.85</span>
+              Confidence: <span class="font-bold text-main">&gt;= 0.85</span>
             </div>
           </div>
         </div>
 
-        <!-- Right: CV Inference Stats Drawer (4 Cols) -->
+        <!-- Right: CV Inference Analytics Drawer (35% / 4 Cols) -->
         <div class="lg:col-span-4 space-y-3 text-xs">
-          <!-- Metric 1: Workstation Count -->
+          <!-- Workstation Tally -->
           <div class="p-3 rounded subtle-surface border border-line space-y-1.5">
             <div class="flex items-center justify-between">
-              <span class="text-sub font-semibold">1. Workstation Count:</span>
-              <span class="tag-red font-bold">Deficient (-8 Units)</span>
+              <span class="text-sub font-semibold">Workstation Tally:</span>
+              <span class="tag-red font-bold">DEFICIENT (-8 Units Required for 180 Intake)</span>
             </div>
             <div class="text-lg font-mono font-bold text-main">
-              142 Terminals <span class="text-xs text-sub font-normal">/ 150 Req.</span>
+              142 Terminals <span class="text-xs text-sub font-normal">/ 150 AICTE APH Prescribed</span>
             </div>
             <div class="w-full bg-slate-200 h-1.5 rounded overflow-hidden">
               <div class="bg-amber-500 h-full" style="width: 94.6%;"></div>
             </div>
             <div class="text-[11px] text-sub">
-              APH Intake Norm requires 150 active terminals for 180 CSE intake. Shortfall of 8 units detected.
+              AICTE APH Norm prescribes 150 active terminals for 180 B.Tech CSE intake. Detected shortfall of 8 units.
             </div>
           </div>
 
-          <!-- Metric 2: Terminal Spacing -->
+          <!-- Carpet Area Density -->
           <div class="p-3 rounded subtle-surface border border-line space-y-1">
             <div class="flex items-center justify-between">
-              <span class="text-sub font-semibold">2. Terminal Spacing:</span>
-              <span class="tag-green font-bold">Compliant</span>
+              <span class="text-sub font-semibold">Carpet Area Density:</span>
+              <span class="tag-green font-bold">COMPLIANT</span>
             </div>
             <div class="text-sm font-mono font-bold text-main">
-              1.2m Carpet Area / Terminal
+              Measured: 1.25 sq.m per terminal
             </div>
             <div class="text-[11px] text-sub">
-              Calculated floor area complies with AICTE minimum specification (1.0m per workstation).
+              Meets AICTE Norm (&gt;= 1.20 sq.m per workstation). Adequate circulation aisle spacing verified.
             </div>
           </div>
 
-          <!-- Metric 3: Safety Assets -->
-          <div class="p-3 rounded subtle-surface border border-line space-y-1">
+          <!-- Life Safety & Accessibility -->
+          <div class="p-3 rounded subtle-surface border border-line space-y-1.5">
             <div class="flex items-center justify-between">
-              <span class="text-sub font-semibold">3. Safety Assets:</span>
-              <span class="tag-amber font-bold">Warning</span>
+              <span class="text-sub font-semibold">Life Safety &amp; Accessibility:</span>
+              <span class="tag-amber font-bold">Action Required</span>
             </div>
-            <ul class="text-[11px] space-y-1 text-main">
+            <ul class="text-[11px] space-y-1.5 text-main">
               <li class="flex items-center gap-1.5 text-emerald-700">
                 <svg class="w-3.5 h-3.5 text-emerald-600 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
-                <span>2 Fire Extinguishers (Class ABC, Hydrotested)</span>
+                <span>Fire Extinguishers: 2 Detected (Compliant)</span>
               </li>
-              <li class="flex items-center gap-1.5 text-amber-700">
-                <svg class="w-3.5 h-3.5 text-amber-600 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
-                <span>Missing Emergency Exit Luminaire above rear door</span>
+              <li class="flex items-center gap-1.5 text-red-700">
+                <svg class="w-3.5 h-3.5 text-red-600 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+                <span>Emergency Illumination: Missing (Non-Compliant)</span>
               </li>
             </ul>
           </div>
 
           <!-- Action Button -->
-          <button onclick="attachCvFindingToDossier()" class="btn-primary w-full py-2 text-xs flex items-center justify-center gap-1.5" style="border-radius:4px;">
+          <button onclick="appendCvFindingToDossier()" class="btn-primary w-full py-2.5 text-xs flex items-center justify-center gap-1.5" style="border-radius:4px;">
             <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
               <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
             </svg>
-            <span>Attach Finding to Official Scrutiny Dossier</span>
+            <span>Append CV Finding to Official Scrutiny Dossier</span>
           </button>
         </div>
       </div>
@@ -4430,7 +4700,7 @@
       <!-- Footer -->
       <div class="flex items-center justify-between pt-2 border-t border-line text-xs">
         <span class="text-[11px] text-sub font-mono">SIH Problem ID: 26261 | AICTE Regulatory Decision-Support</span>
-        <button onclick="closeCvInspectionModal()" class="btn-secondary text-xs" style="border-radius:4px;">Close Inspection</button>
+        <button onclick="window.closeCvEvidenceModal()" class="btn-secondary text-xs" style="border-radius:4px;">Close Inspection</button>
       </div>
     </div>
   </div>
@@ -4438,28 +4708,35 @@
   <!-- =====================================================================
        MODULE 2: SIDE-BY-SIDE FORENSIC DOCUMENT DIFF MODAL
        ===================================================================== -->
-  <div id="forensicDiffModal" class="fixed inset-0 z-50 hidden bg-black/60 flex items-center justify-center p-3 sm:p-4">
-    <div class="card-surface max-w-5xl w-full p-5 space-y-4 shadow-2xl border border-line rounded flex flex-col max-h-[92vh]">
+  <div id="forensicDiffModal" class="modal-backdrop fixed inset-0 z-50 bg-black/60 flex items-center justify-center p-3 sm:p-4" style="display:none;" onclick="if(event.target === this) window.closeForensicDiffModal()">
+    <div class="card-surface max-w-5xl w-full p-5 space-y-4 shadow-2xl border border-line rounded flex flex-col max-h-[92vh]" onclick="event.stopPropagation()">
       <!-- Header -->
       <div class="flex items-center justify-between border-b border-line pb-3">
         <div>
           <div class="flex items-center gap-2">
             <span class="px-2 py-0.5 rounded text-[10px] font-bold font-mono bg-red-100 text-red-800 border border-red-300">Forensic Tamper Detection</span>
-            <h3 class="text-sm font-bold text-main">Cryptographic &amp; Forensic Document Diff Inspector</h3>
+            <h3 class="text-sm font-bold text-main">Cryptographic &amp; Forensic Document Diff Viewer</h3>
           </div>
-          <p class="text-[11px] text-sub mt-0.5">Dual-layer side-by-side raster overlay &amp; font metrics discrepancy analysis (DocID: DEED-REV-MH-4419).</p>
+          <p class="text-[11px] text-sub mt-0.5">Document Comparison: Institution Submitted Upload vs. DigiLocker State Land Registry Record</p>
         </div>
-        <button onclick="closeForensicDiffModal()" class="btn-secondary px-2.5 py-1 text-xs" style="border-radius:4px;">Close</button>
+        <div class="flex items-center gap-2">
+          <button onclick="window.closeForensicDiffModal()" class="btn-secondary px-2.5 py-1 text-xs" style="border-radius:4px;">Close</button>
+          <button onclick="window.closeForensicDiffModal()" class="text-sub hover:text-main p-1 rounded" title="Close Modal">
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
       </div>
 
-      <!-- Side-by-Side Comparison Grid -->
+      <!-- Split-Screen Comparison Grid -->
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4 flex-1 overflow-y-auto">
-        <!-- Left: Submitted PDF (Altered) -->
+        <!-- Column A (Left: Institution Submitted PDF - Land Deed) -->
         <div class="p-4 rounded border-2 border-red-400 bg-red-50/20 space-y-3">
           <div class="flex items-center justify-between border-b border-red-200 pb-2">
             <div>
-              <span class="tag-red font-bold text-[10px]">Institution Submitted PDF</span>
-              <div class="font-mono text-[11px] text-main font-semibold mt-0.5">land_ownership_deed.pdf</div>
+              <span class="tag-red font-bold text-[10px]">Institution Submitted PDF - Land Deed</span>
+              <div class="font-mono text-[11px] text-main font-semibold mt-0.5">Land Sale Deed No. 1849/2018</div>
             </div>
             <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-red-100 text-red-800 border border-red-300 font-bold">Altered Layer</span>
           </div>
@@ -4468,7 +4745,7 @@
           <div class="p-3 bg-white rounded border border-line text-xs font-serif space-y-2 text-slate-800 shadow-xs">
             <div class="text-center border-b border-line pb-1.5">
               <div class="font-bold text-[11px] uppercase tracking-wider text-slate-900">Government of Maharashtra - Revenue Dept</div>
-              <div class="text-[10px] text-slate-500 font-sans">Index-II Property Registration Certificate</div>
+              <div class="text-[10px] text-slate-500 font-sans">Index-II Registered Property Card Sale Deed No. 1849/2018</div>
             </div>
 
             <div class="space-y-1.5 text-[11px]">
@@ -4479,10 +4756,10 @@
               <div class="p-2.5 rounded border-2 border-red-500 bg-red-50 space-y-1">
                 <div class="text-[10px] font-mono text-red-700 font-bold uppercase">Altered Text Stream (Post-Issuance):</div>
                 <div class="font-mono font-bold text-red-900 text-xs">
-                  Survey No: 42/B (Acreage: 5.20 Acres)
+                  Survey No: 42/B (Contiguous Land Area: 5.20 Acres)
                 </div>
                 <div class="text-[10px] text-red-700 font-sans">
-                  Forensic Finding: Helvetica-Bold overlay applied over scanned Courier New baseline.
+                  Callout Box: Altered Layer Detected | Error Level Analysis (ELA) score: 88.4% (Post-scan digital raster modification detected)
                 </div>
               </div>
 
@@ -4497,11 +4774,11 @@
           </div>
         </div>
 
-        <!-- Right: DigiLocker Record (Authentic) -->
+        <!-- Column B (Right: DigiLocker / State Revenue Dept Record) -->
         <div class="p-4 rounded border-2 border-emerald-400 bg-emerald-50/20 space-y-3">
           <div class="flex items-center justify-between border-b border-emerald-200 pb-2">
             <div>
-              <span class="tag-green font-bold text-[10px]">DigiLocker / State Registry</span>
+              <span class="tag-green font-bold text-[10px]">DigiLocker / State Revenue Dept Record</span>
               <div class="font-mono text-[11px] text-main font-semibold mt-0.5">DL-REV-MH-4419 (Live Government API)</div>
             </div>
             <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-emerald-100 text-emerald-800 border border-emerald-300 font-bold">Authentic Source</span>
@@ -4511,7 +4788,7 @@
           <div class="p-3 bg-white rounded border border-line text-xs font-serif space-y-2 text-slate-800 shadow-xs">
             <div class="text-center border-b border-line pb-1.5">
               <div class="font-bold text-[11px] uppercase tracking-wider text-slate-900">Government of Maharashtra - Revenue Dept</div>
-              <div class="text-[10px] text-slate-500 font-sans">State Land Registry Portal (Mahabhulekh 7/12 Extract)</div>
+              <div class="text-[10px] text-slate-500 font-sans">Authentic Government Property Card (Mahabhulekh 7/12 Extract)</div>
             </div>
 
             <div class="space-y-1.5 text-[11px]">
@@ -4522,10 +4799,10 @@
               <div class="p-2.5 rounded border-2 border-emerald-500 bg-emerald-50 space-y-1">
                 <div class="text-[10px] font-mono text-emerald-700 font-bold uppercase">Official Verified Registry Extract:</div>
                 <div class="font-mono font-bold text-emerald-900 text-xs">
-                  Survey No: 42/A (Acreage: 2.10 Acres)
+                  Survey No: 42/A (Contiguous Land Area: 2.10 Acres)
                 </div>
                 <div class="text-[10px] text-emerald-700 font-sans">
-                  Cryptographically verified via State Revenue Directorate digital signature.
+                  Callout Box: Authentic Record Verified via Maharashtra Land Registry API | Hash: 3e8b...910a
                 </div>
               </div>
 
@@ -4541,39 +4818,54 @@
         </div>
       </div>
 
-      <!-- Bottom Forensic Proof Cards -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-2.5 text-xs">
-        <div class="p-2.5 rounded subtle-surface border border-line space-y-1">
-          <div class="font-bold text-main text-[11px]">1. Font Encoding Mismatch</div>
-          <p class="text-[11px] text-sub">Helvetica-Bold overlay applied over scanned Courier New baseline. Glyph baseline offset: +4.2pt.</p>
-        </div>
-        <div class="p-2.5 rounded subtle-surface border border-line space-y-1">
-          <div class="font-bold text-main text-[11px]">2. PDF Metadata Discrepancy</div>
-          <p class="text-[11px] text-sub">Modified with "Adobe Acrobat Pro v24.2" 14 days after issuing date (Creation: 2024-03-10 | Mod: 2024-03-24).</p>
-        </div>
-        <div class="p-2.5 rounded subtle-surface border border-line space-y-1">
-          <div class="font-bold text-main text-[11px]">3. Hash &amp; Layer Discrepancy</div>
-          <p class="text-[11px] text-sub">Submitted PDF hash does not match DigiLocker issuance hash. Root signature broken.</p>
-        </div>
+      <!-- Bottom Forensic Metadata Comparison Table -->
+      <div class="overflow-x-auto rounded border border-line">
+        <table class="w-full text-left border-collapse text-xs">
+          <thead>
+            <tr class="subtle-surface border-b border-line text-sub font-mono text-[11px] uppercase">
+              <th class="py-2.5 px-3">Parameter</th>
+              <th class="py-2.5 px-3">Submitted Document</th>
+              <th class="py-2.5 px-3">Official Registry Source</th>
+              <th class="py-2.5 px-3">Status</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y border-line text-main">
+            <tr>
+              <td class="py-2.5 px-3 font-semibold">Font Stream</td>
+              <td class="py-2.5 px-3 font-mono text-red-600">Helvetica-Bold (Digital Overlay)</td>
+              <td class="py-2.5 px-3 font-mono text-emerald-600">Monospaced Typewriter Courier</td>
+              <td class="py-2.5 px-3"><span class="tag-red font-bold">MISMATCH</span></td>
+            </tr>
+            <tr>
+              <td class="py-2.5 px-3 font-semibold">Software Producer</td>
+              <td class="py-2.5 px-3 font-mono text-red-600">Adobe Acrobat Pro v24.2</td>
+              <td class="py-2.5 px-3 font-mono text-emerald-600">Government C-DAC Digital Stamp</td>
+              <td class="py-2.5 px-3"><span class="tag-red font-bold">IRREGULAR</span></td>
+            </tr>
+            <tr>
+              <td class="py-2.5 px-3 font-semibold">Contiguous Acreage</td>
+              <td class="py-2.5 px-3 font-mono text-red-600 font-bold">5.20 Acres</td>
+              <td class="py-2.5 px-3 font-mono text-emerald-600 font-bold">2.10 Acres</td>
+              <td class="py-2.5 px-3"><span class="tag-red font-bold">REGULATORY DEFICIENCY (-3.10 Acres)</span></td>
+            </tr>
+          </tbody>
+        </table>
       </div>
 
       <!-- Footer -->
       <div class="flex items-center justify-between pt-2 border-t border-line text-xs">
-        <button onclick="attachForensicProofToDossier()" class="btn-primary flex items-center gap-1.5" style="border-radius:4px;">
+        <button onclick="window.attachForensicProofToDossier()" class="btn-primary flex items-center gap-1.5" style="border-radius:4px;">
           <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
             <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
           <span>Attach Forensic Proof to Dossier</span>
         </button>
-        <button onclick="closeForensicDiffModal()" class="btn-secondary text-xs" style="border-radius:4px;">Close Inspector</button>
+        <button onclick="window.closeForensicDiffModal()" class="btn-secondary text-xs" style="border-radius:4px;">Close Inspector</button>
       </div>
     </div>
   </div>
 
-  <!-- =====================================================================
-       MODULE 4: 1-CLICK OFFICIAL AICTE SCRUTINY DEFICIENCY REPORT MODAL
-       ===================================================================== -->
-  <div id="aicteScrutinyReportModal" class="fixed inset-0 z-50 hidden bg-black/60 flex items-center justify-center p-3 sm:p-4">
+  <div id="aicteScrutinyReportModal" class="modal-backdrop fixed inset-0 z-50 bg-black/60 flex items-center justify-center p-3 sm:p-4" style="display:none;" onclick="if(event.target === this) window.closeReportModal()">
     <div class="card-surface max-w-4xl w-full p-6 space-y-5 shadow-2xl border border-line rounded flex flex-col max-h-[94vh]">
       <!-- Controls Bar (Hidden in Print) -->
       <div class="flex items-center justify-between border-b border-line pb-3 no-print">
