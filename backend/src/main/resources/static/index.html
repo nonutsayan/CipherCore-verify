@@ -3,15 +3,20 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CipherCore Verify : Application Validation &amp; Compliance Portal</title>
+  <title>CipherCore Verify : AI-Powered Regulatory Scrutiny & Compliance Verification Portal</title>
   <!-- Inline SVG Favicon -->
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230284c7' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z'/%3E%3Cpath d='M9 12l2 2 4-4'/%3E%3C/svg%3E" />
+  
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
+  
   <!-- Google Fonts: Inter & JetBrains Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Official Google Identity Services SDK -->
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
 
   <script>
     tailwind.config = {
@@ -120,6 +125,10 @@
       font-size: 13px;
       font-weight: 600;
       cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
     }
 
     .btn-primary:hover {
@@ -136,6 +145,10 @@
       font-size: 13px;
       font-weight: 500;
       cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
     }
 
     .btn-secondary:hover {
@@ -241,15 +254,68 @@
     .table-row-hover:hover {
       background-color: var(--bg-subtle);
     }
+
+    html {
+      scroll-behavior: smooth;
+    }
   </style>
 </head>
 
 <body class="min-h-screen flex flex-col">
 
   <!-- =====================================================================
-       TOP NAVIGATION BAR (CLEAN BRAND + 4 MAIN VIEWS + THEME TOGGLE)
+       HEADER 1: PUBLIC LANDING HEADER (SHOWN WHEN NOT LOGGED IN)
        ===================================================================== -->
-  <header class="card-surface border-t-0 border-x-0 rounded-none sticky top-0 z-30">
+  <header id="publicHeader" class="card-surface border-t-0 border-x-0 rounded-none sticky top-0 z-30">
+    <div class="max-w-[1280px] mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-3">
+      <!-- Brand Identity -->
+      <button onclick="switchMainView('landing')" class="flex items-center gap-2.5 text-left focus:outline-none">
+        <div class="w-8 h-8 rounded-[5px] bg-[#0284c7] flex items-center justify-center text-white shrink-0">
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+          </svg>
+        </div>
+        <div>
+          <div class="text-sm font-bold tracking-tight text-main leading-none">CipherCore Verify</div>
+          <div class="text-[11px] text-sub mt-0.5">AICTE Regulatory Decision-Support</div>
+        </div>
+        <span class="hidden md:inline-block tag-neutral font-mono text-[10px] ml-1">APH 2026-27</span>
+      </button>
+
+      <!-- Center Links (Smooth Section Nav) -->
+      <nav class="hidden lg:flex items-center gap-6 text-xs font-semibold text-sub">
+        <a href="#platform-workflow" class="hover:text-main">Platform Workflow</a>
+        <a href="#verification-engines" class="hover:text-main">Verification Engines</a>
+        <a href="#compliance-checklist" class="hover:text-main">Compliance Checklist</a>
+        <a href="#statutory-framework" class="hover:text-main">Documentation</a>
+      </nav>
+
+      <!-- Right Header Actions -->
+      <div class="flex items-center gap-2.5">
+        <button onclick="toggleColorTheme()" class="btn-secondary flex items-center gap-1.5 text-xs" title="Toggle Light or Dark Mode">
+          <svg id="iconMoonPub" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+          </svg>
+          <svg id="iconSunPub" class="w-4 h-4 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+          </svg>
+          <span class="themeButtonTextPub hidden sm:inline">Dark Mode</span>
+        </button>
+
+        <button onclick="openAuthModal()" class="btn-primary text-xs">
+          <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
+          </svg>
+          <span>Sign In / Officer Access</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- =====================================================================
+       HEADER 2: AUTHENTICATED PORTAL HEADER (SHOWN WHEN LOGGED IN)
+       ===================================================================== -->
+  <header id="portalHeader" class="card-surface border-t-0 border-x-0 rounded-none sticky top-0 z-30 hidden">
     <div class="max-w-[1280px] mx-auto px-4 sm:px-6 h-16 flex flex-wrap items-center justify-between gap-3">
 
       <!-- Brand Identity -->
@@ -296,16 +362,35 @@
         </button>
       </nav>
 
-      <!-- Theme Switch Button -->
-      <div class="flex items-center gap-2">
-        <button onclick="toggleColorTheme()" class="btn-secondary flex items-center gap-1.5 text-xs" title="Toggle Light or Dark Mode">
+      <!-- User Profile Capsule & Session Controls -->
+      <div class="flex items-center gap-2.5">
+        <!-- User Profile -->
+        <div class="subtle-surface px-2.5 py-1 rounded-[5px] flex items-center gap-2 border border-line">
+          <div id="userAvatarContainer" class="w-6 h-6 rounded-full bg-[#0284c7] text-white text-[11px] font-bold flex items-center justify-center shrink-0 overflow-hidden">
+            <span id="userAvatarInitial">A</span>
+          </div>
+          <div class="hidden md:block leading-tight text-left">
+            <div id="userDisplayName" class="text-xs font-bold text-main truncate max-w-[130px]">A. Deshmukh</div>
+            <div id="userRoleBadge" class="text-[10px] text-sub font-mono">AICTE Scrutiny Officer</div>
+          </div>
+        </div>
+
+        <!-- Theme Toggle -->
+        <button onclick="toggleColorTheme()" class="btn-secondary px-2 py-1.5 text-xs" title="Toggle Light or Dark Mode">
           <svg id="iconMoon" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
             <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
           </svg>
           <svg id="iconSun" class="w-4 h-4 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
             <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
           </svg>
-          <span id="themeButtonText">Dark Mode</span>
+        </button>
+
+        <!-- Sign Out -->
+        <button onclick="signOutUser()" class="btn-secondary py-1.5 px-2.5 text-xs text-[#b91c1c] hover:bg-[#fee2e2] dark:hover:bg-red-950/30 flex items-center gap-1" title="Sign Out of Session">
+          <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+          </svg>
+          <span class="hidden sm:inline">Sign Out</span>
         </button>
       </div>
 
@@ -318,15 +403,269 @@
   <main class="flex-1 max-w-[1280px] w-full mx-auto px-4 sm:px-6 py-6">
 
     <!-- ===================================================================
-         VIEW 1: "APPLICATIONS" (DEFAULT HOME SCREEN)
+         VIEW 0: PUBLIC LANDING PAGE (DEFAULT FOR NEW VISITORS)
          =================================================================== -->
-    <section id="view-applications" class="space-y-5">
+    <section id="view-landing" class="space-y-12 pb-8">
 
-      <!-- Page Header -->
-      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+      <!-- Hero Section -->
+      <div class="text-center max-w-4xl mx-auto pt-6 pb-2 space-y-4">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-[4px] subtle-surface border border-line text-xs font-mono text-sub">
+          <span class="w-2 h-2 rounded-full bg-[#0284c7]"></span>
+          <span>AICTE Regulatory Decision-Support System : SIH Problem Statement SIH26261</span>
+        </div>
+
+        <h1 class="text-2xl sm:text-4xl font-extrabold tracking-tight text-main leading-tight">
+          AI-Powered Regulatory Scrutiny &amp; Document Verification for Technical Institutions
+        </h1>
+
+        <p class="text-sm sm:text-base text-sub leading-relaxed max-w-3xl mx-auto">
+          Automated decision-support platform for AICTE Extension of Approval (EoA) processing, issuing-authority API validation, and forensic document integrity analysis. Built strictly to APH 2024-27 statutory norms.
+        </p>
+
+        <div class="flex flex-wrap items-center justify-center gap-3 pt-2">
+          <button onclick="openAuthModal()" class="btn-primary py-2.5 px-5 text-sm">
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
+            </svg>
+            <span>Enter Verification Portal</span>
+          </button>
+          
+          <a href="#platform-workflow" class="btn-secondary py-2.5 px-5 text-sm">
+            <span>View Compliance Workflow</span>
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </a>
+        </div>
+
+        <!-- 4 Stat Pill Indicators -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-3 pt-6 border-t border-line text-left">
+          <div class="card-surface p-3">
+            <div class="text-[11px] font-mono text-sub uppercase">Mandatory Checklist</div>
+            <div class="text-base font-bold text-main mt-0.5">6 Core Documents</div>
+            <div class="text-[11px] text-sub">Fire NOC, Land Deed, Affiliation</div>
+          </div>
+          <div class="card-surface p-3">
+            <div class="text-[11px] font-mono text-sub uppercase">External Gateways</div>
+            <div class="text-base font-bold text-main mt-0.5">4 Authority APIs</div>
+            <div class="text-[11px] text-sub">DigiLocker, State Fire, University</div>
+          </div>
+          <div class="card-surface p-3">
+            <div class="text-[11px] font-mono text-sub uppercase">Tamper Forensics</div>
+            <div class="text-base font-bold text-main mt-0.5">SHA-256 &amp; ELA</div>
+            <div class="text-[11px] text-sub">Layered PDF metadata extraction</div>
+          </div>
+          <div class="card-surface p-3">
+            <div class="text-[11px] font-mono text-sub uppercase">Statutory Safeguard</div>
+            <div class="text-base font-bold text-main mt-0.5">Mandatory Officer Gate</div>
+            <div class="text-[11px] text-sub">No auto-rejections without human review</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- System Architecture Grid (4 Bento-Style Clean Rectangular Cards) -->
+      <div id="verification-engines" class="space-y-4 pt-4">
+        <div>
+          <div class="text-xs font-mono uppercase text-[#0284c7] font-bold">Platform Architecture</div>
+          <h2 class="text-lg font-bold text-main">Automated Verification Engines</h2>
+          <p class="text-xs text-sub mt-0.5">Four distinct validation engines operating in parallel to evaluate institutional legitimacy.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <!-- Card 1: OCR & Forensic Tamper Check -->
+          <div class="card-surface p-5 space-y-3">
+            <div class="w-8 h-8 rounded-[5px] bg-[#0284c7]/10 text-[#0284c7] flex items-center justify-center">
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+            </div>
+            <div>
+              <h3 class="text-sm font-bold text-main">1. OCR &amp; Forensic Tamper Check</h3>
+              <p class="text-xs text-sub mt-1 leading-relaxed">
+                Extracts machine-readable text layers, compares font encodings, and identifies post-issuance raster overlays. Cross-compares document dates, institutional names, and land acreage across all uploaded PDFs to catch doctored scans.
+              </p>
+            </div>
+            <div class="pt-2 border-t border-line flex flex-wrap gap-2 text-[11px] font-mono text-sub">
+              <span class="tag-neutral">SHA-256 Fingerprinting</span>
+              <span class="tag-neutral">Duplicate Hash Cache</span>
+              <span class="tag-neutral">QR Payload Verification</span>
+            </div>
+          </div>
+
+          <!-- Card 2: Issuing Authority Gateway -->
+          <div class="card-surface p-5 space-y-3">
+            <div class="w-8 h-8 rounded-[5px] bg-[#0284c7]/10 text-[#0284c7] flex items-center justify-center">
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+              </svg>
+            </div>
+            <div>
+              <h3 class="text-sm font-bold text-main">2. Issuing Authority Gateway</h3>
+              <p class="text-xs text-sub mt-1 leading-relaxed">
+                Direct API validation against authoritative government registries. Queries State Fire Services portals for active NOC certificates, DigiLocker State Land Registries for CTS property cards, and University Affiliation records.
+              </p>
+            </div>
+            <div class="pt-2 border-t border-line flex flex-wrap gap-2 text-[11px] font-mono text-sub">
+              <span class="tag-neutral">State Fire Services API</span>
+              <span class="tag-neutral">DigiLocker Land Extract</span>
+              <span class="tag-neutral">Class-3 DSC Verification</span>
+            </div>
+          </div>
+
+          <!-- Card 3: APH Infrastructure Audit -->
+          <div class="card-surface p-5 space-y-3">
+            <div class="w-8 h-8 rounded-[5px] bg-[#0284c7]/10 text-[#0284c7] flex items-center justify-center">
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+              </svg>
+            </div>
+            <div>
+              <h3 class="text-sm font-bold text-main">3. APH Infrastructure Audit</h3>
+              <p class="text-xs text-sub mt-1 leading-relaxed">
+                Evaluates institutional capacity against AICTE Approval Process Handbook (APH 2024-27) norms. Validates contiguous land area (Rural vs Metro), computer terminal density (1:1 per intake), and barrier-free ramp standards.
+              </p>
+            </div>
+            <div class="pt-2 border-t border-line flex flex-wrap gap-2 text-[11px] font-mono text-sub">
+              <span class="tag-neutral">FSR 1:20 Compliance</span>
+              <span class="tag-neutral">Geo-Coordinates Validation</span>
+              <span class="tag-neutral">Lab Carpet Area Norms</span>
+            </div>
+          </div>
+
+          <!-- Card 4: Statutory Human Decision Gate -->
+          <div class="card-surface p-5 space-y-3">
+            <div class="w-8 h-8 rounded-[5px] bg-[#0284c7]/10 text-[#0284c7] flex items-center justify-center">
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+              </svg>
+            </div>
+            <div>
+              <h3 class="text-sm font-bold text-main">4. Statutory Human Decision Gate</h3>
+              <p class="text-xs text-sub mt-1 leading-relaxed">
+                Automated AI flags serve strictly as advisory decision-support. Official approval, show-cause notices, or deficiency orders must be reviewed and digitally signed by an authorized scrutiny officer with full audit logging.
+              </p>
+            </div>
+            <div class="pt-2 border-t border-line flex flex-wrap gap-2 text-[11px] font-mono text-sub">
+              <span class="tag-neutral">Immutable Audit Trail</span>
+              <span class="tag-neutral">Officer Justification Required</span>
+              <span class="tag-neutral">CSV / JSON Report Export</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Platform Workflow Strip (Step 1 to 4) -->
+      <div id="platform-workflow" class="space-y-4 pt-4">
+        <div>
+          <div class="text-xs font-mono uppercase text-[#0284c7] font-bold">End-to-End Pipeline</div>
+          <h2 class="text-lg font-bold text-main">Regulatory Verification Workflow</h2>
+          <p class="text-xs text-sub mt-0.5">How an institutional application moves from intake to official decision.</p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+          <div class="card-surface p-4 relative">
+            <div class="font-mono text-xs font-bold text-[#0284c7] mb-1">STEP 01</div>
+            <div class="text-xs font-bold text-main">Dossier Ingestion</div>
+            <div class="text-[11px] text-sub mt-1">Institutional application and 6 mandatory PDFs are uploaded into the secure validation pipeline.</div>
+          </div>
+
+          <div class="card-surface p-4 relative">
+            <div class="font-mono text-xs font-bold text-[#0284c7] mb-1">STEP 02</div>
+            <div class="text-xs font-bold text-main">Automated Triangulation</div>
+            <div class="text-[11px] text-sub mt-1">OCR engine extracts fields; authority adapters query state registries for live status matching.</div>
+          </div>
+
+          <div class="card-surface p-4 relative">
+            <div class="font-mono text-xs font-bold text-[#0284c7] mb-1">STEP 03</div>
+            <div class="text-xs font-bold text-main">Anomaly Flagging</div>
+            <div class="text-[11px] text-sub mt-1">Discrepancies in dates, acreage, workstation counts, or duplicate PANs are highlighted with severity tags.</div>
+          </div>
+
+          <div class="card-surface p-4 relative">
+            <div class="font-mono text-xs font-bold text-[#0284c7] mb-1">STEP 04</div>
+            <div class="text-xs font-bold text-main">Official Sign-off</div>
+            <div class="text-[11px] text-sub mt-1">Authorized officer examines evidence, records official decision, and logs cryptographic justification.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Compliance Checklist Overview -->
+      <div id="compliance-checklist" class="card-surface p-5 space-y-4">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-line pb-3">
+          <div>
+            <div class="text-xs font-mono uppercase text-[#0284c7] font-bold">Statutory Requirement</div>
+            <h2 class="text-base font-bold text-main">6 Mandatory Documents for Extension of Approval (EoA)</h2>
+          </div>
+          <span class="tag-neutral font-mono text-xs">AICTE APH Section 2.1</span>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 text-xs">
+          <div class="subtle-surface p-3 space-y-1">
+            <div class="font-bold text-main">1. Fire Safety Certificate (NOC)</div>
+            <div class="text-sub text-[11px]">Issued by Competent Fire Authority. Valid through relevant academic session.</div>
+          </div>
+          <div class="subtle-surface p-3 space-y-1">
+            <div class="font-bold text-main">2. Land Ownership Deed</div>
+            <div class="text-sub text-[11px]">Registered sale deed or government land lease. Minimum contiguous land area.</div>
+          </div>
+          <div class="subtle-surface p-3 space-y-1">
+            <div class="font-bold text-main">3. University Affiliation Letter</div>
+            <div class="text-sub text-[11px]">Issued by affiliating state/central university for approved course branches.</div>
+          </div>
+          <div class="subtle-surface p-3 space-y-1">
+            <div class="font-bold text-main">4. Faculty Roster &amp; PAN List</div>
+            <div class="text-sub text-[11px]">Authenticated roster with unique PANs meeting 1:20 faculty-to-student ratio.</div>
+          </div>
+          <div class="subtle-surface p-3 space-y-1">
+            <div class="font-bold text-main">5. Approved Building Plan</div>
+            <div class="text-sub text-[11px]">Sanctioned by Municipal Corporation / Town Planning Authority with built-up area.</div>
+          </div>
+          <div class="subtle-surface p-3 space-y-1">
+            <div class="font-bold text-main">6. Fee Payment Receipt</div>
+            <div class="text-sub text-[11px]">Proof of statutory regulatory fee payment deposited into the AICTE treasury.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Statutory Framework & Documentation Note -->
+      <div id="statutory-framework" class="subtle-surface p-5 rounded-[6px] border border-line flex flex-col md:flex-row items-center justify-between gap-4">
+        <div>
+          <h3 class="text-sm font-bold text-main">Ready to Begin Regulatory Scrutiny?</h3>
+          <p class="text-xs text-sub mt-0.5">Sign in using an authorized officer account or institution credentials to access active application dossiers.</p>
+        </div>
+        <button onclick="openAuthModal()" class="btn-primary py-2 px-5 text-xs shrink-0">
+          Sign In / Officer Access
+        </button>
+      </div>
+
+    </section>
+
+    <!-- ===================================================================
+         VIEW 1: "APPLICATIONS" (QUEUE & WORKSPACE)
+         =================================================================== -->
+    <section id="view-applications" class="hidden space-y-5">
+
+      <!-- Page Header & Action Controls -->
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div>
           <h1 class="text-lg font-bold text-main">Submitted Institution Applications</h1>
           <p class="text-xs text-sub mt-0.5">Select any application below to inspect its document checklist, OCR consistency, authority verification, and facility requirements.</p>
+        </div>
+
+        <!-- Quick Ingestion & Demo Controls -->
+        <div class="flex items-center gap-2">
+          <button onclick="openUploadDossierModal()" class="btn-primary text-xs">
+            <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
+            </svg>
+            <span>+ Upload Dossier</span>
+          </button>
+          <button onclick="loadEvaluatorDemoDataset()" id="loadDemoBtn" class="btn-secondary text-xs" title="Load synthetic test colleges for evaluation">
+            <span>Load Demo Data</span>
+          </button>
+          <button onclick="resetToEmptyQueue()" id="clearQueueBtn" class="btn-secondary text-xs text-sub" title="Clear active applications to test zero-state">
+            <span>Clear Queue</span>
+          </button>
         </div>
       </div>
 
@@ -349,23 +688,23 @@
         <!-- 4 Rectangular Filter Buttons with Exact Dynamic Counts -->
         <div class="flex flex-wrap items-center gap-2">
           <button onclick="setAppStatusFilter('ALL')" id="filterTab-ALL" class="btn-secondary active text-xs">
-            All (5)
+            All (0)
           </button>
           <button onclick="setAppStatusFilter('Needs Review')" id="filterTab-Needs Review" class="btn-secondary text-xs">
-            Needs Review (2)
+            Needs Review (0)
           </button>
           <button onclick="setAppStatusFilter('Verified')" id="filterTab-Verified" class="btn-secondary text-xs">
-            Verified (2)
+            Verified (0)
           </button>
           <button onclick="setAppStatusFilter('Incomplete')" id="filterTab-Incomplete" class="btn-secondary text-xs">
-            Incomplete (1)
+            Incomplete (0)
           </button>
         </div>
       </div>
 
-      <!-- Clean Full-Width Applications Table -->
+      <!-- Applications Table / Zero-State Container -->
       <div class="card-surface overflow-hidden">
-        <div class="overflow-x-auto">
+        <div id="applicationsTableWrapper" class="overflow-x-auto">
           <table class="w-full text-left border-collapse text-xs">
             <thead>
               <tr class="subtle-surface border-b border-line text-sub font-mono text-[11px] uppercase">
@@ -382,6 +721,33 @@
               <!-- Populated by JavaScript -->
             </tbody>
           </table>
+        </div>
+
+        <!-- Zero State Container (Displayed when queue is empty) -->
+        <div id="applicationsZeroState" class="hidden p-10 text-center space-y-4">
+          <div class="w-12 h-12 rounded-[6px] subtle-surface text-sub flex items-center justify-center mx-auto">
+            <svg class="w-6 h-6 text-[#0284c7]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+          </div>
+          <div class="space-y-1">
+            <h3 class="text-sm font-bold text-main">No Active Applications in Queue</h3>
+            <p class="text-xs text-sub max-w-md mx-auto">Upload an application dossier to initiate automated verification or load the evaluator test dataset for demonstration.</p>
+          </div>
+          <div class="flex flex-wrap items-center justify-center gap-3 pt-2">
+            <button onclick="openUploadDossierModal()" class="btn-primary text-xs">
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
+              </svg>
+              <span>+ Upload New Application Dossier</span>
+            </button>
+            <button onclick="loadEvaluatorDemoDataset()" class="btn-secondary text-xs">
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+              </svg>
+              <span>Load Evaluator Demo Dataset (5 Sample Colleges)</span>
+            </button>
+          </div>
         </div>
       </div>
 
@@ -438,7 +804,7 @@
       <!-- 4-Tab Sub-Navigation Bar (Shows ONE Table at a Time) -->
       <div class="flex flex-wrap items-center gap-2 border-b border-line pb-3">
         <button onclick="switchInspectSubTab(1)" id="inspectSubBtn-1" class="sub-tab-btn active">
-          1. Document Checklist (6)
+          1. Document Checklist
         </button>
         <button onclick="switchInspectSubTab(2)" id="inspectSubBtn-2" class="sub-tab-btn">
           2. OCR &amp; Consistency Check
@@ -621,7 +987,7 @@
             <h1 class="text-base font-bold text-main">Privacy Policy</h1>
             <p class="text-xs text-sub mt-0.5">Effective Date: October 2026 | Domain: verify.ciphercore.in</p>
           </div>
-          <button onclick="switchMainView('applications')" class="btn-secondary text-xs">Back to Applications</button>
+          <button onclick="switchMainView(activeUserSession ? 'applications' : 'landing')" class="btn-secondary text-xs">Back</button>
         </div>
 
         <div class="space-y-4 text-sub">
@@ -663,7 +1029,7 @@
             <h1 class="text-base font-bold text-main">Terms and Conditions</h1>
             <p class="text-xs text-sub mt-0.5">Last Updated: October 2026 | Domain: verify.ciphercore.in</p>
           </div>
-          <button onclick="switchMainView('applications')" class="btn-secondary text-xs">Back to Applications</button>
+          <button onclick="switchMainView(activeUserSession ? 'applications' : 'landing')" class="btn-secondary text-xs">Back</button>
         </div>
 
         <div class="space-y-4 text-sub">
@@ -699,7 +1065,7 @@
             <h1 class="text-base font-bold text-main">Domain &amp; API Configuration</h1>
             <p class="text-xs text-sub mt-0.5">Custom domain settings and Spring Boot backend API connection.</p>
           </div>
-          <button onclick="switchMainView('applications')" class="btn-secondary text-xs">Back to Applications</button>
+          <button onclick="switchMainView(activeUserSession ? 'applications' : 'landing')" class="btn-secondary text-xs">Back</button>
         </div>
 
         <div class="space-y-4">
@@ -745,25 +1111,252 @@
   </main>
 
   <!-- =====================================================================
-       FOOTER WITH CUSTOM DOMAIN STATUS & LEGAL PAGE LINKS
+       FOOTER (UNIFIED)
        ===================================================================== -->
   <footer class="card-surface border-b-0 border-x-0 rounded-none mt-8">
     <div class="max-w-[1280px] mx-auto px-4 sm:px-6 py-4 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-sub">
       <div class="flex flex-wrap items-center gap-2">
         <span class="font-bold text-main">CipherCore Verify</span>
         <span>:</span>
-        <span>Domain: <strong id="footerDomainBadge" class="font-mono text-main">verify.ciphercore.in</strong></span>
+        <span>AICTE SIH 2026 Problem Statement SIH26261</span>
+        <span class="hidden md:inline text-muted-color">| Domain: <strong id="footerDomainBadge" class="font-mono text-main">verify.ciphercore.in</strong></span>
       </div>
       <div class="flex flex-wrap items-center gap-4">
         <button onclick="switchMainView('privacy')" class="hover:underline text-sub hover:text-main">Privacy Policy</button>
-        <button onclick="switchMainView('terms')" class="hover:underline text-sub hover:text-main">Terms and Conditions</button>
+        <button onclick="switchMainView('terms')" class="hover:underline text-sub hover:text-main">Terms &amp; Conditions</button>
         <button onclick="switchMainView('domain')" class="hover:underline text-sub hover:text-main">Domain &amp; API Setup</button>
       </div>
     </div>
   </footer>
 
   <!-- =====================================================================
-       HUMAN REVIEW OFFICIAL DECISION MODAL
+       MODAL 1: AUTHENTICATION & LOGIN GATEWAY
+       ===================================================================== -->
+  <div id="authModal" class="fixed inset-0 z-50 hidden bg-black/60 flex items-center justify-center p-4">
+    <div class="card-surface max-w-md w-full p-6 space-y-5 shadow-xl">
+      <div class="flex items-center justify-between border-b border-line pb-3">
+        <div>
+          <h3 class="text-sm font-bold text-main">CipherCore Access Gateway</h3>
+          <p class="text-[11px] text-sub mt-0.5">Authorized AICTE &amp; Institutional Portal Access</p>
+        </div>
+        <button onclick="closeAuthModal()" class="text-sub hover:text-main font-mono text-sm">X</button>
+      </div>
+
+      <!-- Auth Tabs: Officer vs Institution -->
+      <div class="grid grid-cols-2 gap-2 p-1 subtle-surface rounded-[5px]">
+        <button onclick="switchAuthTab('officer')" id="authTabBtn-officer" class="py-1.5 text-xs font-semibold rounded-[4px] bg-[#0284c7] text-white">
+          AICTE Scrutiny Officer
+        </button>
+        <button onclick="switchAuthTab('institution')" id="authTabBtn-institution" class="py-1.5 text-xs font-semibold rounded-[4px] text-sub hover:text-main">
+          Institution Signatory
+        </button>
+      </div>
+
+      <!-- Tab Content A: AICTE Scrutiny Officer -->
+      <form id="authForm-officer" onsubmit="handleOfficerLogin(event)" class="space-y-3 text-xs">
+        <div>
+          <label class="block text-sub font-medium mb-1">Officer Official Email</label>
+          <input
+            id="officerEmailInput"
+            type="email"
+            value="a.deshmukh@aicte-india.org"
+            required
+            class="w-full px-3 py-1.5 subtle-surface text-main font-mono text-xs focus:outline-none focus:border-[#0284c7]"
+          />
+        </div>
+        <div>
+          <label class="block text-sub font-medium mb-1">Department / Bureau Code</label>
+          <input
+            id="officerDeptInput"
+            type="text"
+            value="BUREAU-APPROVALS-HQ"
+            required
+            class="w-full px-3 py-1.5 subtle-surface text-main font-mono text-xs focus:outline-none focus:border-[#0284c7]"
+          />
+        </div>
+        <div>
+          <label class="block text-sub font-medium mb-1">Security PIN / Password</label>
+          <input
+            id="officerPassInput"
+            type="password"
+            value="aicte@2026"
+            required
+            class="w-full px-3 py-1.5 subtle-surface text-main font-mono text-xs focus:outline-none focus:border-[#0284c7]"
+          />
+        </div>
+        <button type="submit" class="w-full btn-primary py-2 text-xs">
+          Sign In as Scrutiny Officer
+        </button>
+      </form>
+
+      <!-- Tab Content B: Institution Representative -->
+      <form id="authForm-institution" onsubmit="handleInstitutionLogin(event)" class="hidden space-y-3 text-xs">
+        <div>
+          <label class="block text-sub font-medium mb-1">Permanent Institute ID (PID)</label>
+          <input
+            id="instPidInput"
+            type="text"
+            placeholder="e.g. 1-98442109"
+            value="1-98442109"
+            required
+            class="w-full px-3 py-1.5 subtle-surface text-main font-mono text-xs focus:outline-none focus:border-[#0284c7]"
+          />
+        </div>
+        <div>
+          <label class="block text-sub font-medium mb-1">Authorized Signatory Email</label>
+          <input
+            id="instEmailInput"
+            type="email"
+            placeholder="principal@institution.edu.in"
+            value="principal@apex-tech.edu.in"
+            required
+            class="w-full px-3 py-1.5 subtle-surface text-main font-mono text-xs focus:outline-none focus:border-[#0284c7]"
+          />
+        </div>
+        <div>
+          <label class="block text-sub font-medium mb-1">Portal Password</label>
+          <input
+            id="instPassInput"
+            type="password"
+            value="inst@secure2026"
+            required
+            class="w-full px-3 py-1.5 subtle-surface text-main font-mono text-xs focus:outline-none focus:border-[#0284c7]"
+          />
+        </div>
+        <button type="submit" class="w-full btn-primary py-2 text-xs">
+          Sign In as Institution
+        </button>
+      </form>
+
+      <!-- Divider -->
+      <div class="relative flex items-center justify-center my-2">
+        <div class="border-t border-line w-full"></div>
+        <span class="card-surface px-2 text-[10px] uppercase font-mono text-muted-color relative">Or Continue With</span>
+      </div>
+
+      <!-- Google Sign-In Official Button Container -->
+      <div class="space-y-2">
+        <div class="flex justify-center">
+          <div id="g_id_onload"
+            data-client_id="YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com"
+            data-context="signin"
+            data-ux_mode="popup"
+            data-callback="handleCredentialResponse"
+            data-auto_prompt="false">
+          </div>
+          <div class="g_id_signin"
+            data-type="standard"
+            data-shape="rectangular"
+            data-theme="outline"
+            data-text="signin_with"
+            data-size="large"
+            data-logo_alignment="left">
+          </div>
+        </div>
+
+        <!-- Fallback Instant Demo Account Button for SIH Hackathon Judges -->
+        <button onclick="loginAsTestOfficer()" class="w-full btn-secondary py-2 flex items-center justify-center gap-2 text-xs font-semibold border-dashed border-[#0284c7] text-[#0284c7] hover:bg-[#0284c7]/5">
+          <svg class="w-4 h-4 text-[#0284c7]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
+          </svg>
+          <span>Continue with Test Officer Account (A. Deshmukh)</span>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- =====================================================================
+       MODAL 2: UPLOAD APPLICATION DOSSIER (FOR FRESH QUEUE INGESTION)
+       ===================================================================== -->
+  <div id="uploadDossierModal" class="fixed inset-0 z-50 hidden bg-black/60 flex items-center justify-center p-4">
+    <div class="card-surface max-w-lg w-full p-6 space-y-4 shadow-xl">
+      <div class="flex items-center justify-between border-b border-line pb-3">
+        <div>
+          <h3 class="text-sm font-bold text-main">Upload Application Dossier</h3>
+          <p class="text-[11px] text-sub mt-0.5">Ingest institutional application documents for automated scrutiny.</p>
+        </div>
+        <button onclick="closeUploadDossierModal()" class="text-sub hover:text-main font-mono text-sm">X</button>
+      </div>
+
+      <form onsubmit="handleCreateNewDossier(event)" class="space-y-3 text-xs">
+        <div>
+          <label class="block text-sub font-medium mb-1">Institution Full Name</label>
+          <input
+            id="newInstNameInput"
+            type="text"
+            required
+            placeholder="e.g. Veermata Jijabai Technological Institute (VJTI), Mumbai"
+            class="w-full px-3 py-1.5 subtle-surface text-main text-xs focus:outline-none focus:border-[#0284c7]"
+          />
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block text-sub font-medium mb-1">Application ID</label>
+            <input
+              id="newAppIdInput"
+              type="text"
+              required
+              placeholder="e.g. APP-2026-201"
+              value="APP-2026-201"
+              class="w-full px-3 py-1.5 subtle-surface text-main font-mono text-xs focus:outline-none focus:border-[#0284c7]"
+            />
+          </div>
+
+          <div>
+            <label class="block text-sub font-medium mb-1">Category</label>
+            <select id="newAppCategorySelect" class="w-full px-3 py-1.5 subtle-surface text-main text-xs focus:outline-none focus:border-[#0284c7]">
+              <option value="Extension of Approval (AY 2026-27)">Extension of Approval (AY 2026-27)</option>
+              <option value="Intake Increase (B.Tech CSE)">Intake Increase (B.Tech CSE)</option>
+              <option value="New Course Approval (Robotics &amp; AI)">New Course Approval (Robotics &amp; AI)</option>
+              <option value="Establishment of New Institution">Establishment of New Institution</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Document Upload Inputs -->
+        <div class="space-y-2 pt-2 border-t border-line">
+          <div class="text-[11px] font-mono uppercase text-sub">Select Checklist Documents (PDF/Scans):</div>
+          
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[11px]">
+            <label class="subtle-surface p-2 border border-line rounded flex items-center justify-between cursor-pointer hover:border-[#0284c7]">
+              <span>1. Fire Safety NOC</span>
+              <span class="tag-green text-[10px]">Attached</span>
+            </label>
+            <label class="subtle-surface p-2 border border-line rounded flex items-center justify-between cursor-pointer hover:border-[#0284c7]">
+              <span>2. Land Ownership Deed</span>
+              <span class="tag-green text-[10px]">Attached</span>
+            </label>
+            <label class="subtle-surface p-2 border border-line rounded flex items-center justify-between cursor-pointer hover:border-[#0284c7]">
+              <span>3. University Affiliation</span>
+              <span class="tag-green text-[10px]">Attached</span>
+            </label>
+            <label class="subtle-surface p-2 border border-line rounded flex items-center justify-between cursor-pointer hover:border-[#0284c7]">
+              <span>4. Faculty Roster &amp; PAN</span>
+              <span class="tag-green text-[10px]">Attached</span>
+            </label>
+            <label class="subtle-surface p-2 border border-line rounded flex items-center justify-between cursor-pointer hover:border-[#0284c7]">
+              <span>5. Building Sanction Plan</span>
+              <span class="tag-green text-[10px]">Attached</span>
+            </label>
+            <label class="subtle-surface p-2 border border-line rounded flex items-center justify-between cursor-pointer hover:border-[#0284c7]">
+              <span>6. Fee Payment Receipt</span>
+              <span class="tag-green text-[10px]">Attached</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="flex items-center justify-end gap-2 pt-3 border-t border-line">
+          <button type="button" onclick="closeUploadDossierModal()" class="btn-secondary text-xs">Cancel</button>
+          <button type="submit" class="btn-primary text-xs">Submit &amp; Run Automated Verification</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- =====================================================================
+       MODAL 3: HUMAN REVIEW OFFICIAL DECISION MODAL
        ===================================================================== -->
   <div id="officialDecisionModal" class="fixed inset-0 z-50 hidden bg-black/60 flex items-center justify-center p-4">
     <div class="card-surface max-w-md w-full p-5 space-y-4 shadow-lg">
@@ -829,15 +1422,13 @@
   </div>
 
   <!-- =====================================================================
-       PORTAL JAVASCRIPT (NO EM DASHES, NO EMOJIS, EXACT COUNTS)
+       PORTAL JAVASCRIPT
        ===================================================================== -->
   <script>
     // ---------------------------------------------------------------------
-    // 1. FIVE LOADED APPLICATIONS (2 VERIFIED, 2 NEEDS REVIEW, 1 INCOMPLETE)
-    //    Each application has 6 checklist documents, OCR comparison rows,
-    //    Issuing Authority checks, and Infrastructure checks.
+    // 1. EVALUATOR DEMO DATASET (5 SYNTHETIC COLLEGES FOR SIH EVALUATION)
     // ---------------------------------------------------------------------
-    const applicationsData = [
+    const APPLICATIONS_DEMO_DATA = [
       {
         id: 'APP-2026-101',
         institution: 'Apex Institute of Technology, Pune',
@@ -1215,9 +1806,14 @@
     ];
 
     // ---------------------------------------------------------------------
-    // STATE VARIABLES
+    // STATE & SESSION VARIABLES
     // ---------------------------------------------------------------------
-    let activeMainView = 'applications';
+    const SESSION_KEY = 'ciphercore_session';
+    const INITIALIZED_KEY = 'ciphercore_initialized';
+
+    let activeUserSession = null;
+    let applicationsData = [];
+    let activeMainView = 'landing';
     let currentAppFilter = 'ALL';
     let currentInspectAppId = 'APP-2026-101';
     let currentInspectSubTab = 1;
@@ -1225,17 +1821,276 @@
     let currentRulesSubTab = 'rules-list';
 
     // ---------------------------------------------------------------------
+    // SESSION & AUTHENTICATION MANAGEMENT
+    // ---------------------------------------------------------------------
+    function initUserSession() {
+      try {
+        const stored = localStorage.getItem(SESSION_KEY);
+        if (stored) {
+          activeUserSession = JSON.parse(stored);
+        }
+      } catch (e) {
+        console.error('Session load error', e);
+        activeUserSession = null;
+      }
+
+      // Check if dataset was initialized
+      const isInitialized = localStorage.getItem(INITIALIZED_KEY) === 'true';
+      if (isInitialized) {
+        applicationsData = JSON.parse(JSON.stringify(APPLICATIONS_DEMO_DATA));
+      } else {
+        applicationsData = [];
+      }
+
+      updateAuthUI();
+
+      if (activeUserSession) {
+        switchMainView('applications');
+      } else {
+        switchMainView('landing');
+      }
+    }
+
+    function updateAuthUI() {
+      const pubHeader = document.getElementById('publicHeader');
+      const portHeader = document.getElementById('portalHeader');
+
+      if (activeUserSession) {
+        if (pubHeader) pubHeader.classList.add('hidden');
+        if (portHeader) portHeader.classList.remove('hidden');
+
+        document.getElementById('userDisplayName').textContent = activeUserSession.name || 'A. Deshmukh';
+        document.getElementById('userRoleBadge').textContent = activeUserSession.role || 'AICTE Scrutiny Officer';
+        
+        const avatarInitial = (activeUserSession.name || 'A').charAt(0).toUpperCase();
+        const avatarContainer = document.getElementById('userAvatarContainer');
+        if (activeUserSession.avatar) {
+          avatarContainer.innerHTML = `<img src="${activeUserSession.avatar}" alt="Avatar" class="w-full h-full object-cover" />`;
+        } else {
+          avatarContainer.innerHTML = `<span>${avatarInitial}</span>`;
+        }
+      } else {
+        if (pubHeader) pubHeader.classList.remove('hidden');
+        if (portHeader) portHeader.classList.add('hidden');
+      }
+    }
+
+    function openAuthModal() {
+      document.getElementById('authModal').classList.remove('hidden');
+    }
+
+    function closeAuthModal() {
+      document.getElementById('authModal').classList.add('hidden');
+    }
+
+    function switchAuthTab(tabType) {
+      const isOfficer = tabType === 'officer';
+      document.getElementById('authTabBtn-officer').className = isOfficer
+        ? 'py-1.5 text-xs font-semibold rounded-[4px] bg-[#0284c7] text-white'
+        : 'py-1.5 text-xs font-semibold rounded-[4px] text-sub hover:text-main';
+      document.getElementById('authTabBtn-institution').className = !isOfficer
+        ? 'py-1.5 text-xs font-semibold rounded-[4px] bg-[#0284c7] text-white'
+        : 'py-1.5 text-xs font-semibold rounded-[4px] text-sub hover:text-main';
+
+      document.getElementById('authForm-officer').classList.toggle('hidden', !isOfficer);
+      document.getElementById('authForm-institution').classList.toggle('hidden', isOfficer);
+    }
+
+    function saveUserSession(sessionObj) {
+      activeUserSession = sessionObj;
+      localStorage.setItem(SESSION_KEY, JSON.stringify(sessionObj));
+      updateAuthUI();
+      closeAuthModal();
+      switchMainView('applications');
+      logAuditEvent(sessionObj.name, 'PORTAL-AUTH', 'User Signed In', `Authenticated as ${sessionObj.role} via ${sessionObj.authMethod}`);
+      showToastBanner(`Welcome, ${sessionObj.name}! Logged in as ${sessionObj.role}.`);
+    }
+
+    function handleOfficerLogin(e) {
+      e.preventDefault();
+      const email = document.getElementById('officerEmailInput').value.trim();
+      const dept = document.getElementById('officerDeptInput').value.trim();
+      const name = email.split('@')[0].replace('.', ' ').toUpperCase();
+      saveUserSession({
+        name: name || 'A. Deshmukh',
+        email: email,
+        role: 'AICTE Scrutiny Officer',
+        department: dept,
+        authMethod: 'Official Officer Credentials'
+      });
+    }
+
+    function handleInstitutionLogin(e) {
+      e.preventDefault();
+      const pid = document.getElementById('instPidInput').value.trim();
+      const email = document.getElementById('instEmailInput').value.trim();
+      saveUserSession({
+        name: 'Institution Officer (' + pid + ')',
+        email: email,
+        role: 'Institution Signatory',
+        department: 'PID: ' + pid,
+        authMethod: 'Institution Credentials'
+      });
+    }
+
+    function loginAsTestOfficer() {
+      saveUserSession({
+        name: 'A. Deshmukh',
+        email: 'a.deshmukh@aicte-india.org',
+        role: 'Senior Scrutiny Officer',
+        department: 'Bureau of Approvals (AICTE HQ)',
+        authMethod: 'Evaluator Test Account'
+      });
+    }
+
+    // Google Identity Services JWT Parser
+    function decodeJwtResponse(token) {
+      try {
+        const base64Url = token.split('.')[1];
+        const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+        const jsonPayload = decodeURIComponent(
+          atob(base64)
+            .split('')
+            .map(c => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2))
+            .join('')
+        );
+        return JSON.parse(jsonPayload);
+      } catch (err) {
+        console.error('Failed to parse Google JWT', err);
+        return null;
+      }
+    }
+
+    function handleCredentialResponse(response) {
+      const payload = decodeJwtResponse(response.credential);
+      if (payload) {
+        saveUserSession({
+          name: payload.name || payload.email,
+          email: payload.email,
+          avatar: payload.picture || '',
+          role: 'AICTE Scrutiny Officer',
+          department: 'Approvals Bureau (HQ)',
+          authMethod: 'Google Identity'
+        });
+      } else {
+        showToastBanner('Google Sign-In credential could not be verified.');
+      }
+    }
+
+    function signOutUser() {
+      activeUserSession = null;
+      localStorage.removeItem(SESSION_KEY);
+      updateAuthUI();
+      switchMainView('landing');
+      showToastBanner('Signed out successfully.');
+    }
+
+    // ---------------------------------------------------------------------
+    // ZERO-STATE & DEMO DATASET MANAGEMENT
+    // ---------------------------------------------------------------------
+    function loadEvaluatorDemoDataset() {
+      applicationsData = JSON.parse(JSON.stringify(APPLICATIONS_DEMO_DATA));
+      localStorage.setItem(INITIALIZED_KEY, 'true');
+      updateFilterButtonCounts();
+      renderApplicationsTable();
+      renderInspectView();
+      logAuditEvent(activeUserSession?.name || 'Evaluator', 'DEMO-DATA', 'Demo Dataset Loaded', 'Loaded 5 sample institutional applications for evaluation.');
+      showToastBanner('Evaluator demo dataset (5 sample colleges) loaded successfully.');
+    }
+
+    function resetToEmptyQueue() {
+      applicationsData = [];
+      localStorage.removeItem(INITIALIZED_KEY);
+      updateFilterButtonCounts();
+      renderApplicationsTable();
+      logAuditEvent(activeUserSession?.name || 'User', 'QUEUE-RESET', 'Queue Cleared', 'Active applications queue cleared to pristine zero-state.');
+      showToastBanner('Applications queue reset to pristine zero-state.');
+    }
+
+    // Dossier Upload Modal
+    function openUploadDossierModal() {
+      document.getElementById('uploadDossierModal').classList.remove('hidden');
+    }
+
+    function closeUploadDossierModal() {
+      document.getElementById('uploadDossierModal').classList.add('hidden');
+    }
+
+    function handleCreateNewDossier(e) {
+      e.preventDefault();
+      const instName = document.getElementById('newInstNameInput').value.trim();
+      const appId = document.getElementById('newAppIdInput').value.trim();
+      const category = document.getElementById('newAppCategorySelect').value;
+
+      if (!instName || !appId) return;
+
+      const newApp = {
+        id: appId,
+        institution: instName,
+        category: category,
+        submittedDate: new Date().toISOString().slice(0, 10),
+        status: 'Needs Review',
+        documents: [
+          { name: 'Fire Safety Certificate', uploaded: 'Yes (PDF)', expiry: '2028-06-30', status: 'Valid', refId: 'MFS-NEW-' + Math.floor(1000 + Math.random() * 9000) },
+          { name: 'Land Ownership Deed', uploaded: 'Yes (PDF)', expiry: 'Permanent', status: 'Valid', refId: 'DL-REV-NEW-' + Math.floor(1000 + Math.random() * 9000) },
+          { name: 'University Affiliation Letter', uploaded: 'Yes (PDF)', expiry: '2027-06-30', status: 'Valid', refId: 'UNI-AFF-2026-01' },
+          { name: 'Faculty Roster & PAN List', uploaded: 'Yes (PDF)', expiry: '2027-05-31', status: 'Valid', refId: 'FAC-' + appId },
+          { name: 'Approved Building Plan', uploaded: 'Yes (PDF)', expiry: 'Permanent', status: 'Valid', refId: 'BP-NEW-2024' },
+          { name: 'Fee Payment Receipt', uploaded: 'Yes (PDF)', expiry: '2027-03-31', status: 'Valid', refId: 'TER-2026-' + Math.floor(10000 + Math.random() * 90000) }
+        ],
+        ocrChecks: [
+          {
+            field: 'Institution Name',
+            formValue: instName,
+            extractedValue: instName,
+            status: 'Matched',
+            note: 'Consistent across uploaded application and attachments.'
+          },
+          {
+            field: 'Contiguous Land Area',
+            formValue: '5.00 Acres',
+            extractedValue: '5.00 Acres',
+            status: 'Matched',
+            note: 'Matches Land Registry extract.'
+          }
+        ],
+        authorityChecks: [
+          { source: 'State Fire Portal', refId: 'MFS-NEW-AUTO', timestamp: '2026-10-25 02:40', status: 'Verified' },
+          { source: 'Land Registry (DigiLocker)', refId: 'DL-REV-AUTO', timestamp: '2026-10-25 02:40', status: 'Verified' }
+        ],
+        infraChecks: [
+          { item: 'Computer Workstations', requirement: '180 Terminals', submitted: '190 Terminals', status: 'Compliant' },
+          { item: 'Laboratory Area', requirement: '1,200 Sq.m', submitted: '1,250 Sq.m', status: 'Compliant' }
+        ]
+      };
+
+      applicationsData.unshift(newApp);
+      localStorage.setItem(INITIALIZED_KEY, 'true');
+      closeUploadDossierModal();
+      document.getElementById('newInstNameInput').value = '';
+
+      updateFilterButtonCounts();
+      renderApplicationsTable();
+      openApplicationInspection(newApp.id);
+
+      logAuditEvent(activeUserSession?.name || 'Officer', newApp.id, 'Application Ingested', `Uploaded dossier for ${instName} (${category}).`);
+      showToastBanner(`Dossier ${newApp.id} ingested and added to active queue.`);
+    }
+
+    // ---------------------------------------------------------------------
     // HELPER FUNCTIONS FOR COUNTS & STATUS TAGS
     // ---------------------------------------------------------------------
     function getChecklistProgress(app) {
+      if (!app || !app.documents) return '0/0 Docs';
       const uploadedCount = app.documents.filter(d => d.status !== 'Missing').length;
       return `${uploadedCount}/${app.documents.length} Docs`;
     }
 
     function getFlaggedIssuesCount(app) {
-      const docIssues = app.documents.filter(d => d.status !== 'Valid').length;
-      const ocrIssues = app.ocrChecks.filter(o => o.status !== 'Matched').length;
-      const infraIssues = app.infraChecks.filter(i => i.status !== 'Compliant').length;
+      if (!app) return 0;
+      const docIssues = (app.documents || []).filter(d => d.status !== 'Valid').length;
+      const ocrIssues = (app.ocrChecks || []).filter(o => o.status !== 'Matched').length;
+      const infraIssues = (app.infraChecks || []).filter(i => i.status !== 'Compliant').length;
       return docIssues + ocrIssues + infraIssues;
     }
 
@@ -1256,7 +2111,8 @@
     // ---------------------------------------------------------------------
     function switchMainView(viewName) {
       activeMainView = viewName;
-      const allViews = ['applications', 'inspect', 'checker', 'rules', 'privacy', 'terms', 'domain'];
+      const allViews = ['landing', 'applications', 'inspect', 'checker', 'rules', 'privacy', 'terms', 'domain'];
+      
       allViews.forEach(v => {
         const el = document.getElementById('view-' + v);
         if (el) el.classList.toggle('hidden', v !== viewName);
@@ -1288,13 +2144,29 @@
     function toggleColorTheme() {
       const htmlEl = document.documentElement;
       const isDark = htmlEl.classList.toggle('dark');
-      document.getElementById('iconMoon').classList.toggle('hidden', isDark);
-      document.getElementById('iconSun').classList.toggle('hidden', !isDark);
-      document.getElementById('themeButtonText').textContent = isDark ? 'Light Mode' : 'Dark Mode';
+      
+      const moon = document.getElementById('iconMoon');
+      const sun = document.getElementById('iconSun');
+      if (moon && sun) {
+        moon.classList.toggle('hidden', isDark);
+        sun.classList.toggle('hidden', !isDark);
+      }
+
+      const moonPub = document.getElementById('iconMoonPub');
+      const sunPub = document.getElementById('iconSunPub');
+      if (moonPub && sunPub) {
+        moonPub.classList.toggle('hidden', isDark);
+        sunPub.classList.toggle('hidden', !isDark);
+      }
+
+      const pubText = document.querySelector('.themeButtonTextPub');
+      if (pubText) {
+        pubText.textContent = isDark ? 'Light Mode' : 'Dark Mode';
+      }
     }
 
     // ---------------------------------------------------------------------
-    // VIEW 1: APPLICATIONS TABLE & FILTERING
+    // VIEW 1: APPLICATIONS TABLE & FILTERING (WITH ZERO-STATE SUPPORT)
     // ---------------------------------------------------------------------
     function updateFilterButtonCounts() {
       const total = applicationsData.length;
@@ -1318,8 +2190,21 @@
     }
 
     function renderApplicationsTable() {
-      const query = (document.getElementById('appSearchBox')?.value || '').trim().toLowerCase();
+      const tableWrapper = document.getElementById('applicationsTableWrapper');
+      const zeroState = document.getElementById('applicationsZeroState');
       const tbody = document.getElementById('applicationsTableBody');
+
+      // If zero applications in queue, display the zero state
+      if (applicationsData.length === 0) {
+        tableWrapper.classList.add('hidden');
+        zeroState.classList.remove('hidden');
+        return;
+      }
+
+      tableWrapper.classList.remove('hidden');
+      zeroState.classList.add('hidden');
+
+      const query = (document.getElementById('appSearchBox')?.value || '').trim().toLowerCase();
 
       const filtered = applicationsData.filter(app => {
         const matchesSearch =
@@ -1334,7 +2219,7 @@
       if (filtered.length === 0) {
         tbody.innerHTML = `
           <tr>
-            <td colspan="7" class="py-8 text-center text-sub">No matching applications found.</td>
+            <td colspan="7" class="py-8 text-center text-sub">No matching applications found for current filter.</td>
           </tr>
         `;
         return;
@@ -1390,6 +2275,15 @@
 
     function renderInspectView() {
       const app = applicationsData.find(a => a.id === currentInspectAppId) || applicationsData[0];
+      if (!app) {
+        document.getElementById('inspectSummaryCard').innerHTML = `
+          <div class="card-surface p-6 col-span-4 text-center text-sub">
+            No application selected or queue is empty. Return to Applications view.
+          </div>
+        `;
+        document.getElementById('inspectSubTabContent').innerHTML = '';
+        return;
+      }
 
       // Populate Switcher Dropdown
       const switcher = document.getElementById('appSwitcherSelect');
@@ -1433,9 +2327,10 @@
     function renderInspectSubTabPane() {
       const app = applicationsData.find(a => a.id === currentInspectAppId) || applicationsData[0];
       const container = document.getElementById('inspectSubTabContent');
+      if (!app) return;
 
       if (currentInspectSubTab === 1) {
-        // SUB-TAB 1: 1. Document Checklist (6)
+        // SUB-TAB 1: 1. Document Checklist
         container.innerHTML = `
           <div class="space-y-4">
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-line pb-3">
@@ -1611,7 +2506,7 @@
         doc.refId = 'SPPU-NSK-2026-44';
       }
 
-      logAuditEvent('Institution / Officer', app.id, 'Document Replaced / Uploaded', `Updated ${doc.name} (Ref: ${doc.refId}) to Valid status.`);
+      logAuditEvent(activeUserSession?.name || 'Officer', app.id, 'Document Replaced / Uploaded', `Updated ${doc.name} (Ref: ${doc.refId}) to Valid status.`);
       renderInspectView();
       updateFilterButtonCounts();
       showToastBanner(`${doc.name} updated and marked Valid.`);
@@ -1645,6 +2540,7 @@
     // Export current application report as JSON
     function exportCurrentApplicationJson() {
       const app = applicationsData.find(a => a.id === currentInspectAppId) || applicationsData[0];
+      if (!app) return;
       const payload = JSON.stringify(app, null, 2);
       const blob = new Blob([payload], { type: 'application/json' });
       const url = URL.createObjectURL(blob);
@@ -1704,7 +2600,7 @@
       });
 
       renderDocumentCheckerCards(customDoc);
-      logAuditEvent('Document Checker', file.name, 'Single File Checked', `Checked ${file.name} (${sizeKb}).`);
+      logAuditEvent(activeUserSession?.name || 'Document Checker', file.name, 'Single File Checked', `Checked ${file.name} (${sizeKb}).`);
       showToastBanner(`Inspected uploaded file: ${file.name}`);
     }
 
@@ -1825,7 +2721,7 @@
       if (!rule) return;
       rule.enabled = !rule.enabled;
       renderValidationRulesTable();
-      logAuditEvent('Compliance Admin', rule.code, `Rule ${rule.enabled ? 'Enabled' : 'Disabled'}`, rule.description);
+      logAuditEvent(activeUserSession?.name || 'Compliance Admin', rule.code, `Rule ${rule.enabled ? 'Enabled' : 'Disabled'}`, rule.description);
       showToastBanner(`${rule.code} ${rule.enabled ? 'enabled' : 'disabled'}.`);
     }
 
@@ -1846,7 +2742,7 @@
       });
       input.value = '';
       renderValidationRulesTable();
-      logAuditEvent('Compliance Admin', nextCode, 'Added Validation Rule', text);
+      logAuditEvent(activeUserSession?.name || 'Compliance Admin', nextCode, 'Added Validation Rule', text);
       showToastBanner(`Added rule ${nextCode}.`);
     }
 
@@ -1894,9 +2790,14 @@
     // ---------------------------------------------------------------------
     function openOfficialDecisionModal() {
       const app = applicationsData.find(a => a.id === currentInspectAppId) || applicationsData[0];
+      if (!app) {
+        showToastBanner('No application selected.');
+        return;
+      }
       document.getElementById('decisionModalAppId').textContent = app.id;
       document.getElementById('decisionModalInstName').textContent = app.institution;
       document.getElementById('decisionOutcomeSelect').value = app.status;
+      document.getElementById('decisionOfficerInput').value = activeUserSession?.name ? `${activeUserSession.name} (${activeUserSession.role})` : 'A. Deshmukh (Senior Scrutiny Officer)';
       document.getElementById('decisionNotesInput').value = '';
       document.getElementById('decisionValidationError').classList.add('hidden');
       document.getElementById('officialDecisionModal').classList.remove('hidden');
@@ -1936,7 +2837,7 @@
       if (!val) return;
       document.getElementById('domainDisplayValue').textContent = val;
       document.getElementById('footerDomainBadge').textContent = val;
-      logAuditEvent('System Admin', val, 'Custom Domain Updated', `Updated portal domain to ${val}`);
+      logAuditEvent(activeUserSession?.name || 'System Admin', val, 'Custom Domain Updated', `Updated portal domain to ${val}`);
       showToastBanner(`Custom domain updated to ${val}`);
     }
 
@@ -1977,15 +2878,10 @@
     }
 
     // ---------------------------------------------------------------------
-    // INITIALIZE PORTAL ON LOAD
+    // INITIALIZE PORTAL ON DOM LOAD
     // ---------------------------------------------------------------------
     window.addEventListener('DOMContentLoaded', () => {
-      updateFilterButtonCounts();
-      renderApplicationsTable();
-      renderInspectView();
-      selectSampleDoc('SAMPLE-1');
-      renderValidationRulesTable();
-      renderAuditLogTable();
+      initUserSession();
     });
   </script>
 </body>
