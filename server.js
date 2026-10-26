@@ -49,6 +49,8 @@ const server = http.createServer((req, res) => {
 
   let reqPath = decodeURI(req.url.split('?')[0]);
   if (reqPath === '/' || reqPath === '') reqPath = '/index.html';
+  if (reqPath === '/portal' || reqPath === '/portal/') reqPath = '/portal.html';
+  if (reqPath === '/landing' || reqPath === '/landing/') reqPath = '/landing.html';
 
   // Check frontend folder first, then fallback to root DIR
   let filePath = path.join(FRONTEND_DIR, reqPath);

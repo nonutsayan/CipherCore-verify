@@ -1,0 +1,1054 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="claude:viewport-fit-sides" content="cover">
+  <title>CipherCore Verify · Autonomous Regulatory Scrutiny &amp; Decision-Support Platform</title>
+  <meta name="description" content="AI-assisted decision-support platform for scrutiny of Extension of Approval (EoA) applications from technical institutions under Smart India Hackathon 2026.">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' fill='none' stroke='%235AD1F5' stroke-width='2'><path d='M16 3l11 6.5v13L16 29 5 22.5v-13z'/><path d='M10.5 16.5l4 4 7-8'/></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@500;700&family=Public+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+/* Layout concept: the six mandatory EoA documents are real 3D sheets in a fixed WebGL scene behind the page.
+   They fan out, line up under a scan beam, get one flagged, and collapse into a signed seal as the reader scrolls.
+   Two pinned stages (engines, workflow) drive the scene. Dark-first, light supported. */
+:root{
+  --bg:#0A0F16; --bg-2:#0E1520; --nav-bg:rgba(10,15,22,.78);
+  --surface:rgba(17,27,41,.68); --line:rgba(170,200,235,.16);
+  --fg:#E9EFF7; --muted:#9AAABF;
+  --accent:#5AD1F5; --accent-text:#5AD1F5; --cta:#5AD1F5; --cta-ink:#04141C;
+  --ok:#4ADE9A; --warn:#F5B84A; --flag:#FF6B4A; --violet:#A99BFF;
+  --chip:rgba(90,209,245,.12); --spot:rgba(90,209,245,.13);
+  --gl-add:1; --gl-dust:#7C8FA8;
+  --shadow:0 28px 60px -30px rgba(0,0,0,.75);
+  --font-display:'Familjen Grotesk','Public Sans',system-ui,sans-serif;
+  --font-body:'Public Sans',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --font-mono:'JetBrains Mono',ui-monospace,Menlo,monospace;
+  --nav-h:64px;
+  color-scheme:dark;
+}
+@media (prefers-color-scheme: light){
+  :root:not([data-theme="dark"]){
+    --bg:#EDF2F7; --bg-2:#E1E9F1; --nav-bg:rgba(237,242,247,.82);
+    --surface:rgba(255,255,255,.76); --line:rgba(11,22,34,.15);
+    --fg:#0B1622; --muted:#46586B;
+    --accent:#0A78A0; --accent-text:#0A6F94; --cta:#12A6D6; --cta-ink:#031219;
+    --ok:#0B8A56; --warn:#9A6200; --flag:#C23A1C; --violet:#5B46D6;
+    --chip:rgba(10,120,160,.1); --spot:rgba(10,120,160,.1);
+    --gl-add:0; --gl-dust:#7F90A5;
+    --shadow:0 26px 50px -30px rgba(11,22,34,.4);
+    color-scheme:light;
+  }
+}
+:root[data-theme="light"]{
+  --bg:#EDF2F7; --bg-2:#E1E9F1; --nav-bg:rgba(237,242,247,.82);
+  --surface:rgba(255,255,255,.76); --line:rgba(11,22,34,.15);
+  --fg:#0B1622; --muted:#46586B;
+  --accent:#0A78A0; --accent-text:#0A6F94; --cta:#12A6D6; --cta-ink:#031219;
+  --ok:#0B8A56; --warn:#9A6200; --flag:#C23A1C; --violet:#5B46D6;
+  --chip:rgba(10,120,160,.1); --spot:rgba(10,120,160,.1);
+  --gl-add:0; --gl-dust:#7F90A5;
+  --shadow:0 26px 50px -30px rgba(11,22,34,.4);
+  color-scheme:light;
+}
+:root[data-theme="dark"]{
+  --bg:#0A0F16; --bg-2:#0E1520; --nav-bg:rgba(10,15,22,.78);
+  --surface:rgba(17,27,41,.68); --line:rgba(170,200,235,.16);
+  --fg:#E9EFF7; --muted:#9AAABF;
+  --accent:#5AD1F5; --accent-text:#5AD1F5; --cta:#5AD1F5; --cta-ink:#04141C;
+  --ok:#4ADE9A; --warn:#F5B84A; --flag:#FF6B4A; --violet:#A99BFF;
+  --chip:rgba(90,209,245,.12); --spot:rgba(90,209,245,.13);
+  --gl-add:1; --gl-dust:#7C8FA8;
+  --shadow:0 28px 60px -30px rgba(0,0,0,.75);
+  color-scheme:dark;
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:calc(var(--nav-h) + env(safe-area-inset-top,0px) + 12px)}
+body{margin:0;background:var(--bg);color:var(--fg);font:400 1rem/1.6 var(--font-body);-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:var(--bg)}
+a{color:inherit}
+img,svg{max-width:100%}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:6px}
+.wrap{width:100%;max-width:1200px;margin-inline:auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+#gl{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;display:block}
+main{position:relative;z-index:1;overflow-x:clip}
+
+.strip{position:relative;z-index:2;background:var(--bg-2);border-bottom:1px solid var(--line)}
+.strip p{margin:0;padding-block:9px;text-align:center;font:500 .68rem/1.35 var(--font-mono);letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:var(--nav-bg);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.nav-in{display:flex;align-items:center;gap:20px;height:var(--nav-h)}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font:700 1.22rem var(--font-display);letter-spacing:-.02em}
+.brand svg{width:28px;height:28px;color:var(--accent-text);flex:none}
+.brand span b{font-weight:500;color:var(--muted)}
+.links{display:flex;gap:4px;margin-left:auto}
+.links a{padding:8px 12px;border-radius:8px;color:var(--muted);text-decoration:none;font-weight:500;font-size:.92rem}
+.links a:hover{color:var(--fg);background:var(--surface)}
+.theme-btn{display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:8px;background:var(--surface);border:1px solid var(--line);color:var(--muted);cursor:pointer;transition:color .2s,border-color .2s}
+.theme-btn:hover{color:var(--fg);border-color:var(--accent)}
+.theme-btn svg{width:18px;height:18px}
+@media (max-width:860px){.links{display:none}.nav-in .theme-btn{margin-left:auto}.nav-in .btn{margin-left:0}}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:46px;padding:0 22px;border-radius:10px;background:var(--cta);color:var(--cta-ink);font:600 .95rem var(--font-body);text-decoration:none;border:1px solid transparent;transition:transform .2s,box-shadow .2s,background .2s;cursor:pointer}
+.btn:hover{transform:translateY(-2px);box-shadow:0 12px 30px -12px var(--cta)}
+.btn.ghost{background:transparent;color:var(--fg);border-color:var(--line)}
+.btn.ghost:hover{background:var(--surface);box-shadow:none}
+.btn-sm{min-height:40px;padding:0 16px;font-size:.88rem}
+.btn svg{width:16px;height:16px}
+
+h1,h2,h3{margin:0;text-wrap:balance}
+h1{font:700 clamp(2.5rem,6vw,4.9rem)/1.02 var(--font-display);letter-spacing:-.035em;margin-block:.3em .34em}
+h1 em{font-style:normal;color:var(--accent-text)}
+h2{font:700 clamp(2rem,4.3vw,3.3rem)/1.06 var(--font-display);letter-spacing:-.03em}
+.eyebrow{margin:0;font:500 .74rem var(--font-mono);letter-spacing:.15em;text-transform:uppercase;color:var(--accent-text)}
+.lede{font-size:1.14rem;color:var(--muted);max-width:58ch;margin:0}
+.sec{padding-block:clamp(56px,9vw,120px)}
+.sec-head{display:grid;gap:14px;max-width:720px;margin-bottom:clamp(28px,4vw,48px)}
+.sec-head p{margin:0;color:var(--muted);font-size:1.06rem}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);box-shadow:var(--shadow)}
+.note{font:500 .68rem var(--font-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.mono{font-family:var(--font-mono)}
+.pill{font:500 .68rem var(--font-mono);padding:3px 10px;border-radius:999px;border:1px solid currentColor;white-space:nowrap;letter-spacing:.02em}
+.pill.ok{color:var(--ok)}.pill.warn{color:var(--warn)}.pill.flag{color:var(--flag)}.pill.idle{color:var(--muted)}
+
+/* hero */
+.hero{padding-block:clamp(40px,7vw,92px) clamp(48px,8vw,108px)}
+.hero-copy{max-width:640px}
+.cta-row{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:26px}
+.chips span{font:500 .72rem var(--font-mono);padding:6px 12px;border-radius:8px;background:var(--chip);color:var(--accent-text)}
+.scan{margin-top:30px;padding:16px 20px 6px;max-width:500px;will-change:transform;transition:transform .25s ease}
+.scan h3{display:flex;justify-content:space-between;gap:12px;margin:0 0 8px;font:500 .68rem var(--font-mono);letter-spacing:.13em;text-transform:uppercase;color:var(--muted)}
+.srow{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 12px;align-items:center;padding:11px 0;border-top:1px solid var(--line);font-size:.9rem}
+.srow small{grid-column:1;color:var(--muted);font:400 .74rem var(--font-mono)}
+.srow .pill{grid-row:1/3;grid-column:2}
+@keyframes rise{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+.hero-copy>*{animation:rise .8s cubic-bezier(.2,.7,.2,1) backwards}
+.hero-copy>:nth-child(2){animation-delay:.08s}.hero-copy>:nth-child(3){animation-delay:.16s}
+.hero-copy>:nth-child(4){animation-delay:.24s}.hero-copy>:nth-child(5){animation-delay:.32s}.hero-copy>:nth-child(6){animation-delay:.4s}
+
+/* marquee */
+.marq{overflow:hidden;border-block:1px solid var(--line);background:var(--surface);padding-block:18px;-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+.track{display:flex;gap:44px;width:max-content;padding-right:44px;align-items:center}
+.js .track{animation:slide 46s linear infinite}
+.marq:hover .track{animation-play-state:paused}
+.track span{display:inline-flex;align-items:center;gap:44px;font:500 .9rem var(--font-mono);letter-spacing:.04em;white-space:nowrap;color:var(--muted)}
+.track span::after{content:"";width:5px;height:5px;background:var(--accent);transform:rotate(45deg)}
+@keyframes slide{to{transform:translateX(-50%)}}
+
+/* pinned stages */
+.proc{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:56px;align-items:start}
+.proc.rev .stage{order:-1}
+.steps{display:flex;flex-direction:column}
+.step{min-height:62vh;display:flex;align-items:center}
+.proc.compact .step{min-height:50vh}
+.step .card{padding:28px;display:grid;gap:12px;width:100%;transition:opacity .45s,transform .45s,border-color .3s}
+.step h3{font:700 1.65rem/1.1 var(--font-display);letter-spacing:-.02em}
+.step p{margin:0;color:var(--muted)}
+.tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
+.tags span{font:500 .72rem var(--font-mono);padding:4px 10px;border-radius:7px;border:1px solid var(--line);color:var(--fg)}
+.js .step .card{opacity:.5;transform:translateX(-10px)}
+.js .proc.rev .step .card{transform:translateX(10px)}
+.js .step.on .card{opacity:1;transform:none;border-color:var(--accent)}
+.stage{position:sticky;top:calc(var(--nav-h) + env(safe-area-inset-top,0px) + 32px);height:min(70vh,560px);display:flex;flex-direction:column;justify-content:flex-end;gap:16px}
+.big{font:700 clamp(5rem,11vw,9.5rem)/.82 var(--font-display);letter-spacing:-.05em;color:transparent;-webkit-text-stroke:1.5px var(--accent-text);font-variant-numeric:tabular-nums}
+@keyframes pop{from{opacity:.2;transform:translateY(14px)}to{opacity:1;transform:none}}
+.big.pop{animation:pop .5s cubic-bezier(.2,.7,.2,1)}
+.stage .lab{font:700 1.2rem var(--font-display)}
+.segs{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;max-width:420px}
+.seg{height:4px;border-radius:4px;background:var(--line);transition:background .4s}
+.seg.full{background:var(--accent)}
+@media (max-width:900px){
+  .proc{grid-template-columns:minmax(0,1fr);gap:0}
+  .stage{display:none}
+  .step,.proc.compact .step{min-height:auto;padding-block:10px}
+  .js .step .card,.js .proc.rev .step .card{opacity:1;transform:none}
+}
+
+/* documents */
+.docs{display:grid;grid-template-columns:minmax(0,6fr) minmax(0,5fr);gap:48px;align-items:start}
+.dlist{margin:0;padding:0;list-style:none;display:grid;gap:10px}
+.dlist li{display:grid;grid-template-columns:44px minmax(0,1fr);gap:12px;align-items:start;padding:18px 20px;cursor:default;transition:border-color .25s,transform .25s}
+.dlist li:hover,.dlist li:focus-visible{border-color:var(--accent);transform:translateX(6px)}
+.js .dlist li.rv.in:hover,.js .dlist li.rv.in:focus-visible{transform:translateX(6px)}
+.dlist .n{font:500 .8rem var(--font-mono);color:var(--accent-text);padding-top:3px}
+.dlist strong{display:block;font:700 1.12rem var(--font-display);letter-spacing:-.01em}
+.dlist span{color:var(--muted);font-size:.93rem}
+@media (max-width:900px){.docs{grid-template-columns:minmax(0,1fr)}.dlist li:hover{transform:none}}
+
+/* product preview */
+.mock-wrap{perspective:1400px}
+.mock{overflow:hidden;transform:rotateX(var(--tx,0deg)) scale(var(--sc,1));transform-origin:50% 0;will-change:transform}
+.mock-bar{display:flex;align-items:center;gap:7px;padding:12px 16px;border-bottom:1px solid var(--line);font:500 .72rem var(--font-mono);color:var(--muted)}
+.mock-bar i{width:10px;height:10px;border-radius:50%;background:var(--line)}
+.mock-bar span{margin-left:10px}
+.mock-body{padding:18px}
+.tiles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.tile{padding:14px 16px;border:1px solid var(--line);border-radius:10px}
+.tile b{display:block;font:700 1.9rem/1 var(--font-display);font-variant-numeric:tabular-nums}
+.tile span{display:block;margin-top:6px;font-size:.78rem;color:var(--muted)}
+.tile.ok b{color:var(--ok)}.tile.warn b{color:var(--warn)}.tile.flag b{color:var(--flag)}
+.tabs{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 10px}
+.tab{min-height:38px;padding:0 14px;border-radius:8px;border:1px solid var(--line);background:transparent;color:var(--muted);font:500 .82rem var(--font-body);cursor:pointer}
+.tab:hover{color:var(--fg)}
+.tab[aria-pressed="true"]{background:var(--chip);color:var(--accent-text);border-color:var(--accent)}
+.tbl-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;min-width:520px;font-size:.9rem}
+th{font:500 .66rem var(--font-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-align:left;padding:10px 12px;border-bottom:1px solid var(--line)}
+td{padding:13px 12px;border-bottom:1px solid var(--line);font-variant-numeric:tabular-nums}
+tr:last-child td{border-bottom:0}
+@media (max-width:700px){.tiles{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* safeguard */
+.guard{display:grid;grid-template-columns:minmax(0,6fr) minmax(0,5fr);gap:48px;align-items:center}
+.guard h2{font-size:clamp(2.2rem,5vw,4.1rem)}
+.guard ul{margin:26px 0 0;padding:0;list-style:none;display:grid;gap:12px;max-width:560px}
+.guard li{display:flex;gap:14px;padding:16px 18px;color:var(--muted)}
+.guard li svg{width:22px;height:22px;flex:none;color:var(--ok);margin-top:2px}
+.guard li b{display:block;color:var(--fg);font-weight:600}
+@media (max-width:900px){.guard{grid-template-columns:minmax(0,1fr)}}
+
+/* cta + footer */
+.cta{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:48px;align-items:center}
+.cta h2{font-size:clamp(2.3rem,5.4vw,4.3rem)}
+.cta-row.l{margin-top:28px}
+.hash{padding:20px 22px;font:400 .76rem/1.7 var(--font-mono);color:var(--muted);overflow-wrap:anywhere}
+.hash b{color:var(--ok);font-weight:500}
+@media (max-width:900px){.cta{grid-template-columns:minmax(0,1fr)}}
+footer{position:relative;z-index:1;background:var(--bg-2);border-top:1px solid var(--line);padding-block:44px 52px}
+.foot{display:grid;grid-template-columns:minmax(0,6fr) minmax(0,3fr) minmax(0,3fr);gap:32px}
+.foot p{margin:12px 0 0;color:var(--muted);font-size:.86rem;max-width:56ch}
+.foot h4{margin:0 0 12px;font:500 .7rem var(--font-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.foot ul{margin:0;padding:0;list-style:none;display:grid;gap:8px}
+.foot li a{text-decoration:none;font-size:.94rem}
+.foot li a:hover{color:var(--accent-text)}
+@media (max-width:760px){.foot{grid-template-columns:repeat(2,minmax(0,1fr))}.foot>:first-child{grid-column:1/-1}}
+
+.js .rv{opacity:.6;transform:translateY(22px);transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform .8s cubic-bezier(.2,.7,.2,1);transition-delay:var(--d,0s)}
+.js .rv.in{opacity:1;transform:none}
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .js .rv,.js .step .card{opacity:1;transform:none}
+  .mock{transform:none}
+}
+  </style>
+</head>
+<body>
+
+<canvas id="gl" aria-hidden="true"></canvas>
+
+<div class="strip"><div class="wrap"><p>SIH prototype &middot; decision-support only &middot; not an official AICTE system</p></div></div>
+
+<header class="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="#top" aria-label="CipherCore Verify, back to top">
+      <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M16 3l11 6.5v13L16 29 5 22.5v-13z"/><path d="M10.5 16.5l4 4 7-8"/></svg>
+      <span>CipherCore <b>Verify</b></span>
+    </a>
+    <nav class="links" aria-label="Primary">
+      <a href="#engines">Engines</a>
+      <a href="#workflow">Workflow</a>
+      <a href="#documents">Documents</a>
+      <a href="#safeguard">Safeguard</a>
+    </nav>
+    <button class="theme-btn" id="themeToggle" type="button" aria-label="Toggle theme">
+      <svg id="themeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="12" cy="12" r="5"></circle>
+        <line x1="12" y1="1" x2="12" y2="3"></line>
+        <line x1="12" y1="21" x2="12" y2="23"></line>
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+        <line x1="1" y1="12" x2="3" y2="12"></line>
+        <line x1="21" y1="12" x2="23" y2="12"></line>
+        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+      </svg>
+    </button>
+    <a class="btn btn-sm portal" href="portal.html" target="_blank" rel="noopener">Enter portal</a>
+  </div>
+</header>
+
+<main>
+  <section class="hero" id="top" data-layout="fan" data-x="1" data-s="1" data-o="1">
+    <div class="wrap">
+      <div class="hero-copy">
+        <p class="eyebrow">Extension of Approval scrutiny</p>
+        <h1>Every document, <em>verified</em> before anyone signs.</h1>
+        <p class="lede">CipherCore Verify is a decision-support platform for technical institution approvals. It fingerprints documents, checks them with issuing authorities, audits facilities against APH 2024-27 norms, and leaves the final decision to an officer.</p>
+        <div class="cta-row">
+          <a class="btn portal" href="portal.html" target="_blank" rel="noopener">Enter Verification Portal
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
+          <a class="btn ghost" href="#workflow">View compliance workflow</a>
+        </div>
+        <div class="card scan tilt" aria-label="Sample scan result">
+          <h3><span>Scan result</span><span>Sample data</span></h3>
+          <div class="srow"><span>Fire Safety Certificate (NOC)</span><span class="pill ok">Matched</span><small>State registry status confirmed</small></div>
+          <div class="srow"><span>Land Ownership Deed</span><span class="pill warn">Review</span><small>Acreage differs across two PDFs</small></div>
+          <div class="srow"><span>Faculty Roster &amp; PAN List</span><span class="pill flag">Flagged</span><small>Duplicate PAN found</small></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="stack" data-layout="row" data-x="0" data-s=".7" data-o=".3" style="padding-block:0">
+    <div class="marq" aria-label="Checks performed">
+      <div class="track" id="track">
+        <span>SHA-256 fingerprinting</span><span>ELA forensics</span><span>OCR consistency</span><span>DigiLocker land records</span><span>State Fire Services NOC</span><span>University affiliation records</span><span>YOLOv8 facility audit</span><span>Class-3 DSC verification</span><span>Tamper-evident audit ledger</span><span>CSV, JSON and PDF export</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="engines" data-layout="row" data-x="-1" data-s=".95" data-o="1">
+    <div class="wrap">
+      <div class="sec-head rv">
+        <p class="eyebrow">Platform architecture</p>
+        <h2>Four engines. One evidence trail.</h2>
+        <p>Three engines gather evidence. The fourth makes sure a person decides.</p>
+      </div>
+      <div class="proc rev compact" data-pin>
+        <div class="steps">
+          <div class="step" data-label="OCR &amp; forensics" data-layout="row" data-beam="a">
+            <article class="card">
+              <span class="note">Engine 1 of 4</span>
+              <h3>OCR &amp; forensic tamper check</h3>
+              <p>Extracts text layers, compares font encodings and flags raster overlays added after issue. Dates, institution names and acreage are cross-checked across every PDF.</p>
+              <div class="tags"><span>Font encodings</span><span>Raster overlays</span><span>Cross-document fields</span></div>
+            </article>
+          </div>
+          <div class="step" data-label="Authority gateway" data-layout="row" data-beam="warn">
+            <article class="card">
+              <span class="note">Engine 2 of 4</span>
+              <h3>Issuing authority gateway</h3>
+              <p>Validates records directly with the people who issued them, instead of trusting a scan of the certificate.</p>
+              <div class="tags"><span>State Fire Services NOC</span><span>DigiLocker CTS cards</span><span>University affiliation</span></div>
+            </article>
+          </div>
+          <div class="step" data-label="APH audit" data-layout="row" data-beam="violet">
+            <article class="card">
+              <span class="note">Engine 3 of 4</span>
+              <h3>APH infrastructure audit</h3>
+              <p>Checks facilities against APH 2024-27 norms, with a vision audit of lab terminals, safety equipment and geotags.</p>
+              <div class="tags"><span>Contiguous land area</span><span>1:1 terminals per intake</span><span>Barrier-free ramps</span><span>YOLOv8 audit</span></div>
+            </article>
+          </div>
+          <div class="step" data-label="Decision gate" data-layout="row" data-beam="ok">
+            <article class="card">
+              <span class="note">Engine 4 of 4</span>
+              <h3>Statutory human decision gate</h3>
+              <p>AI flags are advisory only. An authorised officer reviews the evidence and digitally signs any approval, show-cause notice or deficiency order.</p>
+              <div class="tags"><span>Officer review</span><span>Digital signature</span><span>Full audit log</span></div>
+            </article>
+          </div>
+        </div>
+        <div class="stage" aria-hidden="true">
+          <div class="big">01</div>
+          <div class="lab">OCR &amp; forensics</div>
+          <div class="segs"><i class="seg full"></i><i class="seg"></i><i class="seg"></i><i class="seg"></i></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="workflow" data-layout="stack" data-x="1" data-s="1" data-o="1">
+    <div class="wrap">
+      <div class="sec-head rv">
+        <p class="eyebrow">Regulatory verification workflow</p>
+        <h2>From dossier to decision, with the evidence attached.</h2>
+      </div>
+      <div class="proc" data-pin>
+        <div class="steps">
+          <div class="step" data-label="Ingestion" data-layout="stack" data-beam="a">
+            <article class="card">
+              <span class="note">Step 1 of 4</span>
+              <h3>Dossier ingestion</h3>
+              <p>The application and its six mandatory PDFs enter a secure pipeline. Each file gets a SHA-256 fingerprint on arrival.</p>
+            </article>
+          </div>
+          <div class="step" data-label="Triangulation" data-layout="row" data-beam="a">
+            <article class="card">
+              <span class="note">Step 2 of 4</span>
+              <h3>Automated triangulation</h3>
+              <p>OCR extracts the fields. Authority adapters check state registries for live status, so every claim is compared with its source.</p>
+            </article>
+          </div>
+          <div class="step" data-label="Flagging" data-layout="flag" data-beam="warn">
+            <article class="card">
+              <span class="note">Step 3 of 4</span>
+              <h3>Anomaly flagging</h3>
+              <p>Discrepancies in dates, acreage, workstation counts or duplicate PANs are highlighted with severity tags, ready for review.</p>
+            </article>
+          </div>
+          <div class="step" data-label="Sign-off" data-layout="seal" data-beam="ok">
+            <article class="card">
+              <span class="note">Step 4 of 4</span>
+              <h3>Official sign-off</h3>
+              <p>The officer examines the evidence, records the decision and logs a cryptographic justification that cannot be edited quietly later.</p>
+            </article>
+          </div>
+        </div>
+        <div class="stage" aria-hidden="true">
+          <div class="big">01</div>
+          <div class="lab">Ingestion</div>
+          <div class="segs"><i class="seg full"></i><i class="seg"></i><i class="seg"></i><i class="seg"></i></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="documents" data-layout="grid" data-x="1" data-s=".8" data-o="1">
+    <div class="wrap docs">
+      <div>
+        <div class="sec-head rv" style="margin-bottom:28px">
+          <p class="eyebrow">APH Section 2.1</p>
+          <h2>The six mandatory EoA documents.</h2>
+          <p>Hover a document to bring its sheet forward in the scene.</p>
+        </div>
+        <ol class="dlist" id="dlist">
+          <li class="card rv" tabindex="0" data-i="0"><span class="n">01</span><div><strong>Fire Safety Certificate (NOC)</strong><span>Status confirmed with State Fire Services.</span></div></li>
+          <li class="card rv" tabindex="0" data-i="1"><span class="n">02</span><div><strong>Land Ownership Deed</strong><span>CTS property card checked on DigiLocker, acreage compared across files.</span></div></li>
+          <li class="card rv" tabindex="0" data-i="2"><span class="n">03</span><div><strong>University Affiliation Letter</strong><span>Validated against university affiliation records.</span></div></li>
+          <li class="card rv" tabindex="0" data-i="3"><span class="n">04</span><div><strong>Faculty Roster &amp; PAN List</strong><span>Duplicate PANs highlighted with a severity tag.</span></div></li>
+          <li class="card rv" tabindex="0" data-i="4"><span class="n">05</span><div><strong>Approved Building Plan</strong><span>Facilities audited against APH 2024-27 norms.</span></div></li>
+          <li class="card rv" tabindex="0" data-i="5"><span class="n">06</span><div><strong>Fee Payment Receipt</strong><span>Dates and institution names cross-checked with the rest of the dossier.</span></div></li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="preview" data-layout="row" data-x="0" data-s=".7" data-o=".25">
+    <div class="wrap">
+      <div class="sec-head rv">
+        <p class="eyebrow">The officer's dashboard</p>
+        <h2>Every application, with its flags in plain sight.</h2>
+        <p>Filter by outcome, open an application and inspect the document checklist, OCR consistency, authority checks and infrastructure checks.</p>
+      </div>
+      <div class="mock-wrap">
+        <div class="card mock" id="mock">
+          <div class="mock-bar"><i></i><i></i><i></i><span>Applications &middot; sample data</span></div>
+          <div class="mock-body">
+            <div class="tiles">
+              <div class="tile"><b>6</b><span>Total</span></div>
+              <div class="tile ok"><b>3</b><span>Verified</span></div>
+              <div class="tile warn"><b>2</b><span>Deficiencies</span></div>
+              <div class="tile flag"><b>1</b><span>Immediate review</span></div>
+            </div>
+            <div class="tabs" id="tabs" role="group" aria-label="Filter applications">
+              <button class="tab" type="button" data-f="all" aria-pressed="true">All</button>
+              <button class="tab" type="button" data-f="ok" aria-pressed="false">Verified</button>
+              <button class="tab" type="button" data-f="warn" aria-pressed="false">Deficiencies</button>
+              <button class="tab" type="button" data-f="flag" aria-pressed="false">Immediate review</button>
+            </div>
+            <div class="tbl-wrap">
+              <table>
+                <thead><tr><th>Institution</th><th>Documents</th><th>Flags</th><th>Status</th></tr></thead>
+                <tbody id="rows">
+                  <tr data-s="ok"><td>Institute A (sample)</td><td>6 / 6</td><td>0</td><td><span class="pill ok">Verified</span></td></tr>
+                  <tr data-s="warn"><td>Institute B (sample)</td><td>5 / 6</td><td>2</td><td><span class="pill warn">Deficient</span></td></tr>
+                  <tr data-s="ok"><td>Institute C (sample)</td><td>6 / 6</td><td>0</td><td><span class="pill ok">Verified</span></td></tr>
+                  <tr data-s="flag"><td>Institute D (sample)</td><td>6 / 6</td><td>3</td><td><span class="pill flag">Immediate review</span></td></tr>
+                  <tr data-s="warn"><td>Institute E (sample)</td><td>6 / 6</td><td>1</td><td><span class="pill warn">Deficient</span></td></tr>
+                  <tr data-s="ok"><td>Institute F (sample)</td><td>6 / 6</td><td>0</td><td><span class="pill ok">Verified</span></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="safeguard" data-layout="seal" data-x="1" data-s="1.05" data-o="1">
+    <div class="wrap guard">
+      <div class="rv">
+        <p class="eyebrow">Statutory safeguard</p>
+        <h2 style="margin-top:14px">AI flags are advisory. A person signs.</h2>
+        <p class="lede" style="margin-top:16px">No auto-rejections without human review.</p>
+        <ul>
+          <li class="card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l4.5 4.5L19 7"/></svg><div><b>Flags are preliminary</b>They support a decision. They are not proof of forgery or non-compliance.</div></li>
+          <li class="card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l4.5 4.5L19 7"/></svg><div><b>Officers decide</b>Approvals, show-cause notices and deficiency orders need an authorised officer's digital signature.</div></li>
+          <li class="card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l4.5 4.5L19 7"/></svg><div><b>Everything is logged</b>Each action lands in an audit ledger built on SHA-256 hashes.</div></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="start" data-layout="fan" data-x="1" data-s="1.1" data-o=".9">
+    <div class="wrap cta">
+      <div class="rv">
+        <p class="eyebrow">Try it</p>
+        <h2 style="margin-top:14px">Run a dossier through the portal.</h2>
+        <p class="lede" style="margin-top:16px">Sign in as an officer or an institution, load the demo data and watch the checks run.</p>
+        <div class="cta-row l">
+          <a class="btn portal" href="portal.html" target="_blank" rel="noopener">Enter Verification Portal
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
+          <a class="btn ghost" href="#engines">Review the engines</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <div>
+      <a class="brand" href="#top"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M16 3l11 6.5v13L16 29 5 22.5v-13z"/><path d="M10.5 16.5l4 4 7-8"/></svg><span>CipherCore <b>Verify</b></span></a>
+      <p>A prototype built in response to a Smart India Hackathon problem statement. Automated flags are preliminary decision-support outputs. Final approvals, deficiency notices and inspection orders remain with competent human authorities. This is not an official AICTE system.</p>
+    </div>
+    <div><h4>Platform</h4><ul><li><a href="#engines">Engines</a></li><li><a href="#workflow">Workflow</a></li><li><a href="#documents">Documents</a></li></ul></div>
+    <div><h4>Portal</h4><ul><li><a class="portal" href="portal.html" target="_blank" rel="noopener">Enter portal</a></li><li><a href="#safeguard">Safeguard</a></li><li><a href="#preview">Dashboard</a></li></ul></div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+/* CipherCore Verify — Scroll-Driven 3D Interactive Client Engine */
+const PORTAL_URL = 'portal.html';
+
+(function(){
+  var root = document.documentElement;
+  root.classList.add('js');
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var hasIO = 'IntersectionObserver' in window;
+
+  /* enforce PORTAL_URL on every .portal link */
+  document.querySelectorAll('.portal').forEach(function(a){
+    a.href = PORTAL_URL;
+    a.target = '_blank';
+    a.rel = 'noopener';
+  });
+
+  /* Theme Switcher */
+  var themeToggle = document.getElementById('themeToggle');
+  var currentTheme = localStorage.getItem('cc-theme') || (matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+  if (currentTheme) {
+    root.setAttribute('data-theme', currentTheme);
+  }
+
+  if (themeToggle) {
+    themeToggle.addEventListener('click', function(){
+      var isLight = root.getAttribute('data-theme') === 'light' || 
+        (!root.getAttribute('data-theme') && matchMedia('(prefers-color-scheme: light)').matches);
+      var nextTheme = isLight ? 'dark' : 'light';
+      root.setAttribute('data-theme', nextTheme);
+      localStorage.setItem('cc-theme', nextTheme);
+    });
+  }
+
+  /* reveal on scroll */
+  var rv = [].slice.call(document.querySelectorAll('.rv'));
+  if(hasIO){
+    var io = new IntersectionObserver(function(es){
+      es.forEach(function(e){
+        if(e.isIntersecting){
+          e.target.classList.add('in');
+          io.unobserve(e.target);
+        }
+      });
+    }, {rootMargin:'0px 0px -6% 0px', threshold:.06});
+    rv.forEach(function(el){ io.observe(el); });
+  } else {
+    rv.forEach(function(el){ el.classList.add('in'); });
+  }
+
+  /* pinned stages: engines and workflow */
+  [].forEach.call(document.querySelectorAll('[data-pin]'), function(pin){
+    var steps = [].slice.call(pin.querySelectorAll('.step'));
+    var num = pin.querySelector('.big');
+    var lab = pin.querySelector('.lab');
+    var segs = [].slice.call(pin.querySelectorAll('.seg'));
+    var cur = -1;
+
+    function setStep(i){
+      if(i < 0 || i === cur) return;
+      cur = i;
+      steps.forEach(function(s, k){ s.classList.toggle('on', k === i); });
+      if(num){
+        num.textContent = '0' + (i + 1);
+        num.classList.remove('pop');
+        void num.offsetWidth;
+        num.classList.add('pop');
+      }
+      if(lab) lab.innerHTML = steps[i].getAttribute('data-label');
+      segs.forEach(function(s, k){ s.classList.toggle('full', k <= i); });
+    }
+    setStep(0);
+
+    if(hasIO){
+      var sio = new IntersectionObserver(function(es){
+        es.forEach(function(e){
+          if(e.isIntersecting) setStep(steps.indexOf(e.target));
+        });
+      }, {rootMargin:'-46% 0px -46% 0px'});
+      steps.forEach(function(s){ sio.observe(s); });
+    }
+  });
+
+  /* marquee: duplicate for seamless loop */
+  var track = document.getElementById('track');
+  if(track){
+    [].slice.call(track.children).forEach(function(k){
+      var c = k.cloneNode(true);
+      c.setAttribute('aria-hidden', 'true');
+      track.appendChild(c);
+    });
+  }
+
+  /* card tilt (mouse pointer only) */
+  if(matchMedia('(hover: hover) and (pointer: fine)').matches && !reduce){
+    [].forEach.call(document.querySelectorAll('.tilt'), function(el){
+      el.addEventListener('pointermove', function(e){
+        var r = el.getBoundingClientRect();
+        var px = (e.clientX - r.left) / r.width;
+        var py = (e.clientY - r.top) / r.height;
+        el.style.transform = 'perspective(900px) rotateX(' + ((.5 - py) * 7).toFixed(2) + 'deg) rotateY(' + ((px - .5) * 9).toFixed(2) + 'deg)';
+      });
+      el.addEventListener('pointerleave', function(){
+        el.style.transform = '';
+      });
+    });
+  }
+
+  /* document list drives the 3D scene */
+  window.__hot = -1;
+  [].forEach.call(document.querySelectorAll('#dlist li'), function(li){
+    var i = +li.getAttribute('data-i');
+    function on(){ window.__hot = i; }
+    function off(){ window.__hot = -1; }
+    li.addEventListener('pointerenter', on);
+    li.addEventListener('focus', on);
+    li.addEventListener('pointerleave', off);
+    li.addEventListener('blur', off);
+  });
+
+  /* dashboard filter */
+  var tabs = [].slice.call(document.querySelectorAll('.tab'));
+  var rows = [].slice.call(document.querySelectorAll('#rows tr'));
+  tabs.forEach(function(t){
+    t.addEventListener('click', function(){
+      var f = t.getAttribute('data-f');
+      tabs.forEach(function(x){ x.setAttribute('aria-pressed', x === t ? 'true' : 'false'); });
+      rows.forEach(function(r){
+        r.hidden = !(f === 'all' || r.getAttribute('data-s') === f);
+      });
+    });
+  });
+
+  /* dashboard flattens as it scrolls into view */
+  var mock = document.getElementById('mock');
+  if(mock && !reduce){
+    var ticking = false;
+    function tilt(){
+      ticking = false;
+      var r = mock.getBoundingClientRect();
+      var vh = window.innerHeight;
+      var p = Math.max(0, Math.min(1, (vh - r.top) / (vh * .85)));
+      mock.style.setProperty('--tx', ((1 - p) * 16).toFixed(2) + 'deg');
+      mock.style.setProperty('--sc', (.94 + .06 * p).toFixed(3));
+    }
+    window.addEventListener('scroll', function(){
+      if(!ticking){
+        ticking = true;
+        requestAnimationFrame(tilt);
+      }
+    }, {passive:true});
+    window.addEventListener('resize', tilt);
+    tilt();
+  }
+})();
+
+/* 3D document scene */
+(function(){
+  var canvas = document.getElementById('gl');
+  if(!canvas || !window.THREE) return;
+  var T = window.THREE;
+  var root = document.documentElement;
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var renderer;
+
+  try {
+    renderer = new T.WebGLRenderer({canvas:canvas, antialias:true, alpha:true, powerPreference:'low-power'});
+  } catch(e) {
+    return;
+  }
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+  renderer.setClearColor(0x000000, 0);
+
+  var scene = new T.Scene();
+  var cam = new T.PerspectiveCamera(40, 1, .1, 100);
+  cam.position.z = 7;
+  var group = new T.Group();
+  scene.add(group);
+
+  var DOCS = [
+    'Fire Safety Certificate (NOC)',
+    'Land Ownership Deed',
+    'University Affiliation Letter',
+    'Faculty Roster & PAN List',
+    'Approved Building Plan',
+    'Fee Payment Receipt'
+  ];
+  var FLAG = 3;
+  var W = 1.25, H = 1.65;
+  var seed = 5;
+  function rnd(){
+    seed = (seed * 16807) % 2147483647;
+    return (seed - 1) / 2147483646;
+  }
+  var hashes = DOCS.map(function(){
+    var s = '';
+    for(var k = 0; k < 10; k++) s += '0123456789abcdef'[Math.floor(rnd() * 16)];
+    return s;
+  });
+
+  function paint(cv, title, idx){
+    var c = cv.getContext('2d'), w = cv.width, h = cv.height;
+    c.fillStyle = '#F4F6FA';
+    c.fillRect(0, 0, w, h);
+    c.fillStyle = '#0E1622';
+    c.fillRect(0, 0, w, 76);
+    c.fillStyle = '#9FB2C8';
+    c.font = '500 11px "JetBrains Mono", Menlo, monospace';
+    c.fillText('EoA  APH 2.1  DOC 0' + (idx + 1), 18, 22);
+    c.fillStyle = '#FFFFFF';
+    c.font = '700 19px "Familjen Grotesk", "Public Sans", Arial, sans-serif';
+    var words = title.split(' '), line = '', ly = 48, lines = [];
+    words.forEach(function(wd){
+      var t = line ? line + ' ' + wd : wd;
+      if(c.measureText(t).width > w - 36 && line){
+        lines.push(line);
+        line = wd;
+      } else {
+        line = t;
+      }
+    });
+    lines.push(line);
+    lines.slice(0, 2).forEach(function(l, k){ c.fillText(l, 18, ly + k * 22); });
+    c.fillStyle = '#CBD5E1';
+    var widths = [.92, .8, .88, .6, .9, .74, .84];
+    for(var k = 0; k < 7; k++){ c.fillRect(18, 104 + k * 20, (w - 36) * widths[k], 7); }
+    c.strokeStyle = '#CBD5E1';
+    c.lineWidth = 1.5;
+    c.strokeRect(18, 260, 90, 46);
+    c.fillStyle = '#E2E8F0';
+    c.fillRect(24, 266, 78, 8);
+    c.fillRect(24, 280, 56, 8);
+    c.strokeStyle = '#4B6584';
+    c.lineWidth = 2.2;
+    c.beginPath();
+    c.arc(w - 58, 284, 30, 0, Math.PI * 2);
+    c.stroke();
+    c.beginPath();
+    c.arc(w - 58, 284, 23, 0, Math.PI * 2);
+    c.stroke();
+    c.fillStyle = '#4B6584';
+    c.font = '700 9px "JetBrains Mono", monospace';
+    c.textAlign = 'center';
+    c.fillText('SEAL', w - 58, 288);
+    c.textAlign = 'left';
+    c.fillStyle = '#64748B';
+    c.font = '400 10px "JetBrains Mono", Menlo, monospace';
+    c.fillText('sha256 ' + hashes[idx] + '...', 18, h - 16);
+    c.fillStyle = '#CBD5E1';
+    c.fillRect(18, h - 38, w - 36, 1.5);
+  }
+
+  var colA = new T.Color(), colOk = new T.Color(), colWarn = new T.Color(), colFlag = new T.Color(), colV = new T.Color(), dust = new T.Color(), addBlend = true;
+
+  function readTheme(){
+    var cs = getComputedStyle(root);
+    function g(n, f){ return (cs.getPropertyValue(n) || f).trim() || f; }
+    colA.set(g('--accent', '#5AD1F5'));
+    colOk.set(g('--ok', '#4ADE9A'));
+    colWarn.set(g('--warn', '#F5B84A'));
+    colFlag.set(g('--flag', '#FF6B4A'));
+    colV.set(g('--violet', '#A99BFF'));
+    dust.set(g('--gl-dust', '#7C8FA8'));
+    var nb = parseFloat(g('--gl-add', '1')) > .5;
+    if(nb !== addBlend || !readTheme.done){
+      addBlend = nb;
+      applyBlend();
+    }
+    readTheme.done = true;
+  }
+
+  var sheets = [], i;
+  var edgePts = new Float32Array([-W/2, -H/2, .002, W/2, -H/2, .002, W/2, H/2, .002, -W/2, H/2, .002]);
+
+  for(i = 0; i < 6; i++){
+    var cv = document.createElement('canvas');
+    cv.width = 300; cv.height = 396;
+    paint(cv, DOCS[i], i);
+    var tex = new T.CanvasTexture(cv);
+    tex.anisotropy = 4;
+    var mat = new T.MeshBasicMaterial({map:tex, transparent:true, side:T.DoubleSide, depthWrite:false});
+    var mesh = new T.Mesh(new T.PlaneGeometry(W, H), mat);
+    var eg = new T.BufferGeometry();
+    eg.setAttribute('position', new T.BufferAttribute(edgePts, 3));
+    var edge = new T.LineLoop(eg, new T.LineBasicMaterial({color:0xffffff, transparent:true}));
+    mesh.add(edge);
+    group.add(mesh);
+    sheets.push({mesh:mesh, mat:mat, edge:edge, tex:tex, cv:cv, p:{x:0, y:0, z:0, rx:0, ry:0, rz:0, s:1, op:1}});
+  }
+
+  if(document.fonts && document.fonts.ready){
+    document.fonts.ready.then(function(){
+      sheets.forEach(function(s, k){
+        paint(s.cv, DOCS[k], k);
+        s.tex.needsUpdate = true;
+      });
+    });
+  }
+
+  /* scan beam */
+  var gc = document.createElement('canvas');
+  gc.width = 4; gc.height = 128;
+  var gx = gc.getContext('2d');
+  var gr = gx.createLinearGradient(0, 0, 0, 128);
+  gr.addColorStop(0, 'rgba(255,255,255,0)');
+  gr.addColorStop(.5, 'rgba(255,255,255,.9)');
+  gr.addColorStop(1, 'rgba(255,255,255,0)');
+  gx.fillStyle = gr;
+  gx.fillRect(0, 0, 4, 128);
+
+  var glowMat = new T.MeshBasicMaterial({map:new T.CanvasTexture(gc), transparent:true, depthWrite:false, side:T.DoubleSide});
+  var lineMat = new T.MeshBasicMaterial({transparent:true, depthWrite:false, side:T.DoubleSide});
+  var beam = new T.Group();
+  var glow = new T.Mesh(new T.PlaneGeometry(1, .7), glowMat);
+  var bl = new T.Mesh(new T.PlaneGeometry(1, .028), lineMat);
+  beam.add(glow);
+  beam.add(bl);
+  beam.position.z = .5;
+  group.add(beam);
+
+  /* signed seal */
+  var seal = new T.Group(), sealMats = [];
+  function sm(){
+    var m = new T.LineBasicMaterial({transparent:true, opacity:0});
+    sealMats.push(m);
+    return m;
+  }
+  function circle(r, n){
+    var a = [];
+    for(var k = 0; k <= n; k++){
+      var t = k / n * Math.PI * 2;
+      a.push(Math.cos(t) * r, Math.sin(t) * r, 0);
+    }
+    var g = new T.BufferGeometry();
+    g.setAttribute('position', new T.BufferAttribute(new Float32Array(a), 3));
+    return g;
+  }
+  seal.add(new T.Line(circle(1.3, 96), sm()));
+  seal.add(new T.Line(circle(1.18, 96), sm()));
+
+  var hexA = [];
+  for(i = 0; i <= 6; i++){
+    var ta = i / 6 * Math.PI * 2 + Math.PI / 6;
+    hexA.push(Math.cos(ta) * 1.55, Math.sin(ta) * 1.55, 0);
+  }
+  var hg = new T.BufferGeometry();
+  hg.setAttribute('position', new T.BufferAttribute(new Float32Array(hexA), 3));
+  seal.add(new T.Line(hg, sm()));
+
+  var ck = new T.BufferGeometry();
+  ck.setAttribute('position', new T.BufferAttribute(new Float32Array([-.42, -.02, 0, -.12, -.34, 0, .46, .34, 0]), 3));
+  seal.add(new T.Line(ck, sm()));
+  seal.position.z = .7;
+  group.add(seal);
+
+  /* dust particles */
+  var dp = new Float32Array(180 * 3);
+  for(i = 0; i < 180; i++){
+    dp[i * 3] = (rnd() - .5) * 11;
+    dp[i * 3 + 1] = (rnd() - .5) * 7;
+    dp[i * 3 + 2] = (rnd() - .5) * 5 - 1;
+  }
+  var dg = new T.BufferGeometry();
+  dg.setAttribute('position', new T.BufferAttribute(dp, 3));
+  var dm = new T.PointsMaterial({size:.035, transparent:true, opacity:.55, sizeAttenuation:true, depthWrite:false});
+  var dots = new T.Points(dg, dm);
+  scene.add(dots);
+
+  function applyBlend(){
+    var b = addBlend ? T.AdditiveBlending : T.NormalBlending;
+    glowMat.blending = b;
+    lineMat.blending = b;
+    glowMat.needsUpdate = true;
+    lineMat.needsUpdate = true;
+    glowMat.opacity = addBlend ? 1 : .55;
+  }
+  readTheme();
+
+  try {
+    matchMedia('(prefers-color-scheme: dark)').addEventListener('change', readTheme);
+  } catch(e){}
+  try {
+    new MutationObserver(readTheme).observe(root, {attributes:true, attributeFilter:['data-theme']});
+  } catch(e){}
+
+  /* layouts: where each sheet goes in each story beat */
+  var L = {
+    fan: function(k){
+      return {x:(k - 2.5) * .17, y:(k - 2.5) * .12, z:.9 - k * .3, rx:.1, ry:-.5, rz:.05 * (2.5 - k), s:1, op:1, e:'a'};
+    },
+    stack: function(k){
+      return {x:k * .025, y:k * .025, z:-k * .05, rx:.08, ry:-.35, rz:0, s:1.05, op:k === 5 ? 1 : .9, e:'a'};
+    },
+    row: function(k){
+      return {x:(k - 2.5) * .82, y:0, z:0, rx:0, ry:-.12, rz:0, s:.56, op:1, e:'a'};
+    },
+    grid: function(k){
+      return {x:((k % 3) - 1) * 1.42, y:(.5 - Math.floor(k / 3)) * 1.95, z:0, rx:0, ry:-.18, rz:0, s:.98, op:1, e:'ok'};
+    },
+    flag: function(k){
+      var f = k === FLAG;
+      return {x:f ? 0 : (k - 2.5) * .8, y:f ? .15 : -.35, z:f ? 1.4 : -.2, rx:0, ry:f ? 0 : -.2, rz:0, s:f ? 1.15 : .5, op:f ? 1 : .42, e:f ? 'flag' : 'ok'};
+    },
+    seal: function(k){
+      return {x:0, y:0, z:-k * .04, rx:0, ry:0, rz:0, s:.8, op:k === 5 ? 1 : .55, e:'ok'};
+    }
+  };
+  var BM = {
+    fan: {w:2.4, a:1.25, o:.9},
+    stack: {w:1.9, a:1, o:.85},
+    row: {w:4.6, a:.62, o:1},
+    grid: {w:4.6, a:2, o:.7},
+    flag: {w:0, a:0, o:0},
+    seal: {w:0, a:0, o:0}
+  };
+
+  var secs = [].slice.call(document.querySelectorAll('[data-layout]')).filter(function(s){ return s.hasAttribute('data-x'); });
+  var active = secs[0];
+  var cur = {x:1, s:1, o:1, bw:2.4, bo:0, sealOp:0};
+  var tgt = {x:1, s:1, o:1};
+  var halfW = 4, mobile = false;
+  var beamCol = new T.Color();
+
+  function pick(){
+    var mid = window.innerHeight * .5;
+    for(var q = 0; q < secs.length; q++){
+      var b = secs[q].getBoundingClientRect();
+      if(b.top <= mid && b.bottom > mid){
+        active = secs[q];
+        break;
+      }
+    }
+    var d = active.dataset;
+    tgt.x = +d.x;
+    tgt.s = +d.s;
+    tgt.o = +d.o;
+  }
+
+  function size(){
+    var w = window.innerWidth, h = window.innerHeight;
+    renderer.setSize(w, h, false);
+    cam.aspect = w / h;
+    cam.updateProjectionMatrix();
+    halfW = Math.tan(cam.fov * Math.PI / 360) * cam.position.z * cam.aspect;
+    mobile = w < 860;
+    pick();
+  }
+  size();
+  window.addEventListener('resize', size);
+  window.addEventListener('scroll', pick, {passive:true});
+
+  var mx = 0, my = 0;
+  window.addEventListener('pointermove', function(e){
+    mx = e.clientX / window.innerWidth - .5;
+    my = e.clientY / window.innerHeight - .5;
+  }, {passive:true});
+
+  function lerp(a, b, k){ return a + (b - a) * k; }
+  var t0 = performance.now();
+
+  function frame(now){
+    var t = (now - t0) / 1000;
+    var k = reduce ? 1 : .07;
+    var sy = window.scrollY || 0;
+    var st = active.querySelector('.step.on');
+    var layout = (st && st.dataset.layout) || active.dataset.layout || 'fan';
+    var beamKey = (st && st.dataset.beam) || 'a';
+    var hot = window.__hot;
+    if(!L[layout]) layout = 'fan';
+
+    cur.x = lerp(cur.x, tgt.x, k);
+    cur.s = lerp(cur.s, tgt.s, k);
+    cur.o = lerp(cur.o, tgt.o, k);
+    group.position.x = mobile ? 0 : cur.x * halfW * .5;
+    var sc = cur.s * (mobile ? .78 : 1);
+    group.scale.set(sc, sc, sc);
+    canvas.style.opacity = (cur.o * (mobile ? .5 : 1)).toFixed(3);
+    group.rotation.y = (reduce ? 0 : mx * .25) + Math.sin(sy * .0006) * .1;
+    group.rotation.x = reduce ? 0 : my * .15;
+    dots.rotation.y = reduce ? 0 : t * .015;
+
+    for(var q = 0; q < sheets.length; q++){
+      var s = sheets[q];
+      var tg = L[layout](q);
+      var pp = s.p;
+      var kk = k;
+
+      if(layout === 'grid' && hot === q){
+        tg.z = .7;
+        tg.s *= 1.12;
+        tg.ry = 0;
+        tg.e = 'a';
+      }
+      if(layout === 'flag' && q === FLAG && !reduce){
+        tg.s *= 1 + .025 * Math.sin(t * 3);
+      }
+
+      pp.x = lerp(pp.x, tg.x, kk);
+      pp.y = lerp(pp.y, tg.y, kk);
+      pp.z = lerp(pp.z, tg.z, kk);
+      pp.rx = lerp(pp.rx, tg.rx, kk);
+      pp.ry = lerp(pp.ry, tg.ry, kk);
+      pp.rz = lerp(pp.rz, tg.rz, kk);
+      pp.s = lerp(pp.s, tg.s, kk);
+      pp.op = lerp(pp.op, tg.op, kk);
+
+      s.mesh.position.set(pp.x, pp.y, pp.z);
+      s.mesh.rotation.set(pp.rx, pp.ry, pp.rz);
+      s.mesh.scale.set(pp.s, pp.s, pp.s);
+      s.mat.opacity = pp.op;
+
+      var ec = tg.e === 'ok' ? colOk : (tg.e === 'flag' ? colFlag : colA);
+      s.edge.material.color.lerp(ec, .12);
+      s.edge.material.opacity = Math.min(1, pp.op + .1);
+    }
+
+    var bm = BM[layout] || BM.fan;
+    cur.bw = lerp(cur.bw, bm.w, k);
+    cur.bo = lerp(cur.bo, bm.o, k);
+    var by = reduce ? 0 : Math.sin(t * 1.15) * bm.a;
+    beam.position.y = by;
+    beam.scale.x = Math.max(.001, cur.bw);
+    beamCol.copy(beamKey === 'warn' ? colWarn : (beamKey === 'violet' ? colV : (beamKey === 'ok' ? colOk : colA)));
+    glowMat.color.lerp(beamCol, .15);
+    lineMat.color.lerp(beamCol, .15);
+
+    var bo = cur.bo * (addBlend ? 1 : .8);
+    lineMat.opacity = bo;
+    glowMat.opacity = bo * (addBlend ? .55 : .3);
+    beam.visible = cur.bo > .01;
+
+    cur.sealOp = lerp(cur.sealOp, layout === 'seal' ? 1 : 0, k);
+    seal.visible = cur.sealOp > .01;
+    seal.scale.setScalar(.6 + .4 * cur.sealOp);
+    seal.rotation.z = reduce ? 0 : t * .12;
+    for(q = 0; q < sealMats.length; q++){
+      sealMats[q].color.copy(colOk);
+      sealMats[q].opacity = cur.sealOp;
+    }
+    dm.color.copy(dust);
+
+    renderer.render(scene, cam);
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>

@@ -53,7 +53,8 @@ global.localStorage = {
   removeItem(k) { delete this._data[k]; }
 };
 
-const html = fs.readFileSync('frontend/index.html', 'utf8');
+const targetFile = fs.existsSync('frontend/portal.html') ? 'frontend/portal.html' : 'frontend/index.html';
+const html = fs.readFileSync(targetFile, 'utf8');
 
 // Extract script content
 const scriptMatches = [...html.matchAll(/<script\b[^>]*>([\s\S]*?)<\/script>/gi)];
