@@ -64,3 +64,7 @@ Thumbs.db
 *.iml
 cloudflared.exe
 *.exe
+
+# Impeccable clone cache
+.impeccable/*
+!.impeccable/config.json

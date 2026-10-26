@@ -19,6 +19,7 @@ colors:
   primary: "#0284c7"
   primary-hover: "#0369a1"
   primary-light: "#e0f2fe"
+  primary-border: "#bae6fd"
 
   # Status Indicators
   status-valid: "#16a34a"
