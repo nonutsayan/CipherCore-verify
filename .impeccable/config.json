@@ -1,0 +1,20 @@
+{
+  "$schema": "https://raw.githubusercontent.com/pbakaus/impeccable/main/schema/config.json",
+  "detector": {
+    "designSystem": {
+      "enabled": true
+    },
+    "ignoreRules": [
+      "cramped-padding",
+      "nested-cards",
+      "overused-font",
+      "pulsing-dot"
+    ],
+    "ignoreValues": {
+      "overused-font": [
+        "Inter",
+        "inter"
+      ]
+    }
+  }
+}
