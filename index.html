@@ -240,7 +240,10 @@ footer{position:relative;z-index:1;background:var(--bg-2);border-top:1px solid v
        ========================================================================= */
     .modal-backdrop:not(.active):not([style*="display: flex"]):not([style*="display:flex"]),
     #cvEvidenceModal:not(.active):not([style*="display: flex"]):not([style*="display:flex"]),
-    #forensicDiffModal:not(.active):not([style*="display: flex"]):not([style*="display:flex"]) {
+    #cvInspectionModal:not(.active):not([style*="display: flex"]):not([style*="display:flex"]),
+    #forensicDiffModal:not(.active):not([style*="display: flex"]):not([style*="display:flex"]),
+    #reportModal:not(.active):not([style*="display: flex"]):not([style*="display:flex"]),
+    #aicteScrutinyReportModal:not(.active):not([style*="display: flex"]):not([style*="display:flex"]) {
       display: none !important;
       visibility: hidden !important;
       opacity: 0 !important;
@@ -347,7 +350,10 @@ footer{position:relative;z-index:1;background:var(--bg-2);border-top:1px solid v
        ========================================================================= */
     .modal-backdrop:not(.active):not([style*="display: flex"]):not([style*="display:flex"]),
     #cvEvidenceModal:not(.active):not([style*="display: flex"]):not([style*="display:flex"]),
-    #forensicDiffModal:not(.active):not([style*="display: flex"]):not([style*="display:flex"]) {
+    #cvInspectionModal:not(.active):not([style*="display: flex"]):not([style*="display:flex"]),
+    #forensicDiffModal:not(.active):not([style*="display: flex"]):not([style*="display:flex"]),
+    #reportModal:not(.active):not([style*="display: flex"]):not([style*="display:flex"]),
+    #aicteScrutinyReportModal:not(.active):not([style*="display: flex"]):not([style*="display:flex"]) {
       display: none !important;
       visibility: hidden !important;
       opacity: 0 !important;
@@ -1915,6 +1921,33 @@ window.LAB_FACILITY_PHOTO_B64 = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEBLAEs
     }
   };
 
+  async function downloadOfficialPdfReport(appId) {
+    const targetId = appId || 'APP-2026-101';
+    try {
+      const res = await fetch(`/api/reports/generate?appId=${encodeURIComponent(targetId)}&format=pdf`);
+      if (res.ok) {
+        const blob = await res.blob();
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `AICTE_Scrutiny_Report_${targetId}.pdf`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        return;
+      }
+    } catch (e) {}
+    // Fallback static
+    const a = document.createElement('a');
+    a.href = `assets/reports/AICTE_Scrutiny_Report_${targetId}.pdf`;
+    a.download = `AICTE_Scrutiny_Report_${targetId}.pdf`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  }
+  window.downloadOfficialPdfReport = downloadOfficialPdfReport;
+
   window.openReportModal = function(appId) {
     const m = document.getElementById('reportModal') || document.getElementById('aicteScrutinyReportModal');
     if (m) {
@@ -2414,11 +2447,9 @@ window.LAB_FACILITY_PHOTO_B64 = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEBLAEs
     } else if (txt.includes('Inspect Forensic Diff') || txt.includes('Launch Forensic Diff Viewer')) {
       e.preventDefault();
       window.openForensicDiffModal('APP-2026-101', 'Land Ownership Deed');
-    } else if (txt.includes('Generate AICTE Scrutiny Report') || txt.includes('Preview AICTE Scrutiny Report')) {
-      if (!txt.includes('Print') && !txt.includes('Save PDF')) {
-        e.preventDefault();
-        window.openReportModal('APP-2026-101');
-      }
+    } else if (txt.includes('Generate AICTE Scrutiny Report') || txt.includes('Preview AICTE Scrutiny Report') || txt.includes('Download Official Report') || txt.includes('Download Official PDF')) {
+      e.preventDefault();
+      downloadOfficialPdfReport('APP-2026-101');
     }
   });
 
@@ -2864,6 +2895,33 @@ window.LAB_FACILITY_PHOTO_B64 = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEBLAEs
     }
   };
 
+  async function downloadOfficialPdfReport(appId) {
+    const targetId = appId || 'APP-2026-101';
+    try {
+      const res = await fetch(`/api/reports/generate?appId=${encodeURIComponent(targetId)}&format=pdf`);
+      if (res.ok) {
+        const blob = await res.blob();
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `AICTE_Scrutiny_Report_${targetId}.pdf`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        return;
+      }
+    } catch (e) {}
+    // Fallback static
+    const a = document.createElement('a');
+    a.href = `assets/reports/AICTE_Scrutiny_Report_${targetId}.pdf`;
+    a.download = `AICTE_Scrutiny_Report_${targetId}.pdf`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  }
+  window.downloadOfficialPdfReport = downloadOfficialPdfReport;
+
   window.openReportModal = function(appId) {
     const m = document.getElementById('reportModal') || document.getElementById('aicteScrutinyReportModal');
     if (m) {
@@ -3363,11 +3421,9 @@ window.LAB_FACILITY_PHOTO_B64 = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEBLAEs
     } else if (txt.includes('Inspect Forensic Diff') || txt.includes('Launch Forensic Diff Viewer')) {
       e.preventDefault();
       window.openForensicDiffModal('APP-2026-101', 'Land Ownership Deed');
-    } else if (txt.includes('Generate AICTE Scrutiny Report') || txt.includes('Preview AICTE Scrutiny Report')) {
-      if (!txt.includes('Print') && !txt.includes('Save PDF')) {
-        e.preventDefault();
-        window.openReportModal('APP-2026-101');
-      }
+    } else if (txt.includes('Generate AICTE Scrutiny Report') || txt.includes('Preview AICTE Scrutiny Report') || txt.includes('Download Official Report') || txt.includes('Download Official PDF')) {
+      e.preventDefault();
+      downloadOfficialPdfReport('APP-2026-101');
     }
   });
 

@@ -1,0 +1,121 @@
+{
+  "reportType": "AICTE Official Scrutiny Assessment Report",
+  "academicYear": "2026-27",
+  "statutoryHandbook": "Approval Process Handbook (APH 2024-27)",
+  "problemStatement": "SIH26261",
+  "generatedAt": "2026-10-27T18:09:55.897952+00:00",
+  "applicationProfile": {
+    "applicationId": "APP-2026-101",
+    "institutionName": "Apex Institute of Technology",
+    "permanentInstituteId": "1-33249112",
+    "region": "Western Region (WRO, Mumbai)",
+    "affiliatingUniversity": "Savitribai Phule Pune University (SPPU)",
+    "category": "Engineering & Technology (UG/PG)",
+    "submittedDate": "2026-10-24",
+    "overallStatus": "Needs Review"
+  },
+  "scrutinyExecutiveSummary": {
+    "decision": "Deficiency Flagged - Conditional Review",
+    "officerId": "AICTE-OFFICER-782",
+    "officerName": "Dr. Arvind Kumar",
+    "justification": "Contiguous land deed exhibits post-scan raster alteration (ELA 88.4%). Computing center short by 8 terminals under APH Clause 4.1.",
+    "overallScore": 68.5
+  },
+  "documentAuditMatrix": [
+    {
+      "name": "Fire Safety Certificate (NOC)",
+      "code": "DOC-01",
+      "docType": "Fire Safety Certificate",
+      "refId": "MFS-2026-7781",
+      "authority": "Maharashtra Fire Services Portal (HTTP 200)",
+      "status": "Valid",
+      "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "findings": "Valid clearance for AY 2026-27. Class-3 DSC verified."
+    },
+    {
+      "name": "Land Ownership Deed",
+      "code": "DOC-02",
+      "docType": "Land Ownership Deed",
+      "refId": "DL-REV-MH-4419",
+      "authority": "IGRS Maharashtra & DigiLocker Gateway",
+      "status": "Altered",
+      "hash": "4a5e9b821cf387a6d88f40192e448b368735df9012a688bcae9124a91986c071",
+      "findings": "Tampering detected (ELA 88.4%). Claimed 5.20 Acres vs Registry 2.10 Acres."
+    },
+    {
+      "name": "University Affiliation Letter",
+      "code": "DOC-03",
+      "docType": "University Affiliation Letter",
+      "refId": "SPPU-AFF-2026-441",
+      "authority": "SPPU Academic Council API",
+      "status": "Valid",
+      "hash": "8f3e2a1b7c9d0e4f6a5b8c7d9e0f1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f",
+      "findings": "Affiliation valid for AY 2026-27. Approved intake 360 seats."
+    },
+    {
+      "name": "Faculty Roster & PAN List",
+      "code": "DOC-04",
+      "docType": "Faculty Roster & PAN List",
+      "refId": "FAC-ROSTER-2026",
+      "authority": "NSDL / Income Tax API & AICTE Faculty Portal",
+      "status": "Valid",
+      "hash": "1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b",
+      "findings": "Cadre ratio 1:16.8 (Compliant). 48/52 faculty PAN records active."
+    },
+    {
+      "name": "Approved Building Plan",
+      "code": "DOC-05",
+      "docType": "Approved Building Plan",
+      "refId": "PMC-BP-2024-9981",
+      "authority": "Pune Municipal Corporation Urban Planning Gateway",
+      "status": "Valid",
+      "hash": "3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3c4d",
+      "findings": "Approved carpet area 8,450 sq.m. FAR / FSI within permissible statutory limits."
+    },
+    {
+      "name": "Fee Payment Receipt (TER)",
+      "code": "DOC-06",
+      "docType": "Fee Payment Receipt",
+      "refId": "TER-2026-88192",
+      "authority": "Bharatkosh Government Payment Portal (UTR SBIN42619028)",
+      "status": "Valid",
+      "hash": "7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b",
+      "findings": "Full processing fee INR 1,50,000 confirmed received."
+    }
+  ],
+  "computerVisionAudit": {
+    "facility": "Central Computing Facility (Lab 03)",
+    "geoCoordinates": "18.5204 N, 73.8567 E (Hinjawadi)",
+    "detectedTerminals": 142,
+    "prescribedNorm": 150,
+    "shortfall": 8,
+    "shortfallPercentage": "-5.3%",
+    "model": "YOLOv8x Deep Neural Detector (v8.2.1)",
+    "confidence": "94.2% mean IoU confidence",
+    "safetyApparatus": "Fire extinguisher present; Emergency exit signage luminaire uninstalled.",
+    "status": "Deficient"
+  },
+  "forensicAnalysis": {
+    "document": "Land Ownership Deed (SYNTH_LAND_DEED_PUNE_ALTERED.pdf)",
+    "elaScore": "88.4% Tamper Overlay Detected",
+    "producerMismatch": "Adobe Acrobat Pro v24.2 overlay on Scanned Courier bitmap",
+    "statutoryShortfall": "Deficit of 3.10 contiguous acres below APH Table 4.1 minimums",
+    "status": "Tampered"
+  },
+  "blockchainProofOfAuthority": {
+    "ledgerType": "Consortium Proof-of-Authority (PoA) Blockchain",
+    "genesisHash": "0000000000000000000000000000000000000000000000000000000000000000",
+    "currentBlock": 4,
+    "merkleRoot": "7b8e1f2a3c9d4e5f6a0b1c2d3e4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d1e2f",
+    "notarizedHash": "d8e7c6b5a4f3e2d1c0b9a8f7e6d5c4b3a2f1e0d9c8b7a6f5e4d3c2b1a0f9e8d7",
+    "nodes": [
+      "AICTE-HQ (New Delhi)",
+      "IIT-Bombay Notary Node",
+      "IIT-Madras Validator",
+      "IISc-Bangalore Anchor Node",
+      "AICTE-WRO (Mumbai)",
+      "MoE-Gov Gateway",
+      "NIC-DataHub"
+    ]
+  }
+}
