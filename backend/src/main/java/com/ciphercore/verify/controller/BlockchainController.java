@@ -64,6 +64,11 @@ public class BlockchainController {
         return ResponseEntity.ok(blockchainNotaryService.verifyDocumentOnChain(docHash));
     }
 
+    @GetMapping("/verify-chain")
+    public ResponseEntity<BlockchainNotaryService.ChainVerificationResult> verifyChain() {
+        return ResponseEntity.ok(blockchainNotaryService.verifyChainIntegrity());
+    }
+
     public record BlockchainTamperRequest(Long blockNumber) {}
 
     @PostMapping("/simulate-tamper")
@@ -71,10 +76,11 @@ public class BlockchainController {
         boolean ok = blockchainNotaryService.simulateTamper(req.blockNumber());
         if (ok) {
             return ResponseEntity.ok(Map.of(
-                    "status", "BLOCKCHAIN_TAMPER_SIMULATED",
+                    "status", "AUDIT_LEDGER_TAMPER_SIMULATED",
                     "blockNumber", req.blockNumber(),
-                    "message", "Consensus Violation: Block #" + req.blockNumber() +
-                               " payload modified! Merkle root calculation mismatch across validator quorum."
+                    "message", "Tamper Detected: Block #" + req.blockNumber() +
+                               " payload modified. SHA-256 block hash no longer matches content signature. Sequential chain linkage broken.",
+                    "ledgerType", "Cryptographic Hash-Chain Audit Ledger Prototype"
             ));
         }
         return ResponseEntity.badRequest().body(Map.of("error", "Block #" + req.blockNumber() + " not found"));
@@ -85,10 +91,11 @@ public class BlockchainController {
         boolean ok = blockchainNotaryService.restoreTamper(req.blockNumber());
         if (ok) {
             return ResponseEntity.ok(Map.of(
-                    "status", "BLOCKCHAIN_TAMPER_RESTORED",
+                    "status", "AUDIT_LEDGER_INTEGRITY_RESTORED",
                     "blockNumber", req.blockNumber(),
-                    "message", "Consensus Restored: Block #" + req.blockNumber() +
-                               " cryptographic integrity verified by 7/7 validator nodes."
+                    "message", "Cryptographic Integrity Restored: Block #" + req.blockNumber() +
+                               " payload restored to original SHA-256 hash. Sequential chain verified.",
+                    "ledgerType", "Cryptographic Hash-Chain Audit Ledger Prototype"
             ));
         }
         return ResponseEntity.badRequest().body(Map.of("error", "Block #" + req.blockNumber() + " not found"));
