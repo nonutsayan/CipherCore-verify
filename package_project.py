@@ -7,7 +7,7 @@ zip_filename = 'aicte-sih-portal.zip'
 zip_filepath = os.path.join(src_dir, zip_filename)
 
 # Exclude patterns to keep zip clean and compact
-exclude_dirs = {'.git', 'target', '.mvn', 'node_modules', '.idea', '__pycache__'}
+exclude_dirs = {'.git', 'target', '.mvn', 'node_modules', '.idea', '__pycache__', '.impeccable'}
 exclude_files = {zip_filename, 'ciphercore_db.mv.db', 'ciphercore_db.trace.db', 'ciphercore_db.lock.db'}
 
 print(f"Creating zip archive at {zip_filepath}...")

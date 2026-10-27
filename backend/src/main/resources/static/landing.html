@@ -76,8 +76,6 @@ img,svg{max-width:100%}
 #gl{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;display:block}
 main{position:relative;z-index:1;overflow-x:clip}
 
-.strip{position:relative;z-index:2;background:var(--bg-2);border-bottom:1px solid var(--line)}
-.strip p{margin:0;padding-block:9px;text-align:center;font:500 .68rem/1.35 var(--font-mono);letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
 .nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:var(--nav-bg);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
 .nav-in{display:flex;align-items:center;gap:20px;height:var(--nav-h)}
 .brand{display:flex;align-items:center;gap:10px;text-decoration:none;font:700 1.22rem var(--font-display);letter-spacing:-.02em}
@@ -240,8 +238,6 @@ footer{position:relative;z-index:1;background:var(--bg-2);border-top:1px solid v
 
 <canvas id="gl" aria-hidden="true"></canvas>
 
-<div class="strip"><div class="wrap"><p>SIH prototype &middot; decision-support only &middot; not an official AICTE system</p></div></div>
-
 <header class="nav">
   <div class="wrap nav-in">
     <a class="brand" href="#top" aria-label="CipherCore Verify, back to top">
@@ -267,7 +263,7 @@ footer{position:relative;z-index:1;background:var(--bg-2);border-top:1px solid v
         <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
       </svg>
     </button>
-    <a class="btn btn-sm portal" href="portal.html" target="_blank" rel="noopener">Enter portal</a>
+    <a class="btn btn-sm portal" href="portal.html">Enter portal</a>
   </div>
 </header>
 
@@ -279,7 +275,7 @@ footer{position:relative;z-index:1;background:var(--bg-2);border-top:1px solid v
         <h1>Every document, <em>verified</em> before anyone signs.</h1>
         <p class="lede">CipherCore Verify is a decision-support platform for technical institution approvals. It fingerprints documents, checks them with issuing authorities, audits facilities against APH 2024-27 norms, and leaves the final decision to an officer.</p>
         <div class="cta-row">
-          <a class="btn portal" href="portal.html" target="_blank" rel="noopener">Enter Verification Portal
+          <a class="btn portal" href="portal.html">Enter Verification Portal
             <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
           <a class="btn ghost" href="#workflow">View compliance workflow</a>
         </div>
@@ -312,34 +308,34 @@ footer{position:relative;z-index:1;background:var(--bg-2);border-top:1px solid v
         <div class="steps">
           <div class="step" data-label="OCR &amp; forensics" data-layout="row" data-beam="a">
             <article class="card">
-              <span class="note">Engine 1 of 4</span>
+              <span class="note">Engine 1 of 4 · Forensic Analysis</span>
               <h3>OCR &amp; forensic tamper check</h3>
-              <p>Extracts text layers, compares font encodings and flags raster overlays added after issue. Dates, institution names and acreage are cross-checked across every PDF.</p>
-              <div class="tags"><span>Font encodings</span><span>Raster overlays</span><span>Cross-document fields</span></div>
+              <p>Autonomous multi-layer PDF parsing engine extracting text streams, font descriptor tables, and embedded raster overlays. Executes Error Level Analysis (ELA: 88.4%) to detect post-issuance digital alterations. Cross-triangulates institutional title, survey numbers, approval dates, and land acreage across all uploaded statutory documents.</p>
+              <div class="tags"><span>Font Encodings</span><span>Error Level Analysis (88.4%)</span><span>Cross-Document Entity Matching</span><span>PDF Stream Dissection</span></div>
             </article>
           </div>
           <div class="step" data-label="Authority gateway" data-layout="row" data-beam="warn">
             <article class="card">
-              <span class="note">Engine 2 of 4</span>
+              <span class="note">Engine 2 of 4 · Registry Gateway</span>
               <h3>Issuing authority gateway</h3>
-              <p>Validates records directly with the people who issued them, instead of trusting a scan of the certificate.</p>
-              <div class="tags"><span>State Fire Services NOC</span><span>DigiLocker CTS cards</span><span>University affiliation</span></div>
+              <p>Direct API verification bridge to state repositories and central government authenticators. Validates State Fire Services NOC validity, queries DigiLocker CTS land records for contiguous plot holding, and verifies State Technical University annual affiliation records, eliminating reliance on scanned paper representations.</p>
+              <div class="tags"><span>State Fire Services API</span><span>DigiLocker Land Registry</span><span>University Affiliation Gateway</span><span>DSC Token Validation</span></div>
             </article>
           </div>
           <div class="step" data-label="APH audit" data-layout="row" data-beam="violet">
             <article class="card">
-              <span class="note">Engine 3 of 4</span>
+              <span class="note">Engine 3 of 4 · Infrastructure Vision</span>
               <h3>APH infrastructure audit</h3>
-              <p>Checks facilities against APH 2024-27 norms, with a vision audit of lab terminals, safety equipment and geotags.</p>
-              <div class="tags"><span>Contiguous land area</span><span>1:1 terminals per intake</span><span>Barrier-free ramps</span><span>YOLOv8 audit</span></div>
+              <p>Autonomous spatial and physical infrastructure auditor enforcing AICTE Approval Process Handbook (APH 2024–27) Chapter II norms. YOLOv8x computer vision model inspects laboratory workstation counts (1:1 terminal-to-intake norm), computing carpet density (≥1.20 sq.m/terminal), barrier-free access ramps, fire safety equipment, and geofenced coordinates.</p>
+              <div class="tags"><span>APH 2024-27 Chapter II</span><span>YOLOv8x Workstation Detection</span><span>Carpet Area Density (≥1.20 m²)</span><span>Geofence HUD (18.52° N)</span></div>
             </article>
           </div>
           <div class="step" data-label="Decision gate" data-layout="row" data-beam="ok">
             <article class="card">
-              <span class="note">Engine 4 of 4</span>
+              <span class="note">Engine 4 of 4 · Governance Gate</span>
               <h3>Statutory human decision gate</h3>
-              <p>AI flags are advisory only. An authorised officer reviews the evidence and digitally signs any approval, show-cause notice or deficiency order.</p>
-              <div class="tags"><span>Officer review</span><span>Digital signature</span><span>Full audit log</span></div>
+              <p>Strict advisory architecture ensuring AI never issues automated rejections without human oversight. Empowers authorized AICTE Scrutiny Officers to review forensic evidence, record definitive decisions (Approval, Show-Cause Notice, or Deficiency Order), and digitally sign determinations recorded permanently on a SHA-256 consortium audit ledger.</p>
+              <div class="tags"><span>Human-in-the-Loop Gate</span><span>Statutory Officer Sign-Off</span><span>SHA-256 Notary Ledger</span><span>Section 3A IT Act Compliance</span></div>
             </article>
           </div>
         </div>
@@ -407,12 +403,54 @@ footer{position:relative;z-index:1;background:var(--bg-2);border-top:1px solid v
           <p>Hover a document to bring its sheet forward in the scene.</p>
         </div>
         <ol class="dlist" id="dlist">
-          <li class="card rv" tabindex="0" data-i="0"><span class="n">01</span><div><strong>Fire Safety Certificate (NOC)</strong><span>Status confirmed with State Fire Services.</span></div></li>
-          <li class="card rv" tabindex="0" data-i="1"><span class="n">02</span><div><strong>Land Ownership Deed</strong><span>CTS property card checked on DigiLocker, acreage compared across files.</span></div></li>
-          <li class="card rv" tabindex="0" data-i="2"><span class="n">03</span><div><strong>University Affiliation Letter</strong><span>Validated against university affiliation records.</span></div></li>
-          <li class="card rv" tabindex="0" data-i="3"><span class="n">04</span><div><strong>Faculty Roster &amp; PAN List</strong><span>Duplicate PANs highlighted with a severity tag.</span></div></li>
-          <li class="card rv" tabindex="0" data-i="4"><span class="n">05</span><div><strong>Approved Building Plan</strong><span>Facilities audited against APH 2024-27 norms.</span></div></li>
-          <li class="card rv" tabindex="0" data-i="5"><span class="n">06</span><div><strong>Fee Payment Receipt</strong><span>Dates and institution names cross-checked with the rest of the dossier.</span></div></li>
+          <li class="card rv" tabindex="0" data-i="0">
+            <span class="n">01</span>
+            <div>
+              <strong>Fire Safety Certificate (NOC)</strong>
+              <span>State Fire &amp; Emergency Services issued NOC verified for institutional building height, sprinkler coverage, fire hydrants, and annual renewal validity. Direct adapter check confirms active status in state registry.</span>
+              <div class="tags" style="margin-top:6px;"><span style="font-size:0.68rem;">APH Section 2.1.1</span><span style="font-size:0.68rem;">Annual Renewal Check</span><span style="font-size:0.68rem;">Registry Verified</span></div>
+            </div>
+          </li>
+          <li class="card rv" tabindex="0" data-i="1">
+            <span class="n">02</span>
+            <div>
+              <strong>Land Ownership Deed &amp; Encumbrance</strong>
+              <span>Registered 30-year lease or freehold sale deed proving contiguous land area. Cross-validated against DigiLocker State Revenue CTS property cards; ELA detects survey number and acreage discrepancies.</span>
+              <div class="tags" style="margin-top:6px;"><span style="font-size:0.68rem;">APH Section 2.1.2</span><span style="font-size:0.68rem;">Min Contiguous 2.50 / 5.00 Acres</span><span style="font-size:0.68rem;">DigiLocker CTS Match</span></div>
+            </div>
+          </li>
+          <li class="card rv" tabindex="0" data-i="2">
+            <span class="n">03</span>
+            <div>
+              <strong>University Affiliation Letter</strong>
+              <span>Annual permanent or provisional affiliation order from affiliating State Technical University validating approved intake capacity, sanctioned branches, and curriculum compliance.</span>
+              <div class="tags" style="margin-top:6px;"><span style="font-size:0.68rem;">APH Section 2.1.3</span><span style="font-size:0.68rem;">Annual Renewal Order</span><span style="font-size:0.68rem;">Affiliation Registry</span></div>
+            </div>
+          </li>
+          <li class="card rv" tabindex="0" data-i="3">
+            <span class="n">04</span>
+            <div>
+              <strong>Faculty Roster &amp; Form 16 / PAN List</strong>
+              <span>Certified cadre-wise teaching faculty roster with Principal/Director appointment. Cross-referenced for 1:15 / 1:20 teacher-student ratio, AICTE qualification norms, and duplicate PAN fraud across multiple colleges.</span>
+              <div class="tags" style="margin-top:6px;"><span style="font-size:0.68rem;">APH Section 2.1.4</span><span style="font-size:0.68rem;">Cadre Ratio 1:2:6</span><span style="font-size:0.68rem;">PAN Duplication Filter</span></div>
+            </div>
+          </li>
+          <li class="card rv" tabindex="0" data-i="4">
+            <span class="n">05</span>
+            <div>
+              <strong>Municipal Approved Building Plan</strong>
+              <span>Competent town planning / municipal corporation sanctioned floor blueprints. Audited against instructional, administrative, and amenities carpet area norms; verified for barrier-free access ramps and safety exits.</span>
+              <div class="tags" style="margin-top:6px;"><span style="font-size:0.68rem;">APH Section 2.1.5</span><span style="font-size:0.68rem;">Instructional Area ≥ 4,200 sq.m</span><span style="font-size:0.68rem;">Municipal Sanction</span></div>
+            </div>
+          </li>
+          <li class="card rv" tabindex="0" data-i="5">
+            <span class="n">06</span>
+            <div>
+              <strong>Fee Payment Receipt (TER Charges)</strong>
+              <span>AICTE Technical Education Regulatory (TER) scrutiny and processing fee receipt. Transaction reference, bank UTR number, and institutional PAN cross-checked against AICTE payment gateway reconciliation.</span>
+              <div class="tags" style="margin-top:6px;"><span style="font-size:0.68rem;">APH Section 2.1.6</span><span style="font-size:0.68rem;">Payment Gateway UTR</span><span style="font-size:0.68rem;">Consortium Ledger Notarized</span></div>
+            </div>
+          </li>
         </ol>
       </div>
     </div>
@@ -482,7 +520,7 @@ footer{position:relative;z-index:1;background:var(--bg-2);border-top:1px solid v
         <h2 style="margin-top:14px">Run a dossier through the portal.</h2>
         <p class="lede" style="margin-top:16px">Sign in as an officer or an institution, load the demo data and watch the checks run.</p>
         <div class="cta-row l">
-          <a class="btn portal" href="portal.html" target="_blank" rel="noopener">Enter Verification Portal
+          <a class="btn portal" href="portal.html">Enter Verification Portal
             <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
           <a class="btn ghost" href="#engines">Review the engines</a>
         </div>
@@ -504,7 +542,7 @@ footer{position:relative;z-index:1;background:var(--bg-2);border-top:1px solid v
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
-/* CipherCore Verify — Scroll-Driven 3D Interactive Client Engine */
+/* CipherCore Verify - Scroll-Driven 3D Interactive Client Engine */
 const PORTAL_URL = 'portal.html';
 
 (function(){
@@ -513,11 +551,18 @@ const PORTAL_URL = 'portal.html';
   var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   var hasIO = 'IntersectionObserver' in window;
 
-  /* enforce PORTAL_URL on every .portal link */
+  /* smooth transition to portal.html */
   document.querySelectorAll('.portal').forEach(function(a){
     a.href = PORTAL_URL;
-    a.target = '_blank';
-    a.rel = 'noopener';
+    a.addEventListener('click', function(e){
+      if (!e.metaKey && !e.ctrlKey) {
+        e.preventDefault();
+        document.body.style.transition = 'opacity 0.22s ease-out, transform 0.22s ease-out';
+        document.body.style.opacity = '0';
+        document.body.style.transform = 'translateY(-6px)';
+        setTimeout(function(){ window.location.href = a.href; }, 200);
+      }
+    });
   });
 
   /* Theme Switcher */

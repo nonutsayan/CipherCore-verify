@@ -52,6 +52,7 @@ global.localStorage = {
   setItem(k, v) { this._data[k] = String(v); },
   removeItem(k) { delete this._data[k]; }
 };
+global.sessionStorage = global.localStorage;
 
 const targetFile = fs.existsSync('frontend/portal.html') ? 'frontend/portal.html' : 'frontend/index.html';
 const html = fs.readFileSync(targetFile, 'utf8');
