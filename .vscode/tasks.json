@@ -1,36 +1,132 @@
 {
   "version": "2.0.0",
+  "inputs": [
+    {
+      "id": "commitMessage",
+      "type": "promptString",
+      "description": "Enter Git commit message",
+      "default": "Deploy portal.html, updated landing page, and report generator"
+    }
+  ],
   "tasks": [
     {
-      "label": "Maven: Run All 16 Automated Tests",
+      "label": "Git: Upload & Push (Deploy to Live GitHub Pages)",
+      "type": "shell",
+      "command": "git add portal.html index.html frontend/ server.js backend/report_generator.py assets/ docs/ scripts/ package_project.py && git commit -m \"${input:commitMessage}\" && git push origin main && git checkout gh-pages && git merge main --no-edit && git push origin gh-pages && git checkout main",
+      "problemMatcher": [],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": true,
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "Git: Quick Push (Default Message)",
+      "type": "shell",
+      "command": "git add portal.html index.html frontend/ server.js backend/report_generator.py assets/ docs/ scripts/ package_project.py && git commit -m \"Deploy portal.html, updated landing page, and report generator\" && git push origin main && git checkout gh-pages && git merge main --no-edit && git push origin gh-pages && git checkout main",
+      "problemMatcher": [],
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": true,
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "Git: Status Check",
+      "type": "shell",
+      "command": "git status",
+      "problemMatcher": [],
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "Server: Start Local Proxy & Report Server (Port 3000)",
+      "type": "shell",
+      "command": "node server.js",
+      "isBackground": true,
+      "problemMatcher": [],
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "Report: Generate Scrutiny PDF & JSON (APP-2026-101)",
+      "type": "shell",
+      "command": "python backend/report_generator.py --app-id APP-2026-101 --format both",
+      "problemMatcher": [],
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "Test: Run Freeze Prevention Test Suite",
+      "type": "shell",
+      "command": "node scripts/test_freeze_prevention.js",
+      "group": {
+        "kind": "test",
+        "isDefault": true
+      },
+      "problemMatcher": [],
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "Test: Run Report Generator Python Tests",
+      "type": "shell",
+      "command": "python scripts/test_report_generator.py",
+      "group": "test",
+      "problemMatcher": [],
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "Package: Build Full Zip Archive",
+      "type": "shell",
+      "command": "python package_project.py",
+      "problemMatcher": [],
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "Maven: Run All Backend Tests (Spring Boot)",
       "type": "shell",
       "command": "mvn test",
       "options": {
         "cwd": "${workspaceFolder}/backend"
       },
-      "group": {
-        "kind": "test",
-        "isDefault": true
-      },
+      "group": "test",
       "problemMatcher": "$maven"
     },
     {
-      "label": "Maven: Clean & Compile (Java 21)",
+      "label": "Maven: Clean & Compile Backend (Java 21)",
       "type": "shell",
       "command": "mvn clean compile",
       "options": {
         "cwd": "${workspaceFolder}/backend"
       },
       "group": "build",
-      "problemMatcher": "$maven"
-    },
-    {
-      "label": "Start Spring Boot (mvn spring-boot:run)",
-      "type": "shell",
-      "command": "mvn spring-boot:run",
-      "options": {
-        "cwd": "${workspaceFolder}/backend"
-      },
       "problemMatcher": "$maven"
     }
   ]
