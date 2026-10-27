@@ -1088,12 +1088,12 @@
       <div class="grid grid-cols-2 lg:grid-cols-4 border border-subtle rounded-[6px] overflow-hidden bg-surface divide-y sm:divide-y-0 sm:divide-x divide-subtle shadow-sm">
         <div class="p-4 space-y-1 bg-surface hover:bg-surface-subtle transition-colors">
           <div class="text-[11px] uppercase font-bold tracking-wider text-secondary">Total Applications</div>
-          <div class="text-2xl font-bold text-primary font-mono tabular-nums" id="kpiTotalDossiers">5</div>
+          <div class="text-2xl font-bold text-primary font-mono tabular-nums" id="kpiTotalDossiers">6</div>
           <div class="text-[11px] text-tertiary">AY 2026-27 Intake Submissions</div>
         </div>
         <div class="p-4 space-y-1 bg-surface hover:bg-surface-subtle transition-colors">
           <div class="text-[11px] uppercase font-bold tracking-wider text-secondary">Verified &amp; Compliant</div>
-          <div class="text-2xl font-bold text-success-text font-mono tabular-nums" id="kpiVerifiedCount">2</div>
+          <div class="text-2xl font-bold text-success-text font-mono tabular-nums" id="kpiVerifiedCount">3</div>
           <div class="text-[11px] text-tertiary">DigiLocker &amp; Fire API Validated</div>
         </div>
         <div class="p-4 space-y-1 bg-surface hover:bg-surface-subtle transition-colors">
@@ -1127,16 +1127,16 @@
         <!-- Filter Pills in Single Flex Row with Exact Dynamic Counts -->
         <div class="flex flex-wrap items-center gap-2">
           <button onclick="setAppStatusFilter('ALL')" id="filterTab-ALL" class="btn-secondary active text-xs">
-            All (0)
+            All (6)
           </button>
           <button onclick="setAppStatusFilter('Needs Review')" id="filterTab-Needs Review" class="btn-secondary text-xs">
-            Needs Review (0)
+            Needs Review (2)
           </button>
           <button onclick="setAppStatusFilter('Verified')" id="filterTab-Verified" class="btn-secondary text-xs">
-            Verified (0)
+            Verified (3)
           </button>
           <button onclick="setAppStatusFilter('Incomplete')" id="filterTab-Incomplete" class="btn-secondary text-xs">
-            Incomplete (0)
+            Incomplete (1)
           </button>
         </div>
       </div>
@@ -1184,7 +1184,7 @@
               <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
               </svg>
-              <span>Load Evaluator Demo Dataset (5 Sample Colleges)</span>
+              <span>Load Evaluator Demo Dataset (6 Sample Institutions)</span>
             </button>
           </div>
         </div>
@@ -1579,7 +1579,7 @@
         <div class="flex items-center justify-between border-b border-line pb-4">
           <div>
             <h1 class="text-base font-bold text-main">Privacy Policy</h1>
-            <p class="text-xs text-sub mt-0.5">Effective Date: October 2026 | Domain: verify.ciphercore.in</p>
+            <p class="text-xs text-sub mt-0.5">Effective Date: October 2026 | Domain: nonutsayan.github.io/CipherCore-verify</p>
           </div>
           <button onclick="switchMainView(activeUserSession ? 'applications' : 'landing')" class="btn-secondary text-xs">Back</button>
         </div>
@@ -1606,7 +1606,7 @@
           <div>
             <h2 class="text-xs font-bold uppercase text-main mb-1">4. Contact</h2>
             <p>
-              For privacy or data governance inquiries, contact the CipherCore Data Protection Desk at <span class="font-mono text-main">privacy@ciphercore.in</span>.
+              For evaluation inquiries regarding this hackathon prototype, contact <span class="font-mono text-main">contact-sih26261@example.org</span> (Prototype / Sandbox Contact — Not an active monitored regulatory desk).
             </p>
           </div>
         </div>
@@ -1621,7 +1621,7 @@
         <div class="flex items-center justify-between border-b border-line pb-4">
           <div>
             <h1 class="text-base font-bold text-main">Terms and Conditions</h1>
-            <p class="text-xs text-sub mt-0.5">Last Updated: October 2026 | Domain: verify.ciphercore.in</p>
+            <p class="text-xs text-sub mt-0.5">Last Updated: October 2026 | Domain: nonutsayan.github.io/CipherCore-verify</p>
           </div>
           <button onclick="switchMainView(activeUserSession ? 'applications' : 'landing')" class="btn-secondary text-xs">Back</button>
         </div>
@@ -1667,15 +1667,15 @@
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
               <div>
                 <div class="font-bold text-main">Connected Custom Domain</div>
-                <div id="domainDisplayValue" class="font-mono text-sub mt-0.5">verify.ciphercore.in</div>
+                <div id="domainDisplayValue" class="font-mono text-sub mt-0.5">nonutsayan.github.io/CipherCore-verify</div>
               </div>
-              <span class="tag-green">TLS Active</span>
+              <span class="px-2 py-0.5 rounded text-[10px] font-mono font-semibold bg-sky-100 text-sky-800 border border-sky-300">GitHub Pages Host (HTTPS Active)</span>
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 pt-2 border-t border-line">
               <div class="sm:col-span-2">
                 <label class="block text-[11px] text-sub mb-1">Custom Domain Hostname</label>
-                <input id="domainConfigInput" type="text" value="verify.ciphercore.in" class="w-full px-3 py-1.5 text-xs card-surface text-main font-mono focus:outline-none focus:border-[#0284c7]" />
+                <input id="domainConfigInput" type="text" value="nonutsayan.github.io/CipherCore-verify" class="w-full px-3 py-1.5 text-xs card-surface text-main font-mono focus:outline-none focus:border-[#0284c7]" />
               </div>
               <div class="flex items-end">
                 <button onclick="updateDomainSetting()" class="btn-primary w-full text-xs">Save Domain</button>
@@ -1713,7 +1713,7 @@
         <span class="font-bold text-main">CipherCore Verify</span>
         <span>:</span>
         <span>AICTE SIH 2026 Problem Statement SIH26261</span>
-        <span class="hidden md:inline text-muted-color">| Domain: <strong id="footerDomainBadge" class="font-mono text-main">verify.ciphercore.in</strong></span>
+        <span class="hidden md:inline text-muted-color">| Host: <strong id="footerDomainBadge" class="font-mono text-main">nonutsayan.github.io</strong></span>
       </div>
       <div class="flex flex-wrap items-center gap-4">
         <button onclick="switchMainView('privacy')" class="hover:underline text-sub hover:text-main">Privacy Policy</button>
@@ -2267,6 +2267,63 @@
           { item: 'Barrier-Free Ramp / Lift', requirement: '1:12 Slope Ramp + Lift', submitted: 'Installed & Verified', status: 'Compliant' },
           { item: 'Building Geo-Coordinates', requirement: '16.9902 N, 73.3120 E', submitted: '16.9901 N, 73.3122 E', status: 'Compliant' }
         ]
+      },
+      {
+        id: 'APP-2026-106',
+        institution: 'Government College of Engineering, Karad',
+        category: 'Extension of Approval (AY 2026-27)',
+        submittedDate: '2026-10-22',
+        status: 'Verified',
+        documents: [
+          { name: 'Fire Safety Certificate', uploaded: 'Yes (PDF)', expiry: '2028-03-31', status: 'Valid', refId: 'MFS-KRD-2025-1049' },
+          { name: 'Land Ownership Deed', uploaded: 'Yes (PDF)', expiry: 'Permanent', status: 'Valid', refId: 'DL-REV-KRD-8812' },
+          { name: 'University Affiliation Letter', uploaded: 'Yes (PDF)', expiry: '2027-06-30', status: 'Valid', refId: 'SUK-AFF-2026-512' },
+          { name: 'Faculty Roster & PAN List', uploaded: 'Yes (PDF)', expiry: '2027-05-31', status: 'Valid', refId: 'FAC-KRD-2026-88' },
+          { name: 'Approved Building Plan', uploaded: 'Yes (PDF)', expiry: 'Permanent', status: 'Valid', refId: 'PWD-KRD-BP-2021' },
+          { name: 'Fee Payment Receipt', uploaded: 'Yes (PDF)', expiry: '2027-03-31', status: 'Valid', refId: 'TER-2026-10928' }
+        ],
+        ocrChecks: [
+          {
+            field: 'Institution Name',
+            formValue: 'Government College of Engineering, Karad',
+            extractedValue: 'Government College of Engineering, Karad',
+            status: 'Matched',
+            note: 'Consistent across all 6 documents.'
+          },
+          {
+            field: 'Fire NOC Expiry Date',
+            formValue: '2028-03-31',
+            extractedValue: '2028-03-31',
+            status: 'Matched',
+            note: 'Valid through March 2028.'
+          },
+          {
+            field: 'Contiguous Land Area',
+            formValue: '40.00 Acres',
+            extractedValue: '40.00 Acres',
+            status: 'Matched',
+            note: 'Government grant survey verified.'
+          },
+          {
+            field: 'Full-Time Faculty Count',
+            formValue: '124 Faculty',
+            extractedValue: '124 Faculty (FSR 1:16.1)',
+            status: 'Matched',
+            note: 'Compliant with 1:20 requirement.'
+          }
+        ],
+        authorityChecks: [
+          { source: 'State Fire Portal', refId: 'MFS-KRD-2025-1049', timestamp: '2026-10-25 02:15', status: 'Verified' },
+          { source: 'Land Registry (DigiLocker)', refId: 'DL-REV-KRD-8812', timestamp: '2026-10-25 02:15', status: 'Verified' },
+          { source: 'University Affiliation Portal', refId: 'SUK-AFF-2026-512', timestamp: '2026-10-25 02:16', status: 'Verified' },
+          { source: 'Digital Signature Verification', refId: 'DSC-CLASS3-1082', timestamp: '2026-10-25 02:16', status: 'Verified' }
+        ],
+        infraChecks: [
+          { item: 'Computer Workstations', requirement: '150 Batch / 300 Intake', submitted: '160 Active Detected (Compliant)', status: 'Compliant' },
+          { item: 'Laboratory Area', requirement: '1,500 Sq.m', submitted: '1,560 Sq.m Verified', status: 'Compliant' },
+          { item: 'Barrier-Free Ramp / Lift', requirement: '1:12 Slope Ramp + Lift', submitted: 'Ramp & Lift Verified', status: 'Compliant' },
+          { item: 'Building Geo-Coordinates', requirement: '17.2892 N, 74.1813 E', submitted: '17.2893 N, 74.1812 E', status: 'Compliant' }
+        ]
       }
     ];
 
@@ -2469,9 +2526,16 @@
     function initUserSession() {
       activeUserSession = getStoredSession();
 
-      // Ensure synthetic dataset is available
-      applicationsData = JSON.parse(JSON.stringify(APPLICATIONS_DEMO_DATA));
-      localStorage.setItem(INITIALIZED_KEY, 'true');
+      // Check whether user explicitly cleared queue to zero-state
+      const isCleared = localStorage.getItem('ciphercore_queue_cleared') === 'true';
+      if (isCleared) {
+        applicationsData = [];
+      } else {
+        applicationsData = JSON.parse(JSON.stringify(APPLICATIONS_DEMO_DATA));
+        localStorage.setItem(INITIALIZED_KEY, 'true');
+      }
+      renderApplicationsTable();
+      updateFilterButtonCounts();
 
       if (!activeUserSession) {
         // Enforce immediate login gateway on portal entry
@@ -2498,10 +2562,10 @@
         const userRoleBadge = document.getElementById('userRoleBadge');
 
         if (userDisplayName) {
-          userDisplayName.textContent = isOfficer ? 'Dr. Arvind Kumar' : 'Prof. Ramesh Patil';
+          userDisplayName.textContent = isOfficer ? '[Demo Profile] Dr. Arvind Kumar' : '[Demo Profile] Prof. Ramesh Patil';
         }
         if (userRoleBadge) {
-          userRoleBadge.textContent = isOfficer ? 'AICTE Scrutiny Officer' : 'Institution Signatory (Apex Institute)';
+          userRoleBadge.textContent = isOfficer ? 'AICTE Scrutiny Officer (Evaluator Sandbox)' : 'Institution Signatory · Apex Institute (Evaluator Sandbox)';
         }
 
         const headerUserBadge = document.getElementById('headerUserBadge');
@@ -2677,18 +2741,20 @@
     // ---------------------------------------------------------------------
     async function loadEvaluatorDemoDataset() {
       applicationsData = JSON.parse(JSON.stringify(APPLICATIONS_DEMO_DATA));
+      localStorage.removeItem('ciphercore_queue_cleared');
       localStorage.setItem(INITIALIZED_KEY, 'true');
       updateFilterButtonCounts();
       renderApplicationsTable();
       renderInspectView();
-      logAuditEvent(activeUserSession?.name || 'Evaluator', 'DEMO-DATA', 'Demo Dataset Loaded', 'Loaded 5 sample institutional applications for evaluation.');
+      logAuditEvent(activeUserSession?.name || 'Evaluator', 'DEMO-DATA', 'Demo Dataset Loaded', 'Loaded 6 sample institutional applications for evaluation.');
       await seedDemoBlockchainBlocks();
       renderBlockchainLedgerUI();
-      showToastBanner('Evaluator demo dataset (5 sample colleges) loaded & notarized on blockchain.');
+      showToastBanner('Evaluator demo dataset (6 sample institutions) loaded & notarized on audit ledger.');
     }
 
     function resetToEmptyQueue() {
       applicationsData = [];
+      localStorage.setItem('ciphercore_queue_cleared', 'true');
       localStorage.removeItem(INITIALIZED_KEY);
       updateFilterButtonCounts();
       renderApplicationsTable();
@@ -2987,6 +3053,7 @@
 
     function renderApplicationsTable() {
       updateKpiStats();
+      updateFilterButtonCounts();
       const tableWrapper = document.getElementById('applicationsTableWrapper');
       const zeroState = document.getElementById('applicationsZeroState');
       const tbody = document.getElementById('applicationsTableBody');
@@ -3817,23 +3884,25 @@
         }
         this.persist();
 
-        // Optional non-blocking sync with Spring Boot Consortium PoA backend if running
-        try {
-          let backendBase = document.getElementById('backendUrlInput')?.value?.trim() || 'http://localhost:8080';
-          if (backendBase.endsWith('/api')) backendBase = backendBase.slice(0, -4);
-          fetch(`${backendBase}/api/blockchain/notarize`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              documentTitle: targetId,
-              documentHash: blockHash,
-              institutionCode: targetId,
-              institutionName: typeof payload === 'object' && payload.institution ? payload.institution : targetId,
-              docCategory: eventType,
-              notaryOfficer: actor
-            })
-          }).catch(() => {});
-        } catch (e) {}
+        // Optional sync with Spring Boot Consortium PoA backend if running
+        if (!window.location.hostname.includes('github.io')) {
+          try {
+            let backendBase = document.getElementById('backendUrlInput')?.value?.trim() || 'http://localhost:8080';
+            if (backendBase.endsWith('/api')) backendBase = backendBase.slice(0, -4);
+            await fetch(`${backendBase}/api/blockchain/notarize`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                documentTitle: targetId,
+                documentHash: blockHash,
+                institutionCode: targetId,
+                institutionName: typeof payload === 'object' && payload.institution ? payload.institution : targetId,
+                docCategory: eventType,
+                notaryOfficer: actor
+              })
+            }).catch(() => {});
+          } catch (e) {}
+        }
 
         return newBlock;
       }
@@ -5269,6 +5338,14 @@
       if (!badge || !dot || !text) return;
 
       const isGitHubPages = window.location.hostname.includes('github.io');
+      if (isGitHubPages) {
+        dot.className = 'w-2 h-2 rounded-full bg-sky-500';
+        text.className = 'text-sky-700 font-semibold';
+        text.textContent = 'GitHub Pages Demo';
+        badge.title = 'Running on GitHub Pages static host with client-side verification engine. Backend API at http://localhost:8080 is available when running locally.';
+        return;
+      }
+
       let backendBase = document.getElementById('backendUrlInput')?.value?.trim() || 'http://localhost:8080';
       if (backendBase.endsWith('/api')) backendBase = backendBase.slice(0, -4);
 
@@ -5362,7 +5439,7 @@
             <!-- Live Model Inference Pill -->
             <div class="absolute top-2.5 left-2.5 px-2 py-0.5 rounded bg-black/80 text-emerald-400 font-mono text-[10px] border border-emerald-500/40 flex items-center gap-1.5 shadow">
               <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-              <span>LIVE INFERENCE: YOLOv8x-SIH26261 (18.4ms)</span>
+              <span>SIMULATED INFERENCE SCENARIO: YOLOv8 Benchmark Model (142 Active / 8 Vacant)</span>
             </div>
             
             <!-- Filter Overlay Dropdown -->
@@ -5393,6 +5470,11 @@
               </label>
             </div>
             <span class="text-[10px] font-mono text-emerald-600 font-bold">142 Active / 8 Vacant</span>
+          </div>
+
+          <!-- Regulatory Assumption Note -->
+          <div class="p-2 rounded subtle-surface border border-line text-[11px] text-sub">
+            <strong>Regulatory Assumption Note:</strong> AICTE APH Appendix 4 prescribes a 1:4 terminal ratio for Technical UG courses. Verification of whether concurrent lab session schedules satisfy curriculum requirements requires institutional timetable scrutiny by the scrutiny committee.
           </div>
 
           <!-- Legend Bar -->
@@ -5505,7 +5587,7 @@
             <span class="px-2 py-0.5 rounded text-[10px] font-bold font-mono bg-amber-100 text-amber-800 border border-amber-300">Heuristic Screening (FIND-2026-DOC-02-ELA)</span>
             <h3 class="text-sm font-bold text-main">Cryptographic &amp; Forensic Document Diff Viewer</h3>
           </div>
-          <p class="text-xs text-sub mt-0.5">Autonomous Verification: Submitted Application Scan vs. DigiLocker State Registry Ground Truth</p>
+          <p class="text-xs text-sub mt-0.5">Automated Heuristic Screening: Submitted Document Layer vs. Synthetic Registry Reference Baseline (DEMO_SIMULATED)</p>
         </div>
         <div class="flex items-center gap-2">
           <!-- View Switcher -->
@@ -5561,23 +5643,23 @@
         <div class="p-3.5 rounded border-2 border-emerald-300 bg-emerald-50/20 space-y-2.5">
           <div class="flex items-center justify-between border-b border-emerald-200 pb-2">
             <div>
-              <span class="text-xs font-bold text-emerald-900 dark:text-emerald-300 block">DigiLocker / State Registry</span>
-              <span class="text-[10px] text-emerald-700 dark:text-emerald-400 font-mono">API CTS Property Card Record</span>
+              <span class="text-xs font-bold text-emerald-900 dark:text-emerald-300 block">DigiLocker / State Registry Schema</span>
+              <span class="text-[10px] text-emerald-700 dark:text-emerald-400 font-mono">DEMO_SIMULATED Reference Benchmark</span>
             </div>
-            <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-300">Verified Ground Truth</span>
+            <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-sky-100 text-sky-800 border border-sky-300">DEMO_SIMULATED Reference</span>
           </div>
 
           <!-- Document Snippet Mock -->
           <div class="p-3 rounded bg-white dark:bg-slate-900 border border-emerald-200 text-xs font-mono space-y-2 shadow-inner">
-            <div class="text-[10px] text-slate-500 uppercase font-bold tracking-wider">Official Registry Extract (Live API Query):</div>
+            <div class="text-[10px] text-slate-500 uppercase font-bold tracking-wider">Synthetic Registry Benchmark (State Land Schema Model):</div>
             <div class="p-2 rounded border border-slate-200 bg-slate-50 dark:bg-slate-800 text-slate-800 dark:text-slate-200 text-[11px] leading-relaxed">
               Government of Maharashtra, Revenue Department CTS Record No: 2021-MH-PUN-091218, Registered Holder: Apex Educational Trust...
             </div>
             <!-- Official Clean Record -->
             <div class="p-2.5 rounded border-2 border-emerald-500 bg-emerald-100/70 dark:bg-emerald-950/40 text-emerald-950 dark:text-emerald-200 font-bold text-xs space-y-1">
               <div class="flex items-center justify-between text-[10px] uppercase tracking-wider text-emerald-800 dark:text-emerald-300">
-                <span>Authenticated Ground Truth:</span>
-                <span class="font-mono">Font: Courier-New (Original Scanned)</span>
+                <span>Synthetic Baseline Record:</span>
+                <span class="font-mono">Schema: Standard Municipal Survey Model</span>
               </div>
               <div class="text-sm">Survey No: 42/A (Contiguous Land Area: 2.10 Acres Actual)</div>
             </div>
@@ -5589,7 +5671,7 @@
               <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
             <div class="text-[11px] leading-relaxed">
-              <strong>Verified Authenticated Record</strong> | Maharashtra Land Registry API (HTTP 200 OK, Signed DSC Serial: 5a9b8f102c).
+              <strong>DEMO_SIMULATED Reference Baseline</strong> | Schema Model: Maharashtra Land Records (Survey 42/A benchmark: 2.10 Acres). Live government API connection is not active.
             </div>
           </div>
         </div>
@@ -5599,7 +5681,7 @@
       <div id="forensicViewEla" style="display:none;" class="space-y-2">
         <div class="p-2 rounded border border-line subtle-surface text-xs flex items-center justify-between">
           <span class="font-mono font-bold text-red-600">Error Level Analysis (ELA) Compression Artifact Heatmap</span>
-          <span class="font-mono text-[11px] text-sub">Threshold: 85.0% | Anomaly Confidence: 99.2%</span>
+          <span class="font-mono text-[11px] text-sub">Threshold: 85.0% | ELA Anomaly Score: 88.4% (Pixel Compression Variance)</span>
         </div>
         <div class="rounded border border-slate-700 overflow-hidden bg-slate-950 flex items-center justify-center">
           <canvas id="elaViewerCanvas" width="980" height="340" class="w-full h-auto max-h-[360px] block" style="background:#060a12;"></canvas>
@@ -5622,7 +5704,7 @@
             <div class="p-2 rounded border border-emerald-300 bg-emerald-50/40 dark:bg-emerald-950/20 space-y-1">
               <div class="font-bold text-emerald-800 dark:text-emerald-300">DigiLocker Ground Truth (SHA-256):</div>
               <div class="text-[10px] text-slate-600 dark:text-slate-400 break-all">2c7e819b52a34df89240fa88921cb91490218ab289134cc982341982bfa81023</div>
-              <div class="text-[10px] text-emerald-600 pt-1">State Registry Digital Signature: VALID &amp; TIME-STAMPED</div>
+              <div class="text-[10px] text-emerald-600 pt-1">Synthetic Baseline Benchmark Hash (Reference Specification)</div>
             </div>
           </div>
         </div>

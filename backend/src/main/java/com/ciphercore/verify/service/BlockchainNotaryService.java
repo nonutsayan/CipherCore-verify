@@ -177,9 +177,9 @@ public class BlockchainNotaryService {
     }
 
     @Transactional
-    public NotarizationResult notarizeDocument(String documentTitle, String documentHash,
-                                              String institutionCode, String institutionName,
-                                              String docCategory, String notaryOfficer) {
+    public synchronized NotarizationResult notarizeDocument(String documentTitle, String documentHash,
+                                                           String institutionCode, String institutionName,
+                                                           String docCategory, String notaryOfficer) {
         if (documentHash == null || documentHash.isBlank()) {
             documentHash = "0x" + sha256(documentTitle + institutionCode + System.currentTimeMillis());
         }

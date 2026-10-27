@@ -1,8 +1,11 @@
 package com.ciphercore.verify;
 
+import com.ciphercore.verify.controller.AdminController;
 import com.ciphercore.verify.controller.OfficialDecisionController;
+import com.ciphercore.verify.model.ValidationRule;
 import com.ciphercore.verify.model.enums.AuthorityVerificationStatus;
 import com.ciphercore.verify.model.enums.OfficialDecisionOutcome;
+import com.ciphercore.verify.model.enums.Severity;
 import com.ciphercore.verify.service.BlockchainNotaryService;
 import com.ciphercore.verify.service.OfficialDecisionService;
 import org.junit.jupiter.api.DisplayName;
@@ -20,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.*;
 /**
  * Project Chimera Master Verification Test Suite (SIH26261)
  * Validates Section 4.2 compliance formulas, Section 4.5 hash-chain audit ledger integrity,
- * and Section 10 role-based decision access control.
+ * Section 10 role-based decision access control, and AdminController rule authorization.
  */
 @SpringBootTest
 @Transactional
@@ -31,6 +34,9 @@ public class ChimeraComplianceAndAuditTests {
 
     @Autowired
     private OfficialDecisionController officialDecisionController;
+
+    @Autowired
+    private AdminController adminController;
 
     @Test
     @DisplayName("Section 4.2: Workstation Deficit & Carpet Area Calculation Disambiguation")
@@ -124,6 +130,28 @@ public class ChimeraComplianceAndAuditTests {
         );
         assertEquals(HttpStatus.OK, officerResponse.getStatusCode(),
                 "Authorized scrutiny officer must be permitted to record decisions");
+    }
+
+    @Test
+    @DisplayName("AdminController: Privileged Rule Configuration Access Control Enforcement")
+    void testAdminRuleConfigurationAccessControl() {
+        ValidationRule newRule = new ValidationRule();
+        newRule.setRuleId("RULE_TEST_CUSTOM_99");
+        newRule.setName("Test Verification Rule");
+        newRule.setDescription("Unauthorized attempt to inject validation rule");
+        newRule.setCategoryCode("ALL");
+        newRule.setRuleType("MANDATORY_FIELD");
+        newRule.setSeverity(Severity.CRITICAL);
+
+        // 1. Unauthorized Applicant or Anonymous User: must be rejected with HTTP 403
+        ResponseEntity<?> unauthorizedResponse = adminController.createRule(newRule, "INSTITUTION_APPLICANT");
+        assertEquals(HttpStatus.FORBIDDEN, unauthorizedResponse.getStatusCode(),
+                "Unauthorized applicants must be blocked from modifying validation rules");
+
+        // 2. Authorized Compliance Admin / Officer: must succeed with HTTP 200
+        ResponseEntity<?> authorizedResponse = adminController.createRule(newRule, "COMPLIANCE_ADMIN");
+        assertEquals(HttpStatus.OK, authorizedResponse.getStatusCode(),
+                "Authorized administrator must be permitted to configure rules");
     }
 
     @Test
