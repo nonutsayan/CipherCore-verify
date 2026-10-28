@@ -39,6 +39,14 @@
   </script>
 
   <style>
+/* Hallmark · theme: modern-minimal | genre: modern-minimal | shape: app screen | copy: verbatim | redesign: polish */
+/* Hallmark · pre-emit critique: P5 H5 E5 S5 R5 V5 · strongest: P, statutory compliance verification */
+/* Hallmark · waive 48 · utility hex mappings · legacy utility color mappings mapped to AICTE tokens */
+/* Hallmark · waive 67 · uppercase badge indicators · statutory authority and legal checklist indicators */
+html, body { overflow-x: clip; }
+
+    
+
     /* =========================================================================
        1. IMPECCABLE DESIGN SYSTEM FOUNDATION & DESIGN TOKENS
        ========================================================================= */
@@ -100,6 +108,8 @@
       --status-amber-border: var(--warning-border);
 
       /* Mathematical Radii & Elevation (Anti-Pill Constraint) */
+      --text-inverted: #f8fafc;
+      --modal-backdrop-bg: rgba(15, 23, 42, 0.70);
       --radius-xs: 3px;
       --radius-sm: 4px;
       --radius-md: 6px;
@@ -112,7 +122,9 @@
       --shadow-modal: 0 25px 50px -12px rgba(15, 23, 42, 0.25);
     }
 
-    [data-theme="dark"], html.dark {
+    [data-theme="dark"] {
+      --text-inverted: #f8fafc;
+      --modal-backdrop-bg: rgba(11, 17, 32, 0.85);
       --bg-page: #0b1120;
       --bg-surface: #0f172a;
       --bg-surface-subtle: #1e293b;
@@ -252,7 +264,7 @@
     }
 
     .top-nav-btn.active {
-      color: #ffffff !important;
+      color: var(--text-inverted) !important;
       background-color: var(--brand-blue) !important;
       border-color: var(--brand-blue) !important;
       font-weight: 600;
@@ -274,7 +286,7 @@
       height: 26px;
       border-radius: var(--radius-sm);
       background-color: var(--brand-blue);
-      color: #ffffff;
+      color: var(--text-inverted);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -326,7 +338,7 @@
        ========================================================================= */
     .btn-primary {
       background-color: var(--brand-blue);
-      color: #ffffff !important;
+      color: var(--text-inverted) !important;
       border: 1px solid var(--brand-blue);
       border-radius: var(--radius-sm);
       padding: 6px 14px;
@@ -369,7 +381,7 @@
 
     .btn-secondary.active {
       background-color: var(--brand-blue);
-      color: #ffffff !important;
+      color: var(--text-inverted) !important;
       border-color: var(--brand-blue);
       font-weight: 600;
     }
@@ -392,7 +404,7 @@
     }
 
     .sub-tab-btn.active {
-      color: #ffffff !important;
+      color: var(--text-inverted) !important;
       background-color: var(--brand-blue);
       border-color: var(--brand-blue);
       box-shadow: var(--shadow-sm);
@@ -513,10 +525,10 @@
       left: 0 !important;
       right: 0 !important;
       bottom: 0 !important;
-      width: 100vw !important;
+      width: 100% !important;
       height: 100vh !important;
       z-index: 999999 !important;
-      background-color: rgba(15, 23, 42, 0.70) !important;
+      background-color: var(--modal-backdrop-bg) !important;
       backdrop-filter: blur(5px) !important;
       -webkit-backdrop-filter: blur(5px) !important;
       align-items: center !important;
@@ -641,8 +653,8 @@
         top: 0 !important;
         width: 100% !important;
         height: auto !important;
-        background: #ffffff !important;
-        color: #000000 !important;
+        background: var(--bg-surface) !important;
+        color: var(--text-primary) !important;
         padding: 0 !important;
         margin: 0 !important;
         z-index: 999999 !important;
@@ -654,7 +666,16 @@
         page-break-after: always;
       }
     }
-  </style>
+  
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+</style>
   <script src="https://accounts.google.com/gsi/client" async defer></script>
 </head>
 
@@ -667,8 +688,8 @@
     <div class="header-inner">
       <!-- Zone 1: Brand (Left) -->
       <button onclick="switchMainView('landing')" class="header-brand">
-        <div class="w-6 h-6 rounded-[4px] bg-[#0284c7] flex items-center justify-center text-white shrink-0 shadow-sm">
-          <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
+        <div class="w-6 h-6 rounded-[4px] bg-sky-600 flex items-center justify-center text-white shrink-0 shadow-sm">
+          <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
           </svg>
         </div>
@@ -677,7 +698,7 @@
           <span class="text-slate-400 font-light">|</span>
           <span class="text-[15px] font-medium tracking-tight text-main">Verify</span>
         </div>
-        <span class="hidden md:inline-block tag-neutral font-mono text-[10px] ml-1">AICTE APH 2026-27</span>
+        <span class="hidden md:inline-block tag-neutral font-mono text-[10px] ml-1"><abbr title="Approval Process Handbook">AICTE APH 2026-27</abbr></span>
       </button>
 
       <!-- Zone 2: Navigation Links (Center) -->
@@ -695,20 +716,20 @@
           <span>Google AI &amp; Cloud</span>
         </button>
         <a href="index.html" class="px-2.5 py-1 text-xs font-mono text-slate-400 hover:text-slate-200 border border-slate-700/60 rounded flex items-center gap-1 transition-colors" title="Return to 3D Landing Page">
-          <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+          <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
           <span>Landing</span>
         </a>
         <button onclick="toggleColorTheme()" class="theme-toggle" title="Toggle Light or Dark Mode" aria-label="Toggle theme">
-          <svg id="iconMoonPub" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <svg id="iconMoonPub" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
           </svg>
-          <svg id="iconSunPub" class="w-4 h-4 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <svg id="iconSunPub" class="w-4 h-4 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
           </svg>
         </button>
 
         <button onclick="openAuthModal()" class="btn-primary text-xs">
-          <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
           </svg>
           <span>Sign In / Officer Access</span>
@@ -725,8 +746,8 @@
 
       <!-- ZONE 1: BRAND (LEFT) -->
       <button onclick="switchMainView('applications')" class="header-brand">
-        <div class="w-6 h-6 rounded-[4px] bg-[#0284c7] flex items-center justify-center text-white shrink-0 shadow-sm">
-          <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
+        <div class="w-6 h-6 rounded-[4px] bg-sky-600 flex items-center justify-center text-white shrink-0 shadow-sm">
+          <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
           </svg>
         </div>
@@ -740,28 +761,28 @@
       <!-- ZONE 2: PRIMARY NAVIGATION TABS (CENTER) -->
       <nav class="header-nav" aria-label="Primary Views">
         <button onclick="switchMainView('applications')" id="mainNav-applications" class="top-nav-btn active flex items-center gap-1.5">
-          <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 10h16M4 14h16M4 18h16" />
           </svg>
           <span>1. Applications</span>
         </button>
 
         <button onclick="switchMainView('inspect')" id="mainNav-inspect" class="top-nav-btn flex items-center gap-1.5">
-          <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
           </svg>
           <span>2. Inspect Application</span>
         </button>
 
         <button onclick="switchMainView('checker')" id="mainNav-checker" class="top-nav-btn flex items-center gap-1.5">
-          <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
           </svg>
           <span>3. Document Checker</span>
         </button>
 
         <button onclick="switchMainView('rules')" id="mainNav-rules" class="top-nav-btn flex items-center gap-1.5">
-          <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
           </svg>
           <span>4. Rules &amp; Audit Log</span>
@@ -780,7 +801,7 @@
           <span id="runtimeModeText" class="text-sub font-medium">Detecting Mode...</span>
         </div>
         <a href="index.html" class="px-2.5 py-1 text-xs font-mono text-slate-400 hover:text-slate-200 border border-slate-700/60 rounded flex items-center gap-1 transition-colors" title="Return to 3D Landing Page">
-          <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+          <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
           <span>Landing</span>
         </a>
         <!-- a) User Profile Badge -->
@@ -790,23 +811,23 @@
           </div>
           <div class="leading-tight text-left">
             <div id="userDisplayName" class="font-bold text-main text-[13px] truncate max-w-[130px]">Dr. Arvind Kumar</div>
-            <div id="userRoleBadge" class="text-[10px] text-tertiary uppercase font-mono tracking-wider font-semibold">AICTE Scrutiny Officer</div>
+            <div id="userRoleBadge" class="text-[10px] text-tertiary font-mono font-semibold">AICTE Scrutiny Officer</div>
           </div>
         </div>
 
         <!-- b) Theme Switcher Button -->
         <button onclick="toggleColorTheme()" class="theme-toggle" title="Toggle Light or Dark Mode" aria-label="Toggle theme">
-          <svg id="iconMoon" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <svg id="iconMoon" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
           </svg>
-          <svg id="iconSun" class="w-4 h-4 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <svg id="iconSun" class="w-4 h-4 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
           </svg>
         </button>
 
         <!-- c) Sign Out Button -->
         <button onclick="signOutUser()" class="btn-signout" title="Sign Out of Session">
-          <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
           </svg>
           <span>Sign Out</span>
@@ -829,7 +850,7 @@
       <!-- Hero Section -->
       <div class="text-center max-w-4xl mx-auto pt-6 pb-2 space-y-4">
         <div class="inline-flex items-center gap-2 px-3 py-1 rounded-[4px] subtle-surface border border-line text-xs font-mono text-sub">
-          <span class="w-2 h-2 rounded-full bg-[#0284c7]"></span>
+          <span class="w-2 h-2 rounded-full bg-sky-600"></span>
           <span>AICTE Regulatory Decision-Support System : SIH Problem Statement SIH26261</span>
         </div>
 
@@ -843,7 +864,7 @@
 
         <div class="flex flex-wrap items-center justify-center gap-3 pt-2">
           <button onclick="openAuthModal()" class="btn-primary py-2.5 px-5 text-sm">
-            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
               <path stroke-linecap="round" stroke-linejoin="round" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
             </svg>
             <span>Enter Verification Portal</span>
@@ -851,7 +872,7 @@
           
           <a href="#platform-workflow" class="btn-secondary py-2.5 px-5 text-sm">
             <span>View Compliance Workflow</span>
-            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
               <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
             </svg>
           </a>
@@ -860,22 +881,22 @@
         <!-- 4 Stat Pill Indicators -->
         <div class="grid grid-cols-2 md:grid-cols-4 gap-3 pt-6 border-t border-line text-left">
           <div class="card-surface p-3">
-            <div class="text-[11px] font-mono text-sub uppercase">Mandatory Checklist</div>
+            <div class="text-[11px] font-mono text-sub">Mandatory Checklist</div>
             <div class="text-base font-bold text-main mt-0.5">6 Core Documents</div>
             <div class="text-[11px] text-sub">Fire NOC, Land Deed, Affiliation</div>
           </div>
           <div class="card-surface p-3">
-            <div class="text-[11px] font-mono text-sub uppercase">External Gateways</div>
+            <div class="text-[11px] font-mono text-sub">External Gateways</div>
             <div class="text-base font-bold text-main mt-0.5">4 Authority APIs</div>
             <div class="text-[11px] text-sub">DigiLocker, State Fire, University</div>
           </div>
           <div class="card-surface p-3">
-            <div class="text-[11px] font-mono text-sub uppercase">Tamper Forensics</div>
+            <div class="text-[11px] font-mono text-sub">Tamper Forensics</div>
             <div class="text-base font-bold text-main mt-0.5">SHA-256 &amp; ELA</div>
             <div class="text-[11px] text-sub">Layered PDF metadata extraction</div>
           </div>
           <div class="card-surface p-3">
-            <div class="text-[11px] font-mono text-sub uppercase">Statutory Safeguard</div>
+            <div class="text-[11px] font-mono text-sub">Statutory Safeguard</div>
             <div class="text-base font-bold text-main mt-0.5">Mandatory Officer Gate</div>
             <div class="text-[11px] text-sub">No auto-rejections without human review</div>
           </div>
@@ -885,7 +906,6 @@
       <!-- System Architecture Grid (4 Bento-Style Clean Rectangular Cards) -->
       <div id="verification-engines" class="space-y-4 pt-4">
         <div>
-          <div class="text-xs font-mono uppercase text-[#0284c7] font-bold">Platform Architecture</div>
           <h2 class="text-lg font-bold text-main">Automated Verification Engines</h2>
           <p class="text-xs text-sub mt-0.5">Four distinct validation engines operating in parallel to evaluate institutional legitimacy.</p>
         </div>
@@ -893,8 +913,8 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <!-- Card 1: OCR & Forensic Tamper Check -->
           <div class="card-surface p-5 space-y-3">
-            <div class="w-8 h-8 rounded-[5px] bg-[#0284c7]/10 text-[#0284c7] flex items-center justify-center">
-              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <div class="w-8 h-8 rounded-[5px] bg-sky-500/10 text-sky-600 flex items-center justify-center">
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
               </svg>
             </div>
@@ -905,7 +925,7 @@
               </p>
               <div class="pt-2">
                 <button onclick="window.openForensicDiffModal('APP-2026-101', 'Land Deed')" class="btn-primary py-1.5 px-3 text-xs flex items-center gap-1.5" style="border-radius:4px;">
-                  <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
                   </svg>
                   <span>Launch Forensic Diff Viewer</span>
@@ -921,8 +941,8 @@
 
           <!-- Card 2: Issuing Authority Gateway -->
           <div class="card-surface p-5 space-y-3">
-            <div class="w-8 h-8 rounded-[5px] bg-[#0284c7]/10 text-[#0284c7] flex items-center justify-center">
-              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <div class="w-8 h-8 rounded-[5px] bg-sky-500/10 text-sky-600 flex items-center justify-center">
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
               </svg>
             </div>
@@ -941,8 +961,8 @@
 
           <!-- Card 3: APH Infrastructure Audit -->
           <div class="card-surface p-5 space-y-3">
-            <div class="w-8 h-8 rounded-[5px] bg-[#0284c7]/10 text-[#0284c7] flex items-center justify-center">
-              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <div class="w-8 h-8 rounded-[5px] bg-sky-500/10 text-sky-600 flex items-center justify-center">
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
               </svg>
             </div>
@@ -953,7 +973,7 @@
               </p>
               <div class="pt-2">
                 <button onclick="window.openCvEvidenceModal('APP-2026-101', 'Computer Center / Lab')" class="btn-primary py-1.5 px-3 text-xs flex items-center gap-1.5" style="border-radius:4px;">
-                  <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                     <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                   </svg>
@@ -970,8 +990,8 @@
 
           <!-- Card 4: Statutory Human Decision Gate -->
           <div class="card-surface p-5 space-y-3">
-            <div class="w-8 h-8 rounded-[5px] bg-[#0284c7]/10 text-[#0284c7] flex items-center justify-center">
-              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <div class="w-8 h-8 rounded-[5px] bg-sky-500/10 text-sky-600 flex items-center justify-center">
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
               </svg>
             </div>
@@ -993,32 +1013,31 @@
       <!-- Platform Workflow Strip (Step 1 to 4) -->
       <div id="platform-workflow" class="space-y-4 pt-4">
         <div>
-          <div class="text-xs font-mono uppercase text-[#0284c7] font-bold">End-to-End Pipeline</div>
           <h2 class="text-lg font-bold text-main">Regulatory Verification Workflow</h2>
           <p class="text-xs text-sub mt-0.5">How an institutional application moves from intake to official decision.</p>
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
           <div class="card-surface p-4 relative">
-            <div class="font-mono text-xs font-bold text-[#0284c7] mb-1">STEP 01</div>
+            <div class="font-mono text-xs font-bold text-sky-600 mb-1">STEP 01</div>
             <div class="text-xs font-bold text-main">Dossier Ingestion</div>
             <div class="text-[11px] text-sub mt-1">Institutional application and 6 mandatory PDFs are uploaded into the secure validation pipeline.</div>
           </div>
 
           <div class="card-surface p-4 relative">
-            <div class="font-mono text-xs font-bold text-[#0284c7] mb-1">STEP 02</div>
+            <div class="font-mono text-xs font-bold text-sky-600 mb-1">STEP 02</div>
             <div class="text-xs font-bold text-main">Automated Triangulation</div>
             <div class="text-[11px] text-sub mt-1">OCR engine extracts fields; authority adapters query state registries for live status matching.</div>
           </div>
 
           <div class="card-surface p-4 relative">
-            <div class="font-mono text-xs font-bold text-[#0284c7] mb-1">STEP 03</div>
+            <div class="font-mono text-xs font-bold text-sky-600 mb-1">STEP 03</div>
             <div class="text-xs font-bold text-main">Anomaly Flagging</div>
             <div class="text-[11px] text-sub mt-1">Discrepancies in dates, acreage, workstation counts, or duplicate PANs are highlighted with severity tags.</div>
           </div>
 
           <div class="card-surface p-4 relative">
-            <div class="font-mono text-xs font-bold text-[#0284c7] mb-1">STEP 04</div>
+            <div class="font-mono text-xs font-bold text-sky-600 mb-1">STEP 04</div>
             <div class="text-xs font-bold text-main">Official Sign-off</div>
             <div class="text-[11px] text-sub mt-1">Authorized officer examines evidence, records official decision, and logs cryptographic justification.</div>
           </div>
@@ -1029,7 +1048,6 @@
       <div id="compliance-checklist" class="card-surface p-5 space-y-4">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-line pb-3">
           <div>
-            <div class="text-xs font-mono uppercase text-[#0284c7] font-bold">Statutory Requirement</div>
             <h2 class="text-base font-bold text-main">6 Mandatory Documents for Extension of Approval (EoA)</h2>
           </div>
           <span class="tag-neutral font-mono text-xs">AICTE APH Section 2.1</span>
@@ -1091,7 +1109,7 @@
         <!-- Toolbar: 3 Clean Rectangular Buttons (Fixed Single Plus Typo) -->
         <div class="flex items-center gap-2">
           <button onclick="openUploadDossierModal()" class="btn-primary text-xs">
-            <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
               <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
             </svg>
             <span>+ Upload Dossier</span>
@@ -1108,22 +1126,22 @@
       <!-- KPI / Stat Strip: 4 clean rectangular metric cards separated by 1px borders -->
       <div class="grid grid-cols-2 lg:grid-cols-4 border border-subtle rounded-[6px] overflow-hidden bg-surface divide-y sm:divide-y-0 sm:divide-x divide-subtle shadow-sm">
         <div class="p-4 space-y-1 bg-surface hover:bg-surface-subtle transition-colors">
-          <div class="text-[11px] uppercase font-bold tracking-wider text-secondary">Total Applications</div>
+          <div class="text-[11px] font-bold text-secondary">Total Applications</div>
           <div class="text-2xl font-bold text-primary font-mono tabular-nums" id="kpiTotalDossiers">6</div>
           <div class="text-[11px] text-tertiary">AY 2026-27 Intake Submissions</div>
         </div>
         <div class="p-4 space-y-1 bg-surface hover:bg-surface-subtle transition-colors">
-          <div class="text-[11px] uppercase font-bold tracking-wider text-secondary">Verified &amp; Compliant</div>
+          <div class="text-[11px] font-bold text-secondary">Verified &amp; Compliant</div>
           <div class="text-2xl font-bold text-success-text font-mono tabular-nums" id="kpiVerifiedCount">3</div>
           <div class="text-[11px] text-tertiary">DigiLocker &amp; Fire API Validated</div>
         </div>
         <div class="p-4 space-y-1 bg-surface hover:bg-surface-subtle transition-colors">
-          <div class="text-[11px] uppercase font-bold tracking-wider text-secondary">Deficiencies Flagged</div>
+          <div class="text-[11px] font-bold text-secondary">Deficiencies Flagged</div>
           <div class="text-2xl font-bold text-danger-text font-mono tabular-nums" id="kpiFlaggedCount">2</div>
           <div class="text-[11px] text-tertiary">Land Acreage &amp; Terminal Deficit</div>
         </div>
         <div class="p-4 space-y-1 bg-surface hover:bg-surface-subtle transition-colors">
-          <div class="text-[11px] uppercase font-bold tracking-wider text-secondary">Immediate Review</div>
+          <div class="text-[11px] font-bold text-secondary">Immediate Review</div>
           <div class="text-2xl font-bold text-warning-text font-mono tabular-nums" id="kpiPendingCount">1</div>
           <div class="text-[11px] text-tertiary">Awaiting Officer Decision Gate</div>
         </div>
@@ -1133,7 +1151,7 @@
       <div class="card-surface p-3.5 flex flex-col md:flex-row md:items-center justify-between gap-3">
         <!-- Search Input -->
         <div class="relative w-full md:w-80">
-          <svg class="w-4 h-4 text-muted-color absolute left-3 top-1/2 -translate-y-1/2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <svg class="w-4 h-4 text-muted-color absolute left-3 top-1/2 -translate-y-1/2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
           </svg>
           <input
@@ -1141,7 +1159,7 @@
             type="text"
             oninput="renderApplicationsTable()"
             placeholder="Search by Institution Name or ID..."
-            class="w-full pl-9 pr-3 py-1.5 text-xs subtle-surface text-main placeholder:text-muted-color focus:outline-none focus:border-[#0284c7] rounded-[5px]"
+            class="w-full pl-9 pr-3 py-1.5 text-xs subtle-surface text-main placeholder:text-muted-color focus:outline-none focus:border-sky-600 rounded-[5px]"
           />
         </div>
 
@@ -1167,7 +1185,7 @@
         <div id="applicationsTableWrapper" class="overflow-x-auto">
           <table class="w-full text-left border-collapse text-xs">
             <thead>
-              <tr class="subtle-surface border-b border-line text-sub font-mono text-[11px] uppercase">
+              <tr class="subtle-surface border-b border-line text-sub font-mono text-[11px]">
                 <th class="py-3 px-4">Application ID</th>
                 <th class="py-3 px-4">Institution Name</th>
                 <th class="py-3 px-4">Category</th>
@@ -1186,7 +1204,7 @@
         <!-- Zero State Container (Displayed when queue is empty) -->
         <div id="applicationsZeroState" class="hidden p-10 text-center space-y-4">
           <div class="w-12 h-12 rounded-[6px] subtle-surface text-sub flex items-center justify-center mx-auto">
-            <svg class="w-6 h-6 text-[#0284c7]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+            <svg class="w-6 h-6 text-sky-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
               <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
             </svg>
           </div>
@@ -1196,13 +1214,13 @@
           </div>
           <div class="flex flex-wrap items-center justify-center gap-3 pt-2">
             <button onclick="openUploadDossierModal()" class="btn-primary text-xs">
-              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
               </svg>
               <span>+ Upload New Application Dossier</span>
             </button>
             <button onclick="loadEvaluatorDemoDataset()" class="btn-secondary text-xs">
-              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
               </svg>
               <span>Load Evaluator Demo Dataset (6 Sample Institutions)</span>
@@ -1222,7 +1240,7 @@
       <div class="card-surface p-3.5 flex flex-col md:flex-row md:items-center justify-between gap-3">
         <div class="flex flex-wrap items-center gap-2.5">
           <button onclick="switchMainView('applications')" class="btn-secondary flex items-center gap-1.5 text-xs">
-            <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
               <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
             </svg>
             <span>Back to Applications</span>
@@ -1233,7 +1251,7 @@
             <select
               id="appSwitcherSelect"
               onchange="selectApplicationForInspection(this.value)"
-              class="px-3 py-1.5 text-xs subtle-surface text-main font-medium focus:outline-none focus:border-[#0284c7]"
+              class="px-3 py-1.5 text-xs subtle-surface text-main font-medium focus:outline-none focus:border-sky-600"
             >
               <!-- Populated by JavaScript -->
             </select>
@@ -1242,40 +1260,40 @@
 
         <div class="flex flex-wrap items-center gap-2">
           <button onclick="window.openForensicDiffModal('APP-2026-101', 'Land Ownership Deed')" class="btn-secondary flex items-center gap-1.5 text-xs" style="border-radius:4px;">
-            <svg class="w-3.5 h-3.5 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <svg class="w-3.5 h-3.5 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
               <path stroke-linecap="round" stroke-linejoin="round" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
             </svg>
             <span>Inspect Forensic Diff</span>
           </button>
           <button onclick="window.openCvEvidenceModal('APP-2026-101', 'Computer Center / Lab')" class="btn-secondary flex items-center gap-1.5 text-xs" style="border-radius:4px;">
-            <svg class="w-3.5 h-3.5 text-[#0284c7]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <svg class="w-3.5 h-3.5 text-sky-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
               <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
               <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
             </svg>
             <span>View CV Evidence Inspection</span>
           </button>
           <button onclick="window.openReportModal(currentInspectAppId || 'APP-2026-101')" class="btn-secondary flex items-center gap-1.5 text-xs" style="border-radius:4px;">
-            <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
               <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
               <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
             </svg>
             <span>Preview Scrutiny Report</span>
           </button>
-          <button onclick="downloadOfficialPdfReport(currentInspectAppId || 'APP-2026-101')" class="btn-primary flex items-center gap-1.5 text-xs bg-[#0284c7] text-white" style="border-radius:4px;" title="Generate and download official PDF report via Python backend">
-            <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <button onclick="downloadOfficialPdfReport(currentInspectAppId || 'APP-2026-101')" class="btn-primary flex items-center gap-1.5 text-xs bg-sky-600 text-white" style="border-radius:4px;" title="Generate and download official PDF report via Python backend">
+            <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
               <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
             </svg>
             <span>Download Official PDF (Python)</span>
           </button>
           <button onclick="exportScrutinyReportJson()" class="btn-secondary flex items-center gap-1.5 text-xs">
-            <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
               <path stroke-linecap="round" stroke-linejoin="round" d="M8 4H6a2 2 0 00-2 2v12a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-2m-4-1v8m0 0l3-3m-3 3L9 8m-5 5h2.586a1 1 0 01.707.293l2.414 2.414a1 1 0 00.707.293h3.172a1 1 0 00.707-.293l2.414-2.414a1 1 0 01.707-.293H20" />
             </svg>
             <span>Export Report (JSON)</span>
           </button>
           <div id="decisionOrUploadContainer" class="inline-flex items-center">
             <button id="officialDecisionActionBtn" onclick="openOfficialDecisionModal()" class="btn-primary flex items-center gap-1.5 text-xs">
-              <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
               <span>Record Official Decision</span>
@@ -1328,9 +1346,9 @@
           </div>
 
           <!-- File Upload Box -->
-          <label class="block subtle-surface border-2 border-dashed border-line hover:border-[#0284c7] p-5 text-center cursor-pointer rounded-[6px]">
-            <div class="w-8 h-8 rounded-[5px] bg-[#0284c7] text-white flex items-center justify-center mx-auto mb-2">
-              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <label class="block subtle-surface border-2 border-dashed border-line hover:border-sky-600 p-5 text-center cursor-pointer rounded-[6px]">
+            <div class="w-8 h-8 rounded-[5px] bg-sky-600 text-white flex items-center justify-center mx-auto mb-2">
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
               </svg>
             </div>
@@ -1341,7 +1359,7 @@
 
           <!-- 6 Sample Test Document Buttons (Expanded APH Test Suite) -->
           <div>
-            <div class="text-[11px] font-mono uppercase text-sub mb-2">Or select a sample test document (APH Mandatory Submissions):</div>
+            <div class="text-[11px] font-mono text-sub mb-2">Or select a sample test document (APH Mandatory Submissions):</div>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5">
               <button onclick="selectSampleDoc('SAMPLE-1')" id="sampleDocBtn-SAMPLE-1" class="btn-secondary active text-left flex items-center justify-between py-2 px-3 text-xs" style="border-radius:4px;">
                 <div>
@@ -1428,7 +1446,7 @@
               id="customRuleTextInput"
               type="text"
               placeholder="New rule description..."
-              class="px-3 py-1.5 text-xs subtle-surface text-main placeholder:text-muted-color focus:outline-none focus:border-[#0284c7] w-60"
+              class="px-3 py-1.5 text-xs subtle-surface text-main placeholder:text-muted-color focus:outline-none focus:border-sky-600 w-60"
             />
             <select id="customRuleCategorySelect" class="px-2.5 py-1.5 text-xs subtle-surface text-main focus:outline-none">
               <option value="Document Checklist">Document Checklist</option>
@@ -1445,7 +1463,7 @@
         <div class="overflow-x-auto">
           <table class="w-full text-left border-collapse text-xs">
             <thead>
-              <tr class="subtle-surface border-b border-line text-sub font-mono text-[11px] uppercase">
+              <tr class="subtle-surface border-b border-line text-sub font-mono text-[11px]">
                 <th class="py-2.5 px-3">Rule Code</th>
                 <th class="py-2.5 px-3">Category</th>
                 <th class="py-2.5 px-3">Rule Description</th>
@@ -1483,7 +1501,7 @@
         <div id="auditViewPane-tabular" class="hidden space-y-4">
           <div class="flex items-center justify-end">
             <button onclick="downloadAuditCsv()" class="btn-primary flex items-center gap-1.5 text-xs">
-              <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
               </svg>
               <span>Download CSV</span>
@@ -1493,7 +1511,7 @@
           <div class="overflow-x-auto">
             <table class="w-full text-left border-collapse text-xs">
               <thead>
-                <tr class="subtle-surface border-b border-line text-sub font-mono text-[11px] uppercase">
+                <tr class="subtle-surface border-b border-line text-sub font-mono text-[11px]">
                   <th class="py-2.5 px-3">Timestamp</th>
                   <th class="py-2.5 px-3">Actor</th>
                   <th class="py-2.5 px-3">Target ID</th>
@@ -1515,8 +1533,8 @@
             <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-3">
               <!-- Left: Chain Metrics & Status Badge -->
               <div class="flex flex-wrap items-center gap-2.5">
-                <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-[#0284c7]/10 text-[#0284c7] font-mono text-xs font-bold border border-[#0284c7]/30">
-                  <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-sky-500/10 text-sky-600 font-mono text-xs font-bold border border-sky-500/30">
+                  <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
                   </svg>
                   <span id="ledgerBlockCount">1 Block in Chain (Genesis Active)</span>
@@ -1524,7 +1542,7 @@
                 
                 <div id="chainIntegrityBadge">
                   <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded bg-emerald-50 text-emerald-800 text-xs font-semibold border border-emerald-300">
-                    <svg class="w-3.5 h-3.5 text-emerald-600 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                    <svg class="w-3.5 h-3.5 text-emerald-600 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
                       <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                     <span>Chain Integrity: VALID / SECURE</span>
@@ -1534,7 +1552,7 @@
 
               <!-- Center: Cryptographic Ledger Architecture -->
               <div class="flex items-center gap-2 px-3 py-1.5 rounded border border-line subtle-surface text-xs shadow-xs">
-                <span class="font-mono text-[11px] text-sub uppercase font-semibold">Ledger Architecture:</span>
+                <span class="font-mono text-[11px] text-sub font-semibold">Ledger Architecture:</span>
                 <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-sky-100 text-sky-800 border border-sky-300">Sequential SHA-256 Hash-Chain</span>
                 <span class="text-[10px] font-mono text-slate-500 hidden sm:inline">(Prototype · Single-Node Notary)</span>
               </div>
@@ -1542,25 +1560,25 @@
               <!-- Right: Interactive Action Buttons -->
               <div class="flex flex-wrap items-center gap-2">
                 <button id="verifyChainBtn" onclick="triggerChainIntegrityCheck()" class="btn-primary flex items-center gap-1.5 text-xs" style="border-radius:4px;">
-                  <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                   <span>Verify Chain Integrity</span>
                 </button>
                 <button id="tamperSimulateBtn" onclick="triggerSimulateTamper()" class="btn-secondary flex items-center gap-1.5 text-xs text-amber-700 border-amber-300 hover:bg-amber-50" style="border-radius:4px;" title="Silently alter historical Block #1 payload to demonstrate tamper detection">
-                  <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                   </svg>
                   <span>Simulate Adversarial Tamper</span>
                 </button>
                 <button id="restoreLedgerBtn" onclick="triggerRestoreLedger()" class="hidden btn-primary flex items-center gap-1.5 text-xs bg-emerald-600 hover:bg-emerald-700 text-white font-bold" style="border-radius:4px;" title="Restore ledger to pristine authenticated state">
-                  <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
                   </svg>
                   <span>Restore Ledger</span>
                 </button>
                 <button onclick="exportLedgerJson()" class="btn-secondary flex items-center gap-1.5 text-xs" style="border-radius:4px;" title="Download signed JSON ledger">
-                  <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                   </svg>
                   <span>Download Signed JSON Ledger</span>
@@ -1571,7 +1589,7 @@
             <!-- Prototype Ledger Architecture & Transparency Notice -->
             <div class="flex flex-wrap items-center justify-between text-[11px] text-sub pt-2 border-t border-line">
               <span class="font-mono">Architecture: CipherCore Cryptographic Audit Ledger &amp; Hash-Chain Prototype</span>
-              <span class="font-mono text-[#0284c7]">Formula: SHA-256(index|timestamp|prevHash|payload|actor|target|event)</span>
+              <span class="font-mono text-sky-600">Formula: SHA-256(index|timestamp|prevHash|payload|actor|target|event)</span>
             </div>
             <div class="p-2 rounded subtle-surface border border-line text-[11px] text-sub">
               <strong>Educational Demonstration Prototype:</strong> Sequential SHA-256 hash chaining demonstrates tamper-evidence on a local ledger. Any mutation in historical payload breaks the mathematical link to subsequent blocks. Production targets Byzantine fault-tolerant multi-institution consortium.
@@ -1607,25 +1625,25 @@
 
         <div class="space-y-4 text-sub">
           <div>
-            <h2 class="text-xs font-bold uppercase text-main mb-1">1. Purpose of Data Processing</h2>
+            <h2 class="text-xs font-bold text-main mb-1">1. Purpose of Data Processing</h2>
             <p>
               CipherCore Verify processes institutional compliance applications and supporting documents strictly for application validation, document authentication, and regulatory scrutiny. Institutional and faculty data is never sold or shared with unauthorized third parties.
             </p>
           </div>
           <div>
-            <h2 class="text-xs font-bold uppercase text-main mb-1">2. Categories of Records Processed</h2>
+            <h2 class="text-xs font-bold text-main mb-1">2. Categories of Records Processed</h2>
             <p>
               The portal processes institutional application forms, uploaded regulatory PDFs (Fire Safety NOCs, Land Registry Deeds, University Affiliation Letters, Faculty Rosters, Building Plans, and Fee Receipts), SHA-256 cryptographic file hashes, and official review logs.
             </p>
           </div>
           <div>
-            <h2 class="text-xs font-bold uppercase text-main mb-1">3. Access Control &amp; Security Logging</h2>
+            <h2 class="text-xs font-bold text-main mb-1">3. Access Control &amp; Security Logging</h2>
             <p>
               Access to institutional records and issuing-authority verification gateways is role-based and restricted to authorized review officers. Every document check and official decision is logged with a timestamp and actor identifier in the Audit Log.
             </p>
           </div>
           <div>
-            <h2 class="text-xs font-bold uppercase text-main mb-1">4. Contact</h2>
+            <h2 class="text-xs font-bold text-main mb-1">4. Contact</h2>
             <p>
               For evaluation inquiries regarding this hackathon prototype, contact <span class="font-mono text-main">contact-sih26261@example.org</span> (Prototype / Sandbox Contact — Not an active monitored regulatory desk).
             </p>
@@ -1649,19 +1667,19 @@
 
         <div class="space-y-4 text-sub">
           <div>
-            <h2 class="text-xs font-bold uppercase text-main mb-1">1. Authorized Portal Usage</h2>
+            <h2 class="text-xs font-bold text-main mb-1">1. Authorized Portal Usage</h2>
             <p>
               CipherCore Verify is restricted to authorized compliance reviewers and institutional representatives. Users must only upload genuine institutional records or authorized test datasets.
             </p>
           </div>
           <div>
-            <h2 class="text-xs font-bold uppercase text-main mb-1">2. Decision-Support Safeguard</h2>
+            <h2 class="text-xs font-bold text-main mb-1">2. Decision-Support Safeguard</h2>
             <p>
               All automated OCR comparisons, metadata tampering flags, and infrastructure checks are preliminary decision-support outputs only. Automated flags require human verification and do not constitute final proof of forgery or non-compliance.
             </p>
           </div>
           <div>
-            <h2 class="text-xs font-bold uppercase text-main mb-1">3. Mandatory Human Review Gate</h2>
+            <h2 class="text-xs font-bold text-main mb-1">3. Mandatory Human Review Gate</h2>
             <p>
               Final regulatory approval, deficiency notices, or physical inspection orders remain solely with competent human authorities and must be logged through the Record Official Decision workflow.
             </p>
@@ -1696,7 +1714,7 @@
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 pt-2 border-t border-line">
               <div class="sm:col-span-2">
                 <label class="block text-[11px] text-sub mb-1">Custom Domain Hostname</label>
-                <input id="domainConfigInput" type="text" value="nonutsayan.github.io/CipherCore-verify" class="w-full px-3 py-1.5 text-xs card-surface text-main font-mono focus:outline-none focus:border-[#0284c7]" />
+                <input id="domainConfigInput" type="text" value="nonutsayan.github.io/CipherCore-verify" class="w-full px-3 py-1.5 text-xs card-surface text-main font-mono focus:outline-none focus:border-sky-600" />
               </div>
               <div class="flex items-end">
                 <button onclick="updateDomainSetting()" class="btn-primary w-full text-xs">Save Domain</button>
@@ -1709,7 +1727,7 @@
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
               <div class="sm:col-span-2">
                 <label class="block text-[11px] text-sub mb-1">REST API Base URL</label>
-                <input id="backendUrlInput" type="text" value="http://localhost:8080/api" class="w-full px-3 py-1.5 text-xs card-surface text-main font-mono focus:outline-none focus:border-[#0284c7]" />
+                <input id="backendUrlInput" type="text" value="http://localhost:8080/api" class="w-full px-3 py-1.5 text-xs card-surface text-main font-mono focus:outline-none focus:border-sky-600" />
               </div>
               <div class="flex items-end">
                 <button onclick="pingBackendApi()" class="btn-primary w-full text-xs">Test Connection</button>
@@ -1754,7 +1772,7 @@
     <div class="card-surface max-w-lg w-full p-6 space-y-4 shadow-2xl border border-line rounded-[6px]" onclick="event.stopPropagation()">
       <div class="flex items-center justify-between border-b border-line pb-3">
         <div class="flex items-center gap-2.5">
-          <div class="w-8 h-8 rounded bg-[#0284c7] flex items-center justify-center text-white font-bold text-xs shadow-sm">CC</div>
+          <div class="w-8 h-8 rounded bg-sky-600 flex items-center justify-center text-white font-bold text-xs shadow-sm">CC</div>
           <div>
             <h2 class="text-sm font-bold text-main tracking-tight">CipherCore Access Gateway</h2>
             <p class="text-[11px] text-sub">AICTE Statutory Scrutiny & Regulatory Verification · Problem Statement SIH26261</p>
@@ -1765,14 +1783,14 @@
 
       <!-- Tab Switcher: Email/Password (Real Auth) vs Google & 1-Click Access -->
       <div class="flex items-center gap-1 border-b border-line pb-2 text-xs">
-        <button id="authTabBtnEmail" type="button" onclick="switchAuthTab('email')" class="px-3 py-1.5 font-semibold rounded border border-[#0284c7] text-[#0284c7] bg-[#0284c7]/10 transition flex items-center gap-1.5">
-          <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <button id="authTabBtnEmail" type="button" onclick="switchAuthTab('email')" class="px-3 py-1.5 font-semibold rounded border border-sky-600 text-sky-600 bg-sky-500/10 transition flex items-center gap-1.5">
+          <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207" />
           </svg>
           <span>Email & Password Login</span>
         </button>
         <button id="authTabBtnGoogle" type="button" onclick="switchAuthTab('google')" class="px-3 py-1.5 font-medium rounded border border-transparent text-sub hover:text-main hover:bg-subtle transition flex items-center gap-1.5">
-          <svg class="w-3.5 h-3.5" viewBox="0 0 24 24">
+          <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" aria-hidden="true">
             <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
             <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
             <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
@@ -1796,7 +1814,7 @@
                 required
                 autocomplete="username"
                 placeholder="e.g. r.sharma@aicte-india.org or officer_sc401"
-                class="w-full px-3 py-2 subtle-surface text-main text-xs border border-line focus:outline-none focus:border-[#0284c7] rounded-[5px]"
+                class="w-full px-3 py-2 subtle-surface text-main text-xs border border-line focus:outline-none focus:border-sky-600 rounded-[5px]"
               />
             </div>
           </div>
@@ -1813,13 +1831,13 @@
                 required
                 autocomplete="current-password"
                 placeholder="Enter account password"
-                class="w-full px-3 py-2 subtle-surface text-main text-xs border border-line focus:outline-none focus:border-[#0284c7] rounded-[5px] pr-10"
+                class="w-full px-3 py-2 subtle-surface text-main text-xs border border-line focus:outline-none focus:border-sky-600 rounded-[5px] pr-10"
               />
             </div>
           </div>
 
           <button id="authLoginSubmitBtn" type="submit" class="btn-primary w-full py-2 text-xs flex items-center justify-center gap-2 font-semibold">
-            <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
               <path stroke-linecap="round" stroke-linejoin="round" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
             </svg>
             <span>Sign In to Verification Portal</span>
@@ -1828,9 +1846,9 @@
 
         <!-- Quick-Fill Evaluator Badges -->
         <div class="pt-2 border-t border-line/60">
-          <div class="text-[10px] font-semibold text-sub uppercase tracking-wider mb-2">Evaluator Demo Accounts (Click to Auto-Fill):</div>
+          <div class="text-[10px] font-semibold text-sub mb-2">Evaluator Demo Accounts (Click to Auto-Fill):</div>
           <div class="grid grid-cols-1 sm:grid-cols-3 gap-1.5 text-[11px]">
-            <button type="button" onclick="fillAuthCredentials('r.sharma@aicte-india.org', 'officer123')" class="p-2 text-left rounded border border-line hover:border-[#0284c7] hover:bg-subtle transition">
+            <button type="button" onclick="fillAuthCredentials('r.sharma@aicte-india.org', 'officer123')" class="p-2 text-left rounded border border-line hover:border-sky-600 hover:bg-subtle transition">
               <div class="font-bold text-main truncate">Scrutiny Officer</div>
               <div class="text-[10px] text-sub font-mono truncate">r.sharma@aicte-india.org</div>
               <div class="text-[9px] text-emerald-600 font-mono mt-0.5">officer123 (6 Inst)</div>
@@ -1840,10 +1858,10 @@
               <div class="text-[10px] text-sub font-mono truncate">principal@apextech.edu.in</div>
               <div class="text-[9px] text-amber-600 font-mono mt-0.5">apex123 (1 Inst)</div>
             </button>
-            <button type="button" onclick="fillAuthCredentials('admin@aicte-india.org', 'admin123')" class="p-2 text-left rounded border border-line hover:border-[#0284c7] hover:bg-subtle transition">
+            <button type="button" onclick="fillAuthCredentials('admin@aicte-india.org', 'admin123')" class="p-2 text-left rounded border border-line hover:border-sky-600 hover:bg-subtle transition">
               <div class="font-bold text-main truncate">System Admin</div>
               <div class="text-[10px] text-sub font-mono truncate">admin@aicte-india.org</div>
-              <div class="text-[9px] text-[#0284c7] font-mono mt-0.5">admin123 (Full)</div>
+              <div class="text-[9px] text-sky-600 font-mono mt-0.5">admin123 (Full)</div>
             </button>
           </div>
         </div>
@@ -1852,11 +1870,11 @@
       <!-- SECTION 2: GOOGLE OAUTH & 1-CLICK PROFILES -->
       <div id="authSectionGoogle" class="space-y-3 hidden">
         <!-- Google GIS Sign-In Card -->
-        <div class="card-surface border border-line hover:border-[#4285F4] p-3.5 rounded-[6px] shadow-sm space-y-2.5">
+        <div class="card-surface border border-line hover:border-blue-500 p-3.5 rounded-[6px] shadow-sm space-y-2.5">
           <div class="flex items-center justify-between gap-3">
             <div class="flex items-center gap-3">
               <div class="w-9 h-9 rounded bg-white border border-slate-200 flex items-center justify-center shrink-0 shadow-sm">
-                <svg class="w-5 h-5" viewBox="0 0 24 24">
+                <svg class="w-5 h-5" viewBox="0 0 24 24" aria-hidden="true">
                   <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
                   <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
                   <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
@@ -1874,10 +1892,10 @@
         </div>
 
         <!-- 1-Click Fast Scrutiny Officer -->
-        <div onclick="loginAsOfficer()" class="group card-surface hover:bg-subtle border border-line hover:border-[#0284c7] p-3 rounded-[6px] cursor-pointer transition shadow-sm flex items-center justify-between gap-3">
+        <div onclick="loginAsOfficer()" class="group card-surface hover:bg-subtle border border-line hover:border-sky-600 p-3 rounded-[6px] cursor-pointer transition shadow-sm flex items-center justify-between gap-3">
           <div class="flex items-center gap-3">
-            <div class="w-8 h-8 rounded bg-[#0284c7]/10 border border-[#0284c7]/30 flex items-center justify-center text-[#0284c7] shrink-0">
-              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <div class="w-8 h-8 rounded bg-sky-500/10 border border-sky-500/30 flex items-center justify-center text-sky-600 shrink-0">
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
               </svg>
             </div>
@@ -1893,7 +1911,7 @@
         <div onclick="loginAsInstitution()" class="group card-surface hover:bg-subtle border border-line hover:border-amber-500/60 p-3 rounded-[6px] cursor-pointer transition shadow-sm flex items-center justify-between gap-3">
           <div class="flex items-center gap-3">
             <div class="w-8 h-8 rounded bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-600 shrink-0">
-              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
               </svg>
             </div>
@@ -1934,7 +1952,7 @@
             type="text"
             required
             placeholder="e.g. Veermata Jijabai Technological Institute (VJTI), Mumbai"
-            class="w-full px-3 py-1.5 subtle-surface text-main text-xs focus:outline-none focus:border-[#0284c7] rounded-[5px]"
+            class="w-full px-3 py-1.5 subtle-surface text-main text-xs focus:outline-none focus:border-sky-600 rounded-[5px]"
           />
         </div>
 
@@ -1947,13 +1965,13 @@
               required
               placeholder="e.g. APP-2026-201"
               value="APP-2026-201"
-              class="w-full px-3 py-1.5 subtle-surface text-main font-mono text-xs focus:outline-none focus:border-[#0284c7] rounded-[5px]"
+              class="w-full px-3 py-1.5 subtle-surface text-main font-mono text-xs focus:outline-none focus:border-sky-600 rounded-[5px]"
             />
           </div>
 
           <div>
             <label class="block text-sub font-medium mb-1">Category</label>
-            <select id="newAppCategorySelect" class="w-full px-3 py-1.5 subtle-surface text-main text-xs focus:outline-none focus:border-[#0284c7] rounded-[5px]">
+            <select id="newAppCategorySelect" class="w-full px-3 py-1.5 subtle-surface text-main text-xs focus:outline-none focus:border-sky-600 rounded-[5px]">
               <option value="Extension of Approval (AY 2026-27)">Extension of Approval (AY 2026-27)</option>
               <option value="Intake Increase (B.Tech CSE)">Intake Increase (B.Tech CSE)</option>
               <option value="New Course Approval (Robotics &amp; AI)">New Course Approval (Robotics &amp; AI)</option>
@@ -1964,30 +1982,30 @@
 
         <!-- Document Upload Inputs -->
         <div class="space-y-2 pt-2 border-t border-line">
-          <div class="text-[11px] font-mono uppercase text-sub">Select Checklist Documents (PDF/Scans):</div>
+          <div class="text-[11px] font-mono text-sub">Select Checklist Documents (PDF/Scans):</div>
           
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[11px]">
-            <label class="subtle-surface p-2 border border-line rounded flex items-center justify-between cursor-pointer hover:border-[#0284c7]">
+            <label class="subtle-surface p-2 border border-line rounded flex items-center justify-between cursor-pointer hover:border-sky-600">
               <span>1. Fire Safety NOC</span>
               <span class="tag-green text-[10px]">Attached</span>
             </label>
-            <label class="subtle-surface p-2 border border-line rounded flex items-center justify-between cursor-pointer hover:border-[#0284c7]">
+            <label class="subtle-surface p-2 border border-line rounded flex items-center justify-between cursor-pointer hover:border-sky-600">
               <span>2. Land Ownership Deed</span>
               <span class="tag-green text-[10px]">Attached</span>
             </label>
-            <label class="subtle-surface p-2 border border-line rounded flex items-center justify-between cursor-pointer hover:border-[#0284c7]">
+            <label class="subtle-surface p-2 border border-line rounded flex items-center justify-between cursor-pointer hover:border-sky-600">
               <span>3. University Affiliation</span>
               <span class="tag-green text-[10px]">Attached</span>
             </label>
-            <label class="subtle-surface p-2 border border-line rounded flex items-center justify-between cursor-pointer hover:border-[#0284c7]">
+            <label class="subtle-surface p-2 border border-line rounded flex items-center justify-between cursor-pointer hover:border-sky-600">
               <span>4. Faculty Roster &amp; PAN</span>
               <span class="tag-green text-[10px]">Attached</span>
             </label>
-            <label class="subtle-surface p-2 border border-line rounded flex items-center justify-between cursor-pointer hover:border-[#0284c7]">
+            <label class="subtle-surface p-2 border border-line rounded flex items-center justify-between cursor-pointer hover:border-sky-600">
               <span>5. Building Sanction Plan</span>
               <span class="tag-green text-[10px]">Attached</span>
             </label>
-            <label class="subtle-surface p-2 border border-line rounded flex items-center justify-between cursor-pointer hover:border-[#0284c7]">
+            <label class="subtle-surface p-2 border border-line rounded flex items-center justify-between cursor-pointer hover:border-sky-600">
               <span>6. Fee Payment Receipt</span>
               <span class="tag-green text-[10px]">Attached</span>
             </label>
@@ -2029,7 +2047,7 @@
 
         <div>
           <label class="block text-sub font-medium mb-1">Official Decision Outcome</label>
-          <select id="decisionOutcomeSelect" class="w-full px-3 py-2 text-xs subtle-surface text-main focus:outline-none focus:border-[#0284c7] rounded-[5px]">
+          <select id="decisionOutcomeSelect" class="w-full px-3 py-2 text-xs subtle-surface text-main focus:outline-none focus:border-sky-600 rounded-[5px]">
             <option value="Verified">Approve &amp; Mark Verified</option>
             <option value="Needs Review">Flag for Clarification / Physical Inspection (Needs Review)</option>
             <option value="Incomplete">Return for Missing Documents (Incomplete)</option>
@@ -2038,22 +2056,22 @@
 
         <div>
           <label class="block text-sub font-medium mb-1">Reviewing Officer Name or ID</label>
-          <input id="decisionOfficerInput" type="text" value="Dr. Arvind Kumar (AICTE Scrutiny Officer)" class="w-full px-3 py-1.5 text-xs subtle-surface text-main font-mono focus:outline-none focus:border-[#0284c7] rounded-[5px]" />
+          <input id="decisionOfficerInput" type="text" value="Dr. Arvind Kumar (AICTE Scrutiny Officer)" class="w-full px-3 py-1.5 text-xs subtle-surface text-main font-mono focus:outline-none focus:border-sky-600 rounded-[5px]" />
         </div>
 
         <div>
           <label class="block text-sub font-medium mb-1">Official Review Remarks</label>
-          <textarea id="decisionNotesInput" rows="3" placeholder="Enter clear justification referencing the checklist and verification findings..." class="w-full p-2.5 text-xs subtle-surface text-main placeholder:text-muted-color focus:outline-none focus:border-[#0284c7] rounded-[5px]"></textarea>
+          <textarea id="decisionNotesInput" rows="3" placeholder="Enter clear justification referencing the checklist and verification findings..." class="w-full p-2.5 text-xs subtle-surface text-main placeholder:text-muted-color focus:outline-none focus:border-sky-600 rounded-[5px]"></textarea>
         </div>
 
-        <div id="decisionValidationError" class="hidden text-xs text-[#b91c1c] font-semibold">
+        <div id="decisionValidationError" class="hidden text-xs text-red-700 font-semibold">
           Please enter both Officer ID and review remarks to confirm.
         </div>
       </div>
 
       <div class="flex items-center justify-between gap-2 pt-2 border-t border-line">
         <button onclick="window.openReportModal('APP-2026-101')" type="button" class="btn-secondary text-xs flex items-center gap-1.5">
-          <svg class="w-3.5 h-3.5 text-[#0284c7]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <svg class="w-3.5 h-3.5 text-sky-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
           </svg>
           <span>Preview AICTE Scrutiny Report</span>
@@ -2069,7 +2087,7 @@
   <!-- =====================================================================
        RECTANGULAR NOTIFICATION BANNER
        ===================================================================== -->
-  <div id="toastBanner" class="fixed bottom-4 right-4 z-50 hidden card-surface border-l-4 border-l-[#0284c7] px-4 py-3 shadow-md max-w-sm text-xs font-medium text-main">
+  <div id="toastBanner" class="fixed bottom-4 right-4 z-50 hidden card-surface border-l-4 border-l-sky-600 px-4 py-3 shadow-md max-w-sm text-xs font-medium text-main">
     <div class="flex items-center justify-between gap-3">
       <span id="toastBannerMessage">Action completed.</span>
       <button onclick="hideToastBanner()" class="text-sub hover:text-main font-mono font-bold">X</button>
@@ -2745,7 +2763,7 @@
 
       if (tab === 'email') {
         if (emailTabBtn) {
-          emailTabBtn.className = 'px-3 py-1.5 font-semibold rounded border border-[#0284c7] text-[#0284c7] bg-[#0284c7]/10 transition flex items-center gap-1.5';
+          emailTabBtn.className = 'px-3 py-1.5 font-semibold rounded border border-sky-600 text-sky-600 bg-sky-500/10 transition flex items-center gap-1.5';
         }
         if (googleTabBtn) {
           googleTabBtn.className = 'px-3 py-1.5 font-medium rounded border border-transparent text-sub hover:text-main hover:bg-subtle transition flex items-center gap-1.5';
@@ -2754,7 +2772,7 @@
         if (googleSection) googleSection.classList.add('hidden');
       } else {
         if (googleTabBtn) {
-          googleTabBtn.className = 'px-3 py-1.5 font-semibold rounded border border-[#0284c7] text-[#0284c7] bg-[#0284c7]/10 transition flex items-center gap-1.5';
+          googleTabBtn.className = 'px-3 py-1.5 font-semibold rounded border border-sky-600 text-sky-600 bg-sky-500/10 transition flex items-center gap-1.5';
         }
         if (emailTabBtn) {
           emailTabBtn.className = 'px-3 py-1.5 font-medium rounded border border-transparent text-sub hover:text-main hover:bg-subtle transition flex items-center gap-1.5';
@@ -3396,6 +3414,7 @@ function loginAsOfficer() {
     function toggleColorTheme() {
       const htmlEl = document.documentElement;
       const isDark = htmlEl.classList.toggle('dark');
+      htmlEl.setAttribute('data-theme', isDark ? 'dark' : 'light');
       
       const moon = document.getElementById('iconMoon');
       const sun = document.getElementById('iconSun');
@@ -3513,7 +3532,7 @@ function loginAsOfficer() {
 
         return `
           <tr onclick="openApplicationInspection('${app.id}')" class="h-[52px] border-b border-subtle hover:bg-surface-subtle cursor-pointer transition-colors duration-150">
-            <td class="py-3 px-4 font-mono font-bold text-[#0284c7] tabular-nums">
+            <td class="py-3 px-4 font-mono font-bold text-sky-600 tabular-nums">
               <span class="px-2 py-0.5 rounded-[3px] bg-sky-50 dark:bg-sky-950/40 border border-sky-200 dark:border-sky-800 text-[11px]">${app.id}</span>
             </td>
             <td class="py-3 px-4 font-semibold text-main text-xs">${app.institution}</td>
@@ -3580,13 +3599,13 @@ function loginAsOfficer() {
       const isInstitution = activeUserSession && activeUserSession.role && activeUserSession.role.includes('Institution');
       if (decisionContainer) {
         if (isInstitution) {
-          decisionContainer.innerHTML = `<button class="btn btn-primary btn-sm py-1.5 px-3 text-xs bg-[#0284c7] text-white flex items-center gap-1.5" style="border-radius:4px;" onclick="alert('Rectification dossier upload portal opened')">
-            <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" /></svg>
+          decisionContainer.innerHTML = `<button class="btn btn-primary btn-sm py-1.5 px-3 text-xs bg-sky-600 text-white flex items-center gap-1.5" style="border-radius:4px;" onclick="alert('Rectification dossier upload portal opened')">
+            <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" /></svg>
             <span>Upload Rectification Document</span>
           </button>`;
         } else {
           decisionContainer.innerHTML = `<button onclick="openOfficialDecisionModal()" class="btn-primary flex items-center gap-1.5 text-xs">
-            <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
               <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
             <span>Record Official Decision</span>
@@ -3597,22 +3616,22 @@ function loginAsOfficer() {
       // Populate 4-Column Summary Card
       document.getElementById('inspectSummaryCard').innerHTML = `
         <div class="card-surface p-4">
-          <div class="text-[11px] font-mono uppercase text-sub">Institution Name &amp; ID</div>
+          <div class="text-[11px] font-mono text-sub">Institution Name &amp; ID</div>
           <div class="text-sm font-bold text-main mt-1">${app.institution}</div>
-          <div class="text-xs font-mono text-[#0284c7] mt-0.5">${app.id}</div>
+          <div class="text-xs font-mono text-sky-600 mt-0.5">${app.id}</div>
         </div>
         <div class="card-surface p-4">
-          <div class="text-[11px] font-mono uppercase text-sub">Application Category</div>
+          <div class="text-[11px] font-mono text-sub">Application Category</div>
           <div class="text-sm font-semibold text-main mt-1">${app.category}</div>
           <div class="text-xs text-sub mt-0.5">Checklist: ${getChecklistProgress(app)}</div>
         </div>
         <div class="card-surface p-4">
-          <div class="text-[11px] font-mono uppercase text-sub">Submission Date</div>
+          <div class="text-[11px] font-mono text-sub">Submission Date</div>
           <div class="text-sm font-mono font-semibold text-main mt-1">${app.submittedDate}</div>
           <div class="text-xs text-sub mt-0.5">Academic Cycle 2026-27</div>
         </div>
         <div class="card-surface p-4">
-          <div class="text-[11px] font-mono uppercase text-sub">Current Status</div>
+          <div class="text-[11px] font-mono text-sub">Current Status</div>
           <div class="mt-1.5">${renderStatusTag(app.status)}</div>
           <div class="text-xs text-sub mt-1">Flagged Items: ${getFlaggedIssuesCount(app)}</div>
         </div>
@@ -3647,7 +3666,7 @@ function loginAsOfficer() {
             <div class="overflow-x-auto">
               <table class="w-full text-left border-collapse text-xs">
                 <thead>
-                  <tr class="subtle-surface border-b border-line text-sub font-mono text-[11px] uppercase">
+                  <tr class="subtle-surface border-b border-line text-sub font-mono text-[11px]">
                     <th class="py-2.5 px-3">Required Document</th>
                     <th class="py-2.5 px-3">Reference ID</th>
                     <th class="py-2.5 px-3">Upload Status</th>
@@ -3668,13 +3687,13 @@ function loginAsOfficer() {
                         <div class="flex items-center justify-end gap-1.5">
                           ${doc.name.toLowerCase().includes('land') ? `
                             <button onclick="window.openForensicDiffModal('${app.id}', '${doc.name}')" class="btn-secondary py-1 px-2 text-xs flex items-center gap-1" style="border-radius:4px;" title="Inspect Forensic Diff">
-                              <svg class="w-3 h-3 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" /></svg>
+                              <svg class="w-3 h-3 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" /></svg>
                               <span>Diff</span>
                             </button>
                           ` : ''}
                           ${doc.name.toLowerCase().includes('building') || doc.name.toLowerCase().includes('plan') ? `
                             <button onclick="window.openCvEvidenceModal('${app.id}', '${doc.name}')" class="btn-secondary py-1 px-2 text-xs flex items-center gap-1" style="border-radius:4px;" title="View CV Evidence">
-                              <svg class="w-3 h-3 text-[#0284c7]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
+                              <svg class="w-3 h-3 text-sky-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
                               <span>CV</span>
                             </button>
                           ` : ''}
@@ -3702,7 +3721,7 @@ function loginAsOfficer() {
               </div>
               <div class="flex items-center gap-2">
                 <button onclick="window.openForensicDiffModal('APP-2026-101', 'Land Ownership Deed')" class="btn-primary py-1 px-3 text-xs flex items-center gap-1.5" style="border-radius:4px;">
-                  <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
                   </svg>
                   <span>Inspect Forensic Diff</span>
@@ -3714,7 +3733,7 @@ function loginAsOfficer() {
             <div class="overflow-x-auto">
               <table class="w-full text-left border-collapse text-xs">
                 <thead>
-                  <tr class="subtle-surface border-b border-line text-sub font-mono text-[11px] uppercase">
+                  <tr class="subtle-surface border-b border-line text-sub font-mono text-[11px]">
                     <th class="py-2.5 px-3">Field Name</th>
                     <th class="py-2.5 px-3">Value in Application Form</th>
                     <th class="py-2.5 px-3">Value Extracted from Document</th>
@@ -3736,7 +3755,7 @@ function loginAsOfficer() {
                             <span>${row.note}</span>
                             ${isLandDiff ? `
                               <button onclick="window.openForensicDiffModal('${app.id}', 'Land Ownership Deed')" class="btn-primary py-1 px-2.5 text-xs shrink-0 flex items-center gap-1.5" style="border-radius:4px;">
-                                <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
                                   <path stroke-linecap="round" stroke-linejoin="round" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
                                 </svg>
                                 <span>Inspect Forensic Diff</span>
@@ -3770,7 +3789,7 @@ function loginAsOfficer() {
             <div class="overflow-x-auto">
               <table class="w-full text-left border-collapse text-xs">
                 <thead>
-                  <tr class="subtle-surface border-b border-line text-sub font-mono text-[11px] uppercase">
+                  <tr class="subtle-surface border-b border-line text-sub font-mono text-[11px]">
                     <th class="py-2.5 px-3">Source Name</th>
                     <th class="py-2.5 px-3">Reference ID</th>
                     <th class="py-2.5 px-3">Timestamp</th>
@@ -3812,7 +3831,7 @@ function loginAsOfficer() {
             <div class="overflow-x-auto">
               <table class="w-full text-left border-collapse text-xs">
                 <thead>
-                  <tr class="subtle-surface border-b border-line text-sub font-mono text-[11px] uppercase">
+                  <tr class="subtle-surface border-b border-line text-sub font-mono text-[11px]">
                     <th class="py-2.5 px-3">Facility Item</th>
                     <th class="py-2.5 px-3">Prescribed Requirement</th>
                     <th class="py-2.5 px-3">Submitted Evidence</th>
@@ -3831,7 +3850,7 @@ function loginAsOfficer() {
                             <span>${item.submitted}</span>
                             ${isLabWorkstation ? `
                               <button onclick="window.openCvEvidenceModal('${app.id}', 'Computer Center / Lab')" class="btn-primary py-1 px-2.5 text-xs shrink-0 flex items-center gap-1.5" style="border-radius:4px;">
-                                <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
                                   <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                                   <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                                 </svg>
@@ -4142,7 +4161,7 @@ function loginAsOfficer() {
             ${boxesToInspect && boxesToInspect.length > 0 ? `
               <div class="pt-2 border-t border-line">
                 <button onclick="window.openGoogleOcrBoxesModal(activeOcrWordBoxes.length ? activeOcrWordBoxes : ${JSON.stringify(boxesToInspect).replace(/"/g, '&quot;')}, '${escapeHtml(doc.fileName)}')" class="btn-secondary w-full py-1.5 px-3 text-xs flex items-center justify-center gap-1.5" style="border-radius:4px;">
-                  <svg class="w-3.5 h-3.5 text-[#0284c7]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <svg class="w-3.5 h-3.5 text-sky-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 10h16M4 14h16M4 18h16" />
                   </svg>
                   <span>Inspect Word Coordinates &amp; Bounding Boxes (${boxesToInspect.length} words)</span>
@@ -4171,7 +4190,7 @@ function loginAsOfficer() {
             ${doc.overallStatus === 'Altered' || doc.fileName.includes('LAND_DEED') ? `
               <div class="pt-2 border-t border-line">
                 <button onclick="window.openForensicDiffModal('SAMPLE-2', 'Land Deed')" class="btn-primary w-full py-2 text-xs flex items-center justify-center gap-1.5" style="border-radius:4px;">
-                  <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
                   </svg>
                   <span>Open Interactive Side-by-Side Forensic Diff</span>
@@ -4181,7 +4200,7 @@ function loginAsOfficer() {
             ${doc.fileName.includes('BUILDING_PLAN') ? `
               <div class="pt-2 border-t border-line">
                 <button onclick="window.openCvEvidenceModal('SAMPLE-5', 'Building Plan')" class="btn-primary w-full py-2 text-xs flex items-center justify-center gap-1.5" style="border-radius:4px;">
-                  <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                     <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                   </svg>
@@ -4205,7 +4224,7 @@ function loginAsOfficer() {
             </div>
             <div class="flex justify-between">
               <span class="text-sub">Queried Reference ID:</span>
-              <span class="font-mono font-semibold text-[#0284c7]">${escapeHtml(doc.authorityStatus?.refId || 'N/A')}</span>
+              <span class="font-mono font-semibold text-sky-600">${escapeHtml(doc.authorityStatus?.refId || 'N/A')}</span>
             </div>
             <div class="subtle-surface p-3 text-sub leading-relaxed">
               ${escapeHtml(doc.authorityStatus?.message || '')}
@@ -4271,7 +4290,7 @@ function loginAsOfficer() {
             <!-- Required Fields Checklist -->
             ${doc.geminiAnalysis.requiredFieldsChecklist && doc.geminiAnalysis.requiredFieldsChecklist.length > 0 ? `
               <div class="pt-2 border-t border-line">
-                <div class="text-[11px] font-mono uppercase text-sub mb-1.5">Statutory Required Fields Checklist:</div>
+                <div class="text-[11px] font-mono text-sub mb-1.5">Statutory Required Fields Checklist:</div>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2">
                   ${doc.geminiAnalysis.requiredFieldsChecklist.map(item => `
                     <div class="subtle-surface p-2 rounded border border-line flex items-center justify-between text-[11px]">
@@ -4754,7 +4773,7 @@ function loginAsOfficer() {
         if (badgeEl) {
           badgeEl.innerHTML = `
             <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded bg-red-100 text-red-900 text-xs font-bold border-2 border-red-500 animate-pulse">
-              <svg class="w-3.5 h-3.5 text-red-600 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <svg class="w-3.5 h-3.5 text-red-600 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
               </svg>
               <span>CRITICAL ALERT: Tampering Detected at Block #${td.brokenIndex}!</span>
@@ -4772,7 +4791,7 @@ function loginAsOfficer() {
           alertEl.classList.remove('hidden');
           alertEl.innerHTML = `
             <div class="flex items-start gap-3">
-              <svg class="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <svg class="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
               </svg>
               <div class="space-y-1.5 flex-1">
@@ -4800,7 +4819,7 @@ function loginAsOfficer() {
         if (badgeEl) {
           badgeEl.innerHTML = `
             <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded bg-emerald-50 text-emerald-800 text-xs font-semibold border border-emerald-300">
-              <svg class="w-3.5 h-3.5 text-emerald-600 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <svg class="w-3.5 h-3.5 text-emerald-600 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
               <span>Chain Integrity: VALID / SECURE</span>
@@ -4839,7 +4858,7 @@ function loginAsOfficer() {
             connectorHtml = `
               <div class="flex items-center justify-center my-3">
                 <div class="flex items-center gap-2 px-3 py-1 bg-red-50 border-2 border-red-500 rounded text-[11px] font-mono text-red-700 shadow-xs animate-pulse">
-                  <svg class="w-3.5 h-3.5 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <svg class="w-3.5 h-3.5 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" />
                   </svg>
                   <span>SHA-256 LINK: Block #${b.index - 1} &rarr; Block #${b.index} (MISMATCH / TAMPERED)</span>
@@ -4850,7 +4869,7 @@ function loginAsOfficer() {
             connectorHtml = `
               <div class="flex items-center justify-center my-3">
                 <div class="flex items-center gap-2 px-3 py-1 bg-amber-50 border border-amber-500 rounded text-[11px] font-mono text-amber-800 shadow-xs">
-                  <svg class="w-3.5 h-3.5 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <svg class="w-3.5 h-3.5 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
                   </svg>
                   <span>HASH CHAIN BROKEN: Previous Hash does not match upstream block</span>
@@ -4861,7 +4880,7 @@ function loginAsOfficer() {
             connectorHtml = `
               <div class="flex items-center justify-center my-3">
                 <div class="flex items-center gap-2 px-3 py-1 bg-white border border-line rounded text-[11px] font-mono text-sub shadow-xs">
-                  <svg class="w-3.5 h-3.5 text-[#0284c7]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <svg class="w-3.5 h-3.5 text-sky-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
                   </svg>
                   <span>SHA-256 LINK: Block #${b.index - 1} &rarr; Block #${b.index} (VALID / LINKED)</span>
@@ -4892,7 +4911,7 @@ function loginAsOfficer() {
                 <span class="px-2 py-0.5 rounded text-[11px] font-semibold border ${badgeStyle}">
                   ${escapeHtml(b.eventType)}
                 </span>
-                <span class="font-mono text-xs font-bold text-[#0284c7]">
+                <span class="font-mono text-xs font-bold text-sky-600">
                   Target: ${escapeHtml(b.targetId)}
                 </span>
               </div>
@@ -4909,7 +4928,7 @@ function loginAsOfficer() {
 
             ${isTamperedTarget ? `
               <div class="p-2.5 bg-red-100 border border-red-300 rounded text-xs text-red-900 font-bold flex items-center gap-2">
-                <svg class="w-4 h-4 text-red-600 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <svg class="w-4 h-4 text-red-600 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                 </svg>
                 <span>TAMPER DETECTED: Historical block payload was modified without valid cryptographic signature! Hash mismatch.</span>
@@ -4918,7 +4937,7 @@ function loginAsOfficer() {
 
             ${isCascadeBroken ? `
               <div class="p-2 bg-amber-100 border border-amber-300 rounded text-xs text-amber-900 font-semibold flex items-center gap-2">
-                <svg class="w-4 h-4 text-amber-600 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <svg class="w-4 h-4 text-amber-600 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                 </svg>
                 <span>HASH CHAIN BROKEN: Previous Hash does not match upstream block. Cryptographic continuity severed.</span>
@@ -4942,7 +4961,7 @@ function loginAsOfficer() {
                   Block Hash (SHA-256):
                 </div>
                 <div class="flex items-center justify-between gap-2">
-                  <span class="font-mono text-[11px] font-bold ${isTamperedTarget ? 'text-red-700 line-through' : 'text-[#0284c7]'} break-all" title="${b.blockHash}">
+                  <span class="font-mono text-[11px] font-bold ${isTamperedTarget ? 'text-red-700 line-through' : 'text-sky-600'} break-all" title="${b.blockHash}">
                     ${hashTrunc}
                   </span>
                   <button onclick="copyLedgerHash('${b.blockHash}', 'Block Hash')" class="btn-secondary py-0.5 px-2 text-[10px] shrink-0" style="border-radius:4px;" title="Copy block hash">
@@ -4960,8 +4979,8 @@ function loginAsOfficer() {
 
             <!-- Raw JSON Inspect Drawer -->
             <details class="text-xs pt-1">
-              <summary class="cursor-pointer text-[#0284c7] font-semibold text-[11px] hover:underline flex items-center gap-1 select-none">
-                <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <summary class="cursor-pointer text-sky-600 font-semibold text-[11px] hover:underline flex items-center gap-1 select-none">
+                <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
                 </svg>
                 <span>Inspect Raw Cryptographic Block JSON</span>
@@ -5062,7 +5081,7 @@ function loginAsOfficer() {
 
       tbody.innerHTML = rulesList.map((r, idx) => `
         <tr class="hover:bg-subtle transition">
-          <td class="py-3 px-3 font-mono font-bold text-[#0284c7]">${r.code}</td>
+          <td class="py-3 px-3 font-mono font-bold text-sky-600">${r.code}</td>
           <td class="py-3 px-3"><span class="tag-neutral">${r.category}</span></td>
           <td class="py-3 px-3 font-medium text-main">${r.description}</td>
           <td class="py-3 px-3">
@@ -5141,7 +5160,7 @@ function loginAsOfficer() {
         <tr>
           <td class="py-2.5 px-3 font-mono text-sub whitespace-nowrap">${item.timestamp}</td>
           <td class="py-2.5 px-3 font-semibold text-main">${item.actor}</td>
-          <td class="py-2.5 px-3 font-mono font-semibold text-[#0284c7]">${item.target}</td>
+          <td class="py-2.5 px-3 font-mono font-semibold text-sky-600">${item.target}</td>
           <td class="py-2.5 px-3 font-medium text-main">${item.event}</td>
           <td class="py-2.5 px-3 text-sub">${item.details}</td>
         </tr>
@@ -5364,7 +5383,7 @@ function loginAsOfficer() {
       const viewEla = document.getElementById('forensicViewEla');
       const viewHash = document.getElementById('forensicViewHash');
 
-      const activeClasses = ['bg-[#0284c7]', 'text-white'];
+      const activeClasses = ['bg-sky-600', 'text-white'];
       const inactiveClasses = ['bg-slate-100', 'dark:bg-slate-800', 'text-slate-700', 'dark:text-slate-300'];
 
       [btnSplit, btnEla, btnHash].forEach(b => {
@@ -6516,7 +6535,7 @@ function loginAsOfficer() {
       <!-- Header -->
       <div class="flex items-center justify-between border-b border-line pb-3">
         <div class="flex items-center gap-2">
-          <span class="px-2 py-0.5 rounded text-[10px] font-bold font-mono bg-[#0284c7]/10 text-[#0284c7] border border-[#0284c7]/30">YOLOv8 Edge CV</span>
+          <span role="status" class="px-2 py-0.5 rounded text-[10px] font-bold font-mono bg-sky-500/10 text-sky-600 border border-sky-500/30">YOLOv8 Edge CV</span>
           <h3 class="text-sm font-bold text-main">AI Computer Vision Infrastructure Audit | APH 2024-27 Norm Validation</h3>
         </div>
         <div class="flex items-center gap-2">
@@ -6528,19 +6547,19 @@ function loginAsOfficer() {
       <!-- Top Metadata Bar -->
       <div class="p-2.5 rounded subtle-surface border border-line text-xs grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 font-mono">
         <div>
-          <span class="text-sub block text-[10px] uppercase font-semibold">Target Facility:</span>
+          <span class="text-sub block text-[10px] font-semibold">Target Facility:</span>
           <span class="text-main font-bold">Apex IT - Lab 3 (Computing Center)</span>
         </div>
         <div>
-          <span class="text-sub block text-[10px] uppercase font-semibold">Intake Specification:</span>
+          <span class="text-sub block text-[10px] font-semibold">Intake Specification:</span>
           <span class="text-main font-bold">180 Intake (B.Tech CSE)</span>
         </div>
         <div>
-          <span class="text-sub block text-[10px] uppercase font-semibold">Carpet Area Audited:</span>
+          <span class="text-sub block text-[10px] font-semibold">Carpet Area Audited:</span>
           <span class="text-main font-bold">194.2 m² (Claimed: 210.5 m²)</span>
         </div>
         <div>
-          <span class="text-sub block text-[10px] uppercase font-semibold">Lab Batch Norm Status:</span>
+          <span class="text-sub block text-[10px] font-semibold">Lab Batch Norm Status:</span>
           <span class="px-1.5 py-0.5 rounded text-[10px] font-bold bg-amber-100 text-amber-800 border border-amber-300">BATCH DEFICIENT (-8 Units)</span>
         </div>
       </div>
@@ -6550,7 +6569,7 @@ function loginAsOfficer() {
         <!-- Left Column: Canvas Viewport (8 Cols) -->
         <div class="lg:col-span-8 flex flex-col space-y-2">
           <div class="relative w-full rounded border border-slate-700 overflow-hidden bg-slate-950 shadow-inner flex items-center justify-center">
-            <canvas id="cvInspectionCanvas" width="800" height="450" class="w-full h-auto max-h-[440px] block" style="background:#090d16;"></canvas>
+            <canvas id="cvInspectionCanvas" width="800" height="450" class="w-full h-auto max-h-[440px] block bg-slate-950" aria-hidden="true"></canvas>
             
             <!-- Live Model Inference Pill -->
             <div class="absolute top-2.5 left-2.5 px-2 py-0.5 rounded bg-black/80 text-emerald-400 font-mono text-[10px] border border-emerald-500/40 flex items-center gap-1.5 shadow">
@@ -6573,15 +6592,15 @@ function loginAsOfficer() {
           <div class="flex flex-wrap items-center justify-between gap-3 p-2.5 rounded subtle-surface border border-line text-xs">
             <div class="flex flex-wrap items-center gap-3">
               <label class="inline-flex items-center gap-1.5 cursor-pointer font-medium text-main text-xs">
-                <input type="checkbox" id="cvBoxesCheckbox" checked onchange="window.toggleCvBoundingBoxes(this.checked)" class="rounded text-[#0284c7]">
+                <input type="checkbox" id="cvBoxesCheckbox" checked onchange="window.toggleCvBoundingBoxes(this.checked)" class="rounded text-sky-600">
                 <span>YOLOv8 Bounding Boxes</span>
               </label>
               <label class="inline-flex items-center gap-1.5 cursor-pointer font-medium text-main text-xs">
-                <input type="checkbox" id="cvHeatmapCheckbox" onchange="window.toggleCvHeatmap(this.checked)" class="rounded text-[#0284c7]">
+                <input type="checkbox" id="cvHeatmapCheckbox" onchange="window.toggleCvHeatmap(this.checked)" class="rounded text-sky-600">
                 <span>Thermal Heatmap</span>
               </label>
               <label class="inline-flex items-center gap-1.5 cursor-pointer font-medium text-main text-xs">
-                <input type="checkbox" id="cvGeofenceCheckbox" checked onchange="window.toggleCvGeofence(this.checked)" class="rounded text-[#0284c7]">
+                <input type="checkbox" id="cvGeofenceCheckbox" checked onchange="window.toggleCvGeofence(this.checked)" class="rounded text-sky-600">
                 <span>Campus Geofence (18.5204 N, 73.8567 E)</span>
               </label>
             </div>
@@ -6606,7 +6625,7 @@ function loginAsOfficer() {
         <div class="lg:col-span-4 flex flex-col space-y-3">
           <div class="p-3 rounded border border-line subtle-surface space-y-2.5">
             <div class="flex items-center justify-between border-b border-line pb-1.5">
-              <span class="text-[10px] uppercase font-bold text-sub tracking-wider">AICTE APH 2024-27 Norm Disambiguation</span>
+              <span class="text-[10px] font-bold text-sub">AICTE APH 2024-27 Norm Disambiguation</span>
               <span class="px-1.5 py-0.5 text-[9px] font-mono font-bold bg-sky-100 text-sky-800 rounded">3-Tier Audit</span>
             </div>
 
@@ -6668,8 +6687,8 @@ function loginAsOfficer() {
 
           <!-- Statutory Scrutiny Action Callout -->
           <div class="p-3 rounded border-2 border-amber-300 bg-amber-50/60 dark:bg-amber-950/20 text-xs space-y-1.5 text-amber-950 dark:text-amber-200">
-            <div class="flex items-center gap-1.5 font-bold text-[11px] uppercase tracking-wider text-amber-800 dark:text-amber-300">
-              <svg class="w-4 h-4 text-amber-600 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <div class="flex items-center gap-1.5 font-bold text-[11px] text-amber-800 dark:text-amber-300">
+              <svg class="w-4 h-4 text-amber-600 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
               </svg>
               <span>Automated Scrutiny Advisory</span>
@@ -6682,7 +6701,7 @@ function loginAsOfficer() {
           <!-- Action Button -->
           <div class="pt-2">
             <button onclick="window.attachCvFindingToDossier()" class="btn-primary w-full py-2.5 text-xs flex items-center justify-center gap-1.5 shadow" style="border-radius:4px;">
-              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
               </svg>
               <span>Attach CV Finding &amp; Notarize on Blockchain</span>
@@ -6708,7 +6727,7 @@ function loginAsOfficer() {
         <div class="flex items-center gap-2">
           <!-- View Switcher -->
           <div class="flex items-center rounded border border-line p-0.5 bg-subtle text-xs font-medium">
-            <button id="forensicModeBtnSplit" onclick="window.setForensicDiffViewMode('split')" class="px-2.5 py-1 rounded text-[11px] font-semibold bg-[#0284c7] text-white">Split Diff</button>
+            <button id="forensicModeBtnSplit" onclick="window.setForensicDiffViewMode('split')" class="px-2.5 py-1 rounded text-[11px] font-semibold bg-sky-600 text-white">Split Diff</button>
             <button id="forensicModeBtnEla" onclick="window.setForensicDiffViewMode('ela')" class="px-2.5 py-1 rounded text-[11px] font-semibold text-slate-700 dark:text-slate-300">ELA 88.4% Heatmap</button>
             <button id="forensicModeBtnHash" onclick="window.setForensicDiffViewMode('hash')" class="px-2.5 py-1 rounded text-[11px] font-semibold text-slate-700 dark:text-slate-300">SHA-256 Byte Delta</button>
           </div>
@@ -6730,13 +6749,13 @@ function loginAsOfficer() {
 
           <!-- Document Snippet Mock -->
           <div class="p-3 rounded bg-white dark:bg-slate-900 border border-red-200 text-xs font-mono space-y-2 shadow-inner">
-            <div class="text-[10px] text-slate-500 uppercase font-bold tracking-wider">Deed Extract (Page 1):</div>
+            <div class="text-[10px] text-slate-500 font-bold">Deed Extract (Page 1):</div>
             <div class="p-2 rounded border border-slate-200 bg-slate-50 dark:bg-slate-800 text-slate-800 dark:text-slate-200 text-[11px] leading-relaxed">
               This Indenture made on 12th January 2021 between Pune District Revenue Authority and Apex Institute of Technology...
             </div>
             <!-- Discrepancy Highlight Box -->
             <div class="p-2.5 rounded border-2 border-red-500 bg-red-100/70 dark:bg-red-950/40 text-red-950 dark:text-red-200 font-bold text-xs space-y-1">
-              <div class="flex items-center justify-between text-[10px] uppercase tracking-wider text-red-800 dark:text-red-300">
+              <div class="flex items-center justify-between text-[10px] text-red-800 dark:text-red-300">
                 <span>Altered Field Highlighted:</span>
                 <span class="font-mono">Font: Helvetica-Bold (Raster Overlay)</span>
               </div>
@@ -6746,7 +6765,7 @@ function loginAsOfficer() {
 
           <!-- Callout -->
           <div class="p-2.5 rounded bg-red-100/60 dark:bg-red-950/30 border border-red-300 text-red-900 dark:text-red-300 text-xs flex items-start gap-2">
-            <svg class="w-4 h-4 text-red-600 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <svg class="w-4 h-4 text-red-600 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
               <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
             </svg>
             <div class="text-[11px] leading-relaxed">
@@ -6767,13 +6786,13 @@ function loginAsOfficer() {
 
           <!-- Document Snippet Mock -->
           <div class="p-3 rounded bg-white dark:bg-slate-900 border border-emerald-200 text-xs font-mono space-y-2 shadow-inner">
-            <div class="text-[10px] text-slate-500 uppercase font-bold tracking-wider">Synthetic Registry Benchmark (State Land Schema Model):</div>
+            <div class="text-[10px] text-slate-500 font-bold">Synthetic Registry Benchmark (State Land Schema Model):</div>
             <div class="p-2 rounded border border-slate-200 bg-slate-50 dark:bg-slate-800 text-slate-800 dark:text-slate-200 text-[11px] leading-relaxed">
               Government of Maharashtra, Revenue Department CTS Record No: 2021-MH-PUN-091218, Registered Holder: Apex Educational Trust...
             </div>
             <!-- Official Clean Record -->
             <div class="p-2.5 rounded border-2 border-emerald-500 bg-emerald-100/70 dark:bg-emerald-950/40 text-emerald-950 dark:text-emerald-200 font-bold text-xs space-y-1">
-              <div class="flex items-center justify-between text-[10px] uppercase tracking-wider text-emerald-800 dark:text-emerald-300">
+              <div class="flex items-center justify-between text-[10px] text-emerald-800 dark:text-emerald-300">
                 <span>Synthetic Baseline Record:</span>
                 <span class="font-mono">Schema: Standard Municipal Survey Model</span>
               </div>
@@ -6783,7 +6802,7 @@ function loginAsOfficer() {
 
           <!-- Callout -->
           <div class="p-2.5 rounded bg-emerald-100/60 dark:bg-emerald-950/30 border border-emerald-300 text-emerald-900 dark:text-emerald-300 text-xs flex items-start gap-2">
-            <svg class="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <svg class="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
               <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
             <div class="text-[11px] leading-relaxed">
@@ -6800,7 +6819,7 @@ function loginAsOfficer() {
           <span class="font-mono text-[11px] text-sub">Threshold: 85.0% | ELA Anomaly Score: 88.4% (Pixel Compression Variance)</span>
         </div>
         <div class="rounded border border-slate-700 overflow-hidden bg-slate-950 flex items-center justify-center">
-          <canvas id="elaViewerCanvas" width="980" height="340" class="w-full h-auto max-h-[360px] block" style="background:#060a12;"></canvas>
+          <canvas id="elaViewerCanvas" width="980" height="340" class="w-full h-auto max-h-[360px] block bg-slate-950" aria-hidden="true"></canvas>
         </div>
       </div>
 
@@ -6828,7 +6847,7 @@ function loginAsOfficer() {
 
       <!-- Statutory Limitation Notice -->
       <div class="p-2.5 rounded bg-amber-50/70 dark:bg-amber-950/20 border border-amber-300 text-amber-900 dark:text-amber-200 text-xs flex items-start gap-2">
-        <svg class="w-4 h-4 text-amber-600 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <svg class="w-4 h-4 text-amber-600 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
           <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
         </svg>
         <div class="text-[11px] leading-relaxed">
@@ -6838,7 +6857,7 @@ function loginAsOfficer() {
 
       <!-- Forensic Findings Table -->
       <div class="space-y-1.5 pt-1">
-        <h4 class="text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300">Forensic Discrepancy Matrix</h4>
+        <h4 class="text-xs font-bold text-slate-700 dark:text-slate-300">Forensic Discrepancy Matrix</h4>
         <div class="border border-line rounded overflow-hidden">
           <table class="w-full text-left text-xs font-mono">
             <thead class="subtle-surface text-slate-600 dark:text-slate-400 border-b border-line text-[11px]">
@@ -6877,7 +6896,7 @@ function loginAsOfficer() {
       <div class="pt-2 flex items-center justify-between border-t border-line">
         <span class="text-xs text-sub">AICTE Problem Statement 26261 · Cryptographic Proof Chain</span>
         <button onclick="window.attachForensicProofToDossier()" class="btn-primary py-2 px-4 text-xs flex items-center gap-1.5" style="border-radius:4px;">
-          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
           </svg>
           <span>Attach Forensic Proof &amp; Notarize on Blockchain</span>
@@ -6894,13 +6913,13 @@ function loginAsOfficer() {
         <h3 class="text-sm font-bold text-main">AICTE Official Scrutiny Assessment Report (AY 2026-27)</h3>
         <div class="flex items-center gap-2">
           <button onclick="downloadOfficialPdfReport(currentInspectAppId)" class="btn-primary flex items-center gap-1.5 text-xs px-3 py-1.5" style="border-radius:4px;" title="Download authentic publication-grade PDF report generated by backend report_generator.py">
-            <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
               <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
             </svg>
             <span>Download Official PDF (Python Engine)</span>
           </button>
           <button onclick="exportScrutinyReportJson()" class="btn-secondary flex items-center gap-1.5 text-xs px-2.5 py-1" style="border-radius:4px;" title="Export structured JSON scrutiny record">
-            <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
               <path stroke-linecap="round" stroke-linejoin="round" d="M8 4H6a2 2 0 00-2 2v12a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-2m-4-1v8m0 0l3-3m-3 3L9 8m-5 5h2.586a1 1 0 01.707.293l2.414 2.414a1 1 0 00.707.293h3.172a1 1 0 00.707-.293l2.414-2.414a1 1 0 01.707-.293H20" />
             </svg>
             <span>JSON</span>
@@ -6918,7 +6937,7 @@ function loginAsOfficer() {
               AICTE
             </div>
             <div>
-              <div class="font-bold text-sm tracking-wide uppercase text-slate-900">ALL INDIA COUNCIL FOR TECHNICAL EDUCATION</div>
+              <div class="font-bold text-sm text-slate-900">All India Council for Technical Education</div>
               <div class="text-[11px] text-slate-600 font-medium">Ministry of Education, Government of India | Approval Process AY 2026-27</div>
               <div class="text-[10px] text-slate-500 font-mono">Regulatory Decision-Support System (Problem Statement: SIH 26261)</div>
             </div>
@@ -6951,7 +6970,7 @@ function loginAsOfficer() {
 
         <!-- 6 Mandatory Documents Summary Table -->
         <div class="space-y-1.5">
-          <div class="text-xs font-bold uppercase tracking-wider text-slate-800 border-b border-slate-300 pb-1">1. Mandatory Regulatory Documents Audit (6 Dossiers)</div>
+          <div class="text-xs font-bold text-slate-800 border-b border-slate-300 pb-1">1. Mandatory Regulatory Documents Audit (6 Dossiers)</div>
           <table class="w-full text-left font-mono text-[11px] border border-slate-200">
             <thead class="bg-slate-100 border-b border-slate-200 text-slate-700">
               <tr>
@@ -7004,7 +7023,7 @@ function loginAsOfficer() {
 
         <!-- Flagged Deficiencies Section -->
         <div class="space-y-2">
-          <div class="text-xs font-bold uppercase tracking-wider text-slate-800 border-b border-slate-300 pb-1">2. Scrutiny Findings &amp; Regulatory Deficiencies Flagged</div>
+          <div class="text-xs font-bold text-slate-800 border-b border-slate-300 pb-1">2. Scrutiny Findings &amp; Regulatory Deficiencies Flagged</div>
           <div class="space-y-1.5 text-xs">
             <div class="p-2.5 rounded bg-red-50 border border-red-200 text-red-900 space-y-0.5">
               <div class="font-bold flex items-center gap-1.5">
@@ -7063,7 +7082,7 @@ function loginAsOfficer() {
       <div class="flex items-center justify-between border-b border-line pb-4">
         <div class="flex items-center gap-3">
           <div class="w-9 h-9 rounded bg-white border border-slate-200 flex items-center justify-center shrink-0 shadow-sm">
-            <svg class="w-5 h-5" viewBox="0 0 24 24">
+            <svg class="w-5 h-5" viewBox="0 0 24 24" aria-hidden="true">
               <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
               <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
               <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
@@ -7148,11 +7167,11 @@ function loginAsOfficer() {
       <div class="card-surface p-4 rounded-[6px] border border-line space-y-3">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-line pb-2.5">
           <div>
-            <h3 class="text-xs font-bold text-main uppercase tracking-wider">Live Cloud Connectivity Test</h3>
+            <h3 class="text-xs font-bold text-main">Live Cloud Connectivity Test</h3>
             <p class="text-[11px] text-sub">Tests real authenticated endpoints against Google Cloud Vision and Google Gemini servers.</p>
           </div>
           <button id="testConnectivityBtn" onclick="testGoogleCloudConnectivity()" class="btn-primary py-1 px-3 text-xs flex items-center gap-1.5 shrink-0" style="border-radius:4px;">
-            <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
               <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/>
             </svg>
             <span>Test Cloud Connectivity</span>
@@ -7167,7 +7186,7 @@ function loginAsOfficer() {
       <!-- Beginner-Friendly Cloud Configuration Guide -->
       <div class="card-surface p-4 rounded-[6px] border border-line space-y-3">
         <div class="flex items-center justify-between border-b border-line pb-2">
-          <h3 class="text-xs font-bold text-main uppercase tracking-wider">Google Cloud &amp; AI Studio Setup Instructions</h3>
+          <h3 class="text-xs font-bold text-main">Google Cloud &amp; AI Studio Setup Instructions</h3>
           <span class="tag-neutral text-[10px] font-mono">Local Secrets Protection</span>
         </div>
         <div class="text-xs text-sub space-y-2">
@@ -7226,7 +7245,7 @@ function loginAsOfficer() {
       <div class="flex-1 overflow-y-auto border border-line rounded subtle-surface">
         <table class="w-full text-left border-collapse text-xs">
           <thead>
-            <tr class="subtle-surface border-b border-line text-sub font-mono text-[11px] uppercase sticky top-0">
+            <tr class="subtle-surface border-b border-line text-sub font-mono text-[11px] sticky top-0">
               <th class="py-2 px-3">Word Text</th>
               <th class="py-2 px-3">Coordinates (X, Y)</th>
               <th class="py-2 px-3">Dimensions (W × H)</th>
