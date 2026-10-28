@@ -241,7 +241,7 @@ html, body { overflow-x: clip; }
     .header-actions {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
       flex-shrink: 0;
     }
 
@@ -275,10 +275,18 @@ html, body { overflow-x: clip; }
       display: flex;
       align-items: center;
       gap: 8px;
-      padding: 4px 8px;
+      padding: 4px 10px;
       border: 1px solid var(--border-subtle);
       border-radius: var(--radius-sm);
       background-color: var(--bg-surface-subtle);
+      cursor: pointer;
+      user-select: none;
+      transition: background-color 150ms ease, border-color 150ms ease;
+    }
+
+    .user-badge:hover {
+      border-color: var(--border-strong);
+      background-color: var(--bg-surface-hover);
     }
 
     .user-badge-avatar {
@@ -292,6 +300,7 @@ html, body { overflow-x: clip; }
       justify-content: center;
       font-weight: 700;
       font-size: 11px;
+      flex-shrink: 0;
     }
 
     .theme-toggle {
@@ -305,6 +314,7 @@ html, body { overflow-x: clip; }
       align-items: center;
       justify-content: center;
       cursor: pointer;
+      flex-shrink: 0;
       transition: background-color 150ms ease, color 150ms ease;
     }
 
@@ -313,24 +323,46 @@ html, body { overflow-x: clip; }
       color: var(--text-primary);
     }
 
+    /* High-Visibility Sign Out Button (Institutional Danger Accent) */
     .btn-signout {
       border-radius: var(--radius-sm);
-      border: 1px solid var(--border-subtle);
-      background-color: var(--bg-surface);
-      color: var(--text-secondary);
-      padding: 5px 10px;
+      border: 1px solid var(--danger-border);
+      background-color: var(--danger-bg);
+      color: var(--danger-text);
+      padding: 6px 12px;
       font-size: 12px;
-      font-weight: 500;
+      font-weight: 600;
       display: inline-flex;
       align-items: center;
       gap: 6px;
       cursor: pointer;
-      transition: background-color 150ms ease, color 150ms ease;
+      white-space: nowrap;
+      flex-shrink: 0;
+      transition: background-color 150ms ease, border-color 150ms ease, color 150ms ease, box-shadow 150ms ease;
     }
 
     .btn-signout:hover {
-      background-color: var(--bg-surface-subtle);
-      color: var(--text-primary);
+      background-color: var(--danger-border);
+      color: var(--danger-text);
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* Interactive User Account Dropdown Menu */
+    .user-dropdown-menu {
+      position: absolute;
+      top: calc(100% + 8px);
+      right: 0;
+      width: 290px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-strong);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-modal);
+      padding: 12px;
+      z-index: 1050;
+      display: none;
+    }
+    .user-dropdown-menu.active {
+      display: block;
     }
 
     /* =========================================================================
@@ -687,7 +719,7 @@ html, body { overflow-x: clip; }
   <header id="publicHeader" class="header-container">
     <div class="header-inner">
       <!-- Zone 1: Brand (Left) -->
-      <button onclick="switchMainView('landing')" class="header-brand">
+      <button onclick="switchMainView('landing')" class="header-brand" aria-label="CipherCore Verify Home">
         <div class="w-6 h-6 rounded-[4px] bg-sky-600 flex items-center justify-center text-white shrink-0 shadow-sm">
           <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
@@ -713,11 +745,12 @@ html, body { overflow-x: clip; }
       <div class="header-actions">
         <button onclick="openGoogleServicesModal()" id="googleServicesBtnPub" class="px-2.5 py-1 text-xs font-mono text-sky-700 dark:text-sky-300 bg-sky-50 dark:bg-sky-950/40 border border-sky-600/30 rounded flex items-center gap-1.5 transition-colors hover:bg-sky-100" title="Google AI &amp; Cloud Services Status and Live Diagnostics">
           <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-          <span>Google AI &amp; Cloud</span>
+          <span class="hidden sm:inline">Google AI &amp; Cloud</span>
+          <span class="sm:hidden">Google AI</span>
         </button>
         <a href="index.html" class="px-2.5 py-1 text-xs font-mono text-slate-400 hover:text-slate-200 border border-slate-700/60 rounded flex items-center gap-1 transition-colors" title="Return to 3D Landing Page">
           <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
-          <span>Landing</span>
+          <span class="hidden sm:inline">Landing</span>
         </a>
         <button onclick="toggleColorTheme()" class="theme-toggle" title="Toggle Light or Dark Mode" aria-label="Toggle theme">
           <svg id="iconMoonPub" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
@@ -728,7 +761,7 @@ html, body { overflow-x: clip; }
           </svg>
         </button>
 
-        <button onclick="openAuthModal()" class="btn-primary text-xs">
+        <button onclick="openAuthModal()" class="btn-primary text-xs flex items-center gap-1.5" title="Sign In as Officer or Institution">
           <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
           </svg>
@@ -745,7 +778,7 @@ html, body { overflow-x: clip; }
     <div class="header-inner">
 
       <!-- ZONE 1: BRAND (LEFT) -->
-      <button onclick="switchMainView('applications')" class="header-brand">
+      <button onclick="switchMainView('applications')" class="header-brand" aria-label="CipherCore Verify Dashboard">
         <div class="w-6 h-6 rounded-[4px] bg-sky-600 flex items-center justify-center text-white shrink-0 shadow-sm">
           <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
@@ -756,32 +789,33 @@ html, body { overflow-x: clip; }
           <span class="text-slate-400 font-light">|</span>
           <span class="text-[15px] font-medium tracking-tight text-main">Verify</span>
         </div>
+        <span class="hidden md:inline-block tag-neutral font-mono text-[10px] ml-1"><abbr title="Approval Process Handbook">AICTE APH 2026-27</abbr></span>
       </button>
 
-      <!-- ZONE 2: PRIMARY NAVIGATION TABS (CENTER) -->
-      <nav class="header-nav" aria-label="Primary Views">
-        <button onclick="switchMainView('applications')" id="mainNav-applications" class="top-nav-btn active flex items-center gap-1.5">
+      <!-- ZONE 2: NAVIGATION TABS (CENTER) -->
+      <nav class="header-nav hidden md:flex items-center gap-1.5 flex-1 justify-center max-w-2xl">
+        <button onclick="switchMainView('applications')" id="mainNav-applications" class="top-nav-btn active flex items-center gap-1.5" title="Applications Ingestion Queue">
           <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 10h16M4 14h16M4 18h16" />
+            <path stroke-linecap="round" stroke-linejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
           </svg>
-          <span>1. Applications</span>
+          <span>1. Applications Queue</span>
         </button>
 
-        <button onclick="switchMainView('inspect')" id="mainNav-inspect" class="top-nav-btn flex items-center gap-1.5">
+        <button onclick="switchMainView('inspect')" id="mainNav-inspect" class="top-nav-btn flex items-center gap-1.5" title="AICTE Scrutiny Dossier">
           <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
           </svg>
-          <span>2. Inspect Application</span>
+          <span>2. Dossier &amp; Verification</span>
         </button>
 
-        <button onclick="switchMainView('checker')" id="mainNav-checker" class="top-nav-btn flex items-center gap-1.5">
+        <button onclick="switchMainView('checker')" id="mainNav-checker" class="top-nav-btn flex items-center gap-1.5" title="Document Verification &amp; Forensic Analysis">
           <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
           </svg>
           <span>3. Document Checker</span>
         </button>
 
-        <button onclick="switchMainView('rules')" id="mainNav-rules" class="top-nav-btn flex items-center gap-1.5">
+        <button onclick="switchMainView('rules')" id="mainNav-rules" class="top-nav-btn flex items-center gap-1.5" title="APH Rule Policies &amp; Immutable Ledger">
           <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
           </svg>
@@ -789,29 +823,70 @@ html, body { overflow-x: clip; }
         </button>
       </nav>
 
-      <!-- ZONE 3: ACTIONS (RIGHT) - EXACTLY USER BADGE + THEME TOGGLE + SIGN OUT -->
+      <!-- ZONE 3: ACTIONS (RIGHT) -->
       <div class="header-actions">
-        <!-- Runtime Mode Badge -->
+        <!-- Google AI & Cloud Services -->
         <button onclick="openGoogleServicesModal()" id="googleServicesBtnPortal" class="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-mono text-sky-700 dark:text-sky-300 bg-sky-50 dark:bg-sky-950/40 border border-sky-600/30 rounded transition-colors hover:bg-sky-100" title="Google AI &amp; Cloud Services Status and Live Diagnostics">
           <span id="googleServicesPortalDot" class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-          <span>Google AI &amp; Cloud</span>
+          <span class="hidden xl:inline">Google AI &amp; Cloud</span>
+          <span class="xl:hidden">Google AI</span>
         </button>
-        <div id="runtimeModeBadge" class="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1 rounded text-[11px] font-mono border border-line subtle-surface" title="Probing Backend Runtime...">
-          <span id="runtimeModeDot" class="w-2 h-2 rounded-full bg-slate-400"></span>
-          <span id="runtimeModeText" class="text-sub font-medium">Detecting Mode...</span>
-        </div>
+
+        <!-- Landing Page Link -->
         <a href="index.html" class="px-2.5 py-1 text-xs font-mono text-slate-400 hover:text-slate-200 border border-slate-700/60 rounded flex items-center gap-1 transition-colors" title="Return to 3D Landing Page">
           <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
-          <span>Landing</span>
+          <span class="hidden sm:inline">Landing</span>
         </a>
-        <!-- a) User Profile Badge -->
-        <div class="user-badge" id="headerUserBadge">
-          <div id="userAvatarContainer" class="user-badge-avatar" style="border-radius:4px; width:26px; height:26px;">
-            <span id="userAvatarInitial">O</span>
-          </div>
-          <div class="leading-tight text-left">
-            <div id="userDisplayName" class="font-bold text-main text-[13px] truncate max-w-[130px]">Dr. Arvind Kumar</div>
-            <div id="userRoleBadge" class="text-[10px] text-tertiary font-mono font-semibold">AICTE Scrutiny Officer</div>
+
+        <!-- a) User Profile Badge (Clickable with Dropdown Popover) -->
+        <div class="relative">
+          <button onclick="toggleUserDropdown()" class="user-badge" id="headerUserBadge" title="User Profile · Click to view account details &amp; options" aria-haspopup="true" aria-expanded="false">
+            <div id="userAvatarContainer" class="user-badge-avatar" style="border-radius:4px; width:26px; height:26px;">
+              <span id="userAvatarInitial">O</span>
+            </div>
+            <div class="leading-tight text-left hidden sm:block">
+              <div id="userDisplayName" class="font-bold text-main text-[13px] truncate max-w-[130px]">Dr. Arvind Kumar</div>
+              <div id="userRoleBadge" class="text-[10px] text-tertiary font-mono font-semibold">AICTE Scrutiny Officer</div>
+            </div>
+            <svg class="w-3 h-3 text-slate-400 ml-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+
+          <!-- Interactive User Profile Popover / Dropdown -->
+          <div id="userProfileDropdown" class="user-dropdown-menu" role="menu" aria-label="User Account Options">
+            <div class="flex items-center gap-3 pb-3 border-b border-line">
+              <div id="dropdownAvatarContainer" class="user-badge-avatar" style="border-radius:4px; width:34px; height:34px; font-size:14px;">
+                <span id="dropdownAvatarInitial">O</span>
+              </div>
+              <div class="leading-tight overflow-hidden">
+                <div id="dropdownUserName" class="font-bold text-main text-sm truncate">Dr. Arvind Kumar</div>
+                <div id="dropdownUserRole" class="text-xs text-sky-600 dark:text-sky-400 font-medium truncate">AICTE Scrutiny Officer</div>
+                <div id="dropdownUserEmail" class="text-[11px] text-tertiary font-mono truncate">a.kumar@aicte-india.org</div>
+              </div>
+            </div>
+
+            <div class="py-2.5 text-xs text-sub space-y-1.5">
+              <div class="flex justify-between items-center text-[11px]">
+                <span class="text-tertiary">Role Access:</span>
+                <span id="dropdownAccessPill" class="px-1.5 py-0.5 rounded font-mono font-semibold bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300">Regulatory Officer</span>
+              </div>
+              <div class="flex justify-between items-center text-[11px]">
+                <span class="text-tertiary">Session ID:</span>
+                <span id="dropdownSessionId" class="font-mono text-[10px] text-main">AICTE-OFFICER-782</span>
+              </div>
+            </div>
+
+            <div class="pt-2 border-t border-line space-y-1.5">
+              <button onclick="toggleUserDropdown(); openAuthModal();" class="w-full text-left px-2.5 py-1.5 text-xs rounded hover:bg-subtle text-main transition flex items-center justify-between">
+                <span>Switch Role / Re-authenticate</span>
+                <svg class="w-3.5 h-3.5 text-tertiary" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" /></svg>
+              </button>
+              <button onclick="toggleUserDropdown(); signOutUser();" class="w-full text-left px-2.5 py-1.5 text-xs rounded font-semibold text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/40 transition flex items-center justify-between">
+                <span>Sign Out of Session</span>
+                <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" /></svg>
+              </button>
+            </div>
           </div>
         </div>
 
@@ -825,17 +900,33 @@ html, body { overflow-x: clip; }
           </svg>
         </button>
 
-        <!-- c) Sign Out Button -->
-        <button onclick="signOutUser()" class="btn-signout" title="Sign Out of Session">
-          <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <!-- c) Highly Visible Sign Out Button -->
+        <button onclick="signOutUser()" id="headerSignOutBtn" class="btn-signout" title="Sign Out of Session">
+          <svg class="w-3.5 h-3.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
           </svg>
-          <span>Sign Out</span>
+          <span class="font-bold">Sign Out</span>
         </button>
       </div>
 
     </div>
   </header>
+
+  <!-- Mobile Secondary Tab Bar (Directly accessible on screens < 768px) -->
+  <nav id="mobileTabBar" class="md:hidden border-b border-line card-surface px-3 py-1.5 flex items-center justify-between gap-1 overflow-x-auto scrollbar-none sticky top-[60px] z-[990]">
+    <button onclick="switchMainView('applications')" id="mobileNav-applications" class="top-nav-btn active text-xs px-2.5 py-1 flex items-center gap-1">
+      <span>1. Queue</span>
+    </button>
+    <button onclick="switchMainView('inspect')" id="mobileNav-inspect" class="top-nav-btn text-xs px-2.5 py-1 flex items-center gap-1">
+      <span>2. Dossier</span>
+    </button>
+    <button onclick="switchMainView('checker')" id="mobileNav-checker" class="top-nav-btn text-xs px-2.5 py-1 flex items-center gap-1">
+      <span>3. Docs</span>
+    </button>
+    <button onclick="switchMainView('rules')" id="mobileNav-rules" class="top-nav-btn text-xs px-2.5 py-1 flex items-center gap-1">
+      <span>4. Rules</span>
+    </button>
+  </nav>
 
   <!-- =====================================================================
        MAIN WORKSPACE CONTAINER (ONE FOCUSED VIEW AT A TIME)
@@ -2668,6 +2759,26 @@ html, body { overflow-x: clip; }
       }
     }
 
+        function toggleUserDropdown() {
+      const dd = document.getElementById('userProfileDropdown');
+      if (dd) {
+        dd.classList.toggle('active');
+        const badge = document.getElementById('headerUserBadge');
+        if (badge) badge.setAttribute('aria-expanded', dd.classList.contains('active') ? 'true' : 'false');
+      }
+    }
+
+    document.addEventListener('click', (e) => {
+      const dd = document.getElementById('userProfileDropdown');
+      const badge = document.getElementById('headerUserBadge');
+      if (dd && dd.classList.contains('active')) {
+        if (!dd.contains(e.target) && !badge.contains(e.target)) {
+          dd.classList.remove('active');
+          if (badge) badge.setAttribute('aria-expanded', 'false');
+        }
+      }
+    });
+
     function updateAuthUI() {
       const pubHeader = document.getElementById('publicHeader');
       const portHeader = document.getElementById('portalHeader');
@@ -2697,9 +2808,28 @@ html, body { overflow-x: clip; }
         if (avatarContainer) {
           avatarContainer.innerHTML = `<span class="font-bold text-xs">${avatarInitial}</span>`;
         }
+
+        // Sync Interactive Dropdown Profile details
+        const dropAvatar = document.getElementById('dropdownAvatarInitial');
+        if (dropAvatar) dropAvatar.textContent = avatarInitial;
+        const dropName = document.getElementById('dropdownUserName');
+        if (dropName) dropName.textContent = activeUserSession.name || (isOfficer ? 'Dr. Arvind Kumar' : 'Prof. Ramesh Patil');
+        const dropRole = document.getElementById('dropdownUserRole');
+        if (dropRole) dropRole.textContent = activeUserSession.role || (isOfficer ? 'AICTE Scrutiny Officer' : 'Institution Signatory');
+        const dropEmail = document.getElementById('dropdownUserEmail');
+        if (dropEmail) dropEmail.textContent = activeUserSession.email || (isOfficer ? 'a.kumar@aicte-india.org' : 'principal@apextech.edu.in');
+        const dropAccess = document.getElementById('dropdownAccessPill');
+        if (dropAccess) dropAccess.textContent = isOfficer ? 'Regulatory Bureau' : 'Institutional Signatory';
+        const dropSession = document.getElementById('dropdownSessionId');
+        if (dropSession) dropSession.textContent = activeUserSession.id || (isOfficer ? 'AICTE-OFFICER-782' : 'INST-APP-101');
+
+        const mobileTabBar = document.getElementById('mobileTabBar');
+        if (mobileTabBar) mobileTabBar.classList.remove('hidden');
       } else {
         if (pubHeader) pubHeader.classList.remove('hidden');
         if (portHeader) portHeader.classList.add('hidden');
+        const mobileTabBar = document.getElementById('mobileTabBar');
+        if (mobileTabBar) mobileTabBar.classList.add('hidden');
       }
     }
 
@@ -3388,6 +3518,8 @@ function loginAsOfficer() {
       ['applications', 'inspect', 'checker', 'rules'].forEach(navId => {
         const btn = document.getElementById('mainNav-' + navId);
         if (btn) btn.classList.toggle('active', navId === viewName);
+        const mBtn = document.getElementById('mobileNav-' + navId);
+        if (mBtn) mBtn.classList.toggle('active', navId === viewName);
       });
 
       if (viewName === 'applications') {
