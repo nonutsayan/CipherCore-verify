@@ -1,0 +1,630 @@
+<!doctype html>
+<html lang="en" data-resolution="landscape">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1920, height=1080">
+  <title>CipherCore Verify - SIH Jury Showcase &amp; Technical Walkthrough</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@600;700&family=Public+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+  <style>
+    :root {
+      --bg: #0B0F19;
+      --surface: #0E1626;
+      --surface-card: #131E33;
+      --border-cyan: rgba(0, 240, 255, 0.3);
+      --border-emerald: rgba(0, 255, 136, 0.35);
+      --border-crimson: rgba(255, 46, 77, 0.45);
+      --border-violet: rgba(168, 85, 247, 0.35);
+      --cyan: #00F0FF;
+      --emerald: #00FF88;
+      --crimson: #FF2E4D;
+      --violet: #A855F7;
+      --text: #F8FAFC;
+      --text-sub: #94A3B8;
+      --font-display: 'Familjen Grotesk', sans-serif;
+      --font-body: 'Public Sans', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      width: 1920px;
+      height: 1080px;
+      overflow: hidden;
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    #root {
+      position: relative;
+      width: 1920px;
+      height: 1080px;
+      overflow: hidden;
+      background: #0B0F19;
+    }
+
+    .bg-grid {
+      position: absolute;
+      inset: 0;
+      background-image: 
+        linear-gradient(to right, rgba(0, 240, 255, 0.04) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(0, 240, 255, 0.04) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+    }
+
+    .clip {
+      position: absolute;
+      inset: 0;
+      width: 1920px;
+      height: 1080px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .card-panel {
+      background: var(--surface-card);
+      border: 1px solid var(--border-cyan);
+      border-radius: 12px;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
+    }
+
+    .card-emerald {
+      background: #0B2019;
+      border: 1px solid var(--border-emerald);
+      border-radius: 12px;
+      box-shadow: 0 16px 40px rgba(0, 255, 136, 0.12);
+    }
+
+    .card-crimson {
+      background: #240C14;
+      border: 1px solid var(--border-crimson);
+      border-radius: 12px;
+      box-shadow: 0 16px 40px rgba(255, 46, 77, 0.15);
+    }
+
+    .font-display { font-family: var(--font-display); font-weight: 700; }
+    .font-mono { font-family: var(--font-mono); }
+
+    .glow-cyan { text-shadow: 0 0 20px rgba(0, 240, 255, 0.6); }
+    .glow-emerald { text-shadow: 0 0 20px rgba(0, 255, 136, 0.6); }
+    .glow-crimson { text-shadow: 0 0 20px rgba(255, 46, 77, 0.6); }
+
+    .matrix-ring {
+      position: absolute;
+      border-radius: 50%;
+      border: 2px dashed rgba(0, 240, 255, 0.4);
+      box-sizing: border-box;
+    }
+
+    .virtual-cursor {
+      position: absolute;
+      width: 24px;
+      height: 24px;
+      pointer-events: none;
+      z-index: 100;
+      left: 0;
+      top: 0;
+    }
+
+    .perspective-box {
+      perspective: 1200px;
+      transform-style: preserve-3d;
+    }
+  </style>
+</head>
+<body>
+  <div
+    id="root"
+    data-composition-id="main"
+    data-start="0"
+    data-duration="162"
+    data-width="1920"
+    data-height="1080"
+  >
+    <div class="bg-grid"></div>
+
+    <!-- Audio Elements -->
+    <audio id="music-bed" class="clip" data-start="0" data-duration="162.0" data-track-index="1" data-volume="0.16" src="assets/music/music-bed.mp3"></audio>
+    
+    <!-- Narration Audio Clips -->
+    <audio id="vo-scene1" class="clip" data-start="1.0" data-duration="23.57" data-track-index="2" data-volume="1.0" src="assets/vo/scene1_vo.mp3"></audio>
+    <audio id="vo-scene2" class="clip" data-start="26.0" data-duration="23.62" data-track-index="2" data-volume="1.0" src="assets/vo/scene2_vo.mp3"></audio>
+    <audio id="vo-scene3" class="clip" data-start="53.0" data-duration="29.23" data-track-index="2" data-volume="1.0" src="assets/vo/scene3_vo.mp3"></audio>
+    <audio id="vo-scene4" class="clip" data-start="86.0" data-duration="25.78" data-track-index="2" data-volume="1.0" src="assets/vo/scene4_vo.mp3"></audio>
+    <audio id="vo-scene5" class="clip" data-start="115.0" data-duration="15.96" data-track-index="2" data-volume="1.0" src="assets/vo/scene5_vo.mp3"></audio>
+    <audio id="vo-scene6" class="clip" data-start="134.0" data-duration="25.08" data-track-index="2" data-volume="1.0" src="assets/vo/scene6_vo.mp3"></audio>
+
+    <!-- SFX Audio Clips -->
+    <audio id="sfx-drop-1" class="clip" data-start="0.4" data-duration="0.5" data-track-index="3" data-volume="0.7" src="assets/sfx/drop_002.ogg"></audio>
+    <audio id="sfx-slide-2" class="clip" data-start="25.2" data-duration="0.6" data-track-index="3" data-volume="0.75" src="assets/sfx/card-slide-1.ogg"></audio>
+    <audio id="sfx-click-3" class="clip" data-start="55.2" data-duration="0.2" data-track-index="3" data-volume="0.8" src="assets/sfx/mouseclick1.ogg"></audio>
+    <audio id="sfx-switch-3" class="clip" data-start="68.0" data-duration="0.3" data-track-index="3" data-volume="0.7" src="assets/sfx/switch_001.ogg"></audio>
+    <audio id="sfx-click-4" class="clip" data-start="87.0" data-duration="0.2" data-track-index="3" data-volume="0.8" src="assets/sfx/mouseclick1.ogg"></audio>
+    <audio id="sfx-fan-4" class="clip" data-start="100.8" data-duration="0.7" data-track-index="3" data-volume="0.85" src="assets/sfx/card-fan-1.ogg"></audio>
+    <audio id="sfx-glitch-5" class="clip" data-start="116.2" data-duration="0.4" data-track-index="3" data-volume="0.8" src="assets/sfx/glitch_002.ogg"></audio>
+    <audio id="sfx-error-5" class="clip" data-start="117.0" data-duration="0.5" data-track-index="4" data-volume="0.85" src="assets/sfx/error_005.ogg"></audio>
+    <audio id="sfx-bell-6" class="clip" data-start="152.0" data-duration="2.5" data-track-index="3" data-volume="0.9" src="assets/sfx/impactBell_heavy_000.ogg"></audio>
+
+    <!-- ========================================================================= -->
+    <!-- SCENE 1: THE INITIALIZATION & CRYPTOGRAPHIC MATRIX (0.0s – 25.0s)        -->
+    <!-- ========================================================================= -->
+    <section id="scene-1" class="clip" data-start="0.0" data-duration="25.0">
+      <div id="s1-content" style="position:relative; width:100%; height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center;">
+        
+        <div id="s1-matrix-box" style="position:relative; width:380px; height:380px; display:flex; align-items:center; justify-content:center; margin-bottom:28px;">
+          <div id="s1-ring-outer" class="matrix-ring" style="width:360px; height:360px; border-color:rgba(0, 240, 255, 0.4); border-width:2px;"></div>
+          <div id="s1-ring-mid" class="matrix-ring" style="width:270px; height:270px; border-color:rgba(168, 85, 247, 0.5); border-width:2px; border-style:dotted;"></div>
+          <div id="s1-ring-inner" class="matrix-ring" style="width:180px; height:180px; border-color:rgba(0, 255, 136, 0.5); border-width:2px;"></div>
+          
+          <div id="s1-core-glyph" style="position:relative; width:90px; height:90px; border-radius:50%; background:#101D33; border:2px solid #00F0FF; display:flex; align-items:center; justify-content:center; box-shadow:0 0 35px rgba(0, 240, 255, 0.5);">
+            <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#00F0FF" stroke-width="2">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              <path d="M9 12l2 2 4-4" stroke="#00FF88" stroke-width="2.5"/>
+            </svg>
+          </div>
+        </div>
+
+        <h1 id="s1-title" class="font-display glow-cyan" style="font-size:38px; color:#F8FAFC; margin-bottom:10px; letter-spacing:0.04em;">
+          CIPHERCORE VERIFY <span style="font-size:22px; color:#00F0FF; font-weight:400; font-family:var(--font-body);">:: ZERO-TRUST ENCLAVE</span>
+        </h1>
+        <p id="s1-subtitle" data-layout-ignore="true" style="font-size:16px; color:#94A3B8; margin-bottom:22px; letter-spacing:0.06em; text-transform:uppercase;">
+          Client-Side Cryptographic Runtime &amp; Immutable Verification Pipeline
+        </p>
+
+        <div id="s1-terminal" class="card-panel font-mono" style="width:780px; padding:18px 24px; border-color:rgba(0, 240, 255, 0.35);">
+          <div style="display:flex; justify-content:space-between; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px; margin-bottom:10px; font-size:12px; color:#64748B;">
+            <span data-layout-ignore="true">SECURE_BOOT_SEQUENCE // v2.6.1</span>
+            <span data-layout-ignore="true" style="color:#00FF88;">ENCLAVE_MOUNTED</span>
+          </div>
+          <div id="s1-log-1" data-layout-ignore="true" style="font-size:13px; color:#00F0FF; margin-bottom:6px;">[0.12ms] [INIT] Booting Secure Client Enclave...</div>
+          <div id="s1-log-2" data-layout-ignore="true" style="font-size:13px; color:#CBD5E1; margin-bottom:6px; opacity:0;">[0.45ms] [HASH] Loading SHA-256 / AES-GCM WASM Cryptographic Engines...</div>
+          <div id="s1-log-3" data-layout-ignore="true" style="font-size:13px; color:#A855F7; margin-bottom:6px; opacity:0;">[0.68ms] [READY] Establishing Zero-Trust Verification Tunnel.</div>
+          <div id="s1-log-4" data-layout-ignore="true" style="font-size:13px; color:#00FF88; opacity:0;">[0.82ms] [CLIENT] Complete client hydration: 0 server dependencies.</div>
+        </div>
+
+        <div style="width:780px; margin-top:14px; background:rgba(255,255,255,0.06); height:6px; border-radius:3px; overflow:hidden;">
+          <div id="s1-progress-fill" style="width:0%; height:100%; background:linear-gradient(90deg, #00F0FF, #00FF88); box-shadow:0 0 12px #00FF88;"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- SCENE 2: HERO INTERFACE & CARD ENTRY ANIMATIONS (25.0s – 52.0s)          -->
+    <!-- ========================================================================= -->
+    <section id="scene-2" class="clip" data-start="25.0" data-duration="27.0">
+      <div id="s2-content" style="position:relative; width:100%; height:100%; display:flex; flex-direction:column; padding:40px 80px;">
+        
+        <header id="s2-header" class="card-panel" style="display:flex; justify-content:space-between; align-items:center; padding:12px 28px; margin-bottom:36px; border-color:rgba(0, 240, 255, 0.25);">
+          <div style="display:flex; align-items:center; gap:12px;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#00F0FF" stroke-width="2.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
+            <span class="font-display" style="font-size:20px; font-weight:700; color:#F8FAFC;">CipherCore <span style="color:#00F0FF;">Verify</span></span>
+            <span data-layout-ignore="true" style="font-size:11px; background:rgba(0,240,255,0.12); color:#00F0FF; border:1px solid rgba(0,240,255,0.3); padding:2px 8px; border-radius:4px; font-weight:600;">SIH 2026 FINALE</span>
+          </div>
+          <div style="display:flex; align-items:center; gap:20px; font-size:12px;" class="font-mono">
+            <div data-layout-ignore="true" style="display:flex; align-items:center; gap:6px; color:#00FF88;">
+              <span style="width:8px; height:8px; background:#00FF88; border-radius:50%; box-shadow:0 0 8px #00FF88;"></span>
+              STATUS: SECURE (100% PoA)
+            </div>
+            <div data-layout-ignore="true" style="color:#94A3B8;">FINGERPRINT: <span style="color:#F8FAFC;">0x9E4B..F21A</span></div>
+          </div>
+        </header>
+
+        <div id="s2-hero-text" style="text-align:center; margin-bottom:36px;">
+          <h2 class="font-display glow-cyan" style="font-size:44px; color:#F8FAFC; margin-bottom:8px;">
+            Next-Generation Regulatory Verification Engine
+          </h2>
+          <p data-layout-ignore="true" style="font-size:18px; color:#94A3B8; max-width:850px; margin:0 auto;">
+            Industrial-grade utility meets glassmorphic elegance. Staggered physics, context-aware micro-elevation, and deterministic cryptographic auditability.
+          </p>
+        </div>
+
+        <div id="s2-cards-row" class="perspective-box" style="display:grid; grid-template-columns:repeat(3, 1fr); gap:28px;">
+          
+          <div id="s2-card-1" class="card-panel" style="padding:28px 24px; border-color:rgba(0, 240, 255, 0.35);">
+            <div style="width:48px; height:48px; border-radius:10px; background:rgba(0,240,255,0.12); border:1px solid #00F0FF; display:flex; align-items:center; justify-content:center; margin-bottom:18px;">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#00F0FF" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+            </div>
+            <h3 class="font-display" style="font-size:20px; color:#F8FAFC; margin-bottom:8px;">Multi-Vector Ingestion</h3>
+            <p data-layout-ignore="true" style="font-size:14px; color:#94A3B8; line-height:1.5;">Ingests raw document binaries, sovereign DigiLocker tokens, and cryptographic hashes client-side with zero data egress.</p>
+            <div data-layout-ignore="true" style="margin-top:18px; font-size:11px; color:#00F0FF;" class="font-mono">&gt; WASM Parser: Mounted</div>
+          </div>
+
+          <div id="s2-card-2" class="card-panel" style="padding:28px 24px; border-color:rgba(0, 255, 136, 0.45); box-shadow:0 25px 60px rgba(0, 255, 136, 0.1);">
+            <div style="width:48px; height:48px; border-radius:10px; background:rgba(0,255,136,0.12); border:1px solid #00FF88; display:flex; align-items:center; justify-content:center; margin-bottom:18px;">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#00FF88" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+            </div>
+            <h3 class="font-display" style="font-size:20px; color:#F8FAFC; margin-bottom:8px;">Bitwise Entropy Guard</h3>
+            <p data-layout-ignore="true" style="font-size:14px; color:#94A3B8; line-height:1.5;">Evaluates Shannon entropy across incoming binary streams to detect prompt injections, steganography, and corrupt payloads.</p>
+            <div data-layout-ignore="true" style="margin-top:18px; font-size:11px; color:#00FF88;" class="font-mono">&gt; Entropy Engine: 7.98 bits/byte</div>
+          </div>
+
+          <div id="s2-card-3" class="card-panel" style="padding:28px 24px; border-color:rgba(168, 85, 247, 0.35);">
+            <div style="width:48px; height:48px; border-radius:10px; background:rgba(168,85,247,0.12); border:1px solid #A855F7; display:flex; align-items:center; justify-content:center; margin-bottom:18px;">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#A855F7" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+            </div>
+            <h3 class="font-display" style="font-size:20px; color:#F8FAFC; margin-bottom:8px;">PoA Block Notarization</h3>
+            <p data-layout-ignore="true" style="font-size:14px; color:#94A3B8; line-height:1.5;">Binds approved audit decisions to an immutable Proof-of-Authority ledger with Class 3 Digital Signature Certificate stamping.</p>
+            <div data-layout-ignore="true" style="margin-top:18px; font-size:11px; color:#A855F7;" class="font-mono">&gt; Block Epoch: #104,289</div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- SCENE 3: FEATURE DEEP-DIVE — INPUT & CRYPTO PARSING (52.0s – 85.0s)      -->
+    <!-- ========================================================================= -->
+    <section id="scene-3" class="clip" data-start="52.0" data-duration="33.0">
+      <div id="s3-content" style="position:relative; width:100%; height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:20px 80px;">
+        
+        <div id="s3-container" class="card-panel" style="width:1120px; padding:36px 44px; border-color:rgba(0, 240, 255, 0.4); position:relative;">
+          
+          <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:16px; margin-bottom:24px;">
+            <div>
+              <h2 class="font-display glow-cyan" style="font-size:26px; color:#F8FAFC; margin-bottom:4px;">Multi-Vector Ingestion &amp; Cryptographic Parser</h2>
+              <p data-layout-ignore="true" style="font-size:13px; color:#94A3B8;" class="font-mono">&gt; Client-Side Byte Extraction // Zero Raw Data Egress</p>
+            </div>
+            <div style="display:flex; gap:8px;" class="font-mono">
+              <span data-layout-ignore="true" style="font-size:11px; padding:6px 12px; background:rgba(0,255,136,0.15); border:1px solid #00FF88; color:#00FF88; border-radius:4px; font-weight:700;">[FILE DROPZONE]</span>
+              <span data-layout-ignore="true" style="font-size:11px; padding:6px 12px; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.1); color:#94A3B8; border-radius:4px;">[DSC TOKEN]</span>
+              <span data-layout-ignore="true" style="font-size:11px; padding:6px 12px; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.1); color:#94A3B8; border-radius:4px;">[TX HASH]</span>
+            </div>
+          </div>
+
+          <div id="s3-dropzone" style="border:2px dashed rgba(0, 255, 136, 0.5); border-radius:12px; padding:26px; background:rgba(0, 255, 136, 0.04); display:flex; align-items:center; justify-content:space-between; margin-bottom:22px;">
+            <div style="display:flex; align-items:center; gap:20px;">
+              <div style="width:54px; height:54px; border-radius:10px; background:rgba(0,255,136,0.15); border:1px solid #00FF88; display:flex; align-items:center; justify-content:center;">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#00FF88" stroke-width="2"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><polyline points="13 2 13 9 20 9"/></svg>
+              </div>
+              <div>
+                <div style="font-size:17px; font-weight:600; color:#F8FAFC;">Pune_Tech_Statutory_Deed.pdf</div>
+                <div data-layout-ignore="true" style="font-size:12px; color:#64748B;" class="font-mono">4,812,410 BYTES · MIME: application/pdf · BUFFER LOADED</div>
+              </div>
+            </div>
+            <div data-layout-ignore="true" style="font-size:12px; padding:6px 14px; background:rgba(0,240,255,0.15); border:1px solid #00F0FF; color:#00F0FF; border-radius:6px; font-weight:700;" class="font-mono">
+              HASHING STREAM ACTIVE
+            </div>
+          </div>
+
+          <div style="display:grid; grid-template-columns:1.6fr 1fr; gap:20px;">
+            
+            <div class="card-panel font-mono" style="padding:16px 20px; font-size:12px; border-color:rgba(0, 240, 255, 0.2);">
+              <div data-layout-ignore="true" style="color:#64748B; font-size:11px; margin-bottom:8px;">BYTE-LEVEL STREAMING DECOMPOSITION:</div>
+              <div id="s3-bytes-row1" data-layout-ignore="true" style="color:#00F0FF; line-height:1.7;">0x4F 0x8A 0x12 0x99 0xC2 0xFA 0x33 0x01 0x7E 0x9D 0x44 0x1B 0x88 0x22 0xF1 0x09</div>
+              <div id="s3-bytes-row2" data-layout-ignore="true" style="color:#A855F7; line-height:1.7;">0xBB 0x31 0x4E 0x28 0x77 0x19 0xAA 0x5C 0x66 0x21 0x0F 0x9E 0x4B 0xF2 0x1A 0x33</div>
+              <div style="border-top:1px solid rgba(255,255,255,0.06); margin-top:10px; padding-top:10px;">
+                <div data-layout-ignore="true" style="color:#94A3B8; font-size:11px;">SHA-256 CHECKSUM:</div>
+                <div id="s3-hash-val" data-layout-ignore="true" style="color:#00FF88; font-size:12px; word-break:break-all;">e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855</div>
+              </div>
+            </div>
+
+            <div class="card-panel" style="padding:16px 20px; border-color:rgba(0, 255, 136, 0.25); display:flex; flex-direction:column; justify-content:space-between;">
+              <div>
+                <div data-layout-ignore="true" style="font-size:12px; color:#64748B; text-transform:uppercase;" class="font-mono">Bitwise Shannon Entropy</div>
+                <div id="s3-entropy-num" class="font-display glow-emerald" style="font-size:36px; color:#00FF88; margin:6px 0;">7.98 <span style="font-size:16px; font-weight:400; color:#94A3B8;">bits/byte</span></div>
+                <div data-layout-ignore="true" style="font-size:11px; color:#94A3B8;">Theoretical maximum: 8.00 bits/byte</div>
+              </div>
+              <div data-layout-ignore="true" style="padding:6px 10px; background:rgba(0,255,136,0.1); border:1px solid rgba(0,255,136,0.3); border-radius:4px; font-size:11px; color:#00FF88;" class="font-mono">
+                [STATUS: SANITIZED · ZERO INJECTIONS]
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- SCENE 4: VERIFICATION CORE ENGINE & AUDIT TELEMETRY (85.0s – 114.0s)      -->
+    <!-- ========================================================================= -->
+    <section id="scene-4" class="clip" data-start="85.0" data-duration="29.0">
+      <div id="s4-content" style="position:relative; width:100%; height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:20px 80px;">
+        
+        <div id="s4-flip-wrapper" class="perspective-box" style="width:1080px; height:520px; position:relative;">
+          
+          <div id="s4-face-front" class="card-panel" style="position:absolute; inset:0; padding:36px 44px; border-color:rgba(0, 240, 255, 0.45); backface-visibility:hidden;">
+            
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:26px;">
+              <div>
+                <h2 class="font-display glow-cyan" style="font-size:26px; color:#F8FAFC;">Cryptographic Verification Sequence</h2>
+                <p data-layout-ignore="true" style="font-size:13px; color:#94A3B8;" class="font-mono">&gt; Executing 3-Tier Zero-Trust Protocol Matrix</p>
+              </div>
+              <button id="s4-cta-btn" style="padding:10px 24px; background:#00F0FF; color:#0B0F19; border:none; border-radius:6px; font-weight:700; font-size:13px; cursor:pointer; box-shadow:0 0 20px rgba(0,240,255,0.6);" class="font-mono">
+                [EXECUTE INTEGRITY AUDIT]
+              </button>
+            </div>
+
+            <div id="s4-scanline" style="position:absolute; left:44px; right:44px; height:3px; background:#00F0FF; box-shadow:0 0 15px #00F0FF; top:120px; opacity:0;"></div>
+
+            <div style="display:flex; flex-direction:column; gap:16px;">
+              <div id="s4-tier-1" class="card-panel" style="padding:14px 20px; display:flex; justify-content:space-between; align-items:center; border-color:rgba(255,255,255,0.08);">
+                <div>
+                  <div style="font-size:15px; font-weight:600; color:#F8FAFC;">Tier 1: Signature Origin &amp; Public Key PKI Match</div>
+                  <div data-layout-ignore="true" style="font-size:12px; color:#64748B;" class="font-mono">Verifying X.509 Class 3 DSC certificate chain against CCA root repository</div>
+                </div>
+                <div id="s4-tier1-badge" data-layout-ignore="true" style="font-size:12px; padding:4px 12px; border-radius:4px; font-weight:700; background:rgba(0,255,136,0.15); color:#00FF88; border:1px solid #00FF88;" class="font-mono">
+                  PASS // VALIDATED
+                </div>
+              </div>
+
+              <div id="s4-tier-2" class="card-panel" style="padding:14px 20px; display:flex; justify-content:space-between; align-items:center; border-color:rgba(255,255,255,0.08); opacity:0.3;">
+                <div>
+                  <div style="font-size:15px; font-weight:600; color:#F8FAFC;">Tier 2: Bitwise Payload Integrity &amp; Bit-Flip Detection</div>
+                  <div data-layout-ignore="true" style="font-size:12px; color:#64748B;" class="font-mono">Zero bit discrepancies detected across 4,812,410 payload bytes</div>
+                </div>
+                <div id="s4-tier2-badge" data-layout-ignore="true" style="font-size:12px; padding:4px 12px; border-radius:4px; font-weight:700; background:rgba(0,255,136,0.15); color:#00FF88; border:1px solid #00FF88;" class="font-mono">
+                  PASS // 0 BITS FLIPPED
+                </div>
+              </div>
+
+              <div id="s4-tier-3" class="card-panel" style="padding:14px 20px; display:flex; justify-content:space-between; align-items:center; border-color:rgba(255,255,255,0.08); opacity:0.3;">
+                <div>
+                  <div style="font-size:15px; font-weight:600; color:#F8FAFC;">Tier 3: Timestamp &amp; Replay Attack Defense</div>
+                  <div data-layout-ignore="true" style="font-size:12px; color:#64748B;" class="font-mono">Reconciling epoch nonce against PoA Block #104,289 state tree</div>
+                </div>
+                <div id="s4-tier3-badge" data-layout-ignore="true" style="font-size:12px; padding:4px 12px; border-radius:4px; font-weight:700; background:rgba(0,255,136,0.15); color:#00FF88; border:1px solid #00FF88;" class="font-mono">
+                  PASS // IMMUTABLE
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <div id="s4-face-back" class="card-emerald" style="position:absolute; inset:0; padding:40px; display:flex; flex-direction:column; align-items:center; justify-content:center; transform:rotateY(180deg); backface-visibility:hidden;">
+            
+            <div id="s4-shield-bloom" style="width:100px; height:100px; border-radius:50%; background:rgba(0, 255, 136, 0.2); border:3px solid #00FF88; display:flex; align-items:center; justify-content:center; box-shadow:0 0 50px rgba(0, 255, 136, 0.6); margin-bottom:18px;">
+              <svg width="54" height="54" viewBox="0 0 24 24" fill="none" stroke="#00FF88" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
+            </div>
+
+            <h2 class="font-display glow-emerald" style="font-size:38px; color:#F8FAFC; margin-bottom:6px;">VERIFIED // 100% UNTAMPERED</h2>
+            <p data-layout-ignore="true" style="font-size:16px; color:#00FF88; margin-bottom:24px; font-weight:600;" class="font-mono">MATHEMATICALLY PROVEN INTEGRITY CERTIFICATE</p>
+
+            <div style="display:flex; gap:36px;" class="font-mono">
+              <div data-layout-ignore="true" class="card-panel" style="padding:12px 20px; text-align:center; border-color:rgba(0,255,136,0.4);">
+                <div style="font-size:11px; color:#94A3B8;">EXECUTION LATENCY</div>
+                <div style="font-size:22px; color:#00FF88; font-weight:700;">2.4 ms</div>
+              </div>
+              <div data-layout-ignore="true" class="card-panel" style="padding:12px 20px; text-align:center; border-color:rgba(0,255,136,0.4);">
+                <div style="font-size:11px; color:#94A3B8;">CLIENT RUNTIME</div>
+                <div style="font-size:22px; color:#00F0FF; font-weight:700;">WASM Core</div>
+              </div>
+              <div data-layout-ignore="true" class="card-panel" style="padding:12px 20px; text-align:center; border-color:rgba(0,255,136,0.4);">
+                <div style="font-size:11px; color:#94A3B8;">POA NOTARY SEAL</div>
+                <div style="font-size:22px; color:#A855F7; font-weight:700;">Block #104,289</div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- SCENE 5: EDGE CASES, TAMPER DETECTION & RECOVERY (114.0s – 133.0s)        -->
+    <!-- ========================================================================= -->
+    <section id="scene-5" class="clip" data-start="114.0" data-duration="19.0">
+      <div id="s5-content" style="position:relative; width:100%; height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:20px 80px;">
+        
+        <div id="s5-alert-card" class="card-crimson" style="width:1080px; padding:38px 44px; position:relative;">
+          
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; border-bottom:1px solid rgba(255,46,77,0.3); padding-bottom:14px;">
+            <div style="display:flex; align-items:center; gap:12px;">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#FF2E4D" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+              <h2 class="font-display glow-crimson" style="font-size:26px; color:#FF2E4D;">INTEGRITY BREACH DETECTED // 1-BIT TAMPER</h2>
+            </div>
+            <span data-layout-ignore="true" style="font-size:12px; padding:4px 12px; background:rgba(255,46,77,0.25); border:1px solid #FF2E4D; color:#FF2E4D; border-radius:4px; font-weight:700;" class="font-mono">
+              PAYLOAD REFUSED
+            </span>
+          </div>
+
+          <div style="margin-bottom:24px;">
+            <div style="font-size:15px; color:#F8FAFC; margin-bottom:8px;">
+              Simulated Adversarial Manipulation: <strong>1 single bit flipped at byte offset 0x004F</strong>
+            </div>
+            <div class="card-panel font-mono" style="padding:14px 18px; font-size:13px; border-color:rgba(255,46,77,0.4); background:#150A10;">
+              <div data-layout-ignore="true" style="color:#64748B; margin-bottom:6px;">PAYLOAD COMPARISON TREE:</div>
+              <div data-layout-ignore="true" style="color:#94A3B8;">EXPECTED: 0x4F 0x8A 0x12 0x99 <span style="color:#00FF88; font-weight:700;">[0x7F]</span> 0xFA 0x33 0x01</div>
+              <div data-layout-ignore="true" style="color:#FF2E4D; font-weight:700;">RECEIVED: 0x4F 0x8A 0x12 0x99 <span style="background:rgba(255,46,77,0.3); padding:2px 4px; border:1px solid #FF2E4D;">[0x7E]</span> 0xFA 0x33 0x01 &lt;-- HASH MISMATCH AT BLOCK 4</div>
+            </div>
+          </div>
+
+          <div style="display:flex; justify-content:space-between; align-items:center; background:rgba(0,0,0,0.5); padding:14px 20px; border-radius:8px; border:1px solid rgba(255,46,77,0.2);" class="font-mono">
+            <div data-layout-ignore="true" style="font-size:12px; color:#F8FAFC;">
+              <span style="color:#FF2E4D; font-weight:700;">RESILIENCE SAFEGUARD:</span> Downstream state preserved. 0 attack surfaces exposed.
+            </div>
+            <div data-layout-ignore="true" style="font-size:12px; color:#00FF88;">
+              FAIL-CLOSED SECURE STATE: ACTIVE
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- SCENE 6: ARCHITECTURE SUMMARY & SIH JURY WRAP-UP (133.0s – 162.0s)        -->
+    <!-- ========================================================================= -->
+    <section id="scene-6" class="clip" data-start="133.0" data-duration="29.0">
+      <div id="s6-content" style="position:relative; width:100%; height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:20px 80px;">
+        
+        <div style="text-align:center; margin-bottom:34px;">
+          <div data-layout-ignore="true" style="display:inline-flex; align-items:center; gap:8px; padding:4px 14px; background:rgba(0,240,255,0.1); border:1px solid rgba(0,240,255,0.3); border-radius:30px; font-size:12px; color:#00F0FF; font-weight:600; margin-bottom:12px;" class="font-mono">
+            SMART INDIA HACKATHON 2026 // GRAND FINALE SHOWCASE
+          </div>
+          <h2 class="font-display glow-cyan" style="font-size:42px; color:#F8FAFC; margin-bottom:6px;">
+            CipherCore Verify — Architectural Superiority
+          </h2>
+          <p data-layout-ignore="true" style="font-size:17px; color:#94A3B8;">
+            Solving the trust deficit across India's Digital Public Infrastructure with mathematically provable zero-trust verification.
+          </p>
+        </div>
+
+        <div id="s6-grid" style="display:grid; grid-template-columns:repeat(4, 1fr); gap:20px; width:100%; max-width:1200px; margin-bottom:34px;">
+          
+          <div id="s6-card-1" class="card-panel" style="padding:22px 18px; border-color:rgba(0, 240, 255, 0.35); text-align:center;">
+            <div class="font-display" style="font-size:28px; color:#00F0FF; font-weight:700; margin-bottom:6px;">0 Server</div>
+            <div style="font-size:14px; font-weight:600; color:#F8FAFC; margin-bottom:6px;">Client WASM Hashing</div>
+            <div data-layout-ignore="true" style="font-size:12px; color:#94A3B8;">Zero data egress; complete sovereign privacy.</div>
+          </div>
+
+          <div id="s6-card-2" class="card-panel" style="padding:22px 18px; border-color:rgba(0, 255, 136, 0.35); text-align:center;">
+            <div class="font-display" style="font-size:28px; color:#00FF88; font-weight:700; margin-bottom:6px;">&lt; 5 ms</div>
+            <div style="font-size:14px; font-weight:600; color:#F8FAFC; margin-bottom:6px;">Evaluation Latency</div>
+            <div data-layout-ignore="true" style="font-size:12px; color:#94A3B8;">Sub-millisecond verification throughput.</div>
+          </div>
+
+          <div id="s6-card-3" class="card-panel" style="padding:22px 18px; border-color:rgba(168, 85, 247, 0.35); text-align:center;">
+            <div class="font-display" style="font-size:28px; color:#A855F7; font-weight:700; margin-bottom:6px;">Military-Grade</div>
+            <div style="font-size:14px; font-weight:600; color:#F8FAFC; margin-bottom:6px;">Cryptographic Suite</div>
+            <div data-layout-ignore="true" style="font-size:12px; color:#94A3B8;">SHA-256, HMAC-512 &amp; Class 3 DSC.</div>
+          </div>
+
+          <div id="s6-card-4" class="card-panel" style="padding:22px 18px; border-color:rgba(255, 193, 7, 0.35); text-align:center;">
+            <div class="font-display" style="font-size:28px; color:#FFC107; font-weight:700; margin-bottom:6px;">Immutable</div>
+            <div style="font-size:14px; font-weight:600; color:#F8FAFC; margin-bottom:6px;">PoA Blockchain Ledger</div>
+            <div data-layout-ignore="true" style="font-size:12px; color:#94A3B8;">Independently verifiable audit receipts.</div>
+          </div>
+
+        </div>
+
+        <div id="s6-outro" class="card-panel" style="display:flex; justify-content:space-between; align-items:center; width:100%; max-width:1200px; padding:18px 28px; border-color:rgba(0,255,136,0.3);">
+          <div style="display:flex; align-items:center; gap:16px;">
+            <div style="width:40px; height:40px; border-radius:50%; background:rgba(0,255,136,0.15); border:1px solid #00FF88; display:flex; align-items:center; justify-content:center;">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#00FF88" stroke-width="2.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
+            </div>
+            <div>
+              <div style="font-size:16px; font-weight:700; color:#F8FAFC;">CipherCore Verify // Ready for National Deployment</div>
+              <div data-layout-ignore="true" style="font-size:12px; color:#94A3B8;" class="font-mono">Repository: github.com/nonutsayan/CipherCore-verify</div>
+            </div>
+          </div>
+          <div>
+            <span data-layout-ignore="true" style="font-size:12px; padding:8px 16px; background:#00FF88; color:#0B0F19; border-radius:6px; font-weight:700;" class="font-mono">
+              DEPLOYMENT CERTIFIED
+            </span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Virtual Animated Cursor -->
+    <div id="cursor" class="virtual-cursor" style="opacity:0;">
+      <svg viewBox="0 0 24 24" fill="#00F0FF" width="24" height="24">
+        <path d="M3 3l7 18 3-7 7-3L3 3z" stroke="#0B0F19" stroke-width="1.5"/>
+      </svg>
+    </div>
+  </div>
+
+  <script>
+    window.__timelines = window.__timelines || {};
+    const tl = gsap.timeline();
+
+    // -------------------------------------------------------------------------
+    // SCENE 1 ANIMATIONS (0.0s – 25.0s)
+    // -------------------------------------------------------------------------
+    tl.to('#s1-ring-outer', { rotation: 360, duration: 25.0, ease: 'none', repeat: 0 }, 0);
+    tl.to('#s1-ring-mid', { rotation: -360, duration: 25.0, ease: 'none', repeat: 0 }, 0);
+    tl.to('#s1-ring-inner', { rotation: 360, duration: 25.0, ease: 'none', repeat: 0 }, 0);
+    tl.to('#s1-core-glyph', { scale: 1.08, duration: 2.0, yoyo: true, repeat: 11, ease: 'sine.inOut' }, 0);
+
+    // Initial state visible at frame 0
+    tl.to('#s1-progress-fill', { width: '100%', duration: 22.0, ease: 'power1.inOut' }, 0.5);
+
+    tl.to('#s1-log-2', { opacity: 1, duration: 0.4 }, 5.0);
+    tl.to('#s1-log-3', { opacity: 1, duration: 0.4 }, 11.0);
+    tl.to('#s1-log-4', { opacity: 1, duration: 0.4 }, 17.5);
+    tl.to('#s1-title', { textShadow: '0 0 30px rgba(0, 240, 255, 0.9)', duration: 2.0, yoyo: true, repeat: 5, ease: 'sine.inOut' }, 2.0);
+
+    // -------------------------------------------------------------------------
+    // SCENE 2 ANIMATIONS (25.0s – 52.0s)
+    // -------------------------------------------------------------------------
+    tl.from('#s2-header', { y: -30, opacity: 0, duration: 0.8, ease: 'power3.out' }, 25.1);
+    tl.from('#s2-hero-text', { y: 20, opacity: 0, duration: 0.8, ease: 'power3.out' }, 25.4);
+
+    tl.from('#s2-card-1', { y: 40, opacity: 0, duration: 0.9, ease: 'back.out(1.4)' }, 25.8);
+    tl.from('#s2-card-2', { y: 40, opacity: 0, duration: 0.9, ease: 'back.out(1.4)' }, 26.2);
+    tl.from('#s2-card-3', { y: 40, opacity: 0, duration: 0.9, ease: 'back.out(1.4)' }, 26.6);
+
+    tl.fromTo('#cursor', { x: 960, y: 1100, opacity: 0 }, { x: 960, y: 640, opacity: 1, duration: 1.5, ease: 'power2.out' }, 28.0);
+    tl.to('#s2-card-2', { rotateX: 6, rotateY: -8, scale: 1.03, duration: 1.4, ease: 'power2.out' }, 30.5);
+    tl.to('#s2-card-2', { rotateX: 0, rotateY: 0, scale: 1.0, duration: 1.2, ease: 'power2.inOut' }, 33.0);
+
+    tl.to('#s2-card-1', { borderColor: 'rgba(0, 240, 255, 0.7)', duration: 1.5, yoyo: true, repeat: 3 }, 35.0);
+    tl.to('#s2-card-3', { borderColor: 'rgba(168, 85, 247, 0.7)', duration: 1.5, yoyo: true, repeat: 3 }, 41.0);
+    tl.to('#cursor', { x: 600, y: 640, duration: 1.8, ease: 'power2.inOut' }, 47.0);
+
+    // -------------------------------------------------------------------------
+    // SCENE 3 ANIMATIONS (52.0s – 85.0s)
+    // -------------------------------------------------------------------------
+    tl.from('#s3-container', { scale: 0.92, opacity: 0, duration: 0.8, ease: 'power3.out' }, 52.2);
+    tl.from('#s3-dropzone', { y: 20, opacity: 0, duration: 0.7, ease: 'power2.out' }, 53.5);
+    tl.to('#s3-dropzone', { borderColor: '#00FF88', backgroundColor: 'rgba(0, 255, 136, 0.08)', duration: 0.5 }, 55.0);
+
+    tl.to('#s3-bytes-row1', { opacity: 0.7, duration: 0.8, yoyo: true, repeat: 12 }, 56.0);
+    tl.to('#s3-bytes-row2', { opacity: 0.7, duration: 0.8, yoyo: true, repeat: 12 }, 57.0);
+
+    tl.from('#s3-entropy-num', { scale: 0.5, opacity: 0, duration: 0.8, ease: 'back.out(1.7)' }, 64.0);
+    tl.to('#s3-hash-val', { color: '#00F0FF', duration: 1.5, yoyo: true, repeat: 5 }, 67.0);
+    tl.to('#s3-dropzone', { borderColor: '#00F0FF', duration: 1.5, yoyo: true, repeat: 3 }, 76.0);
+
+    // -------------------------------------------------------------------------
+    // SCENE 4 ANIMATIONS (85.0s – 114.0s)
+    // -------------------------------------------------------------------------
+    tl.from('#s4-face-front', { opacity: 0, y: 20, duration: 0.8, ease: 'power3.out' }, 85.2);
+
+    tl.to('#cursor', { x: 1400, y: 380, duration: 1.2, ease: 'power2.inOut' }, 85.6);
+    tl.to('#s4-cta-btn', { scale: 0.94, duration: 0.15, yoyo: true, repeat: 1 }, 87.0);
+
+    tl.to('#s4-scanline', { opacity: 1, duration: 0.1 }, 87.2);
+    tl.to('#s4-scanline', { y: 340, duration: 2.2, ease: 'power1.inOut' }, 87.3);
+    tl.to('#s4-scanline', { opacity: 0, duration: 0.2 }, 89.5);
+
+    tl.to('#s4-tier-2', { opacity: 1, duration: 0.5 }, 92.0);
+    tl.to('#s4-tier-3', { opacity: 1, duration: 0.5 }, 95.0);
+
+    tl.to('#s4-face-front', { rotateY: -180, duration: 1.2, ease: 'power3.inOut' }, 99.0);
+    tl.to('#s4-face-back', { rotateY: 0, duration: 1.2, ease: 'power3.inOut' }, 99.0);
+    tl.from('#s4-shield-bloom', { scale: 0.3, duration: 0.8, ease: 'back.out(2.0)' }, 100.5);
+
+    tl.to('#s4-shield-bloom', { boxShadow: '0 0 70px rgba(0, 255, 136, 0.9)', duration: 1.5, yoyo: true, repeat: 4 }, 102.5);
+    tl.to('#s4-face-back', { borderColor: '#00F0FF', duration: 1.5, yoyo: true, repeat: 2 }, 109.0);
+
+    // -------------------------------------------------------------------------
+    // SCENE 5 ANIMATIONS (114.0s – 133.0s)
+    // -------------------------------------------------------------------------
+    tl.from('#s5-alert-card', { scale: 0.94, opacity: 0, duration: 0.4, ease: 'power2.out' }, 114.2);
+    tl.to('#s5-alert-card', { x: -8, duration: 0.06, yoyo: true, repeat: 12, ease: 'none' }, 116.2);
+    tl.to('#s5-alert-card', { borderColor: 'rgba(255, 46, 77, 0.9)', duration: 1.2, yoyo: true, repeat: 4 }, 118.0);
+    tl.to('#s5-alert-card', { boxShadow: '0 0 60px rgba(255, 46, 77, 0.3)', duration: 1.5, yoyo: true, repeat: 3 }, 124.0);
+
+    // -------------------------------------------------------------------------
+    // SCENE 6 ANIMATIONS (133.0s – 162.0s)
+    // -------------------------------------------------------------------------
+    tl.from('#s6-content', { opacity: 0, scale: 0.96, duration: 0.8, ease: 'power2.out' }, 133.2);
+
+    tl.from('#s6-card-1', { y: 30, opacity: 0, duration: 0.6, ease: 'back.out(1.4)' }, 134.5);
+    tl.from('#s6-card-2', { y: 30, opacity: 0, duration: 0.6, ease: 'back.out(1.4)' }, 135.2);
+    tl.from('#s6-card-3', { y: 30, opacity: 0, duration: 0.6, ease: 'back.out(1.4)' }, 135.9);
+    tl.from('#s6-card-4', { y: 30, opacity: 0, duration: 0.6, ease: 'back.out(1.4)' }, 136.6);
+
+    tl.from('#s6-outro', { y: 20, opacity: 0, duration: 0.8, ease: 'power2.out' }, 138.0);
+    tl.to('#s6-card-1', { borderColor: 'rgba(0, 240, 255, 0.8)', duration: 1.5, yoyo: true, repeat: 3 }, 141.0);
+    tl.to('#s6-card-2', { borderColor: 'rgba(0, 255, 136, 0.8)', duration: 1.5, yoyo: true, repeat: 3 }, 146.0);
+    tl.to('#s6-outro', { borderColor: 'rgba(0, 255, 136, 0.9)', boxShadow: '0 0 40px rgba(0, 255, 136, 0.3)', duration: 2.0, yoyo: true, repeat: 4 }, 152.0);
+
+    window.__timelines["main"] = tl;
+    tl.seek(0);
+  </script>
+</body>
+</html>

@@ -1,0 +1,644 @@
+{
+  "ok": true,
+  "strict": false,
+  "browserSkipped": false,
+  "lint": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 7,
+    "infoCount": 0,
+    "findings": [
+      {
+        "code": "composition_file_too_large",
+        "severity": "warning",
+        "message": "This HTML composition file has 521 lines. Smaller sub-compositions are easier to read, iterate on, and diff.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {},
+        "sourceFile": "C:\\Users\\Anisa Shaikh\\.gemini\\antigravity\\scratch\\aicte-sih-portal\\brag-sih-jury\\composition\\index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Split coherent scenes or layers into separate .html files under compositions/, then mount them from the parent with data-composition-src so each file stays small enough to inspect, revise, and validate independently."
+      },
+      {
+        "code": "nested_structure_needs_subcomposition",
+        "severity": "warning",
+        "message": "<section id=\"scene-1\"> is a timeline element that contains nested <div id=\"s1-content\">. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.",
+        "selector": "#scene-1",
+        "dataAttributes": {},
+        "sourceFile": "C:\\Users\\Anisa Shaikh\\.gemini\\antigravity\\scratch\\aicte-sih-portal\\brag-sih-jury\\composition\\index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Move <section id=\"scene-1\"> and its contents into a sub-composition file and mount it with data-composition-src."
+      },
+      {
+        "code": "nested_structure_needs_subcomposition",
+        "severity": "warning",
+        "message": "<section id=\"scene-2\"> is a timeline element that contains nested <div id=\"s2-content\">. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.",
+        "selector": "#scene-2",
+        "dataAttributes": {},
+        "sourceFile": "C:\\Users\\Anisa Shaikh\\.gemini\\antigravity\\scratch\\aicte-sih-portal\\brag-sih-jury\\composition\\index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Move <section id=\"scene-2\"> and its contents into a sub-composition file and mount it with data-composition-src."
+      },
+      {
+        "code": "nested_structure_needs_subcomposition",
+        "severity": "warning",
+        "message": "<section id=\"scene-3\"> is a timeline element that contains nested <div id=\"s3-content\">. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.",
+        "selector": "#scene-3",
+        "dataAttributes": {},
+        "sourceFile": "C:\\Users\\Anisa Shaikh\\.gemini\\antigravity\\scratch\\aicte-sih-portal\\brag-sih-jury\\composition\\index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Move <section id=\"scene-3\"> and its contents into a sub-composition file and mount it with data-composition-src."
+      },
+      {
+        "code": "nested_structure_needs_subcomposition",
+        "severity": "warning",
+        "message": "<section id=\"scene-4\"> is a timeline element that contains nested <div id=\"s4-content\">. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.",
+        "selector": "#scene-4",
+        "dataAttributes": {},
+        "sourceFile": "C:\\Users\\Anisa Shaikh\\.gemini\\antigravity\\scratch\\aicte-sih-portal\\brag-sih-jury\\composition\\index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Move <section id=\"scene-4\"> and its contents into a sub-composition file and mount it with data-composition-src."
+      },
+      {
+        "code": "nested_structure_needs_subcomposition",
+        "severity": "warning",
+        "message": "<section id=\"scene-5\"> is a timeline element that contains nested <div id=\"s5-content\">. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.",
+        "selector": "#scene-5",
+        "dataAttributes": {},
+        "sourceFile": "C:\\Users\\Anisa Shaikh\\.gemini\\antigravity\\scratch\\aicte-sih-portal\\brag-sih-jury\\composition\\index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Move <section id=\"scene-5\"> and its contents into a sub-composition file and mount it with data-composition-src."
+      },
+      {
+        "code": "nested_structure_needs_subcomposition",
+        "severity": "warning",
+        "message": "<section id=\"scene-6\"> is a timeline element that contains nested <div id=\"s6-content\">. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.",
+        "selector": "#scene-6",
+        "dataAttributes": {},
+        "sourceFile": "C:\\Users\\Anisa Shaikh\\.gemini\\antigravity\\scratch\\aicte-sih-portal\\brag-sih-jury\\composition\\index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Move <section id=\"scene-6\"> and its contents into a sub-composition file and mount it with data-composition-src."
+      }
+    ],
+    "filesScanned": 1
+  },
+  "runtime": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 5,
+    "infoCount": 0,
+    "findings": [
+      {
+        "code": "clip_media_fit",
+        "severity": "warning",
+        "message": "Audio \"sfx-drop-1\" is 0.19s but its slot (data-duration) is 0.50s — the slot is shortened to the media length when rendered. Set data-duration to ~0.19s if that isn't intended.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {
+          "data-composition-id": "main",
+          "data-start": "0",
+          "data-duration": "162",
+          "data-width": "1920",
+          "data-height": "1080"
+        },
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 1920,
+          "height": 1080
+        },
+        "time": 0
+      },
+      {
+        "code": "clip_media_fit",
+        "severity": "warning",
+        "message": "Audio \"sfx-click-3\" is 0.06s but its slot (data-duration) is 0.20s — the slot is shortened to the media length when rendered. Set data-duration to ~0.06s if that isn't intended.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {
+          "data-composition-id": "main",
+          "data-start": "0",
+          "data-duration": "162",
+          "data-width": "1920",
+          "data-height": "1080"
+        },
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 1920,
+          "height": 1080
+        },
+        "time": 0
+      },
+      {
+        "code": "clip_media_fit",
+        "severity": "warning",
+        "message": "Audio \"sfx-click-4\" is 0.06s but its slot (data-duration) is 0.20s — the slot is shortened to the media length when rendered. Set data-duration to ~0.06s if that isn't intended.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {
+          "data-composition-id": "main",
+          "data-start": "0",
+          "data-duration": "162",
+          "data-width": "1920",
+          "data-height": "1080"
+        },
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 1920,
+          "height": 1080
+        },
+        "time": 0
+      },
+      {
+        "code": "clip_media_fit",
+        "severity": "warning",
+        "message": "Audio \"sfx-glitch-5\" is 0.03s but its slot (data-duration) is 0.40s — the slot is shortened to the media length when rendered. Set data-duration to ~0.03s if that isn't intended.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {
+          "data-composition-id": "main",
+          "data-start": "0",
+          "data-duration": "162",
+          "data-width": "1920",
+          "data-height": "1080"
+        },
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 1920,
+          "height": 1080
+        },
+        "time": 0
+      },
+      {
+        "code": "clip_media_fit",
+        "severity": "warning",
+        "message": "Audio \"sfx-bell-6\" is 1.48s but its slot (data-duration) is 2.50s — the slot is shortened to the media length when rendered. Set data-duration to ~1.48s if that isn't intended.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {
+          "data-composition-id": "main",
+          "data-start": "0",
+          "data-duration": "162",
+          "data-width": "1920",
+          "data-height": "1080"
+        },
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 1920,
+          "height": 1080
+        },
+        "time": 0
+      }
+    ]
+  },
+  "layout": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "infoCount": 0,
+    "findings": [],
+    "duration": 162,
+    "samples": [
+      9,
+      27,
+      45,
+      63,
+      81,
+      99,
+      117,
+      135,
+      153
+    ],
+    "transitionSamples": [],
+    "transitionSamplesDropped": 0,
+    "tolerance": 2,
+    "totalIssueCount": 0,
+    "truncated": false
+  },
+  "motion": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "infoCount": 0,
+    "findings": [],
+    "enabled": false,
+    "samples": 0
+  },
+  "contrast": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "infoCount": 0,
+    "findings": [],
+    "enabled": true,
+    "samples": [
+      9,
+      45,
+      81,
+      117,
+      153
+    ],
+    "checked": 24,
+    "passed": 24
+  },
+  "craft": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 8,
+    "infoCount": 0,
+    "findings": [
+      {
+        "code": "dead_stretch",
+        "severity": "warning",
+        "message": "Nothing on screen changes for 3.25 s (48.68–51.93 s): start the next move within 3 s, or put data-hold on the element whose stillness is deliberate; see references/motion.md.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 48.681,
+        "seconds": 3.246,
+        "floorSeconds": 3,
+        "until": 51.927
+      },
+      {
+        "code": "dead_stretch",
+        "severity": "warning",
+        "message": "Nothing on screen changes for 8.11 s (55.71–63.83 s): start the next move within 3 s, or put data-hold on the element whose stillness is deliberate; see references/motion.md.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 55.713,
+        "seconds": 8.113,
+        "floorSeconds": 3,
+        "until": 63.826
+      },
+      {
+        "code": "dead_stretch",
+        "severity": "warning",
+        "message": "Nothing on screen changes for 11.09 s (64.91–76.00 s): start the next move within 3 s, or put data-hold on the element whose stillness is deliberate; see references/motion.md.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 64.908,
+        "seconds": 11.089,
+        "floorSeconds": 3,
+        "until": 75.997
+      },
+      {
+        "code": "text_below_floor",
+        "severity": "warning",
+        "message": "Type floor is 28 px (2.6% of the 1080 px short side, what a phone can read) and 22 text elements stay under it for 0.5 s or more, the smallest \"[EXECUTE INTEGRITY AUDIT]\" at 11 px: set reading text to at least 28 px, or put data-layout-ignore on text that is texture rather than reading; see references/look.md.",
+        "text": "[EXECUTE INTEGRITY AUDIT]",
+        "selector": "#s4-cta-btn",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 1236,
+          "y": 338.53,
+          "width": 195,
+          "height": 17
+        },
+        "time": 85.462,
+        "times": [
+          0,
+          25.422,
+          25.422,
+          25.963,
+          26.504,
+          26.775,
+          52.467,
+          53.82,
+          64.367,
+          85.462,
+          85.462,
+          85.462,
+          92.224,
+          95.199,
+          114.401,
+          114.401,
+          114.401,
+          134.684,
+          135.496,
+          136.037,
+          136.848,
+          138.2
+        ],
+        "fontPx": 11.08,
+        "floorPx": 28,
+        "seconds": 28.668,
+        "elements": [
+          {
+            "selector": "#s4-cta-btn",
+            "text": "[EXECUTE INTEGRITY AUDIT]",
+            "fontPx": 11.08,
+            "time": 85.462,
+            "seconds": 28.668
+          },
+          {
+            "selector": "#s4-tier-1 > div:nth-of-type(1) > div:nth-of-type(1)",
+            "text": "Tier 1: Signature Origin & Public Key PKI Match",
+            "fontPx": 12.79,
+            "time": 85.462,
+            "seconds": 28.668
+          },
+          {
+            "selector": "#s4-tier-2 > div:nth-of-type(1) > div:nth-of-type(1)",
+            "text": "Tier 2: Bitwise Payload Integrity & Bit-Flip Detection",
+            "fontPx": 12.79,
+            "time": 92.224,
+            "seconds": 21.906
+          },
+          {
+            "selector": "#s4-tier-3 > div:nth-of-type(1) > div:nth-of-type(1)",
+            "text": "Tier 3: Timestamp & Replay Attack Defense",
+            "fontPx": 12.79,
+            "time": 95.199,
+            "seconds": 18.931
+          },
+          {
+            "selector": "#s6-card-1 > div:nth-of-type(2)",
+            "text": "Client WASM Hashing",
+            "fontPx": 14,
+            "time": 134.684,
+            "seconds": 27.316
+          },
+          {
+            "selector": "#s6-card-2 > div:nth-of-type(2)",
+            "text": "Evaluation Latency",
+            "fontPx": 14,
+            "time": 135.496,
+            "seconds": 26.504
+          },
+          {
+            "selector": "#s6-card-3 > div:nth-of-type(2)",
+            "text": "Cryptographic Suite",
+            "fontPx": 14,
+            "time": 136.037,
+            "seconds": 25.963
+          },
+          {
+            "selector": "#s6-card-4 > div:nth-of-type(2)",
+            "text": "PoA Blockchain Ledger",
+            "fontPx": 14,
+            "time": 136.848,
+            "seconds": 25.152
+          },
+          {
+            "selector": "#s5-alert-card > div:nth-of-type(2) > div:nth-of-type(1)",
+            "text": "Simulated Adversarial Manipulation:",
+            "fontPx": 14.89,
+            "time": 114.401,
+            "seconds": 18.66
+          },
+          {
+            "selector": "#s5-alert-card > div:nth-of-type(2) > div:nth-of-type(1) > strong:nth-of-type(1)",
+            "text": "1 single bit flipped at byte offset 0x004F",
+            "fontPx": 14.89,
+            "time": 114.401,
+            "seconds": 18.66
+          },
+          {
+            "selector": "#s3-entropy-num > span:nth-of-type(1)",
+            "text": "bits/byte",
+            "fontPx": 16,
+            "time": 64.367,
+            "seconds": 20.825
+          },
+          {
+            "selector": "#s6-outro > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1)",
+            "text": "CipherCore Verify // Ready for National Deployment",
+            "fontPx": 16,
+            "time": 138.2,
+            "seconds": 23.8
+          },
+          {
+            "selector": "#s3-dropzone > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1)",
+            "text": "Pune_Tech_Statutory_Deed.pdf",
+            "fontPx": 17,
+            "time": 53.82,
+            "seconds": 31.372
+          },
+          {
+            "selector": "span.font-display",
+            "text": "CipherCore",
+            "fontPx": 20,
+            "time": 25.422,
+            "seconds": 26.775
+          },
+          {
+            "selector": "span.font-display > span:nth-of-type(1)",
+            "text": "Verify",
+            "fontPx": 20,
+            "time": 25.422,
+            "seconds": 26.775
+          },
+          {
+            "selector": "#s2-card-1 > h3:nth-of-type(1)",
+            "text": "Multi-Vector Ingestion",
+            "fontPx": 20,
+            "time": 25.963,
+            "seconds": 26.234
+          },
+          {
+            "selector": "#s2-card-2 > h3:nth-of-type(1)",
+            "text": "Bitwise Entropy Guard",
+            "fontPx": 20,
+            "time": 26.504,
+            "seconds": 25.693
+          },
+          {
+            "selector": "#s2-card-3 > h3:nth-of-type(1)",
+            "text": "PoA Block Notarization",
+            "fontPx": 20,
+            "time": 26.775,
+            "seconds": 25.422
+          },
+          {
+            "selector": "#s1-title > span:nth-of-type(1)",
+            "text": ":: ZERO-TRUST ENCLAVE",
+            "fontPx": 22,
+            "time": 0,
+            "seconds": 25.151
+          },
+          {
+            "selector": "#s4-face-front > div:nth-of-type(1) > div:nth-of-type(1) > h2:nth-of-type(1)",
+            "text": "Cryptographic Verification Sequence",
+            "fontPx": 22.16,
+            "time": 85.462,
+            "seconds": 28.668
+          },
+          {
+            "selector": "#s3-container > div:nth-of-type(1) > div:nth-of-type(1) > h2:nth-of-type(1)",
+            "text": "Multi-Vector Ingestion & Cryptographic Parser",
+            "fontPx": 25.59,
+            "time": 52.467,
+            "seconds": 32.725
+          },
+          {
+            "selector": "h2.font-display.glow-crimson",
+            "text": "INTEGRITY BREACH DETECTED // 1-BIT TAMPER",
+            "fontPx": 25.81,
+            "time": 114.401,
+            "seconds": 18.66
+          }
+        ]
+      },
+      {
+        "code": "dead_stretch",
+        "severity": "warning",
+        "message": "Nothing on screen changes for 3.25 s (95.74–98.98 s): start the next move within 3 s, or put data-hold on the element whose stillness is deliberate; see references/motion.md.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 95.74,
+        "seconds": 3.245,
+        "floorSeconds": 3,
+        "until": 98.985
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "\"[EXECUTE INTEGRITY AUDIT]\" (3 words) is on screen 0.44 s (±0.01 s), under its 1.05 s floor: hold it about 0.5 s + 0.3 s a word (1.40 s here) before it leaves or changes; see references/motion.md.",
+        "text": "[EXECUTE INTEGRITY AUDIT]",
+        "selector": "#s4-cta-btn",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 1198.16,
+          "y": 257.24,
+          "width": 230.41000000000008,
+          "height": 57.69
+        },
+        "time": 99.407,
+        "words": 3,
+        "seconds": 0.439,
+        "floorSeconds": 1.05
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "\"Tier 1: Signature Origin & Public Key PKI Match\" (8 words) is on screen 0.24 s (±0.01 s), under its 2.17 s floor: hold it about 0.5 s + 0.3 s a word (2.90 s here) before it leaves or changes; see references/motion.md.",
+        "text": "Tier 1: Signature Origin & Public Key PKI Match",
+        "selector": "#s4-tier-1 > div:nth-of-type(1) > div:nth-of-type(1)",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 689.14,
+          "y": 418.1,
+          "width": 173.82000000000005,
+          "height": 31.44999999999999
+        },
+        "time": 99.509,
+        "words": 8,
+        "seconds": 0.236,
+        "floorSeconds": 2.175
+      },
+      {
+        "code": "dead_stretch",
+        "severity": "warning",
+        "message": "Nothing on screen changes for 8.65 s (124.14–132.79 s): start the next move within 3 s, or put data-hold on the element whose stillness is deliberate; see references/motion.md.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 124.137,
+        "seconds": 8.654,
+        "floorSeconds": 3,
+        "until": 132.791
+      }
+    ],
+    "enabled": true,
+    "step": 0.27000000000001023,
+    "samples": 599
+  },
+  "audio": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "infoCount": 0,
+    "findings": []
+  },
+  "hdr": {
+    "autoPromotion": null,
+    "inspection": "available"
+  },
+  "snapshots": {
+    "enabled": false,
+    "files": [],
+    "times": [],
+    "findingFiles": []
+  }
+}
