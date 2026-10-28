@@ -429,7 +429,8 @@ footer{position:relative;z-index:1;background:var(--bg-2);border-top:1px solid v
         <div class="cta-row">
           <a class="btn portal" href="portal.html">Enter Verification Portal
             <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
-          <a class="btn ghost" href="#workflow">View compliance workflow</a>
+          <a class="btn ghost" <button type="button" class="btn ghost" onclick="window.openLaunchVideoModal()" style="display:inline-flex; align-items:center; gap:8px; cursor:pointer;"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg><span>Watch Launch Video (20s)</span></button>
+          href="#workflow">View compliance workflow</a>
         </div>
         <div class="card scan tilt" aria-label="Sample scan result">
           <h3><span>Scan result</span><span>Sample data</span></h3>
@@ -2472,5 +2473,60 @@ try {
   }
 } catch(e) {}
 </script>
+
+<!-- Launch Video Modal -->
+<div id="launchVideoModal" class="modal-backdrop" style="display:none;" onclick="if(event.target===this)window.closeLaunchVideoModal()">
+  <div class="modal-container card-surface max-w-[960px] w-[95%] p-5 space-y-4 shadow-2xl border border-line rounded-[8px] flex flex-col" onclick="event.stopPropagation()">
+    <div class="flex items-center justify-between border-b border-line pb-3">
+      <div class="flex items-center gap-2">
+        <span class="px-2 py-0.5 rounded text-[10px] font-bold font-mono bg-sky-500/10 text-sky-500 border border-sky-500/30">AICTE SIH 26261</span>
+        <h3 class="text-sm font-bold text-main" style="color:var(--fg,#f8fafc);">CipherCore Verify — Official Launch Video (20s)</h3>
+      </div>
+      <button onclick="window.closeLaunchVideoModal()" class="btn-close" title="Close Modal">&times;</button>
+    </div>
+    <div class="relative w-full rounded-md overflow-hidden bg-black" style="aspect-ratio: 16/9; max-height: 540px;">
+      <video id="launchVideoPlayer" controls playsinline preload="auto" style="width:100%; height:100%; object-fit:contain;" poster="assets/video/brag.jpg" src="assets/video/brag.mp4">
+        Your browser does not support the video tag.
+      </video>
+    </div>
+    <div class="flex items-center justify-between text-xs text-muted pt-2 border-t border-line">
+      <span style="color:var(--muted,#94a3b8);">1920×1080 (16:9) · High-Definition Launch Video</span>
+      <a href="assets/video/brag.mp4" download="CipherCore_Verify_Launch.mp4" class="btn btn-sm btn-primary inline-flex items-center gap-2" style="background:#0284c7; color:#fff; text-decoration:none; padding:6px 14px; border-radius:4px;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        <span>Download Video MP4</span>
+      </a>
+    </div>
+  </div>
+</div>
+
+<script>
+window.openLaunchVideoModal = function() {
+  var m = document.getElementById('launchVideoModal');
+  var v = document.getElementById('launchVideoPlayer');
+  if (m) {
+    m.style.display = 'flex';
+    m.classList.add('active');
+  }
+  if (v) {
+    v.currentTime = 0;
+    v.play().catch(function(e){ console.log('Autoplay deferred:', e); });
+  }
+};
+window.closeLaunchVideoModal = function() {
+  var m = document.getElementById('launchVideoModal');
+  var v = document.getElementById('launchVideoPlayer');
+  if (v) v.pause();
+  if (m) {
+    m.style.display = 'none';
+    m.classList.remove('active');
+  }
+};
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    window.closeLaunchVideoModal();
+  }
+});
+</script>
+
 </body>
 </html>
