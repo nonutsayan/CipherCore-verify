@@ -14,13 +14,41 @@ import java.util.Optional;
 public class AuthController {
 
     private final AuthService authService;
+    private final com.ciphercore.verify.service.GoogleAuthService googleAuthService;
 
-    public AuthController(AuthService authService) {
+    public AuthController(AuthService authService,
+                          com.ciphercore.verify.service.GoogleAuthService googleAuthService) {
         this.authService = authService;
+        this.googleAuthService = googleAuthService;
     }
 
     public record LoginRequest(String username, String password) {}
+    public record GoogleLoginRequest(String idToken) {}
     public record ChangePasswordRequest(String username, String oldPassword, String newPassword) {}
+
+    @PostMapping("/google")
+    public ResponseEntity<?> loginWithGoogle(@RequestBody GoogleLoginRequest request, HttpServletRequest httpRequest) {
+        String ip = getClientIp(httpRequest);
+        com.ciphercore.verify.service.GoogleAuthService.GoogleAuthResult res =
+                googleAuthService.authenticateGoogleIdToken(request.idToken(), ip);
+
+        if (!res.success()) {
+            return ResponseEntity.badRequest().body(Map.of(
+                    "error", res.errorMessage(),
+                    "status", 400
+            ));
+        }
+
+        return ResponseEntity.ok(Map.of(
+                "token", res.token(),
+                "username", res.username(),
+                "fullName", res.fullName(),
+                "email", res.email(),
+                "role", res.role(),
+                "isOfficer", res.isOfficer(),
+                "authMethod", "Google Identity Services (OAuth 2.0)"
+        ));
+    }
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest request, HttpServletRequest httpRequest) {

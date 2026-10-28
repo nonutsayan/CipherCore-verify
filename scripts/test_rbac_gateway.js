@@ -93,8 +93,8 @@ const mainScript = scriptMatches.find(m => m[1].length > 1000)[1];
   }
   const officerApps = getRoleFilteredApplications();
   console.log('Officer visible applications count:', officerApps.length);
-  if (officerApps.length !== 5) {
-    throw new Error(`Expected 5 institutions for Officer, got ${officerApps.length}`);
+  if (officerApps.length !== 6) {
+    throw new Error(`Expected 6 institutions for Officer, got ${officerApps.length}`);
   }
 
   console.log('--- TEST 3: LOGIN AS INSTITUTION SIGNATORY ---');

@@ -52,6 +52,12 @@ public class DocumentProcessingOrchestrator {
     @Autowired
     private AnomalyDetectionOrchestrator anomalyDetectionOrchestrator;
 
+    @Autowired(required = false)
+    private GeminiDocumentAnalysisService geminiService;
+
+    @Autowired(required = false)
+    private SignatureVerificationService signatureVerificationService;
+
     @Autowired
     private DocumentRepository documentRepository;
 
@@ -126,7 +132,7 @@ public class DocumentProcessingOrchestrator {
                 documentPageRepository.save(page);
             }
 
-            // 5. Automatic Document Classification (Section 8)
+            // 5. Automatic Document Classification (Section 8) & Gemini AI Document Intelligence
             document.setProcessingStatus(DocumentProcessingStatus.CLASSIFYING);
             DocumentClassificationService.ClassificationOutcome classOutcome = 
                 classificationService.classifyDocument(ocrResult.consolidatedText());
@@ -137,6 +143,32 @@ public class DocumentProcessingOrchestrator {
             document.setClassificationEvidence(String.join("; ", classOutcome.evidencePhrases()));
             document.setClassificationMethod(classOutcome.classificationMethod());
             document.setRequiresManualReview(classOutcome.manualConfirmationRecommended());
+
+            if (geminiService != null && geminiService.isConfigured()) {
+                try {
+                    GeminiDocumentAnalysisService.GeminiAnalysisResult gRes = 
+                        geminiService.analyzeDocumentContent(ocrResult.consolidatedText(), document.getOriginalFilename(), classOutcome.primaryCategory().name());
+                    if (gRes.success() && gRes.analysis() != null) {
+                        GeminiDocumentAnalysisService.GeminiAnalysisPayload a = gRes.analysis();
+                        if (a.documentType() != null && !a.documentType().isBlank()) {
+                            DocumentCategory geminiCat = DocumentCategory.fromString(a.documentType());
+                            if (geminiCat != DocumentCategory.UNKNOWN) {
+                                document.setPredictedCategory(geminiCat);
+                                document.setDocumentCategory(geminiCat);
+                            }
+                        }
+                        if (a.classificationConfidence() != null) {
+                            document.setClassificationConfidence(a.classificationConfidence());
+                        }
+                        if (a.classificationEvidence() != null && !a.classificationEvidence().isBlank()) {
+                            document.setClassificationEvidence(a.classificationEvidence());
+                        }
+                        document.setClassificationMethod("GOOGLE_GEMINI_" + gRes.modelUsed());
+                    }
+                } catch (Exception ge) {
+                    log.warn("Gemini document intelligence notice: {}. Continuing with schema extraction.", ge.getMessage());
+                }
+            }
 
             // 6. Schema-Driven Field Extraction (Section 9 & 10)
             document.setProcessingStatus(DocumentProcessingStatus.EXTRACTING_FIELDS);
@@ -182,6 +214,15 @@ public class DocumentProcessingOrchestrator {
                 anomalyDetectionOrchestrator.runComprehensiveAnalysis(document.getId());
             } catch (Exception ae) {
                 log.warn("Forensic anomaly engine exception for document {}: {}", document.getId(), ae.getMessage());
+            }
+
+            // 9B. Cryptographic Digital Signature & Handwritten Signer Verification
+            if (signatureVerificationService != null) {
+                try {
+                    signatureVerificationService.verifySignatures(document, null);
+                } catch (Exception se) {
+                    log.warn("Digital signature evaluation exception for document {}: {}", document.getId(), se.getMessage());
+                }
             }
 
             // Finalize Status

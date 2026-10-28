@@ -127,6 +127,33 @@ public class AuthService {
         return new LoginResult(true, token, u, null, 200);
     }
 
+    @Transactional
+    public LoginResult createSessionForGoogleUser(User u, String ipAddress) {
+        u.setFailedLoginAttempts(0);
+        u.setLockedUntil(null);
+        u.setLastLoginAt(LocalDateTime.now());
+        userRepository.save(u);
+
+        String token = "bearer_ciphercore_" + u.getUsername() + "_" + System.currentTimeMillis();
+        activeTokens.put(token, u.getUsername());
+
+        securityMonitoringService.logSecurityEvent(
+                "GOOGLE_AUTH_SUCCESS", u.getUsername(), u.getRole().name(), "AUTH", u.getUsername(),
+                "LOGIN", "SUCCESS", "GOOGLE_OAUTH",
+                "User '" + u.getUsername() + "' (" + u.getRole().name() + ") authenticated via Google Identity Services.",
+                ipAddress
+        );
+
+        auditTrailService.recordEvent(
+                u.getUsername(), u.getRole().name(), "GOOGLE_USER_LOGGED_IN",
+                "USER_SESSION", u.getUsername(),
+                "User successfully logged in via Google OAuth with role " + u.getRole().name(),
+                ipAddress
+        );
+
+        return new LoginResult(true, token, u, null, 200);
+    }
+
     public void logout(String tokenOrUsername, String ipAddress) {
         String username = tokenOrUsername;
         if (activeTokens.containsKey(tokenOrUsername)) {

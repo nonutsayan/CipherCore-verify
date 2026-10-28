@@ -44,6 +44,30 @@ app:
   ai-provider:
     mode: DETERMINISTIC_FALLBACK
     confidence-threshold: 0.85
+  google:
+    vision:
+      enabled: true
+      api-key: ${GOOGLE_VISION_API_KEY:}
+      endpoint: https://vision.googleapis.com/v1
+      max-pages-per-doc: 10
+      timeout-seconds: 30
+    gemini:
+      enabled: true
+      api-key: ${GEMINI_API_KEY:}
+      model: ${GEMINI_MODEL:gemini-1.5-flash}
+      endpoint: https://generativelanguage.googleapis.com/v1beta
+      timeout-seconds: 45
+      temperature: 0.1
+    oauth:
+      enabled: true
+      client-id: ${GOOGLE_CLIENT_ID:}
+      officer-emails:
+        - arvind.kumar.aicte@gmail.com
+        - a.kumar@aicte-india.org
+        - reviewer@aicte-india.org
+    drive:
+      enabled: false
+      client-id: ${GOOGLE_DRIVE_CLIENT_ID:}
 
 # OpenAPI Documentation
 springdoc:

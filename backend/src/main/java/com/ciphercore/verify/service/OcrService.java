@@ -30,6 +30,9 @@ public class OcrService {
     @Autowired
     private ImagePreprocessingService imagePreprocessingService;
 
+    @Autowired(required = false)
+    private GoogleVisionOcrService googleVisionOcrService;
+
     public record PageExtractionResult(
         int pageNumber,
         String extractedText,
@@ -54,6 +57,44 @@ public class OcrService {
     public DocumentInspectionResult extractText(File file, String mediaType) {
         if (!file.exists()) {
             return new DocumentInspectionResult(0, "NONE", "UNREADABLE", List.of(), "");
+        }
+
+        // 1. If Google Cloud Vision API is configured, use it as primary OCR engine
+        if (googleVisionOcrService != null && googleVisionOcrService.isConfigured()) {
+            try {
+                GoogleVisionOcrService.VisionOcrResult gRes = googleVisionOcrService.extractDocumentText(file, mediaType);
+                if (gRes.success() && !gRes.consolidatedText().isBlank()) {
+                    List<PageExtractionResult> gPages = new ArrayList<>();
+                    for (GoogleVisionOcrService.VisionPageResult pr : gRes.pages()) {
+                        String sanitized = sanitizeText(pr.text());
+                        int charCount = sanitized.length();
+                        int wordCount = countWords(sanitized);
+                        String quality = assessQuality(sanitized, charCount, wordCount);
+                        gPages.add(new PageExtractionResult(
+                                pr.pageNumber(),
+                                sanitized,
+                                "GOOGLE_CLOUD_VISION",
+                                quality,
+                                charCount,
+                                wordCount,
+                                null
+                        ));
+                    }
+                    String overallQuality = gPages.stream().anyMatch(p -> "HIGH".equals(p.ocrQuality())) ? "HIGH" : "MEDIUM";
+                    return new DocumentInspectionResult(
+                            gRes.totalPages(),
+                            "GOOGLE_CLOUD_VISION",
+                            overallQuality,
+                            gPages,
+                            sanitizeText(gRes.consolidatedText())
+                    );
+                } else {
+                    log.warn("Google Cloud Vision OCR returned non-success or empty text ({}): {}. Falling back to local PDFBox/Image extraction.",
+                            gRes.status(), gRes.message());
+                }
+            } catch (Exception e) {
+                log.warn("Google Cloud Vision invocation failed: {}. Falling back to local engine.", e.getMessage());
+            }
         }
 
         if ("application/pdf".equalsIgnoreCase(mediaType)) {

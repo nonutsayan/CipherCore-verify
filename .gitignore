@@ -68,3 +68,17 @@ cloudflared.exe
 # Impeccable clone cache
 .impeccable/*
 !.impeccable/config.json
+
+
+# Credentials, API keys, and environment secrets (NEVER COMMIT)
+.env
+.env.*
+!.env.example
+*.env
+gcp-*.json
+service-account*.json
+credentials*.json
+*.pem
+*.key
+*.p12
+*.jks
