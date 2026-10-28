@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=1920, height=1080" />
-    <title>CipherCore Verify — Launch Brag</title>
+    <title>CipherCore Verify — Complete Detailed SaaS Walkthrough</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@600;700&family=Public+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -18,6 +18,7 @@
         --text-primary: #F8FAFC;
         --text-secondary: #94A3B8;
         --accent: #5AD1F5;
+        --accent-glow: rgba(90, 209, 245, 0.25);
         --ok: #4ADE9A;
         --ok-bg: rgba(74, 222, 154, 0.14);
         --warn: #F5B84A;
@@ -49,7 +50,7 @@
         position: relative;
         width: 1920px;
         height: 1080px;
-        background: radial-gradient(circle at 50% 20%, rgba(90, 209, 245, 0.08) 0%, rgba(10, 15, 22, 1) 75%);
+        background: radial-gradient(circle at 50% 15%, rgba(90, 209, 245, 0.08) 0%, rgba(10, 15, 22, 1) 75%);
         overflow: hidden;
       }
 
@@ -64,27 +65,19 @@
         pointer-events: none;
       }
 
-      /* Vignette */
-      .bg-vignette {
-        position: absolute;
-        inset: 0;
-        box-shadow: inset 0 0 160px rgba(0, 0, 0, 0.85);
-        pointer-events: none;
-      }
-
       /* Global Header Bar */
       .top-nav {
         position: absolute;
         top: 0;
         left: 0;
         right: 0;
-        height: 84px;
-        padding: 0 72px;
+        height: 76px;
+        padding: 0 64px;
         display: flex;
         align-items: center;
         justify-content: space-between;
         border-bottom: 1px solid var(--line);
-        background: rgba(10, 15, 22, 0.8);
+        background: rgba(10, 15, 22, 0.85);
         backdrop-filter: blur(12px);
         z-index: 50;
       }
@@ -92,23 +85,21 @@
       .brand {
         display: flex;
         align-items: center;
-        gap: 14px;
+        gap: 12px;
         font-family: var(--font-display);
         font-size: 24px;
         font-weight: 700;
-        letter-spacing: -0.02em;
         color: var(--text-primary);
       }
 
       .brand svg {
-        width: 32px;
-        height: 32px;
+        width: 30px;
+        height: 30px;
         color: var(--accent);
       }
 
       .brand span b {
         color: var(--accent);
-        font-weight: 700;
       }
 
       .top-badge {
@@ -134,40 +125,39 @@
         box-shadow: 0 0 8px var(--ok);
       }
 
-      /* Scene Container */
+      /* Scene Base */
       .scene {
         position: absolute;
-        top: 84px;
+        top: 76px;
         left: 0;
         width: 1920px;
-        height: 996px;
-        padding: 60px 80px;
+        height: 1004px;
+        padding: 40px 64px;
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
       }
 
-      /* Typography Helpers */
       .eyebrow {
         font-family: var(--font-mono);
-        font-size: 16px;
+        font-size: 15px;
         font-weight: 600;
         color: var(--accent);
         letter-spacing: 0.1em;
         text-transform: uppercase;
-        margin-bottom: 14px;
+        margin-bottom: 12px;
       }
 
       .headline {
         font-family: var(--font-display);
-        font-size: 64px;
+        font-size: 58px;
         font-weight: 700;
-        line-height: 1.08;
-        letter-spacing: -0.03em;
+        line-height: 1.1;
+        letter-spacing: -0.02em;
         text-align: center;
         color: var(--text-primary);
-        max-width: 1280px;
+        max-width: 1320px;
       }
 
       .headline em {
@@ -179,15 +169,14 @@
       }
 
       .subhead {
-        font-size: 22px;
+        font-size: 20px;
         line-height: 1.5;
         color: var(--text-secondary);
         max-width: 900px;
         text-align: center;
-        margin-top: 18px;
+        margin-top: 14px;
       }
 
-      /* Card styles */
       .glass-card {
         background: var(--surface);
         border: 1px solid var(--surface-border);
@@ -197,190 +186,265 @@
       }
 
       /* =========================================================================
-         SCENE 1: HOOK & DOSSIER INGESTION (0 - 4.5s)
+         SCENE 1: SAAS BROWSER LANDING PAGE & 3D DOCUMENT FAN (0.0s - 8.0s)
          ========================================================================= */
-      #scene-1 .dossier-card {
-        margin-top: 44px;
-        width: 1100px;
-        padding: 32px 40px;
-      }
-
-      .dossier-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding-bottom: 20px;
-        border-bottom: 1px solid var(--line);
-        margin-bottom: 20px;
-      }
-
-      .dossier-title {
-        font-family: var(--font-mono);
-        font-size: 15px;
-        color: var(--accent);
-        letter-spacing: 0.05em;
-      }
-
-      .dossier-meta {
-        font-family: var(--font-mono);
-        font-size: 13px;
-        color: var(--text-secondary);
-      }
-
-      .dossier-table {
+      .browser-window {
+        width: 1440px;
+        height: 720px;
+        border-radius: 12px;
+        overflow: hidden;
+        border: 1px solid var(--surface-border);
+        box-shadow: 0 32px 80px rgba(0, 0, 0, 0.8), 0 0 40px rgba(90, 209, 245, 0.15);
+        background: #0E1520;
         display: flex;
         flex-direction: column;
-        gap: 14px;
+        position: relative;
       }
 
-      .doc-row {
-        display: grid;
-        grid-template-columns: 280px 1fr 180px;
+      .browser-topbar {
+        height: 44px;
+        background: rgba(17, 27, 41, 0.95);
+        border-bottom: 1px solid var(--line);
+        display: flex;
         align-items: center;
-        padding: 16px 20px;
-        background: rgba(14, 21, 32, 0.7);
+        padding: 0 18px;
+        gap: 16px;
+      }
+
+      .mac-dots {
+        display: flex;
+        gap: 8px;
+      }
+
+      .mac-dot {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+      }
+      .dot-red { background: #FF5F56; }
+      .dot-yellow { background: #FFBD2E; }
+      .dot-green { background: #27C93F; }
+
+      .browser-url-bar {
+        flex: 1;
+        max-width: 600px;
+        height: 28px;
+        background: rgba(10, 15, 22, 0.6);
         border: 1px solid var(--line);
         border-radius: 6px;
-        font-size: 16px;
-      }
-
-      .doc-name {
-        font-weight: 600;
-        color: var(--text-primary);
-      }
-
-      .doc-detail {
-        font-family: var(--font-mono);
-        font-size: 13px;
-        color: var(--text-secondary);
-      }
-
-      .status-pill {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        gap: 6px;
-        padding: 6px 14px;
-        border-radius: 4px;
-        font-family: var(--font-mono);
-        font-size: 13px;
-        font-weight: 600;
-        letter-spacing: 0.02em;
-        justify-self: end;
-      }
-
-      .status-pill.ok {
-        background: var(--ok-bg);
-        color: var(--ok);
-        border: 1px solid rgba(74, 222, 154, 0.4);
-      }
-
-      .status-pill.warn {
-        background: var(--warn-bg);
-        color: var(--warn);
-        border: 1px solid rgba(245, 184, 74, 0.4);
-      }
-
-      .status-pill.flag {
-        background: var(--flag-bg);
-        color: var(--flag);
-        border: 1px solid rgba(255, 107, 74, 0.4);
-      }
-
-      /* =========================================================================
-         SCENE 2: FOUR PARALLEL ENGINES (4.5 - 9.5s)
-         ========================================================================= */
-      #scene-2 .engines-grid {
-        margin-top: 48px;
-        display: grid;
-        grid-template-columns: repeat(4, 380px);
-        gap: 24px;
-      }
-
-      .engine-card {
-        padding: 32px 28px;
         display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        height: 480px;
+        align-items: center;
+        padding: 0 12px;
+        gap: 8px;
+        font-family: var(--font-mono);
+        font-size: 12px;
+        color: var(--accent);
+      }
+
+      .browser-content {
+        flex: 1;
+        padding: 44px 56px;
+        display: grid;
+        grid-template-columns: 1.15fr 0.85fr;
+        gap: 40px;
+        align-items: center;
         position: relative;
         overflow: hidden;
       }
 
-      .engine-num {
-        font-family: var(--font-mono);
-        font-size: 12px;
-        color: var(--accent);
-        text-transform: uppercase;
-        letter-spacing: 0.08em;
-        margin-bottom: 12px;
-      }
-
-      .engine-name {
-        font-family: var(--font-display);
-        font-size: 26px;
+      .hero-cta-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 14px 28px;
+        border-radius: 6px;
+        background: #0369a1;
+        color: #FFFFFF;
+        font-size: 16px;
         font-weight: 700;
-        line-height: 1.18;
-        color: var(--text-primary);
-        margin-bottom: 16px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        box-shadow: 0 8px 24px rgba(3, 105, 161, 0.4);
+        margin-top: 28px;
       }
 
-      .engine-desc {
-        font-size: 14px;
-        line-height: 1.55;
-        color: var(--text-secondary);
-        margin-bottom: 24px;
+      /* 3D Document Fan Effect */
+      .doc-fan-container {
+        position: relative;
+        width: 440px;
+        height: 480px;
+        perspective: 1000px;
       }
 
-      .engine-tags {
+      .fan-card {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        width: 320px;
+        height: 400px;
+        background: rgba(17, 27, 41, 0.96);
+        border: 1px solid var(--surface-border);
+        border-radius: 8px;
+        padding: 24px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
         display: flex;
         flex-direction: column;
-        gap: 8px;
-        margin-top: auto;
+        justify-content: space-between;
+        transform-origin: bottom center;
       }
 
-      .engine-tag {
-        font-family: var(--font-mono);
-        font-size: 11px;
-        padding: 5px 10px;
-        border-radius: 4px;
-        background: rgba(255, 255, 255, 0.04);
-        border: 1px solid var(--line);
-        color: #CBD5E1;
-      }
+      .fan-card-1 { transform: rotate(-12deg) translateY(-10px) translateX(-40px); border-color: rgba(90, 209, 245, 0.3); }
+      .fan-card-2 { transform: rotate(0deg) translateY(0); z-index: 2; border-color: var(--accent); box-shadow: 0 0 24px rgba(90, 209, 245, 0.25); }
+      .fan-card-3 { transform: rotate(12deg) translateY(10px) translateX(40px); z-index: 1; border-color: rgba(74, 222, 154, 0.3); }
 
-      .engine-card.active {
-        border-color: var(--accent);
-        box-shadow: 0 0 24px rgba(90, 209, 245, 0.2);
-      }
-
-      .engine-card.active::before {
-        content: '';
+      /* Cursor element */
+      .fake-cursor {
         position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 3px;
-        background: var(--accent);
+        width: 24px;
+        height: 24px;
+        z-index: 100;
+        pointer-events: none;
+        will-change: transform;
       }
 
       /* =========================================================================
-         SCENE 3: YOLOv8 COMPUTER VISION AUDIT (9.5 - 15.0s)
+         SCENE 2: CYBER COMMAND CENTRE & SLIDE-OVER DRAWER (8.0s - 16.5s)
          ========================================================================= */
-      #scene-3 .cv-container {
-        margin-top: 32px;
-        width: 1480px;
+      .portal-container {
+        width: 1600px;
+        height: 760px;
+        display: grid;
+        grid-template-columns: 1fr 480px;
+        gap: 28px;
+        align-items: stretch;
+      }
+
+      .portal-main {
+        padding: 28px 32px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      .queue-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 14px;
+      }
+
+      .queue-table th {
+        font-family: var(--font-mono);
+        font-size: 12px;
+        color: var(--text-secondary);
+        text-align: left;
+        padding: 12px 14px;
+        border-bottom: 1px solid var(--line);
+        text-transform: uppercase;
+      }
+
+      .queue-table td {
+        padding: 16px 14px;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .queue-row.selected {
+        background: rgba(90, 209, 245, 0.12);
+        border-left: 3px solid var(--accent);
+      }
+
+      .investigation-drawer {
+        padding: 32px 28px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        border-left: 1px solid var(--accent);
+        box-shadow: -16px 0 36px rgba(0, 0, 0, 0.6);
+        background: rgba(14, 21, 32, 0.98);
+      }
+
+      /* =========================================================================
+         SCENE 3: FORENSIC TAMPER DIFF & AUTHORITY GATEWAYS (16.5s - 25.0s)
+         ========================================================================= */
+      .forensic-split {
+        width: 1540px;
         height: 640px;
         display: grid;
-        grid-template-columns: 960px 480px;
+        grid-template-columns: 1fr 1fr;
+        gap: 32px;
+      }
+
+      .diff-pane {
+        padding: 28px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .diff-pane.tampered {
+        border-color: var(--flag);
+        box-shadow: 0 0 30px rgba(255, 107, 74, 0.2);
+      }
+
+      .diff-pane.verified {
+        border-color: var(--ok);
+        box-shadow: 0 0 30px rgba(74, 222, 154, 0.2);
+      }
+
+      .heatmap-overlay {
+        position: absolute;
+        top: 140px;
+        left: 28px;
+        right: 28px;
+        height: 120px;
+        background: rgba(255, 107, 74, 0.18);
+        border: 2px dashed var(--flag);
+        border-radius: 6px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: var(--font-mono);
+        font-size: 14px;
+        font-weight: 700;
+        color: var(--flag);
+        gap: 12px;
+      }
+
+      .authority-badges-grid {
+        margin-top: 24px;
+        width: 1540px;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+      }
+
+      .auth-badge-card {
+        padding: 16px 20px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background: rgba(14, 21, 32, 0.85);
+        border: 1px solid var(--line);
+        border-radius: 6px;
+      }
+
+      /* =========================================================================
+         SCENE 4: YOLOv8 COMPUTER VISION AUDIT (25.0s - 34.0s)
+         ========================================================================= */
+      .cv-container {
+        margin-top: 16px;
+        width: 1540px;
+        height: 640px;
+        display: grid;
+        grid-template-columns: 1020px 480px;
         gap: 40px;
         align-items: center;
       }
 
       .cv-viewport {
         position: relative;
-        width: 960px;
-        height: 580px;
+        width: 1020px;
+        height: 600px;
         border-radius: 8px;
         overflow: hidden;
         border: 1px solid var(--accent);
@@ -392,10 +456,9 @@
         width: 100%;
         height: 100%;
         object-fit: cover;
-        opacity: 0.85;
+        opacity: 0.88;
       }
 
-      /* Laser Scan Line */
       .cv-scanline {
         position: absolute;
         top: 0;
@@ -408,7 +471,6 @@
         will-change: transform;
       }
 
-      /* Reticles and Bounding Boxes */
       .bbox {
         position: absolute;
         border: 2px solid var(--ok);
@@ -423,9 +485,9 @@
         background: var(--ok);
         color: #04141C;
         font-family: var(--font-mono);
-        font-size: 10px;
+        font-size: 11px;
         font-weight: 700;
-        padding: 1px 5px;
+        padding: 1px 6px;
         border-radius: 0 0 2px 0;
       }
 
@@ -433,65 +495,40 @@
         padding: 36px 32px;
         display: flex;
         flex-direction: column;
-        gap: 20px;
-        height: 580px;
+        gap: 22px;
+        height: 600px;
         justify-content: space-between;
-      }
-
-      .telemetry-item {
-        display: flex;
-        flex-direction: column;
-        gap: 6px;
-      }
-
-      .telemetry-label {
-        font-family: var(--font-mono);
-        font-size: 12px;
-        color: var(--text-secondary);
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
       }
 
       .telemetry-val {
         font-family: var(--font-display);
-        font-size: 32px;
+        font-size: 36px;
         font-weight: 700;
         color: var(--text-primary);
       }
-
-      .telemetry-val.highlight {
-        color: var(--ok);
-      }
-
-      .telemetry-val small {
-        font-size: 15px;
-        color: var(--text-secondary);
-        font-family: var(--font-mono);
-        font-weight: 400;
-        margin-left: 6px;
-      }
+      .telemetry-val.highlight { color: var(--ok); }
 
       /* =========================================================================
-         SCENE 4: IMMUTABLE AUDIT LEDGER & OFFICER SEAL (15.0 - 20.0s)
+         SCENE 5: IMMUTABLE AUDIT LEDGER & STATUTORY OFFICER GATE (34.0s - 42.0s)
          ========================================================================= */
-      #scene-4 .cert-card {
-        margin-top: 40px;
-        width: 1060px;
-        padding: 44px 52px;
+      .cert-card {
+        margin-top: 24px;
+        width: 1160px;
+        padding: 44px 56px;
         display: flex;
         flex-direction: column;
         gap: 28px;
         border: 1px solid var(--accent);
-        box-shadow: 0 0 40px rgba(90, 209, 245, 0.18);
+        box-shadow: 0 0 44px rgba(90, 209, 245, 0.2);
         position: relative;
       }
 
       .cert-card::before {
-        content: 'AICTE VERIFIED';
+        content: 'AICTE EoA APPROVED';
         position: absolute;
         top: 36px;
         right: 48px;
-        padding: 6px 16px;
+        padding: 6px 18px;
         border: 2px solid var(--ok);
         border-radius: 4px;
         font-family: var(--font-mono);
@@ -500,33 +537,6 @@
         color: var(--ok);
         letter-spacing: 0.1em;
         transform: rotate(-3deg);
-      }
-
-      .cert-meta-row {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 24px;
-        padding-bottom: 24px;
-        border-bottom: 1px solid var(--line);
-      }
-
-      .cert-field {
-        display: flex;
-        flex-direction: column;
-        gap: 4px;
-      }
-
-      .cert-label {
-        font-family: var(--font-mono);
-        font-size: 11px;
-        color: var(--text-secondary);
-        text-transform: uppercase;
-      }
-
-      .cert-value {
-        font-size: 18px;
-        font-weight: 600;
-        color: var(--text-primary);
       }
 
       .officer-badge-box {
@@ -540,8 +550,8 @@
       }
 
       .officer-avatar {
-        width: 44px;
-        height: 44px;
+        width: 48px;
+        height: 48px;
         background: #0284c7;
         color: #fff;
         border-radius: 4px;
@@ -549,64 +559,41 @@
         align-items: center;
         justify-content: center;
         font-family: var(--font-display);
-        font-size: 20px;
+        font-size: 22px;
         font-weight: 700;
-      }
-
-      .officer-info {
-        display: flex;
-        flex-direction: column;
-      }
-
-      .officer-name {
-        font-size: 16px;
-        font-weight: 600;
-        color: var(--text-primary);
-      }
-
-      .officer-role {
-        font-family: var(--font-mono);
-        font-size: 12px;
-        color: var(--ok);
       }
 
       .hash-box {
         font-family: var(--font-mono);
         font-size: 13px;
         color: #94A3B8;
-        padding: 14px 18px;
+        padding: 16px 20px;
         background: rgba(0, 0, 0, 0.4);
         border: 1px solid var(--line);
         border-radius: 4px;
         word-break: break-all;
       }
-
-      .hash-box b {
-        color: var(--ok);
-        font-weight: 600;
-      }
+      .hash-box b { color: var(--ok); font-weight: 600; }
 
       .launch-link {
         font-family: var(--font-mono);
         font-size: 16px;
         color: var(--accent);
         text-align: center;
-        margin-top: 8px;
       }
     </style>
   </head>
   <body>
-    <!-- Composition Root (20 seconds @ 30fps = 600 frames) -->
+    <!-- Root Timeline Container (42 seconds @ 30fps = 1260 frames) -->
     <div
       id="root"
       data-composition-id="main"
       data-start="0"
-      data-duration="20"
+      data-duration="42"
       data-width="1920"
       data-height="1080"
     >
       <div class="bg-grid"></div>
-      <div class="bg-vignette"></div>
 
       <!-- Static Top Navigation Bar -->
       <header class="top-nav">
@@ -623,218 +610,355 @@
         </div>
       </header>
 
-      <!-- SCENE 1: HOOK & DOSSIER INGESTION (0.0s - 4.5s) -->
-      <section id="scene-1" class="scene clip" data-start="0" data-duration="4.5" data-track-index="1">
-        <span class="eyebrow" id="s1-eyebrow">Autonomous Regulatory Intelligence</span>
-        <h1 class="headline" id="s1-headline">Every document, <em>verified</em> before anyone signs.</h1>
-        <p class="subhead" id="s1-subhead">Instant forensic fingerprinting, issuing authority checks, and norms compliance for AICTE Extension of Approval dossiers.</p>
+      <!-- =====================================================================
+           SCENE 1: SAAS BROWSER LANDING PAGE & 3D FAN (0.0s - 8.0s)
+           ===================================================================== -->
+      <section id="scene-1" class="scene clip" data-start="0" data-duration="8.0" data-track-index="1">
+        <span class="eyebrow" id="s1-eyebrow">Public Landing Experience</span>
 
-        <div class="glass-card dossier-card" id="s1-card">
-          <div class="dossier-header" data-layout-ignore>
-            <span class="dossier-title">DOSSIER INGESTION: APP-2026-101 (MIT ACADEMY OF ENGINEERING)</span>
-            <span class="dossier-meta">6 STATUTORY ATTACHMENTS VERIFIED</span>
+        <div class="browser-window" id="s1-browser">
+          <div class="browser-topbar">
+            <div class="mac-dots" data-layout-ignore>
+              <div class="mac-dot dot-red"></div>
+              <div class="mac-dot dot-yellow"></div>
+              <div class="mac-dot dot-green"></div>
+            </div>
+            <div class="browser-url-bar" data-layout-ignore>
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              <span>https://nonutsayan.github.io/CipherCore-verify/</span>
+            </div>
           </div>
-          <div class="dossier-table">
-            <div class="doc-row" id="doc-1">
-              <span class="doc-name">Fire Safety NOC</span>
-              <span class="doc-detail" data-layout-ignore>Maharashtra Fire Services Registry API</span>
-              <span class="status-pill ok" data-layout-ignore>
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
-                Matched
-              </span>
+
+          <div class="browser-content">
+            <div class="hero-left" id="s1-hero-left">
+              <span class="eyebrow" style="font-size:12px; margin-bottom:8px;">AI-Powered Regulatory Decision Support</span>
+              <h1 class="headline" style="font-size:42px; text-align:left; line-height:1.12;">Every document, <em>verified</em> before anyone signs.</h1>
+              <p class="subhead" style="font-size:16px; text-align:left; margin-top:12px;">Autonomous scrutiny across 6 statutory dossiers with forensic ELA, issuing authority checks, and YOLOv8 facility audits.</p>
+              
+              <button class="hero-cta-btn" id="s1-cta-btn">
+                <span>Enter Verification Portal</span>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+              </button>
             </div>
-            <div class="doc-row" id="doc-2">
-              <span class="doc-name">Land Ownership Deed</span>
-              <span class="doc-detail" data-layout-ignore>ELA 88.4% · Acreage variance detected</span>
-              <span class="status-pill warn" data-layout-ignore>
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-                Review
-              </span>
+
+            <!-- 3D Document Fan (data-layout-allow-overlap) -->
+            <div class="doc-fan-container" id="s1-doc-fan" data-layout-allow-overlap>
+              <div class="fan-card fan-card-1" id="fan-card-1" data-layout-allow-overlap>
+                <span class="eyebrow" style="font-size:10px;" data-layout-ignore>Mandatory Attachment 01</span>
+                <h3 style="font-size:20px; font-weight:700;" data-layout-ignore>Fire Safety NOC</h3>
+                <p style="font-size:13px; color:var(--text-secondary);" data-layout-ignore>State Fire Services Registry Verification</p>
+                <span class="top-badge" style="align-self:flex-start; font-size:11px;" data-layout-ignore>API Matched</span>
+              </div>
+              <div class="fan-card fan-card-2" id="fan-card-2" data-layout-allow-overlap>
+                <span class="eyebrow" style="font-size:10px;" data-layout-ignore>Mandatory Attachment 02</span>
+                <h3 style="font-size:20px; font-weight:700;" data-layout-ignore>Land Ownership Deed</h3>
+                <p style="font-size:13px; color:var(--text-secondary);" data-layout-ignore>DigiLocker Revenue &amp; ELA Variance</p>
+                <span class="top-badge" style="align-self:flex-start; font-size:11px; border-color:var(--warn); color:var(--warn);" data-layout-ignore>Acreage Variance</span>
+              </div>
+              <div class="fan-card fan-card-3" id="fan-card-3" data-layout-allow-overlap>
+                <span class="eyebrow" style="font-size:10px;" data-layout-ignore>Mandatory Attachment 03</span>
+                <h3 style="font-size:20px; font-weight:700;" data-layout-ignore>Faculty PAN Roster</h3>
+                <p style="font-size:13px; color:var(--text-secondary);" data-layout-ignore>Central Duplicate PAN Detection</p>
+                <span class="top-badge" style="align-self:flex-start; font-size:11px; border-color:var(--flag); color:var(--flag);" data-layout-ignore>Flagged Record</span>
+              </div>
             </div>
-            <div class="doc-row" id="doc-3">
-              <span class="doc-name">Faculty PAN Roster</span>
-              <span class="doc-detail" data-layout-ignore>Duplicate PAN cross-match against Central Index</span>
-              <span class="status-pill flag" data-layout-ignore>
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-                Flagged
-              </span>
+
+            <!-- Animated Simulated Mouse Cursor -->
+            <svg class="fake-cursor" id="s1-cursor" viewBox="0 0 24 24" fill="none" data-layout-allow-overflow>
+              <path d="M3 3l7 18 3-7 7-3L3 3z" fill="#5AD1F5" stroke="#04141C" stroke-width="2"/>
+            </svg>
+          </div>
+        </div>
+      </section>
+
+      <!-- =====================================================================
+           SCENE 2: CYBER COMMAND CENTRE & SLIDE-OVER DRAWER (8.0s - 16.5s)
+           ===================================================================== -->
+      <section id="scene-2" class="scene clip" data-start="8.0" data-duration="8.5" data-track-index="2">
+        <span class="eyebrow" id="s2-eyebrow">Scrutiny Intake &amp; Queue</span>
+        <h2 class="headline" id="s2-headline" style="font-size:48px;">Cyber Command Centre · <em>Dossier Queue</em></h2>
+
+        <div class="portal-container" id="s2-portal">
+          <div class="glass-card portal-main" id="s2-table-card">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <span class="eyebrow" style="margin:0;">Pending Extension of Approval Applications (45 Total)</span>
+              <span class="top-badge" id="s2-sync-badge" style="font-size:11px;" data-layout-ignore>Live PoA Sync</span>
+            </div>
+
+            <table class="queue-table">
+              <thead>
+                <tr>
+                  <th>App ID</th>
+                  <th>Institution Name</th>
+                  <th>Region</th>
+                  <th>Docs</th>
+                  <th>Forensic Risk</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="queue-row selected" id="q-row-1">
+                  <td style="font-family:var(--font-mono); font-weight:600; color:var(--accent);">APP-2026-101</td>
+                  <td style="font-weight:600;">MIT Academy of Engineering</td>
+                  <td>Western (Pune)</td>
+                  <td>6 / 6</td>
+                  <td style="color:var(--warn); font-family:var(--font-mono);">88.4% Tamper Risk</td>
+                  <td><span class="top-badge" id="s2-inspecting-badge" style="border-color:var(--accent); color:var(--accent); padding:2px 8px;" data-layout-ignore>Inspecting</span></td>
+                </tr>
+                <tr class="queue-row">
+                  <td style="font-family:var(--font-mono);">APP-2026-102</td>
+                  <td>Apex Institute of Technology</td>
+                  <td>Western (Mumbai)</td>
+                  <td>6 / 6</td>
+                  <td style="color:var(--ok); font-family:var(--font-mono);">0.0% Clean</td>
+                  <td><span class="top-badge" style="border-color:var(--ok); color:var(--ok); padding:2px 8px;" data-layout-ignore>Pass</span></td>
+                </tr>
+                <tr class="queue-row">
+                  <td style="font-family:var(--font-mono);">APP-2026-103</td>
+                  <td>Sinhgad College of Engineering</td>
+                  <td>Western (Pune)</td>
+                  <td>6 / 6</td>
+                  <td style="color:var(--flag); font-family:var(--font-mono);">PAN Conflict</td>
+                  <td><span class="top-badge" style="border-color:var(--flag); color:var(--flag); padding:2px 8px;" data-layout-ignore>Flagged</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Slide-Over Investigation Drawer -->
+          <div class="glass-card investigation-drawer" id="s2-drawer">
+            <span class="eyebrow" style="font-size:12px;">Investigation Telemetry</span>
+            <h3 style="font-size:20px; font-weight:700;">Dossier APP-2026-101</h3>
+            <div style="font-size:13px; color:var(--text-secondary); line-height:1.5;">
+              Spatial coordinate inspection active across all 6 statutory attachments.
+            </div>
+
+            <div style="display:flex; flex-direction:column; gap:12px; margin-top:10px;">
+              <div id="drawer-item-1" style="padding:10px 14px; background:rgba(0,0,0,0.3); border:1px solid var(--line); border-radius:4px;">
+                <span class="eyebrow" style="font-size:10px;" data-layout-ignore>Engine 1 · Forensics</span>
+                <div style="font-size:13px; font-weight:600; color:var(--flag);" data-layout-ignore>Land Survey Acreage Variance (88.4%)</div>
+              </div>
+              <div id="drawer-item-2" style="padding:10px 14px; background:rgba(0,0,0,0.3); border:1px solid var(--line); border-radius:4px;">
+                <span class="eyebrow" style="font-size:10px;" data-layout-ignore>Engine 2 · Gateways</span>
+                <div style="font-size:13px; font-weight:600; color:var(--ok);" data-layout-ignore>Fire NOC Registry Validated</div>
+              </div>
+              <div id="drawer-item-3" style="padding:10px 14px; background:rgba(0,0,0,0.3); border:1px solid var(--line); border-radius:4px;">
+                <span class="eyebrow" style="font-size:10px;" data-layout-ignore>Engine 3 · Vision</span>
+                <div style="font-size:13px; font-weight:600; color:var(--accent);" data-layout-ignore>YOLOv8 Lab Scan Scheduled</div>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- SCENE 2: FOUR PARALLEL ENGINES (4.5s - 9.5s) -->
-      <section id="scene-2" class="scene clip" data-start="4.5" data-duration="5.0" data-track-index="2">
-        <span class="eyebrow" id="s2-eyebrow">Multi-Layer Architecture</span>
-        <h2 class="headline" id="s2-headline">Four engines. <em>One evidence trail.</em></h2>
-        <p class="subhead" id="s2-subhead">Three autonomous engines gather forensic truth. The fourth ensures an authorized officer decides.</p>
+      <!-- =====================================================================
+           SCENE 3: FORENSIC TAMPER DIFF & AUTHORITY GATEWAYS (16.5s - 25.0s)
+           ===================================================================== -->
+      <section id="scene-3" class="scene clip" data-start="16.5" data-duration="8.5" data-track-index="3">
+        <span class="eyebrow" id="s3-eyebrow">Forensic Triangulation Engine</span>
+        <h2 class="headline" id="s3-headline" style="font-size:48px;">Side-by-Side <em>Forensic Tamper Diff</em></h2>
 
-        <div class="engines-grid" id="s2-grid">
-          <div class="glass-card engine-card active" id="eng-1">
+        <div class="forensic-split" id="s3-split">
+          <div class="glass-card diff-pane tampered" id="diff-left">
             <div>
-              <div class="engine-num" data-layout-ignore>Engine 01 · Forensics</div>
-              <div class="engine-name">OCR &amp; Forensic Tamper Check</div>
-              <div class="engine-desc">Google Vision OCR and ELA analysis detecting modified survey numbers and forged signatures.</div>
+              <span class="top-badge" style="border-color:var(--flag); color:var(--flag);" data-layout-ignore>Submitted PDF Document</span>
+              <h3 style="font-size:24px; font-weight:700; margin-top:12px;">Land Ownership Deed (Survey 42B)</h3>
+              <p style="font-size:14px; color:var(--text-secondary); margin-top:6px;">Applicant Claims: 12.50 Contiguous Acres</p>
             </div>
-            <div class="engine-tags" data-layout-ignore>
-              <span class="engine-tag">Google Cloud Vision API</span>
-              <span class="engine-tag">ELA Variance 88.4%</span>
+
+            <!-- ELA Heatmap Box -->
+            <div class="heatmap-overlay" id="s3-heatmap">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+              <span>ERROR LEVEL ANALYSIS: 88.4% TAMPER VARIANCE IN ACREAGE FIELD</span>
+            </div>
+
+            <div style="font-family:var(--font-mono); font-size:12px; color:var(--text-secondary);" data-layout-ignore>
+              PKCS#7 Signature ByteRange Modified · Font Micro-Kerning Inconsistency
             </div>
           </div>
 
-          <div class="glass-card engine-card" id="eng-2">
+          <div class="glass-card diff-pane verified" id="diff-right">
             <div>
-              <div class="engine-num" data-layout-ignore>Engine 02 · Authority</div>
-              <div class="engine-name">Issuing Authority Gateway</div>
-              <div class="engine-desc">Direct government API attestation replacing scanned paper trust with live state databases.</div>
+              <span class="top-badge" style="border-color:var(--ok); color:var(--ok);" data-layout-ignore>Government Ground Truth</span>
+              <h3 style="font-size:24px; font-weight:700; margin-top:12px;">DigiLocker Revenue Record API</h3>
+              <p style="font-size:14px; color:var(--text-secondary); margin-top:6px;">Official Registry Truth: 9.80 Acres (-2.70 Acre Deficit)</p>
             </div>
-            <div class="engine-tags" data-layout-ignore>
-              <span class="engine-tag">DigiLocker Land Registry</span>
-              <span class="engine-tag">State Fire NOC Gateway</span>
+
+            <div style="padding:24px; background:rgba(74, 222, 154, 0.08); border:1px solid rgba(74, 222, 154, 0.3); border-radius:6px;">
+              <div class="eyebrow" style="font-size:11px; color:var(--ok); margin:0;" data-layout-ignore>Statutory Registry Attestation</div>
+              <div style="font-size:15px; font-weight:600; margin-top:6px; color:var(--text-primary);">
+                Maharashtra State Land Records (Bhulekh API) · Verified Token Auth
+              </div>
+            </div>
+
+            <div style="font-family:var(--font-mono); font-size:12px; color:var(--ok);" data-layout-ignore>
+              Verified Official Record Matches State Archive DB · Zero Interpolation
             </div>
           </div>
+        </div>
 
-          <div class="glass-card engine-card active" id="eng-3">
-            <div>
-              <div class="engine-num" data-layout-ignore>Engine 03 · Vision</div>
-              <div class="engine-name">APH Infrastructure Vision</div>
-              <div class="engine-desc">YOLOv8x computer vision auditing computer lab terminal counts, carpet density, and ramps.</div>
-            </div>
-            <div class="engine-tags" data-layout-ignore>
-              <span class="engine-tag">APH 2024–27 Chapter II</span>
-              <span class="engine-tag">Density ≥1.20 m²/PC</span>
-            </div>
+        <div class="authority-badges-grid" id="s3-auth-badges">
+          <div class="auth-badge-card" id="auth-b-1">
+            <span style="font-weight:600; font-size:14px;">State Fire Services NOC</span>
+            <span class="top-badge" style="border-color:var(--ok); color:var(--ok); font-size:11px;" data-layout-ignore>Valid NOC-2026-88</span>
           </div>
-
-          <div class="glass-card engine-card active" id="eng-4">
-            <div>
-              <div class="engine-num" data-layout-ignore>Engine 04 · Governance</div>
-              <div class="engine-name">Statutory Officer Decision Gate</div>
-              <div class="engine-desc">Strict advisory architecture. Human scrutiny officers retain definitive approval authority.</div>
-            </div>
-            <div class="engine-tags" data-layout-ignore>
-              <span class="engine-tag">Section 3A IT Act</span>
-              <span class="engine-tag">Zero Auto-Rejections</span>
-            </div>
+          <div class="auth-badge-card" id="auth-b-2">
+            <span style="font-weight:600; font-size:14px;">DigiLocker Land Registry</span>
+            <span class="top-badge" style="border-color:var(--flag); color:var(--flag); font-size:11px;" data-layout-ignore>Acreage Variance</span>
+          </div>
+          <div class="auth-badge-card" id="auth-b-3">
+            <span style="font-weight:600; font-size:14px;">SPPU University Affiliation</span>
+            <span class="top-badge" style="border-color:var(--ok); color:var(--ok); font-size:11px;" data-layout-ignore>Active Affiliation</span>
           </div>
         </div>
       </section>
 
-      <!-- SCENE 3: YOLOv8 COMPUTER VISION AUDIT (9.5s - 15.0s) -->
-      <section id="scene-3" class="scene clip" data-start="9.5" data-duration="5.5" data-track-index="3">
-        <span class="eyebrow" id="s3-eyebrow">Physical Norms Verification</span>
-        <h2 class="headline" id="s3-headline">Edge Computer Vision <em>Facility Audit</em></h2>
+      <!-- =====================================================================
+           SCENE 4: YOLOv8 COMPUTER VISION FACILITY AUDIT (25.0s - 34.0s)
+           ===================================================================== -->
+      <section id="scene-4" class="scene clip" data-start="25.0" data-duration="9.0" data-track-index="4">
+        <span class="eyebrow" id="s4-eyebrow">Physical Norms Verification</span>
+        <h2 class="headline" id="s4-headline" style="font-size:48px;">YOLOv8 Edge Computer Vision <em>Facility Audit</em></h2>
 
-        <div class="cv-container" id="s3-container">
-          <div class="cv-viewport" id="s3-viewport">
+        <div class="cv-container" id="s4-container">
+          <div class="cv-viewport" id="s4-viewport">
             <img class="cv-image" src="assets/images/lab_facility_photo.jpg" alt="AICTE Laboratory Facility">
             <div class="cv-scanline" id="scanline"></div>
             
             <!-- YOLO Bounding Boxes -->
-            <div class="bbox" id="box-1" style="top: 240px; left: 140px; width: 130px; height: 110px;">
+            <div class="bbox" id="box-1" style="top: 250px; left: 150px; width: 140px; height: 115px;">
               <span class="bbox-tag" data-layout-ignore>workstation 99.4%</span>
             </div>
-            <div class="bbox" id="box-2" style="top: 230px; left: 320px; width: 140px; height: 115px;">
+            <div class="bbox" id="box-2" style="top: 240px; left: 340px; width: 150px; height: 120px;">
               <span class="bbox-tag" data-layout-ignore>workstation 98.7%</span>
             </div>
-            <div class="bbox" id="box-3" style="top: 250px; left: 510px; width: 135px; height: 110px;">
+            <div class="bbox" id="box-3" style="top: 260px; left: 540px; width: 145px; height: 115px;">
               <span class="bbox-tag" data-layout-ignore>workstation 99.1%</span>
             </div>
-            <div class="bbox" id="box-4" style="top: 220px; left: 690px; width: 140px; height: 120px;">
+            <div class="bbox" id="box-4" style="top: 230px; left: 740px; width: 150px; height: 125px;">
               <span class="bbox-tag" data-layout-ignore>workstation 98.9%</span>
             </div>
           </div>
 
-          <div class="glass-card cv-telemetry" id="s3-telemetry">
-            <div class="telemetry-item">
-              <span class="telemetry-label" data-layout-ignore>Detected Workstations</span>
-              <span class="telemetry-val highlight" id="stat-workstations">64 <small data-layout-ignore>/ 60 REQUIRED</small></span>
+          <div class="glass-card cv-telemetry" id="s4-telemetry">
+            <div>
+              <span class="eyebrow" style="font-size:11px;" data-layout-ignore>APH 2024-27 Chapter II Telemetry</span>
+              <h3 style="font-size:24px; font-weight:700; margin-top:6px;">Computer Center Audit</h3>
             </div>
 
-            <div class="telemetry-item">
-              <span class="telemetry-label" data-layout-ignore>Carpet Area Density</span>
-              <span class="telemetry-val highlight">1.32 m² <small data-layout-ignore>NORM ≥ 1.20 m²</small></span>
+            <div style="display:flex; flex-direction:column; gap:16px;">
+              <div id="stat-row-1">
+                <span class="eyebrow" style="font-size:11px; margin-bottom:4px;" data-layout-ignore>Detected Workstations</span>
+                <span class="telemetry-val highlight">64 <small style="font-size:16px; color:var(--text-secondary); font-family:var(--font-mono);" data-layout-ignore>/ 60 REQUIRED [PASS]</small></span>
+              </div>
+
+              <div id="stat-row-2">
+                <span class="eyebrow" style="font-size:11px; margin-bottom:4px;" data-layout-ignore>Carpet Area Density</span>
+                <span class="telemetry-val highlight">1.32 m² <small style="font-size:16px; color:var(--text-secondary); font-family:var(--font-mono);" data-layout-ignore>≥ 1.20 m² NORM [PASS]</small></span>
+              </div>
+
+              <div id="stat-row-3">
+                <span class="eyebrow" style="font-size:11px; margin-bottom:4px;" data-layout-ignore>Geofence On-Premises</span>
+                <span class="telemetry-val" style="font-size:24px;">18.5204° N, 73.8567° E</span>
+              </div>
             </div>
 
-            <div class="telemetry-item">
-              <span class="telemetry-label" data-layout-ignore>Geofence Coordinates</span>
-              <span class="telemetry-val" style="font-size: 24px;">18.5204° N, 73.8567° E</span>
-            </div>
-
-            <div class="telemetry-item">
-              <span class="telemetry-label" data-layout-ignore>Norm Compliance Status</span>
-              <span class="status-pill ok" data-layout-ignore style="font-size: 14px; padding: 8px 16px; justify-self: start;">
-                APH 2024-27 Norms Satisfied
-              </span>
+            <div class="top-badge" id="s4-norm-badge" style="border-color:var(--ok); color:var(--ok); justify-content:center; padding:10px 16px; font-size:14px;" data-layout-ignore>
+              APH Physical Norms Satisfied
             </div>
           </div>
         </div>
       </section>
 
-      <!-- SCENE 4: IMMUTABLE AUDIT LEDGER & OFFICER SEAL (15.0s - 20.0s) -->
-      <section id="scene-4" class="scene clip" data-start="15.0" data-duration="5.0" data-track-index="4">
-        <span class="eyebrow" id="s4-eyebrow">Cryptographic Tamper-Evidence</span>
-        <h2 class="headline" id="s4-headline">Consortium Blockchain <em>Audit Trail</em></h2>
+      <!-- =====================================================================
+           SCENE 5: BLOCKCHAIN NOTARIZATION & OFFICER GATE (34.0s - 42.0s)
+           ===================================================================== -->
+      <section id="scene-5" class="scene clip" data-start="34.0" data-duration="8.0" data-track-index="5">
+        <span class="eyebrow" id="s5-eyebrow">Cryptographic Governance</span>
+        <h2 class="headline" id="s5-headline" style="font-size:48px;">Immutable Blockchain Ledger &amp; <em>Officer Seal</em></h2>
 
-        <div class="glass-card cert-card" id="s4-cert">
-          <div class="cert-meta-row">
-            <div class="cert-field">
-              <span class="cert-label" data-layout-ignore>Scrutiny Application</span>
-              <span class="cert-value">APP-2026-101 · MIT Academy of Engineering</span>
+        <div class="glass-card cert-card" id="s5-cert">
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px; padding-bottom:20px; border-bottom:1px solid var(--line);">
+            <div>
+              <span class="eyebrow" style="font-size:11px; margin-bottom:4px;" data-layout-ignore>Institution Application</span>
+              <div style="font-size:18px; font-weight:600;">APP-2026-101 · MIT Academy of Engineering</div>
             </div>
-            <div class="cert-field">
-              <span class="cert-label" data-layout-ignore>Determination</span>
-              <span class="cert-value" style="color: var(--ok);">Extension of Approval (EoA) Granted</span>
+            <div>
+              <span class="eyebrow" style="font-size:11px; margin-bottom:4px;" data-layout-ignore>Determination Status</span>
+              <div style="font-size:18px; font-weight:700; color:var(--ok);">Extension of Approval (EoA) Conditional Grant</div>
             </div>
           </div>
 
-          <div class="officer-badge-box">
+          <div class="officer-badge-box" id="s5-officer">
             <div class="officer-avatar">A</div>
-            <div class="officer-info">
-              <span class="officer-name">Dr. Arvind Kumar</span>
-              <span class="officer-role" data-layout-ignore>Statutory Scrutiny Officer · Digitally Signed (Class 3 DSC)</span>
+            <div>
+              <div style="font-size:17px; font-weight:600;">Dr. Arvind Kumar</div>
+              <div style="font-family:var(--font-mono); font-size:12px; color:var(--ok);" data-layout-ignore>
+                AICTE Scrutiny Officer · Digitally Signed (Class 3 DSC) · Human-in-the-Loop Gate
+              </div>
             </div>
           </div>
 
-          <div class="hash-box" data-layout-ignore>
-            <span>BLOCK #104,289 · 7 NODES CONSENSUS · SHA-256 NOTARY DIGEST:</span><br>
+          <div class="hash-box" id="s5-hash" data-layout-ignore>
+            <span>BLOCK #104,289 · 7 POA VALIDATOR NODES · 0.0 GWEI · SHA-256 NOTARY HASH:</span><br>
             <b>0x7f83b1657ff1fc53b92dc18148a1d65dfc2d4b1fa3d677284addd200126d9069</b>
           </div>
 
-          <div class="launch-link">
-            Live Deployment: <b>https://nonutsayan.github.io/CipherCore-verify/</b>
+          <div class="launch-link" id="s5-link">
+            Four engines. One evidence trail. Zero automated rejections.<br>
+            <b>https://nonutsayan.github.io/CipherCore-verify/</b>
           </div>
         </div>
       </section>
 
-      <!-- Audio Track Elements (relative paths from composition/) -->
+      <!-- Audio Track Elements (42.0 seconds) -->
       <audio
         id="bg-music"
         class="clip"
         data-start="0"
-        data-duration="20"
+        data-duration="42"
         data-track-index="10"
-        data-volume="0.35"
+        data-volume="0.32"
         src="assets/music/happy-beats-business-moves-vol-12-by-ende-dot-app.mp3"
       ></audio>
 
-      <!-- SFX Track Elements -->
+      <!-- SFX Elements -->
+      <audio
+        id="sfx-fan"
+        class="clip"
+        data-start="1.2"
+        data-duration="0.8"
+        data-track-index="11"
+        data-volume="0.65"
+        src="assets/sfx/casino/card-fan-1.ogg"
+      ></audio>
+
       <audio
         id="sfx-click"
         class="clip"
-        data-start="0.6"
-        data-duration="0.05"
-        data-track-index="11"
+        data-start="6.0"
+        data-duration="0.2"
+        data-track-index="12"
+        data-volume="0.75"
+        src="assets/sfx/ui/mouseclick1.ogg"
+      ></audio>
+
+      <audio
+        id="sfx-drawer"
+        class="clip"
+        data-start="10.5"
+        data-duration="0.5"
+        data-track-index="13"
         data-volume="0.65"
-        src="assets/sfx/interface/click_002.ogg"
+        src="assets/sfx/casino/card-slide-1.ogg"
       ></audio>
 
       <audio
         id="sfx-switch"
         class="clip"
-        data-start="4.5"
+        data-start="18.0"
         data-duration="0.2"
-        data-track-index="12"
+        data-track-index="14"
         data-volume="0.6"
         src="assets/sfx/interface/switch_001.ogg"
       ></audio>
@@ -842,9 +966,9 @@
       <audio
         id="sfx-drop"
         class="clip"
-        data-start="10.2"
+        data-start="27.0"
         data-duration="0.25"
-        data-track-index="13"
+        data-track-index="15"
         data-volume="0.65"
         src="assets/sfx/interface/drop_002.ogg"
       ></audio>
@@ -852,9 +976,9 @@
       <audio
         id="sfx-bell"
         class="clip"
-        data-start="15.2"
+        data-start="36.5"
         data-duration="1.5"
-        data-track-index="14"
+        data-track-index="16"
         data-volume="0.75"
         src="assets/sfx/impact/impactBell_heavy_000.ogg"
       ></audio>
@@ -867,132 +991,99 @@
       const tl = gsap.timeline({ paused: true });
 
       // =========================================================================
-      // SCENE 1 (0.0s - 4.5s)
+      // SCENE 1 (0.0s - 8.0s) — SaaS Landing Page & 3D Document Fan
       // =========================================================================
-      tl.fromTo("#s1-eyebrow", 
-        { y: -20, opacity: 0 }, 
-        { y: 0, opacity: 1, duration: 0.4, ease: "power2.out" }, 
-        0.1
-      );
-      tl.fromTo("#s1-headline", 
-        { y: 24, opacity: 0 }, 
-        { y: 0, opacity: 1, duration: 0.5, ease: "power3.out" }, 
-        0.2
-      );
-      tl.fromTo("#s1-subhead", 
-        { y: 16, opacity: 0 }, 
-        { y: 0, opacity: 1, duration: 0.4, ease: "power2.out" }, 
-        0.4
-      );
-      tl.fromTo("#s1-card", 
-        { y: 30, opacity: 0, scale: 0.98 }, 
-        { y: 0, opacity: 1, scale: 1, duration: 0.5, ease: "back.out(1.2)" }, 
-        0.5
-      );
-      tl.fromTo(["#doc-1", "#doc-2", "#doc-3"], 
-        { x: -20, opacity: 0 }, 
-        { x: 0, opacity: 1, duration: 0.35, stagger: 0.18, ease: "power2.out" }, 
-        0.7
-      );
+      tl.fromTo("#s1-eyebrow", { y: -16, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4, ease: "power2.out" }, 0.1);
+      tl.fromTo("#s1-browser", { scale: 0.92, opacity: 0, y: 30 }, { scale: 1, opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, 0.2);
+      tl.fromTo("#s1-hero-left", { x: -24, opacity: 0 }, { x: 0, opacity: 1, duration: 0.5, ease: "power2.out" }, 0.5);
+
+      // 3D Document Fan Spread
+      tl.fromTo("#fan-card-1", { rotation: 0, x: 0, opacity: 0 }, { rotation: -12, x: -40, opacity: 1, duration: 0.6, ease: "back.out(1.4)" }, 1.0);
+      tl.fromTo("#fan-card-2", { scale: 0.9, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.5, ease: "power2.out" }, 1.2);
+      tl.fromTo("#fan-card-3", { rotation: 0, x: 0, opacity: 0 }, { rotation: 12, x: 40, opacity: 1, duration: 0.6, ease: "back.out(1.4)" }, 1.4);
+
+      // Simulated Cursor Movement & Click
+      tl.fromTo("#s1-cursor", { x: 700, y: 380, opacity: 0 }, { x: 230, y: 310, opacity: 1, duration: 1.8, ease: "power2.inOut" }, 3.5);
+      tl.to("#s1-cta-btn", { scale: 0.94, duration: 0.12, ease: "power1.in" }, 5.95);
+      tl.to("#s1-cta-btn", { scale: 1, duration: 0.15, ease: "power1.out" }, 6.1);
+      tl.to("#s1-browser", { scale: 1.06, opacity: 0, duration: 0.6, ease: "power2.in" }, 7.3);
 
       // =========================================================================
-      // SCENE 2 (4.5s - 9.5s)
+      // SCENE 2 (8.0s - 16.5s) — Cyber Command Centre & Slide-Over Drawer
       // =========================================================================
-      tl.fromTo("#s2-eyebrow", 
-        { y: -16, opacity: 0 }, 
-        { y: 0, opacity: 1, duration: 0.3, ease: "power2.out" }, 
-        4.55
-      );
-      tl.fromTo("#s2-headline", 
-        { y: 20, opacity: 0 }, 
-        { y: 0, opacity: 1, duration: 0.4, ease: "power3.out" }, 
-        4.65
-      );
-      tl.fromTo("#s2-subhead", 
-        { y: 12, opacity: 0 }, 
-        { y: 0, opacity: 1, duration: 0.35, ease: "power2.out" }, 
-        4.8
-      );
-      tl.fromTo(["#eng-1", "#eng-2", "#eng-3", "#eng-4"], 
-        { y: 30, opacity: 0, scale: 0.96 }, 
-        { y: 0, opacity: 1, scale: 1, duration: 0.45, stagger: 0.14, ease: "back.out(1.1)" }, 
-        5.0
-      );
-      tl.to("#eng-1", { borderColor: "#5AD1F5", duration: 0.3 }, 6.2);
-      tl.to("#eng-4", { borderColor: "#4ADE9A", duration: 0.3 }, 7.2);
+      tl.fromTo("#s2-eyebrow", { y: -16, opacity: 0 }, { y: 0, opacity: 1, duration: 0.35, ease: "power2.out" }, 8.05);
+      tl.fromTo("#s2-headline", { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.45, ease: "power3.out" }, 8.15);
+      tl.fromTo("#s2-table-card", { x: -30, opacity: 0 }, { x: 0, opacity: 1, duration: 0.5, ease: "power2.out" }, 8.4);
+      
+      // Slide-over drawer animation
+      tl.fromTo("#s2-drawer", { x: 500, opacity: 0 }, { x: 0, opacity: 1, duration: 0.65, ease: "power3.out" }, 10.3);
+
+      // Continuous micro-motion during Scene 2
+      tl.to("#s2-inspecting-badge", { scale: 1.08, duration: 0.25, yoyo: true, repeat: 1 }, 12.0);
+      tl.to("#drawer-item-1", { borderColor: "#5AD1F5", duration: 0.3 }, 13.5);
+      tl.to("#drawer-item-2", { borderColor: "#4ADE9A", duration: 0.3 }, 15.0);
+
+      // Exit Scene 2
+      tl.to(["#s2-table-card", "#s2-drawer"], { opacity: 0, y: -20, duration: 0.4, ease: "power2.in" }, 16.0);
 
       // =========================================================================
-      // SCENE 3 (9.5s - 15.0s)
+      // SCENE 3 (16.5s - 25.0s) — Forensic Tamper Diff & Authority Gateways
       // =========================================================================
-      tl.fromTo("#s3-eyebrow", 
-        { y: -16, opacity: 0 }, 
-        { y: 0, opacity: 1, duration: 0.3, ease: "power2.out" }, 
-        9.55
-      );
-      tl.fromTo("#s3-headline", 
-        { y: 20, opacity: 0 }, 
-        { y: 0, opacity: 1, duration: 0.4, ease: "power3.out" }, 
-        9.65
-      );
-      tl.fromTo("#s3-viewport", 
-        { opacity: 0, scale: 0.95 }, 
-        { opacity: 1, scale: 1, duration: 0.45, ease: "power2.out" }, 
-        9.8
-      );
-      tl.fromTo("#s3-telemetry", 
-        { x: 30, opacity: 0 }, 
-        { x: 0, opacity: 1, duration: 0.45, ease: "power2.out" }, 
-        9.9
-      );
+      tl.fromTo("#s3-eyebrow", { y: -16, opacity: 0 }, { y: 0, opacity: 1, duration: 0.35, ease: "power2.out" }, 16.55);
+      tl.fromTo("#s3-headline", { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.45, ease: "power3.out" }, 16.65);
+      tl.fromTo("#diff-left", { x: -40, opacity: 0 }, { x: 0, opacity: 1, duration: 0.5, ease: "back.out(1.1)" }, 17.0);
+      tl.fromTo("#diff-right", { x: 40, opacity: 0 }, { x: 0, opacity: 1, duration: 0.5, ease: "back.out(1.1)" }, 17.2);
+      tl.fromTo("#s3-heatmap", { scale: 0.95, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.4, ease: "power2.out" }, 18.2);
+      tl.fromTo("#s3-auth-badges", { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4, ease: "power2.out" }, 19.0);
 
-      // Scanline transform y sweep across viewport (sub-pixel smooth)
-      tl.fromTo("#scanline", 
-        { y: 0 }, 
-        { y: 576, duration: 2.2, ease: "linear" }, 
-        10.0
-      );
+      // Continuous micro-motion during Scene 3
+      tl.to("#s3-heatmap", { scale: 1.03, duration: 0.3, yoyo: true, repeat: 1 }, 20.5);
+      tl.to("#auth-b-2", { borderColor: "#FF6B4A", duration: 0.3 }, 22.0);
+      tl.to("#auth-b-3", { borderColor: "#4ADE9A", duration: 0.3 }, 23.5);
 
-      // Bounding box detections pop as scanline passes
-      tl.fromTo("#box-1", { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.2, ease: "back.out(2)" }, 10.4);
-      tl.fromTo("#box-2", { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.2, ease: "back.out(2)" }, 10.8);
-      tl.fromTo("#box-3", { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.2, ease: "back.out(2)" }, 11.2);
-      tl.fromTo("#box-4", { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.2, ease: "back.out(2)" }, 11.6);
+      // Exit Scene 3
+      tl.to(["#s3-split", "#s3-auth-badges"], { opacity: 0, scale: 0.96, duration: 0.4, ease: "power2.in" }, 24.5);
 
       // =========================================================================
-      // SCENE 4 (15.0s - 20.0s)
+      // SCENE 4 (25.0s - 34.0s) — YOLOv8 Computer Vision Facility Audit
       // =========================================================================
-      tl.fromTo("#s4-eyebrow", 
-        { y: -16, opacity: 0 }, 
-        { y: 0, opacity: 1, duration: 0.3, ease: "power2.out" }, 
-        15.05
-      );
-      tl.fromTo("#s4-headline", 
-        { y: 20, opacity: 0 }, 
-        { y: 0, opacity: 1, duration: 0.4, ease: "power3.out" }, 
-        15.15
-      );
-      tl.fromTo("#s4-cert", 
-        { scale: 0.94, opacity: 0, y: 30 }, 
-        { scale: 1, opacity: 1, y: 0, duration: 0.6, ease: "back.out(1.15)" }, 
-        15.3
-      );
-      tl.fromTo(".officer-badge-box", 
-        { x: -20, opacity: 0 }, 
-        { x: 0, opacity: 1, duration: 0.4, ease: "power2.out" }, 
-        15.7
-      );
-      tl.fromTo(".hash-box", 
-        { opacity: 0 }, 
-        { opacity: 1, duration: 0.4, ease: "power2.out" }, 
-        16.1
-      );
-      tl.fromTo(".launch-link", 
-        { y: 10, opacity: 0 }, 
-        { y: 0, opacity: 1, duration: 0.4, ease: "power2.out" }, 
-        16.5
-      );
+      tl.fromTo("#s4-eyebrow", { y: -16, opacity: 0 }, { y: 0, opacity: 1, duration: 0.35, ease: "power2.out" }, 25.05);
+      tl.fromTo("#s4-headline", { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.45, ease: "power3.out" }, 25.15);
+      tl.fromTo("#s4-viewport", { scale: 0.95, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.5, ease: "power2.out" }, 25.4);
+      tl.fromTo("#s4-telemetry", { x: 30, opacity: 0 }, { x: 0, opacity: 1, duration: 0.5, ease: "power2.out" }, 25.6);
 
-      // Register timeline for Hyperframes engine
+      // Scanline sweep
+      tl.fromTo("#scanline", { y: 0 }, { y: 596, duration: 2.5, ease: "linear" }, 26.0);
+
+      // Bounding box pops
+      tl.fromTo("#box-1", { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.2, ease: "back.out(2)" }, 26.8);
+      tl.fromTo("#box-2", { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.2, ease: "back.out(2)" }, 27.3);
+      tl.fromTo("#box-3", { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.2, ease: "back.out(2)" }, 27.8);
+      tl.fromTo("#box-4", { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.2, ease: "back.out(2)" }, 28.3);
+
+      // Continuous micro-motion during Scene 4
+      tl.to("#stat-row-1", { scale: 1.04, duration: 0.25, yoyo: true, repeat: 1 }, 29.8);
+      tl.to("#stat-row-2", { scale: 1.04, duration: 0.25, yoyo: true, repeat: 1 }, 31.2);
+      tl.to("#s4-norm-badge", { scale: 1.06, duration: 0.25, yoyo: true, repeat: 1 }, 32.6);
+
+      // Exit Scene 4
+      tl.to(["#s4-container"], { opacity: 0, y: -20, duration: 0.4, ease: "power2.in" }, 33.5);
+
+      // =========================================================================
+      // SCENE 5 (34.0s - 42.0s) — Blockchain Notarization & Statutory Officer Gate
+      // =========================================================================
+      tl.fromTo("#s5-eyebrow", { y: -16, opacity: 0 }, { y: 0, opacity: 1, duration: 0.35, ease: "power2.out" }, 34.05);
+      tl.fromTo("#s5-headline", { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.45, ease: "power3.out" }, 34.15);
+      tl.fromTo("#s5-cert", { scale: 0.94, opacity: 0, y: 30 }, { scale: 1, opacity: 1, y: 0, duration: 0.65, ease: "back.out(1.15)" }, 34.4);
+      tl.fromTo("#s5-officer", { x: -20, opacity: 0 }, { x: 0, opacity: 1, duration: 0.4, ease: "power2.out" }, 35.2);
+      tl.fromTo("#s5-hash", { opacity: 0 }, { opacity: 1, duration: 0.4, ease: "power2.out" }, 36.2);
+      tl.fromTo("#s5-link", { y: 10, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4, ease: "power2.out" }, 37.0);
+
+      // Continuous micro-motion in Scene 5
+      tl.to("#s5-cert", { borderColor: "#4ADE9A", duration: 0.4 }, 38.5);
+      tl.to("#s5-officer", { scale: 1.03, duration: 0.25, yoyo: true, repeat: 1 }, 39.8);
+
+      // Register master timeline
       window.__timelines["main"] = tl;
       tl.seek(0);
     </script>
