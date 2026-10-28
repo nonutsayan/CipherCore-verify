@@ -159,6 +159,8 @@ public class DataSeedInitializer implements CommandLineRunner {
     private void seedUsers() {
         seedUserIfNotExists("admin", "admin123", "AICTE System Administrator", "admin@aicte-india.org", UserRole.ROLE_SYSTEM_ADMINISTRATOR, "AICTE Headquarters", "AICTE-HQ");
         seedUserIfNotExists("officer_sc401", "officer123", "Dr. Rajesh Sharma (Scrutiny Member)", "r.sharma@aicte-india.org", UserRole.ROLE_REGULATORY_OFFICER, "Western Regional Office", "WRO-MUM");
+        seedUserIfNotExists("arvind_kumar", "officer123", "Dr. Arvind Kumar (AICTE Scrutiny Officer)", "a.kumar@aicte-india.org", UserRole.ROLE_REGULATORY_OFFICER, "AICTE Approval Bureau", "CAB-DEL");
+        seedUserIfNotExists("ramesh_patil", "apex123", "Prof. Ramesh Patil", "ramesh.patil@apex.edu", UserRole.ROLE_INSTITUTION_APPLICANT, "Apex Institute of Technology", "INST-APEX-001");
         seedUserIfNotExists("senior_reviewer", "senior123", "Dr. Meenakshi Sundaram (Regional Director)", "m.sundaram@aicte-india.org", UserRole.ROLE_SENIOR_REVIEWER, "AICTE Central Approval Bureau", "CAB-DEL");
         seedUserIfNotExists("auditor", "auditor123", "Suresh Menon (Independent Vigilance Officer)", "s.menon@gov.in", UserRole.ROLE_AUDITOR, "Ministry of Education Vigilance Unit", "VIG-01");
         seedUserIfNotExists("applicant_apex", "apex123", "Principal Apex Tech", "principal@apextech.edu.in", UserRole.ROLE_INSTITUTION_APPLICANT, "Apex Institute of Technology", "INST-APEX-001");

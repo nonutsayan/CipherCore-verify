@@ -69,6 +69,7 @@ public class GoogleIntegrationsController {
         oauth.put("serviceName", "Google Identity Services (OAuth 2.0)");
         oauth.put("feature", "Reviewer Authentication & Role Enforcement");
         oauth.put("configured", googleAuthService.isConfigured());
+        oauth.put("clientId", googleAuthService.getClientId() != null ? googleAuthService.getClientId() : "");
         oauth.put("status", googleAuthService.isConfigured() ? "CONFIGURED_AND_READY" : "SETUP_REQUIRED");
         oauth.put("allowlistedOfficerEmailsCount", googleAuthService.getOfficerEmailAllowlist().size());
         res.put("googleSignIn", oauth);
