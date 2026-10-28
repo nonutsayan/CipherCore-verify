@@ -97,7 +97,16 @@ img,svg{max-width:100%}
 main{position:relative;z-index:1;overflow-x:clip}
 
 .nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:var(--nav-bg);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
-.nav-in{display:flex;align-items:center;gap:20px;height:var(--nav-h)}
+.nav-in{height:60px;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:0 16px;overflow:visible !important;white-space:nowrap}
+.header-actions{display:flex;align-items:center;gap:8px;flex-shrink:0;margin-left:auto}
+.user-badge{height:32px;max-height:32px;padding:3px 8px;border:1px solid var(--line);background-color:var(--surface);border-radius:4px;gap:6px;display:inline-flex;align-items:center;flex-shrink:0}
+.user-badge-avatar{width:22px;height:22px;border-radius:3px;background-color:var(--accent);color:var(--cta-ink);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:11px;flex-shrink:0;line-height:1}
+.user-badge-text{display:flex;flex-direction:column;justify-content:center;text-align:left;line-height:1.1}
+.user-badge-name{font-size:12px;font-weight:600;line-height:1.1;color:var(--fg);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:120px}
+.user-badge-role{font-size:10px;font-weight:500;color:var(--muted);line-height:1.1;white-space:nowrap}
+@media (max-width:1279px){.user-badge-role{display:none !important}}
+.btn-signout{flex-shrink:0 !important;height:32px;padding:4px 10px;font-size:12px;font-weight:600;border-radius:4px;display:inline-flex;align-items:center;gap:5px;border:1px solid var(--line);background-color:transparent;color:var(--flag);cursor:pointer;white-space:nowrap;transition:background-color 150ms ease,color 150ms ease}
+.btn-signout:hover{background-color:var(--surface)}
 .brand{display:flex;align-items:center;gap:10px;text-decoration:none;font:700 1.22rem var(--font-display);letter-spacing:-.02em}
 .brand svg{width:28px;height:28px;color:var(--accent-text);flex:none}
 .brand span b{font-weight:500;color:var(--muted)}
@@ -361,31 +370,53 @@ footer{position:relative;z-index:1;background:var(--bg-2);border-top:1px solid v
 
 <header class="nav">
   <div class="wrap nav-in">
-    <a class="brand" href="#top" aria-label="CipherCore Verify, back to top">
+    <a class="brand" href="#top" aria-label="CipherCore Verify, back to top" style="flex-shrink: 0;">
       <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M16 3l11 6.5v13L16 29 5 22.5v-13z"/><path d="M10.5 16.5l4 4 7-8"/></svg>
       <span>CipherCore <b>Verify</b></span>
     </a>
-    <nav class="links" aria-label="Primary">
+    <nav class="links" aria-label="Primary" style="flex-shrink: 1; min-width: 0;">
       <a href="#engines">Engines</a>
       <a href="portal.html#checker" class="font-semibold text-sky-600">Google AI Portal</a>
       <a href="#workflow">Workflow</a>
       <a href="#documents">Documents</a>
       <a href="#safeguard">Safeguard</a>
     </nav>
-    <button class="theme-btn" id="themeToggle" type="button" aria-label="Toggle theme">
-      <svg id="themeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-        <circle cx="12" cy="12" r="5"></circle>
-        <line x1="12" y1="1" x2="12" y2="3"></line>
-        <line x1="12" y1="21" x2="12" y2="23"></line>
-        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-        <line x1="1" y1="12" x2="3" y2="12"></line>
-        <line x1="21" y1="12" x2="23" y2="12"></line>
-        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-      </svg>
-    </button>
-    <a class="btn btn-sm portal" href="portal.html">Enter portal</a>
+    <div class="header-actions">
+      <!-- Officer Profile Badge (shown when logged in) -->
+      <div id="indexUserBadge" class="user-badge" style="display:none;" title="Officer Session Active">
+        <div class="user-badge-avatar">
+          <span id="indexAvatarInitial">A</span>
+        </div>
+        <div class="user-badge-text">
+          <div id="indexUserName" class="user-badge-name">Dr. Arvind Kumar</div>
+          <div id="indexUserRole" class="user-badge-role">AICTE Officer</div>
+        </div>
+      </div>
+      <!-- Theme Toggle -->
+      <button class="theme-btn" id="themeToggle" type="button" aria-label="Toggle theme">
+        <svg id="themeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="5"></circle>
+          <line x1="12" y1="1" x2="12" y2="3"></line>
+          <line x1="12" y1="21" x2="12" y2="23"></line>
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+          <line x1="1" y1="12" x2="3" y2="12"></line>
+          <line x1="21" y1="12" x2="23" y2="12"></line>
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+      </button>
+      <!-- Enter Portal / Sign Out Buttons -->
+      <a id="indexEnterPortalBtn" class="btn btn-sm portal" href="portal.html">Enter portal</a>
+      <button id="indexSignOutBtn" onclick="window.handleSignOut()" class="btn-signout" style="display:none;" title="Sign Out of Session">
+        <svg class="shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+          <polyline points="16 17 21 12 16 7" />
+          <line x1="21" y1="12" x2="9" y2="12" />
+        </svg>
+        <span>Sign Out</span>
+      </button>
+    </div>
   </div>
 </header>
 
@@ -2410,5 +2441,36 @@ window.LAB_FACILITY_PHOTO_B64 = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEBLAEs
   </script>
 
 
-  </body>
+  
+<script>
+window.handleSignOut = function() {
+  try {
+    sessionStorage.removeItem('ciphercore_user');
+    localStorage.removeItem('ciphercore_user');
+  } catch(e) {}
+  window.location.reload();
+};
+try {
+  const raw = sessionStorage.getItem('ciphercore_user') || localStorage.getItem('ciphercore_user');
+  if (raw) {
+    const u = JSON.parse(raw);
+    const isOff = !u.role || u.role.includes('Officer');
+    const b = document.getElementById('indexUserBadge');
+    const so = document.getElementById('indexSignOutBtn');
+    const ep = document.getElementById('indexEnterPortalBtn');
+    if (b) {
+      b.style.display = 'inline-flex';
+      const nameEl = document.getElementById('indexUserName');
+      const roleEl = document.getElementById('indexUserRole');
+      const avEl = document.getElementById('indexAvatarInitial');
+      if (nameEl) nameEl.textContent = u.name || (isOff ? 'Dr. Arvind Kumar' : 'Prof. Ramesh Patil');
+      if (roleEl) roleEl.textContent = isOff ? 'AICTE Officer' : 'Institution Officer';
+      if (avEl) avEl.textContent = isOff ? 'A' : 'R';
+    }
+    if (so) so.style.display = 'inline-flex';
+    if (ep) ep.textContent = 'Go to portal';
+  }
+} catch(e) {}
+</script>
+</body>
 </html>
