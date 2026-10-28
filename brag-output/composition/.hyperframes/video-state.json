@@ -1,0 +1,292 @@
+{
+  "version": 1,
+  "historyId": "4b15204f-9a50-4452-a0d2-30ffa368af5e",
+  "currentRevision": "f0851536-6351-44cc-9b6c-7502bd5fac56",
+  "pendingChanges": false,
+  "files": {
+    "AGENTS.md": {
+      "hash": "1b36171117cb7c18f4100a0db6a3782ff2e096115995733200445cc2e80a4060",
+      "content": "C:\\Users\\Anisa Shaikh\\.cache\\hyperframes\\history\\4b15204f-9a50-4452-a0d2-30ffa368af5e\\blobs\\1b\\1b36171117cb7c18f4100a0db6a3782ff2e096115995733200445cc2e80a4060"
+    },
+    "CLAUDE.md": {
+      "hash": "1b36171117cb7c18f4100a0db6a3782ff2e096115995733200445cc2e80a4060",
+      "content": "C:\\Users\\Anisa Shaikh\\.cache\\hyperframes\\history\\4b15204f-9a50-4452-a0d2-30ffa368af5e\\blobs\\1b\\1b36171117cb7c18f4100a0db6a3782ff2e096115995733200445cc2e80a4060"
+    },
+    "assets/images/lab_facility_photo.jpg": {
+      "hash": "bec521b9e2ca9d5ee943488a9c4a7b18694175f85a58f0342123f31caf2e79be",
+      "content": "C:\\Users\\Anisa Shaikh\\.cache\\hyperframes\\history\\4b15204f-9a50-4452-a0d2-30ffa368af5e\\blobs\\be\\bec521b9e2ca9d5ee943488a9c4a7b18694175f85a58f0342123f31caf2e79be"
+    },
+    "assets/sfx/impact/impactBell_heavy_000.ogg": {
+      "hash": "94b8bb5f2d43ab65e4bcc32b28562416e9bc2c51d9fd4be1e333660ee52f977f",
+      "content": "C:\\Users\\Anisa Shaikh\\.cache\\hyperframes\\history\\4b15204f-9a50-4452-a0d2-30ffa368af5e\\blobs\\94\\94b8bb5f2d43ab65e4bcc32b28562416e9bc2c51d9fd4be1e333660ee52f977f"
+    },
+    "assets/sfx/interface/click_002.ogg": {
+      "hash": "adcd1f4adc35f1b41bc1b5bbefeff7aa44f2f3f0d96d3199b544140c7c1e761c",
+      "content": "C:\\Users\\Anisa Shaikh\\.cache\\hyperframes\\history\\4b15204f-9a50-4452-a0d2-30ffa368af5e\\blobs\\ad\\adcd1f4adc35f1b41bc1b5bbefeff7aa44f2f3f0d96d3199b544140c7c1e761c"
+    },
+    "assets/sfx/interface/drop_002.ogg": {
+      "hash": "4ac4d1cef7e936965cbf795852ca2020300b9e2ba7daa59f2bf4f1f7bf416218",
+      "content": "C:\\Users\\Anisa Shaikh\\.cache\\hyperframes\\history\\4b15204f-9a50-4452-a0d2-30ffa368af5e\\blobs\\4a\\4ac4d1cef7e936965cbf795852ca2020300b9e2ba7daa59f2bf4f1f7bf416218"
+    },
+    "assets/sfx/interface/switch_001.ogg": {
+      "hash": "3b74efad87f1e69dbd1d05c5ad952ab90859b5a3d11da6ec5bd79b4f03b42afa",
+      "content": "C:\\Users\\Anisa Shaikh\\.cache\\hyperframes\\history\\4b15204f-9a50-4452-a0d2-30ffa368af5e\\blobs\\3b\\3b74efad87f1e69dbd1d05c5ad952ab90859b5a3d11da6ec5bd79b4f03b42afa"
+    },
+    "hyperframes.json": {
+      "hash": "53dbce1e19aa713cbb12ee0bc4d206143b45ab15e6ffbfcaa8f69572d4d24d50",
+      "content": "C:\\Users\\Anisa Shaikh\\.cache\\hyperframes\\history\\4b15204f-9a50-4452-a0d2-30ffa368af5e\\blobs\\53\\53dbce1e19aa713cbb12ee0bc4d206143b45ab15e6ffbfcaa8f69572d4d24d50"
+    },
+    "index.html": {
+      "hash": "5731080bd9ea80b71f92e28c4e1c78c424b0eb88a8adcf497956893291534ae4",
+      "content": "C:\\Users\\Anisa Shaikh\\.cache\\hyperframes\\history\\4b15204f-9a50-4452-a0d2-30ffa368af5e\\blobs\\57\\5731080bd9ea80b71f92e28c4e1c78c424b0eb88a8adcf497956893291534ae4"
+    },
+    "meta.json": {
+      "hash": "7e9ba4f9c3f8903187f591c30cd03c0911faf7b8b959d64935742178275cb8ad",
+      "content": "C:\\Users\\Anisa Shaikh\\.cache\\hyperframes\\history\\4b15204f-9a50-4452-a0d2-30ffa368af5e\\blobs\\7e\\7e9ba4f9c3f8903187f591c30cd03c0911faf7b8b959d64935742178275cb8ad"
+    },
+    "package.json": {
+      "hash": "82badef3230c2ea7d0cd5fc55cbf4b969240647f33ddcee7dc78846153ff0a21",
+      "content": "C:\\Users\\Anisa Shaikh\\.cache\\hyperframes\\history\\4b15204f-9a50-4452-a0d2-30ffa368af5e\\blobs\\82\\82badef3230c2ea7d0cd5fc55cbf4b969240647f33ddcee7dc78846153ff0a21"
+    },
+    "assets/music/happy-beats-business-moves-vol-12-by-ende-dot-app.mp3": {
+      "hash": "5888d4bd2ba0119b87a94e502ae2cc401c08192945cc5e5c2f8e8a33aa47a0a1",
+      "content": "C:\\Users\\Anisa Shaikh\\.cache\\hyperframes\\history\\4b15204f-9a50-4452-a0d2-30ffa368af5e\\blobs\\58\\5888d4bd2ba0119b87a94e502ae2cc401c08192945cc5e5c2f8e8a33aa47a0a1"
+    }
+  },
+  "revisions": {
+    "48d5db09-033a-4142-9d51-f12e0d72d131": {
+      "actor": {
+        "kind": "outside",
+        "name": "Outside"
+      },
+      "label": "Changed outside the app",
+      "startedAt": 1793176605137,
+      "endedAt": 1793176605141,
+      "files": {
+        "index.html": {
+          "before": "C:\\Users\\Anisa Shaikh\\.cache\\hyperframes\\history\\4b15204f-9a50-4452-a0d2-30ffa368af5e\\blobs\\e3\\e3a044b70410bd2c2dbfe02b7a60ee7bf92355e5998c3d5bc33b141f677cb955",
+          "after": "C:\\Users\\Anisa Shaikh\\.cache\\hyperframes\\history\\4b15204f-9a50-4452-a0d2-30ffa368af5e\\blobs\\7f\\7f6e3a6d68ead8e6f773e62ef52cb7434851738b6babbede89564bbc7fcf05d8"
+        }
+      }
+    },
+    "0d95c6c3-2cf1-42b1-b292-e3c384c938c1": {
+      "actor": {
+        "kind": "outside",
+        "name": "Outside"
+      },
+      "label": "Changed outside the app",
+      "startedAt": 1793176701081,
+      "endedAt": 1793176701089,
+      "files": {
+        "index.html": {
+          "before": "C:\\Users\\Anisa Shaikh\\.cache\\hyperframes\\history\\4b15204f-9a50-4452-a0d2-30ffa368af5e\\blobs\\7f\\7f6e3a6d68ead8e6f773e62ef52cb7434851738b6babbede89564bbc7fcf05d8",
+          "after": "C:\\Users\\Anisa Shaikh\\.cache\\hyperframes\\history\\4b15204f-9a50-4452-a0d2-30ffa368af5e\\blobs\\8a\\8ababbc686cb5e6bd38182bffb6b570a78692770a4f0a91184b3c1d42e35048b"
+        }
+      }
+    },
+    "3517b2ec-a90f-4b1b-89ee-936161244640": {
+      "actor": {
+        "kind": "outside",
+        "name": "Outside"
+      },
+      "label": "Changed outside the app",
+      "startedAt": 1793176790067,
+      "endedAt": 1793176790073,
+      "files": {
+        "index.html": {
+          "before": "C:\\Users\\Anisa Shaikh\\.cache\\hyperframes\\history\\4b15204f-9a50-4452-a0d2-30ffa368af5e\\blobs\\8a\\8ababbc686cb5e6bd38182bffb6b570a78692770a4f0a91184b3c1d42e35048b",
+          "after": "C:\\Users\\Anisa Shaikh\\.cache\\hyperframes\\history\\4b15204f-9a50-4452-a0d2-30ffa368af5e\\blobs\\e9\\e9d98800dd4f5bffa346b5d49982ebebf1eba2afe9edf89171c75e196466e2c6"
+        }
+      }
+    },
+    "f0851536-6351-44cc-9b6c-7502bd5fac56": {
+      "actor": {
+        "kind": "outside",
+        "name": "Outside"
+      },
+      "label": "Changed outside the app",
+      "startedAt": 1793176894931,
+      "endedAt": 1793176894938,
+      "files": {
+        "index.html": {
+          "before": "C:\\Users\\Anisa Shaikh\\.cache\\hyperframes\\history\\4b15204f-9a50-4452-a0d2-30ffa368af5e\\blobs\\e9\\e9d98800dd4f5bffa346b5d49982ebebf1eba2afe9edf89171c75e196466e2c6",
+          "after": "C:\\Users\\Anisa Shaikh\\.cache\\hyperframes\\history\\4b15204f-9a50-4452-a0d2-30ffa368af5e\\blobs\\57\\5731080bd9ea80b71f92e28c4e1c78c424b0eb88a8adcf497956893291534ae4"
+        }
+      }
+    }
+  },
+  "checks": {
+    "latest": {
+      "revision": "f0851536-6351-44cc-9b6c-7502bd5fac56",
+      "id": "6b16b48a-25e0-42f2-abad-f8bbebca1e6f"
+    },
+    "revisions": {
+      "48d5db09-033a-4142-9d51-f12e0d72d131": [
+        {
+          "id": "106e5ed1-5d05-4a28-b513-541cf4c50069",
+          "scope": "project",
+          "metadata": {
+            "ok": false,
+            "browserSkipped": true,
+            "options": {
+              "samples": 9,
+              "atTransitions": false,
+              "maxIssues": 80,
+              "collapseStatic": true,
+              "tolerance": 2,
+              "timeout": 10000,
+              "contrast": true,
+              "strict": false,
+              "snapshots": false,
+              "browserGpuMode": "auto"
+            }
+          },
+          "createdAt": 1793176605729,
+          "contentHash": "e84f253fdd7b2549ffeef096b656f0f7ab7b1eba8b2dfd04fc2c8ef7eed8de59",
+          "revision": "48d5db09-033a-4142-9d51-f12e0d72d131",
+          "inputFingerprint": "a2952944a098842ea7d6f82e1edff93113423381d232869480d6a96c0512eb15",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision",
+          "status": "cleaned",
+          "cleanedAfterRender": "653ef9c7-2143-43c6-b807-6e92602c459e"
+        }
+      ],
+      "0d95c6c3-2cf1-42b1-b292-e3c384c938c1": [
+        {
+          "id": "a476afe2-cd16-4b2d-a243-b1c3f60e400f",
+          "scope": "project",
+          "metadata": {
+            "ok": false,
+            "browserSkipped": true,
+            "options": {
+              "samples": 9,
+              "atTransitions": false,
+              "maxIssues": 80,
+              "collapseStatic": true,
+              "tolerance": 2,
+              "timeout": 10000,
+              "contrast": true,
+              "strict": false,
+              "snapshots": false,
+              "browserGpuMode": "auto"
+            }
+          },
+          "createdAt": 1793176703371,
+          "contentHash": "0350c9f4f4de8f46ab0ee688a65db459e8e99bd5017afa3cf0908c168159d59e",
+          "revision": "0d95c6c3-2cf1-42b1-b292-e3c384c938c1",
+          "inputFingerprint": "69b3e776df2f7129f4a14a96efd45129aa935e1a0b2cb4c709d257a8b4d6ddd6",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision",
+          "status": "cleaned",
+          "cleanedAfterRender": "653ef9c7-2143-43c6-b807-6e92602c459e"
+        }
+      ],
+      "3517b2ec-a90f-4b1b-89ee-936161244640": [
+        {
+          "id": "8e5b0e3d-fa78-4d38-b3b2-6da48f2629da",
+          "scope": "project",
+          "metadata": {
+            "ok": true,
+            "browserSkipped": false,
+            "options": {
+              "samples": 9,
+              "atTransitions": false,
+              "maxIssues": 80,
+              "collapseStatic": true,
+              "tolerance": 2,
+              "timeout": 10000,
+              "contrast": true,
+              "strict": false,
+              "snapshots": false,
+              "browserGpuMode": "auto"
+            }
+          },
+          "createdAt": 1793176805176,
+          "contentHash": "d29b3093bbfad207510863827fe672abda73696339e150c2173b9fa3330b2bad",
+          "revision": "3517b2ec-a90f-4b1b-89ee-936161244640",
+          "inputFingerprint": "12e4a2f1f69088fe62c68946f22da0af9171acbfdd6ab6d071ff7845aa5a314f",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision",
+          "status": "cleaned",
+          "cleanedAfterRender": "653ef9c7-2143-43c6-b807-6e92602c459e"
+        }
+      ],
+      "f0851536-6351-44cc-9b6c-7502bd5fac56": [
+        {
+          "id": "6b16b48a-25e0-42f2-abad-f8bbebca1e6f",
+          "scope": "project",
+          "report": "C:\\Users\\Anisa Shaikh\\.gemini\\antigravity\\scratch\\aicte-sih-portal\\brag-output\\composition\\.hyperframes\\artifacts\\checks\\6b16b48a-25e0-42f2-abad-f8bbebca1e6f.json",
+          "metadata": {
+            "ok": true,
+            "browserSkipped": false,
+            "options": {
+              "samples": 9,
+              "atTransitions": false,
+              "maxIssues": 80,
+              "collapseStatic": true,
+              "tolerance": 2,
+              "timeout": 10000,
+              "contrast": true,
+              "strict": false,
+              "snapshots": false,
+              "browserGpuMode": "auto"
+            }
+          },
+          "createdAt": 1793176908564,
+          "contentHash": "a20b04cbe621bc9050c919781ff23b4115eda2a4634c87ded8c225634f7118b7",
+          "revision": "f0851536-6351-44cc-9b6c-7502bd5fac56",
+          "inputFingerprint": "b27639e3086509f88c883d0442d3ece31ee8481d87776998638e3806762aaf44",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        }
+      ]
+    },
+    "unversioned": [
+      {
+        "id": "7d813b22-c57b-4ad4-b388-bf5e98c79ee0",
+        "scope": "project",
+        "report": "C:\\Users\\Anisa Shaikh\\.gemini\\antigravity\\scratch\\aicte-sih-portal\\brag-output\\composition\\.hyperframes\\artifacts\\checks\\7d813b22-c57b-4ad4-b388-bf5e98c79ee0.json",
+        "metadata": {
+          "ok": true,
+          "browserSkipped": false,
+          "options": {
+            "samples": 9,
+            "atTransitions": false,
+            "maxIssues": 80,
+            "collapseStatic": true,
+            "tolerance": 2,
+            "timeout": 10000,
+            "contrast": true,
+            "strict": false,
+            "snapshots": false,
+            "browserGpuMode": "auto"
+          }
+        },
+        "createdAt": 1793176506947,
+        "contentHash": "b519d8eeb9db8cfc3469d26082451a075e109f3a5888c09590f2d38bcafcdcb4",
+        "revision": null,
+        "inputFingerprint": "801e0e0567d9b6275966d861e8734354edb916d80826ea35c3678a6fcd1991fa",
+        "inputScope": "local-project-files",
+        "attribution": "unversioned"
+      }
+    ]
+  },
+  "snapshots": {
+    "latest": null,
+    "revisions": {},
+    "unversioned": []
+  },
+  "renders": {
+    "latest": {
+      "id": "653ef9c7-2143-43c6-b807-6e92602c459e",
+      "completedAt": 1793177002229,
+      "output": "C:\\Users\\Anisa Shaikh\\.gemini\\antigravity\\scratch\\aicte-sih-portal\\brag-output\\brag.mp4",
+      "status": "completed",
+      "revision": "f0851536-6351-44cc-9b6c-7502bd5fac56"
+    },
+    "retainedRevisions": [
+      "f0851536-6351-44cc-9b6c-7502bd5fac56"
+    ]
+  },
+  "pendingArtifactCleanup": []
+}

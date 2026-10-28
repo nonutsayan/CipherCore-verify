@@ -1,0 +1,432 @@
+{
+  "ok": true,
+  "strict": false,
+  "browserSkipped": false,
+  "lint": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 5,
+    "infoCount": 0,
+    "findings": [
+      {
+        "code": "composition_file_too_large",
+        "severity": "warning",
+        "message": "This HTML composition file has 415 lines. Smaller sub-compositions are easier to read, iterate on, and diff.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {},
+        "sourceFile": "C:\\Users\\Anisa Shaikh\\.gemini\\antigravity\\scratch\\aicte-sih-portal\\brag-output\\composition\\index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Split coherent scenes or layers into separate .html files under compositions/, then mount them from the parent with data-composition-src so each file stays small enough to inspect, revise, and validate independently."
+      },
+      {
+        "code": "nested_structure_needs_subcomposition",
+        "severity": "warning",
+        "message": "<section id=\"scene-1\"> is a timeline element that contains nested <h1 id=\"s1-headline\">. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.",
+        "selector": "#scene-1",
+        "dataAttributes": {},
+        "sourceFile": "C:\\Users\\Anisa Shaikh\\.gemini\\antigravity\\scratch\\aicte-sih-portal\\brag-output\\composition\\index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Move <section id=\"scene-1\"> and its contents into a sub-composition file and mount it with data-composition-src."
+      },
+      {
+        "code": "nested_structure_needs_subcomposition",
+        "severity": "warning",
+        "message": "<section id=\"scene-2\"> is a timeline element that contains nested <h2 id=\"s2-headline\">. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.",
+        "selector": "#scene-2",
+        "dataAttributes": {},
+        "sourceFile": "C:\\Users\\Anisa Shaikh\\.gemini\\antigravity\\scratch\\aicte-sih-portal\\brag-output\\composition\\index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Move <section id=\"scene-2\"> and its contents into a sub-composition file and mount it with data-composition-src."
+      },
+      {
+        "code": "nested_structure_needs_subcomposition",
+        "severity": "warning",
+        "message": "<section id=\"scene-3\"> is a timeline element that contains nested <h2 id=\"s3-headline\">. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.",
+        "selector": "#scene-3",
+        "dataAttributes": {},
+        "sourceFile": "C:\\Users\\Anisa Shaikh\\.gemini\\antigravity\\scratch\\aicte-sih-portal\\brag-output\\composition\\index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Move <section id=\"scene-3\"> and its contents into a sub-composition file and mount it with data-composition-src."
+      },
+      {
+        "code": "nested_structure_needs_subcomposition",
+        "severity": "warning",
+        "message": "<section id=\"scene-4\"> is a timeline element that contains nested <h2 id=\"s4-headline\">. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.",
+        "selector": "#scene-4",
+        "dataAttributes": {},
+        "sourceFile": "C:\\Users\\Anisa Shaikh\\.gemini\\antigravity\\scratch\\aicte-sih-portal\\brag-output\\composition\\index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Move <section id=\"scene-4\"> and its contents into a sub-composition file and mount it with data-composition-src."
+      }
+    ],
+    "filesScanned": 1
+  },
+  "runtime": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 1,
+    "infoCount": 0,
+    "findings": [
+      {
+        "code": "clip_media_fit",
+        "severity": "warning",
+        "message": "Audio \"sfx-drop\" is 0.19s but its slot (data-duration) is 0.25s — the slot is shortened to the media length when rendered. Set data-duration to ~0.19s if that isn't intended.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {
+          "data-composition-id": "main",
+          "data-start": "0",
+          "data-duration": "20",
+          "data-width": "1920",
+          "data-height": "1080"
+        },
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 1920,
+          "height": 1080
+        },
+        "time": 0
+      }
+    ]
+  },
+  "layout": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "infoCount": 0,
+    "findings": [],
+    "duration": 20,
+    "samples": [
+      1.111,
+      3.333,
+      5.556,
+      7.778,
+      10,
+      12.222,
+      14.444,
+      16.667,
+      18.889
+    ],
+    "transitionSamples": [],
+    "transitionSamplesDropped": 0,
+    "tolerance": 2,
+    "totalIssueCount": 0,
+    "truncated": false
+  },
+  "motion": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "infoCount": 0,
+    "findings": [],
+    "enabled": false,
+    "samples": 0
+  },
+  "contrast": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "infoCount": 0,
+    "findings": [],
+    "enabled": true,
+    "samples": [
+      1.111,
+      5.556,
+      10,
+      14.444,
+      18.889
+    ],
+    "checked": 49,
+    "passed": 49
+  },
+  "craft": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 1,
+    "infoCount": 0,
+    "findings": [
+      {
+        "code": "text_below_floor",
+        "severity": "warning",
+        "message": "Type floor is 28 px (2.6% of the 1080 px short side, what a phone can read) and 26 text elements stay under it for 0.5 s or more, the smallest \"Strict advisory architecture. Human s...\" at 14 px: set reading text to at least 28 px, or put data-layout-ignore on text that is texture rather than reading; see references/look.md.",
+        "text": "Strict advisory architecture. Human scrutiny officers retain definitive approval authority.",
+        "selector": "#eng-4 > div:nth-of-type(1) > div:nth-of-type(3)",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 1407.72,
+          "y": 614.78,
+          "width": 281.63,
+          "height": 37.06
+        },
+        "time": 5.5,
+        "times": [
+          0,
+          0,
+          0.25,
+          0.5,
+          0.875,
+          1,
+          1.25,
+          4.75,
+          5,
+          5.125,
+          5.125,
+          5.25,
+          5.25,
+          5.375,
+          5.375,
+          5.5,
+          5.5,
+          9.75,
+          10,
+          15.25,
+          15.5,
+          15.5,
+          15.875,
+          15.875,
+          16.625,
+          16.625
+        ],
+        "fontPx": 13.76,
+        "floorPx": 28,
+        "seconds": 4,
+        "elements": [
+          {
+            "selector": "#eng-4 > div:nth-of-type(1) > div:nth-of-type(3)",
+            "text": "Strict advisory architecture. Human scrutiny officers retain definitive approval authority.",
+            "fontPx": 13.76,
+            "time": 5.5,
+            "seconds": 4
+          },
+          {
+            "selector": "#eng-3 > div:nth-of-type(1) > div:nth-of-type(3)",
+            "text": "YOLOv8x computer vision auditing computer lab terminal counts, carpet density, and ramps.",
+            "fontPx": 13.78,
+            "time": 5.375,
+            "seconds": 4.125
+          },
+          {
+            "selector": "#eng-2 > div:nth-of-type(1) > div:nth-of-type(3)",
+            "text": "Direct government API attestation replacing scanned paper trust with live state databases.",
+            "fontPx": 13.8,
+            "time": 5.25,
+            "seconds": 4.25
+          },
+          {
+            "selector": "#eng-1 > div:nth-of-type(1) > div:nth-of-type(3)",
+            "text": "Google Vision OCR and ELA analysis detecting modified survey numbers and forged signatures.",
+            "fontPx": 13.82,
+            "time": 5.125,
+            "seconds": 4.375
+          },
+          {
+            "selector": "#s1-eyebrow",
+            "text": "Autonomous Regulatory Intelligence",
+            "fontPx": 16,
+            "time": 0.25,
+            "seconds": 4.25
+          },
+          {
+            "selector": "#doc-1 > span:nth-of-type(1)",
+            "text": "Fire Safety NOC",
+            "fontPx": 16,
+            "time": 0.875,
+            "seconds": 3.625
+          },
+          {
+            "selector": "#doc-2 > span:nth-of-type(1)",
+            "text": "Land Ownership Deed",
+            "fontPx": 16,
+            "time": 1,
+            "seconds": 3.5
+          },
+          {
+            "selector": "#doc-3 > span:nth-of-type(1)",
+            "text": "Faculty PAN Roster",
+            "fontPx": 16,
+            "time": 1.25,
+            "seconds": 3.25
+          },
+          {
+            "selector": "#s2-eyebrow",
+            "text": "Multi-Layer Architecture",
+            "fontPx": 16,
+            "time": 4.75,
+            "seconds": 4.75
+          },
+          {
+            "selector": "#s3-eyebrow",
+            "text": "Physical Norms Verification",
+            "fontPx": 16,
+            "time": 9.75,
+            "seconds": 5.25
+          },
+          {
+            "selector": "#s4-eyebrow",
+            "text": "Cryptographic Tamper-Evidence",
+            "fontPx": 16,
+            "time": 15.25,
+            "seconds": 4.75
+          },
+          {
+            "selector": "span.officer-name",
+            "text": "Dr. Arvind Kumar",
+            "fontPx": 16,
+            "time": 15.875,
+            "seconds": 4.125
+          },
+          {
+            "selector": "div.launch-link",
+            "text": "Live Deployment:",
+            "fontPx": 16,
+            "time": 16.625,
+            "seconds": 3.375
+          },
+          {
+            "selector": "div.launch-link > b:nth-of-type(1)",
+            "text": "https://nonutsayan.github.io/CipherCore-verify/",
+            "fontPx": 16,
+            "time": 16.625,
+            "seconds": 3.375
+          },
+          {
+            "selector": "div.cert-meta-row > div:nth-of-type(1) > span:nth-of-type(2)",
+            "text": "APP-2026-101 · MIT Academy of Engineering",
+            "fontPx": 17.86,
+            "time": 15.5,
+            "seconds": 4.5
+          },
+          {
+            "selector": "div.cert-meta-row > div:nth-of-type(2) > span:nth-of-type(2)",
+            "text": "Extension of Approval (EoA) Granted",
+            "fontPx": 17.86,
+            "time": 15.5,
+            "seconds": 4.5
+          },
+          {
+            "selector": "div.officer-avatar",
+            "text": "A",
+            "fontPx": 20,
+            "time": 15.875,
+            "seconds": 4.125
+          },
+          {
+            "selector": "#s1-subhead",
+            "text": "Instant forensic fingerprinting, issuing authority checks, and norms compliance for AICTE Extension of Approval dossiers.",
+            "fontPx": 22,
+            "time": 0.5,
+            "seconds": 4
+          },
+          {
+            "selector": "#s2-subhead",
+            "text": "Three autonomous engines gather forensic truth. The fourth ensures an authorized officer decides.",
+            "fontPx": 22,
+            "time": 5,
+            "seconds": 4.5
+          },
+          {
+            "selector": "div.brand > span:nth-of-type(1)",
+            "text": "CipherCore",
+            "fontPx": 24,
+            "time": 0,
+            "seconds": 20
+          },
+          {
+            "selector": "div.brand > span:nth-of-type(1) > b:nth-of-type(1)",
+            "text": "Verify",
+            "fontPx": 24,
+            "time": 0,
+            "seconds": 20
+          },
+          {
+            "selector": "#s3-telemetry > div:nth-of-type(3) > span:nth-of-type(2)",
+            "text": "18.5204° N, 73.8567° E",
+            "fontPx": 24,
+            "time": 10,
+            "seconds": 5
+          },
+          {
+            "selector": "#eng-4 > div:nth-of-type(1) > div:nth-of-type(2)",
+            "text": "Statutory Officer Decision Gate",
+            "fontPx": 25.56,
+            "time": 5.5,
+            "seconds": 4
+          },
+          {
+            "selector": "#eng-3 > div:nth-of-type(1) > div:nth-of-type(2)",
+            "text": "APH Infrastructure Vision",
+            "fontPx": 25.6,
+            "time": 5.375,
+            "seconds": 4.125
+          },
+          {
+            "selector": "#eng-2 > div:nth-of-type(1) > div:nth-of-type(2)",
+            "text": "Issuing Authority Gateway",
+            "fontPx": 25.63,
+            "time": 5.25,
+            "seconds": 4.25
+          },
+          {
+            "selector": "#eng-1 > div:nth-of-type(1) > div:nth-of-type(2)",
+            "text": "OCR & Forensic Tamper Check",
+            "fontPx": 25.66,
+            "time": 5.125,
+            "seconds": 4.375
+          }
+        ]
+      }
+    ],
+    "enabled": true,
+    "step": 0.125,
+    "samples": 160
+  },
+  "audio": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "infoCount": 0,
+    "findings": []
+  },
+  "hdr": {
+    "autoPromotion": null,
+    "inspection": "available"
+  },
+  "snapshots": {
+    "enabled": false,
+    "files": [],
+    "times": [],
+    "findingFiles": []
+  }
+}

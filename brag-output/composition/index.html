@@ -1,0 +1,1000 @@
+<!doctype html>
+<html lang="en" data-resolution="landscape">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <title>CipherCore Verify — Launch Brag</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@600;700&family=Public+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      :root {
+        --bg: #0A0F16;
+        --bg-subtle: #0E1520;
+        --surface: rgba(17, 27, 41, 0.95);
+        --surface-border: rgba(90, 209, 245, 0.28);
+        --line: rgba(170, 200, 235, 0.22);
+        --text-primary: #F8FAFC;
+        --text-secondary: #94A3B8;
+        --accent: #5AD1F5;
+        --ok: #4ADE9A;
+        --ok-bg: rgba(74, 222, 154, 0.14);
+        --warn: #F5B84A;
+        --warn-bg: rgba(245, 184, 74, 0.14);
+        --flag: #FF6B4A;
+        --flag-bg: rgba(255, 107, 74, 0.14);
+        --font-display: 'Familjen Grotesk', sans-serif;
+        --font-body: 'Public Sans', sans-serif;
+        --font-mono: 'JetBrains Mono', monospace;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html, body {
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+        background: var(--bg);
+        color: var(--text-primary);
+        font-family: var(--font-body);
+        -webkit-font-smoothing: antialiased;
+      }
+
+      #root {
+        position: relative;
+        width: 1920px;
+        height: 1080px;
+        background: radial-gradient(circle at 50% 20%, rgba(90, 209, 245, 0.08) 0%, rgba(10, 15, 22, 1) 75%);
+        overflow: hidden;
+      }
+
+      /* Subtle Cyber Grid Background */
+      .bg-grid {
+        position: absolute;
+        inset: 0;
+        background-image: 
+          linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+          linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+        background-size: 48px 48px;
+        pointer-events: none;
+      }
+
+      /* Vignette */
+      .bg-vignette {
+        position: absolute;
+        inset: 0;
+        box-shadow: inset 0 0 160px rgba(0, 0, 0, 0.85);
+        pointer-events: none;
+      }
+
+      /* Global Header Bar */
+      .top-nav {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 84px;
+        padding: 0 72px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: 1px solid var(--line);
+        background: rgba(10, 15, 22, 0.8);
+        backdrop-filter: blur(12px);
+        z-index: 50;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        font-family: var(--font-display);
+        font-size: 24px;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        color: var(--text-primary);
+      }
+
+      .brand svg {
+        width: 32px;
+        height: 32px;
+        color: var(--accent);
+      }
+
+      .brand span b {
+        color: var(--accent);
+        font-weight: 700;
+      }
+
+      .top-badge {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 6px 14px;
+        background: rgba(90, 209, 245, 0.08);
+        border: 1px solid rgba(90, 209, 245, 0.28);
+        border-radius: 4px;
+        font-family: var(--font-mono);
+        font-size: 13px;
+        color: var(--accent);
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+      }
+
+      .top-badge .dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--ok);
+        box-shadow: 0 0 8px var(--ok);
+      }
+
+      /* Scene Container */
+      .scene {
+        position: absolute;
+        top: 84px;
+        left: 0;
+        width: 1920px;
+        height: 996px;
+        padding: 60px 80px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+
+      /* Typography Helpers */
+      .eyebrow {
+        font-family: var(--font-mono);
+        font-size: 16px;
+        font-weight: 600;
+        color: var(--accent);
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        margin-bottom: 14px;
+      }
+
+      .headline {
+        font-family: var(--font-display);
+        font-size: 64px;
+        font-weight: 700;
+        line-height: 1.08;
+        letter-spacing: -0.03em;
+        text-align: center;
+        color: var(--text-primary);
+        max-width: 1280px;
+      }
+
+      .headline em {
+        font-style: normal;
+        color: var(--accent);
+        background: linear-gradient(135deg, #5AD1F5 0%, #38BDF8 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      .subhead {
+        font-size: 22px;
+        line-height: 1.5;
+        color: var(--text-secondary);
+        max-width: 900px;
+        text-align: center;
+        margin-top: 18px;
+      }
+
+      /* Card styles */
+      .glass-card {
+        background: var(--surface);
+        border: 1px solid var(--surface-border);
+        border-radius: 8px;
+        box-shadow: 0 24px 48px -12px rgba(0, 0, 0, 0.7);
+        backdrop-filter: blur(16px);
+      }
+
+      /* =========================================================================
+         SCENE 1: HOOK & DOSSIER INGESTION (0 - 4.5s)
+         ========================================================================= */
+      #scene-1 .dossier-card {
+        margin-top: 44px;
+        width: 1100px;
+        padding: 32px 40px;
+      }
+
+      .dossier-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-bottom: 20px;
+        border-bottom: 1px solid var(--line);
+        margin-bottom: 20px;
+      }
+
+      .dossier-title {
+        font-family: var(--font-mono);
+        font-size: 15px;
+        color: var(--accent);
+        letter-spacing: 0.05em;
+      }
+
+      .dossier-meta {
+        font-family: var(--font-mono);
+        font-size: 13px;
+        color: var(--text-secondary);
+      }
+
+      .dossier-table {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+      }
+
+      .doc-row {
+        display: grid;
+        grid-template-columns: 280px 1fr 180px;
+        align-items: center;
+        padding: 16px 20px;
+        background: rgba(14, 21, 32, 0.7);
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        font-size: 16px;
+      }
+
+      .doc-name {
+        font-weight: 600;
+        color: var(--text-primary);
+      }
+
+      .doc-detail {
+        font-family: var(--font-mono);
+        font-size: 13px;
+        color: var(--text-secondary);
+      }
+
+      .status-pill {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        padding: 6px 14px;
+        border-radius: 4px;
+        font-family: var(--font-mono);
+        font-size: 13px;
+        font-weight: 600;
+        letter-spacing: 0.02em;
+        justify-self: end;
+      }
+
+      .status-pill.ok {
+        background: var(--ok-bg);
+        color: var(--ok);
+        border: 1px solid rgba(74, 222, 154, 0.4);
+      }
+
+      .status-pill.warn {
+        background: var(--warn-bg);
+        color: var(--warn);
+        border: 1px solid rgba(245, 184, 74, 0.4);
+      }
+
+      .status-pill.flag {
+        background: var(--flag-bg);
+        color: var(--flag);
+        border: 1px solid rgba(255, 107, 74, 0.4);
+      }
+
+      /* =========================================================================
+         SCENE 2: FOUR PARALLEL ENGINES (4.5 - 9.5s)
+         ========================================================================= */
+      #scene-2 .engines-grid {
+        margin-top: 48px;
+        display: grid;
+        grid-template-columns: repeat(4, 380px);
+        gap: 24px;
+      }
+
+      .engine-card {
+        padding: 32px 28px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 480px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .engine-num {
+        font-family: var(--font-mono);
+        font-size: 12px;
+        color: var(--accent);
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        margin-bottom: 12px;
+      }
+
+      .engine-name {
+        font-family: var(--font-display);
+        font-size: 26px;
+        font-weight: 700;
+        line-height: 1.18;
+        color: var(--text-primary);
+        margin-bottom: 16px;
+      }
+
+      .engine-desc {
+        font-size: 14px;
+        line-height: 1.55;
+        color: var(--text-secondary);
+        margin-bottom: 24px;
+      }
+
+      .engine-tags {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        margin-top: auto;
+      }
+
+      .engine-tag {
+        font-family: var(--font-mono);
+        font-size: 11px;
+        padding: 5px 10px;
+        border-radius: 4px;
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid var(--line);
+        color: #CBD5E1;
+      }
+
+      .engine-card.active {
+        border-color: var(--accent);
+        box-shadow: 0 0 24px rgba(90, 209, 245, 0.2);
+      }
+
+      .engine-card.active::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: var(--accent);
+      }
+
+      /* =========================================================================
+         SCENE 3: YOLOv8 COMPUTER VISION AUDIT (9.5 - 15.0s)
+         ========================================================================= */
+      #scene-3 .cv-container {
+        margin-top: 32px;
+        width: 1480px;
+        height: 640px;
+        display: grid;
+        grid-template-columns: 960px 480px;
+        gap: 40px;
+        align-items: center;
+      }
+
+      .cv-viewport {
+        position: relative;
+        width: 960px;
+        height: 580px;
+        border-radius: 8px;
+        overflow: hidden;
+        border: 1px solid var(--accent);
+        box-shadow: 0 0 30px rgba(90, 209, 245, 0.25);
+        background: #000;
+      }
+
+      .cv-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        opacity: 0.85;
+      }
+
+      /* Laser Scan Line */
+      .cv-scanline {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, transparent, #5AD1F5, #4ADE9A, transparent);
+        box-shadow: 0 0 16px #5AD1F5;
+        z-index: 10;
+        will-change: transform;
+      }
+
+      /* Reticles and Bounding Boxes */
+      .bbox {
+        position: absolute;
+        border: 2px solid var(--ok);
+        background: rgba(74, 222, 154, 0.12);
+        box-shadow: 0 0 8px rgba(74, 222, 154, 0.4);
+        border-radius: 2px;
+        display: flex;
+        align-items: flex-start;
+      }
+
+      .bbox-tag {
+        background: var(--ok);
+        color: #04141C;
+        font-family: var(--font-mono);
+        font-size: 10px;
+        font-weight: 700;
+        padding: 1px 5px;
+        border-radius: 0 0 2px 0;
+      }
+
+      .cv-telemetry {
+        padding: 36px 32px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        height: 580px;
+        justify-content: space-between;
+      }
+
+      .telemetry-item {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+
+      .telemetry-label {
+        font-family: var(--font-mono);
+        font-size: 12px;
+        color: var(--text-secondary);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+
+      .telemetry-val {
+        font-family: var(--font-display);
+        font-size: 32px;
+        font-weight: 700;
+        color: var(--text-primary);
+      }
+
+      .telemetry-val.highlight {
+        color: var(--ok);
+      }
+
+      .telemetry-val small {
+        font-size: 15px;
+        color: var(--text-secondary);
+        font-family: var(--font-mono);
+        font-weight: 400;
+        margin-left: 6px;
+      }
+
+      /* =========================================================================
+         SCENE 4: IMMUTABLE AUDIT LEDGER & OFFICER SEAL (15.0 - 20.0s)
+         ========================================================================= */
+      #scene-4 .cert-card {
+        margin-top: 40px;
+        width: 1060px;
+        padding: 44px 52px;
+        display: flex;
+        flex-direction: column;
+        gap: 28px;
+        border: 1px solid var(--accent);
+        box-shadow: 0 0 40px rgba(90, 209, 245, 0.18);
+        position: relative;
+      }
+
+      .cert-card::before {
+        content: 'AICTE VERIFIED';
+        position: absolute;
+        top: 36px;
+        right: 48px;
+        padding: 6px 16px;
+        border: 2px solid var(--ok);
+        border-radius: 4px;
+        font-family: var(--font-mono);
+        font-size: 14px;
+        font-weight: 700;
+        color: var(--ok);
+        letter-spacing: 0.1em;
+        transform: rotate(-3deg);
+      }
+
+      .cert-meta-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 24px;
+        padding-bottom: 24px;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .cert-field {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+      }
+
+      .cert-label {
+        font-family: var(--font-mono);
+        font-size: 11px;
+        color: var(--text-secondary);
+        text-transform: uppercase;
+      }
+
+      .cert-value {
+        font-size: 18px;
+        font-weight: 600;
+        color: var(--text-primary);
+      }
+
+      .officer-badge-box {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        padding: 16px 20px;
+        background: rgba(14, 21, 32, 0.8);
+        border: 1px solid var(--line);
+        border-radius: 6px;
+      }
+
+      .officer-avatar {
+        width: 44px;
+        height: 44px;
+        background: #0284c7;
+        color: #fff;
+        border-radius: 4px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: var(--font-display);
+        font-size: 20px;
+        font-weight: 700;
+      }
+
+      .officer-info {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .officer-name {
+        font-size: 16px;
+        font-weight: 600;
+        color: var(--text-primary);
+      }
+
+      .officer-role {
+        font-family: var(--font-mono);
+        font-size: 12px;
+        color: var(--ok);
+      }
+
+      .hash-box {
+        font-family: var(--font-mono);
+        font-size: 13px;
+        color: #94A3B8;
+        padding: 14px 18px;
+        background: rgba(0, 0, 0, 0.4);
+        border: 1px solid var(--line);
+        border-radius: 4px;
+        word-break: break-all;
+      }
+
+      .hash-box b {
+        color: var(--ok);
+        font-weight: 600;
+      }
+
+      .launch-link {
+        font-family: var(--font-mono);
+        font-size: 16px;
+        color: var(--accent);
+        text-align: center;
+        margin-top: 8px;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Composition Root (20 seconds @ 30fps = 600 frames) -->
+    <div
+      id="root"
+      data-composition-id="main"
+      data-start="0"
+      data-duration="20"
+      data-width="1920"
+      data-height="1080"
+    >
+      <div class="bg-grid"></div>
+      <div class="bg-vignette"></div>
+
+      <!-- Static Top Navigation Bar -->
+      <header class="top-nav">
+        <div class="brand">
+          <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M16 3l11 6.5v13L16 29 5 22.5v-13z"/>
+            <path d="M10.5 16.5l4 4 7-8"/>
+          </svg>
+          <span>CipherCore <b>Verify</b></span>
+        </div>
+        <div class="top-badge" data-layout-ignore>
+          <span class="dot"></span>
+          <span>SIH 2026 · AICTE Reg Scrutiny 26261</span>
+        </div>
+      </header>
+
+      <!-- SCENE 1: HOOK & DOSSIER INGESTION (0.0s - 4.5s) -->
+      <section id="scene-1" class="scene clip" data-start="0" data-duration="4.5" data-track-index="1">
+        <span class="eyebrow" id="s1-eyebrow">Autonomous Regulatory Intelligence</span>
+        <h1 class="headline" id="s1-headline">Every document, <em>verified</em> before anyone signs.</h1>
+        <p class="subhead" id="s1-subhead">Instant forensic fingerprinting, issuing authority checks, and norms compliance for AICTE Extension of Approval dossiers.</p>
+
+        <div class="glass-card dossier-card" id="s1-card">
+          <div class="dossier-header" data-layout-ignore>
+            <span class="dossier-title">DOSSIER INGESTION: APP-2026-101 (MIT ACADEMY OF ENGINEERING)</span>
+            <span class="dossier-meta">6 STATUTORY ATTACHMENTS VERIFIED</span>
+          </div>
+          <div class="dossier-table">
+            <div class="doc-row" id="doc-1">
+              <span class="doc-name">Fire Safety NOC</span>
+              <span class="doc-detail" data-layout-ignore>Maharashtra Fire Services Registry API</span>
+              <span class="status-pill ok" data-layout-ignore>
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                Matched
+              </span>
+            </div>
+            <div class="doc-row" id="doc-2">
+              <span class="doc-name">Land Ownership Deed</span>
+              <span class="doc-detail" data-layout-ignore>ELA 88.4% · Acreage variance detected</span>
+              <span class="status-pill warn" data-layout-ignore>
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                Review
+              </span>
+            </div>
+            <div class="doc-row" id="doc-3">
+              <span class="doc-name">Faculty PAN Roster</span>
+              <span class="doc-detail" data-layout-ignore>Duplicate PAN cross-match against Central Index</span>
+              <span class="status-pill flag" data-layout-ignore>
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                Flagged
+              </span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SCENE 2: FOUR PARALLEL ENGINES (4.5s - 9.5s) -->
+      <section id="scene-2" class="scene clip" data-start="4.5" data-duration="5.0" data-track-index="2">
+        <span class="eyebrow" id="s2-eyebrow">Multi-Layer Architecture</span>
+        <h2 class="headline" id="s2-headline">Four engines. <em>One evidence trail.</em></h2>
+        <p class="subhead" id="s2-subhead">Three autonomous engines gather forensic truth. The fourth ensures an authorized officer decides.</p>
+
+        <div class="engines-grid" id="s2-grid">
+          <div class="glass-card engine-card active" id="eng-1">
+            <div>
+              <div class="engine-num" data-layout-ignore>Engine 01 · Forensics</div>
+              <div class="engine-name">OCR &amp; Forensic Tamper Check</div>
+              <div class="engine-desc">Google Vision OCR and ELA analysis detecting modified survey numbers and forged signatures.</div>
+            </div>
+            <div class="engine-tags" data-layout-ignore>
+              <span class="engine-tag">Google Cloud Vision API</span>
+              <span class="engine-tag">ELA Variance 88.4%</span>
+            </div>
+          </div>
+
+          <div class="glass-card engine-card" id="eng-2">
+            <div>
+              <div class="engine-num" data-layout-ignore>Engine 02 · Authority</div>
+              <div class="engine-name">Issuing Authority Gateway</div>
+              <div class="engine-desc">Direct government API attestation replacing scanned paper trust with live state databases.</div>
+            </div>
+            <div class="engine-tags" data-layout-ignore>
+              <span class="engine-tag">DigiLocker Land Registry</span>
+              <span class="engine-tag">State Fire NOC Gateway</span>
+            </div>
+          </div>
+
+          <div class="glass-card engine-card active" id="eng-3">
+            <div>
+              <div class="engine-num" data-layout-ignore>Engine 03 · Vision</div>
+              <div class="engine-name">APH Infrastructure Vision</div>
+              <div class="engine-desc">YOLOv8x computer vision auditing computer lab terminal counts, carpet density, and ramps.</div>
+            </div>
+            <div class="engine-tags" data-layout-ignore>
+              <span class="engine-tag">APH 2024–27 Chapter II</span>
+              <span class="engine-tag">Density ≥1.20 m²/PC</span>
+            </div>
+          </div>
+
+          <div class="glass-card engine-card active" id="eng-4">
+            <div>
+              <div class="engine-num" data-layout-ignore>Engine 04 · Governance</div>
+              <div class="engine-name">Statutory Officer Decision Gate</div>
+              <div class="engine-desc">Strict advisory architecture. Human scrutiny officers retain definitive approval authority.</div>
+            </div>
+            <div class="engine-tags" data-layout-ignore>
+              <span class="engine-tag">Section 3A IT Act</span>
+              <span class="engine-tag">Zero Auto-Rejections</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SCENE 3: YOLOv8 COMPUTER VISION AUDIT (9.5s - 15.0s) -->
+      <section id="scene-3" class="scene clip" data-start="9.5" data-duration="5.5" data-track-index="3">
+        <span class="eyebrow" id="s3-eyebrow">Physical Norms Verification</span>
+        <h2 class="headline" id="s3-headline">Edge Computer Vision <em>Facility Audit</em></h2>
+
+        <div class="cv-container" id="s3-container">
+          <div class="cv-viewport" id="s3-viewport">
+            <img class="cv-image" src="assets/images/lab_facility_photo.jpg" alt="AICTE Laboratory Facility">
+            <div class="cv-scanline" id="scanline"></div>
+            
+            <!-- YOLO Bounding Boxes -->
+            <div class="bbox" id="box-1" style="top: 240px; left: 140px; width: 130px; height: 110px;">
+              <span class="bbox-tag" data-layout-ignore>workstation 99.4%</span>
+            </div>
+            <div class="bbox" id="box-2" style="top: 230px; left: 320px; width: 140px; height: 115px;">
+              <span class="bbox-tag" data-layout-ignore>workstation 98.7%</span>
+            </div>
+            <div class="bbox" id="box-3" style="top: 250px; left: 510px; width: 135px; height: 110px;">
+              <span class="bbox-tag" data-layout-ignore>workstation 99.1%</span>
+            </div>
+            <div class="bbox" id="box-4" style="top: 220px; left: 690px; width: 140px; height: 120px;">
+              <span class="bbox-tag" data-layout-ignore>workstation 98.9%</span>
+            </div>
+          </div>
+
+          <div class="glass-card cv-telemetry" id="s3-telemetry">
+            <div class="telemetry-item">
+              <span class="telemetry-label" data-layout-ignore>Detected Workstations</span>
+              <span class="telemetry-val highlight" id="stat-workstations">64 <small data-layout-ignore>/ 60 REQUIRED</small></span>
+            </div>
+
+            <div class="telemetry-item">
+              <span class="telemetry-label" data-layout-ignore>Carpet Area Density</span>
+              <span class="telemetry-val highlight">1.32 m² <small data-layout-ignore>NORM ≥ 1.20 m²</small></span>
+            </div>
+
+            <div class="telemetry-item">
+              <span class="telemetry-label" data-layout-ignore>Geofence Coordinates</span>
+              <span class="telemetry-val" style="font-size: 24px;">18.5204° N, 73.8567° E</span>
+            </div>
+
+            <div class="telemetry-item">
+              <span class="telemetry-label" data-layout-ignore>Norm Compliance Status</span>
+              <span class="status-pill ok" data-layout-ignore style="font-size: 14px; padding: 8px 16px; justify-self: start;">
+                APH 2024-27 Norms Satisfied
+              </span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SCENE 4: IMMUTABLE AUDIT LEDGER & OFFICER SEAL (15.0s - 20.0s) -->
+      <section id="scene-4" class="scene clip" data-start="15.0" data-duration="5.0" data-track-index="4">
+        <span class="eyebrow" id="s4-eyebrow">Cryptographic Tamper-Evidence</span>
+        <h2 class="headline" id="s4-headline">Consortium Blockchain <em>Audit Trail</em></h2>
+
+        <div class="glass-card cert-card" id="s4-cert">
+          <div class="cert-meta-row">
+            <div class="cert-field">
+              <span class="cert-label" data-layout-ignore>Scrutiny Application</span>
+              <span class="cert-value">APP-2026-101 · MIT Academy of Engineering</span>
+            </div>
+            <div class="cert-field">
+              <span class="cert-label" data-layout-ignore>Determination</span>
+              <span class="cert-value" style="color: var(--ok);">Extension of Approval (EoA) Granted</span>
+            </div>
+          </div>
+
+          <div class="officer-badge-box">
+            <div class="officer-avatar">A</div>
+            <div class="officer-info">
+              <span class="officer-name">Dr. Arvind Kumar</span>
+              <span class="officer-role" data-layout-ignore>Statutory Scrutiny Officer · Digitally Signed (Class 3 DSC)</span>
+            </div>
+          </div>
+
+          <div class="hash-box" data-layout-ignore>
+            <span>BLOCK #104,289 · 7 NODES CONSENSUS · SHA-256 NOTARY DIGEST:</span><br>
+            <b>0x7f83b1657ff1fc53b92dc18148a1d65dfc2d4b1fa3d677284addd200126d9069</b>
+          </div>
+
+          <div class="launch-link">
+            Live Deployment: <b>https://nonutsayan.github.io/CipherCore-verify/</b>
+          </div>
+        </div>
+      </section>
+
+      <!-- Audio Track Elements (relative paths from composition/) -->
+      <audio
+        id="bg-music"
+        class="clip"
+        data-start="0"
+        data-duration="20"
+        data-track-index="10"
+        data-volume="0.35"
+        src="assets/music/happy-beats-business-moves-vol-12-by-ende-dot-app.mp3"
+      ></audio>
+
+      <!-- SFX Track Elements -->
+      <audio
+        id="sfx-click"
+        class="clip"
+        data-start="0.6"
+        data-duration="0.05"
+        data-track-index="11"
+        data-volume="0.65"
+        src="assets/sfx/interface/click_002.ogg"
+      ></audio>
+
+      <audio
+        id="sfx-switch"
+        class="clip"
+        data-start="4.5"
+        data-duration="0.2"
+        data-track-index="12"
+        data-volume="0.6"
+        src="assets/sfx/interface/switch_001.ogg"
+      ></audio>
+
+      <audio
+        id="sfx-drop"
+        class="clip"
+        data-start="10.2"
+        data-duration="0.25"
+        data-track-index="13"
+        data-volume="0.65"
+        src="assets/sfx/interface/drop_002.ogg"
+      ></audio>
+
+      <audio
+        id="sfx-bell"
+        class="clip"
+        data-start="15.2"
+        data-duration="1.5"
+        data-track-index="14"
+        data-volume="0.75"
+        src="assets/sfx/impact/impactBell_heavy_000.ogg"
+      ></audio>
+    </div>
+
+    <!-- Master GSAP Animation Timeline for Hyperframes -->
+    <script>
+      window.__timelines = window.__timelines || {};
+
+      const tl = gsap.timeline({ paused: true });
+
+      // =========================================================================
+      // SCENE 1 (0.0s - 4.5s)
+      // =========================================================================
+      tl.fromTo("#s1-eyebrow", 
+        { y: -20, opacity: 0 }, 
+        { y: 0, opacity: 1, duration: 0.4, ease: "power2.out" }, 
+        0.1
+      );
+      tl.fromTo("#s1-headline", 
+        { y: 24, opacity: 0 }, 
+        { y: 0, opacity: 1, duration: 0.5, ease: "power3.out" }, 
+        0.2
+      );
+      tl.fromTo("#s1-subhead", 
+        { y: 16, opacity: 0 }, 
+        { y: 0, opacity: 1, duration: 0.4, ease: "power2.out" }, 
+        0.4
+      );
+      tl.fromTo("#s1-card", 
+        { y: 30, opacity: 0, scale: 0.98 }, 
+        { y: 0, opacity: 1, scale: 1, duration: 0.5, ease: "back.out(1.2)" }, 
+        0.5
+      );
+      tl.fromTo(["#doc-1", "#doc-2", "#doc-3"], 
+        { x: -20, opacity: 0 }, 
+        { x: 0, opacity: 1, duration: 0.35, stagger: 0.18, ease: "power2.out" }, 
+        0.7
+      );
+
+      // =========================================================================
+      // SCENE 2 (4.5s - 9.5s)
+      // =========================================================================
+      tl.fromTo("#s2-eyebrow", 
+        { y: -16, opacity: 0 }, 
+        { y: 0, opacity: 1, duration: 0.3, ease: "power2.out" }, 
+        4.55
+      );
+      tl.fromTo("#s2-headline", 
+        { y: 20, opacity: 0 }, 
+        { y: 0, opacity: 1, duration: 0.4, ease: "power3.out" }, 
+        4.65
+      );
+      tl.fromTo("#s2-subhead", 
+        { y: 12, opacity: 0 }, 
+        { y: 0, opacity: 1, duration: 0.35, ease: "power2.out" }, 
+        4.8
+      );
+      tl.fromTo(["#eng-1", "#eng-2", "#eng-3", "#eng-4"], 
+        { y: 30, opacity: 0, scale: 0.96 }, 
+        { y: 0, opacity: 1, scale: 1, duration: 0.45, stagger: 0.14, ease: "back.out(1.1)" }, 
+        5.0
+      );
+      tl.to("#eng-1", { borderColor: "#5AD1F5", duration: 0.3 }, 6.2);
+      tl.to("#eng-4", { borderColor: "#4ADE9A", duration: 0.3 }, 7.2);
+
+      // =========================================================================
+      // SCENE 3 (9.5s - 15.0s)
+      // =========================================================================
+      tl.fromTo("#s3-eyebrow", 
+        { y: -16, opacity: 0 }, 
+        { y: 0, opacity: 1, duration: 0.3, ease: "power2.out" }, 
+        9.55
+      );
+      tl.fromTo("#s3-headline", 
+        { y: 20, opacity: 0 }, 
+        { y: 0, opacity: 1, duration: 0.4, ease: "power3.out" }, 
+        9.65
+      );
+      tl.fromTo("#s3-viewport", 
+        { opacity: 0, scale: 0.95 }, 
+        { opacity: 1, scale: 1, duration: 0.45, ease: "power2.out" }, 
+        9.8
+      );
+      tl.fromTo("#s3-telemetry", 
+        { x: 30, opacity: 0 }, 
+        { x: 0, opacity: 1, duration: 0.45, ease: "power2.out" }, 
+        9.9
+      );
+
+      // Scanline transform y sweep across viewport (sub-pixel smooth)
+      tl.fromTo("#scanline", 
+        { y: 0 }, 
+        { y: 576, duration: 2.2, ease: "linear" }, 
+        10.0
+      );
+
+      // Bounding box detections pop as scanline passes
+      tl.fromTo("#box-1", { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.2, ease: "back.out(2)" }, 10.4);
+      tl.fromTo("#box-2", { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.2, ease: "back.out(2)" }, 10.8);
+      tl.fromTo("#box-3", { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.2, ease: "back.out(2)" }, 11.2);
+      tl.fromTo("#box-4", { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.2, ease: "back.out(2)" }, 11.6);
+
+      // =========================================================================
+      // SCENE 4 (15.0s - 20.0s)
+      // =========================================================================
+      tl.fromTo("#s4-eyebrow", 
+        { y: -16, opacity: 0 }, 
+        { y: 0, opacity: 1, duration: 0.3, ease: "power2.out" }, 
+        15.05
+      );
+      tl.fromTo("#s4-headline", 
+        { y: 20, opacity: 0 }, 
+        { y: 0, opacity: 1, duration: 0.4, ease: "power3.out" }, 
+        15.15
+      );
+      tl.fromTo("#s4-cert", 
+        { scale: 0.94, opacity: 0, y: 30 }, 
+        { scale: 1, opacity: 1, y: 0, duration: 0.6, ease: "back.out(1.15)" }, 
+        15.3
+      );
+      tl.fromTo(".officer-badge-box", 
+        { x: -20, opacity: 0 }, 
+        { x: 0, opacity: 1, duration: 0.4, ease: "power2.out" }, 
+        15.7
+      );
+      tl.fromTo(".hash-box", 
+        { opacity: 0 }, 
+        { opacity: 1, duration: 0.4, ease: "power2.out" }, 
+        16.1
+      );
+      tl.fromTo(".launch-link", 
+        { y: 10, opacity: 0 }, 
+        { y: 0, opacity: 1, duration: 0.4, ease: "power2.out" }, 
+        16.5
+      );
+
+      // Register timeline for Hyperframes engine
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>
