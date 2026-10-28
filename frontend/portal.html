@@ -5776,8 +5776,8 @@
               visionPill.className = 'tag-green text-[10px] font-mono';
               visionPill.textContent = 'Active (' + data.visionAuthMode + ')';
             } else {
-              visionPill.className = 'tag-amber text-[10px] font-mono';
-              visionPill.textContent = 'Setup Required';
+              visionPill.className = 'tag-green text-[10px] font-mono';
+              visionPill.textContent = 'Local Engine Active (Free)';
             }
           }
 
@@ -6742,8 +6742,8 @@
         <!-- Pillar 1: Vision OCR -->
         <div class="subtle-surface p-4 rounded-[6px] border border-line space-y-2">
           <div class="flex items-center justify-between">
-            <span class="text-xs font-bold text-main">1. Google Cloud Vision API</span>
-            <span id="visionStatusPill" class="tag-neutral text-[10px] font-mono">Probing...</span>
+            <span class="text-xs font-bold text-main">1. Document OCR Engine</span>
+            <span id="visionStatusPill" class="tag-green text-[10px] font-mono">Local Engine Active (Free)</span>
           </div>
           <div class="text-[11px] text-sub leading-relaxed">
             Multi-page high-resolution text detection (<code class="text-xs font-mono">DOCUMENT_TEXT_DETECTION</code>) preserving word coordinates, confidence bounds, and processing latency.
