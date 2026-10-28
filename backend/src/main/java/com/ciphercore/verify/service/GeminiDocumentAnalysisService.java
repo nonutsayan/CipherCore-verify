@@ -28,7 +28,7 @@ public class GeminiDocumentAnalysisService {
     @Value("${app.google.gemini.api-key:}")
     private String apiKey;
 
-    @Value("${app.google.gemini.model:gemini-1.5-flash}")
+    @Value("${app.google.gemini.model:gemini-3.8-flash}")
     private String modelName;
 
     @Value("${app.google.gemini.endpoint:https://generativelanguage.googleapis.com/v1beta}")
