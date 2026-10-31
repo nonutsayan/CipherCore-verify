@@ -1,7 +1,7 @@
 {
   "version": 1,
   "historyId": "4b15204f-9a50-4452-a0d2-30ffa368af5e",
-  "currentRevision": "f0851536-6351-44cc-9b6c-7502bd5fac56",
+  "currentRevision": "74fadc2f-09f3-4d02-a0ab-86e376fa1bbd",
   "pendingChanges": false,
   "files": {
     "AGENTS.md": {
@@ -37,8 +37,8 @@
       "content": "C:\\Users\\Anisa Shaikh\\.cache\\hyperframes\\history\\4b15204f-9a50-4452-a0d2-30ffa368af5e\\blobs\\53\\53dbce1e19aa713cbb12ee0bc4d206143b45ab15e6ffbfcaa8f69572d4d24d50"
     },
     "index.html": {
-      "hash": "5731080bd9ea80b71f92e28c4e1c78c424b0eb88a8adcf497956893291534ae4",
-      "content": "C:\\Users\\Anisa Shaikh\\.cache\\hyperframes\\history\\4b15204f-9a50-4452-a0d2-30ffa368af5e\\blobs\\57\\5731080bd9ea80b71f92e28c4e1c78c424b0eb88a8adcf497956893291534ae4"
+      "hash": "82a4296cc41cd6e46a5342936905382dbede6c33c4d04cb63c346ac9bac70323",
+      "content": "C:\\Users\\Anisa Shaikh\\.cache\\hyperframes\\history\\4b15204f-9a50-4452-a0d2-30ffa368af5e\\blobs\\82\\82a4296cc41cd6e46a5342936905382dbede6c33c4d04cb63c346ac9bac70323"
     },
     "meta.json": {
       "hash": "7e9ba4f9c3f8903187f591c30cd03c0911faf7b8b959d64935742178275cb8ad",
@@ -51,6 +51,18 @@
     "assets/music/happy-beats-business-moves-vol-12-by-ende-dot-app.mp3": {
       "hash": "5888d4bd2ba0119b87a94e502ae2cc401c08192945cc5e5c2f8e8a33aa47a0a1",
       "content": "C:\\Users\\Anisa Shaikh\\.cache\\hyperframes\\history\\4b15204f-9a50-4452-a0d2-30ffa368af5e\\blobs\\58\\5888d4bd2ba0119b87a94e502ae2cc401c08192945cc5e5c2f8e8a33aa47a0a1"
+    },
+    "assets/sfx/casino/card-fan-1.ogg": {
+      "hash": "7a9758ccad8899baef1b9f60b4064e4baa724a548293832fdaea07e6e07e638d",
+      "content": "C:\\Users\\Anisa Shaikh\\.cache\\hyperframes\\history\\4b15204f-9a50-4452-a0d2-30ffa368af5e\\blobs\\7a\\7a9758ccad8899baef1b9f60b4064e4baa724a548293832fdaea07e6e07e638d"
+    },
+    "assets/sfx/casino/card-slide-1.ogg": {
+      "hash": "006cf9822d15d7063f8899e56041f41646df30adb6fbd8b974ee5d5420012690",
+      "content": "C:\\Users\\Anisa Shaikh\\.cache\\hyperframes\\history\\4b15204f-9a50-4452-a0d2-30ffa368af5e\\blobs\\00\\006cf9822d15d7063f8899e56041f41646df30adb6fbd8b974ee5d5420012690"
+    },
+    "assets/sfx/ui/mouseclick1.ogg": {
+      "hash": "ece1210c62ccae6c9ea4f4c59466d9d453d6b357c7d4b1a6c31196e5e6fea1bf",
+      "content": "C:\\Users\\Anisa Shaikh\\.cache\\hyperframes\\history\\4b15204f-9a50-4452-a0d2-30ffa368af5e\\blobs\\ec\\ece1210c62ccae6c9ea4f4c59466d9d453d6b357c7d4b1a6c31196e5e6fea1bf"
     }
   },
   "revisions": {
@@ -113,12 +125,54 @@
           "after": "C:\\Users\\Anisa Shaikh\\.cache\\hyperframes\\history\\4b15204f-9a50-4452-a0d2-30ffa368af5e\\blobs\\57\\5731080bd9ea80b71f92e28c4e1c78c424b0eb88a8adcf497956893291534ae4"
         }
       }
+    },
+    "f4704902-2814-41af-a2e3-0f73de85ec04": {
+      "actor": {
+        "kind": "outside",
+        "name": "Outside"
+      },
+      "label": "Changed outside the app",
+      "startedAt": 1793178411897,
+      "endedAt": 1793178412689,
+      "files": {
+        "assets/sfx/casino/card-fan-1.ogg": {
+          "before": null,
+          "after": "C:\\Users\\Anisa Shaikh\\.cache\\hyperframes\\history\\4b15204f-9a50-4452-a0d2-30ffa368af5e\\blobs\\7a\\7a9758ccad8899baef1b9f60b4064e4baa724a548293832fdaea07e6e07e638d"
+        },
+        "assets/sfx/casino/card-slide-1.ogg": {
+          "before": null,
+          "after": "C:\\Users\\Anisa Shaikh\\.cache\\hyperframes\\history\\4b15204f-9a50-4452-a0d2-30ffa368af5e\\blobs\\00\\006cf9822d15d7063f8899e56041f41646df30adb6fbd8b974ee5d5420012690"
+        },
+        "assets/sfx/ui/mouseclick1.ogg": {
+          "before": null,
+          "after": "C:\\Users\\Anisa Shaikh\\.cache\\hyperframes\\history\\4b15204f-9a50-4452-a0d2-30ffa368af5e\\blobs\\ec\\ece1210c62ccae6c9ea4f4c59466d9d453d6b357c7d4b1a6c31196e5e6fea1bf"
+        },
+        "index.html": {
+          "before": "C:\\Users\\Anisa Shaikh\\.cache\\hyperframes\\history\\4b15204f-9a50-4452-a0d2-30ffa368af5e\\blobs\\57\\5731080bd9ea80b71f92e28c4e1c78c424b0eb88a8adcf497956893291534ae4",
+          "after": "C:\\Users\\Anisa Shaikh\\.cache\\hyperframes\\history\\4b15204f-9a50-4452-a0d2-30ffa368af5e\\blobs\\0b\\0b3975e4f9aee14c2dc8aed250a11a982e7c4685ee7f289087c84bb5a628127b"
+        }
+      }
+    },
+    "74fadc2f-09f3-4d02-a0ab-86e376fa1bbd": {
+      "actor": {
+        "kind": "outside",
+        "name": "Outside"
+      },
+      "label": "Changed outside the app",
+      "startedAt": 1793178563456,
+      "endedAt": 1793178563463,
+      "files": {
+        "index.html": {
+          "before": "C:\\Users\\Anisa Shaikh\\.cache\\hyperframes\\history\\4b15204f-9a50-4452-a0d2-30ffa368af5e\\blobs\\0b\\0b3975e4f9aee14c2dc8aed250a11a982e7c4685ee7f289087c84bb5a628127b",
+          "after": "C:\\Users\\Anisa Shaikh\\.cache\\hyperframes\\history\\4b15204f-9a50-4452-a0d2-30ffa368af5e\\blobs\\82\\82a4296cc41cd6e46a5342936905382dbede6c33c4d04cb63c346ac9bac70323"
+        }
+      }
     }
   },
   "checks": {
     "latest": {
-      "revision": "f0851536-6351-44cc-9b6c-7502bd5fac56",
-      "id": "6b16b48a-25e0-42f2-abad-f8bbebca1e6f"
+      "revision": "74fadc2f-09f3-4d02-a0ab-86e376fa1bbd",
+      "id": "dd932272-41b0-4fa2-8071-52f486864cf3"
     },
     "revisions": {
       "48d5db09-033a-4142-9d51-f12e0d72d131": [
@@ -239,6 +293,92 @@
           "inputScope": "local-project-files",
           "attribution": "recorded-revision"
         }
+      ],
+      "f4704902-2814-41af-a2e3-0f73de85ec04": [
+        {
+          "id": "210a9d4a-053d-4d40-8b43-50bb7fda35d4",
+          "scope": "project",
+          "metadata": {
+            "ok": false,
+            "browserSkipped": false,
+            "options": {
+              "samples": 9,
+              "atTransitions": false,
+              "maxIssues": 80,
+              "collapseStatic": true,
+              "tolerance": 2,
+              "timeout": 10000,
+              "contrast": true,
+              "strict": false,
+              "snapshots": false,
+              "browserGpuMode": "auto"
+            }
+          },
+          "createdAt": 1793178436188,
+          "contentHash": "25306ebbe26a5a2cbed4f13f7552b34c838a2709214bff91193efbd6861f2025",
+          "revision": "f4704902-2814-41af-a2e3-0f73de85ec04",
+          "inputFingerprint": "edacc7e1ebea6dc9ab560398a048a37a4b8bb256838c75b67d238f01ce62b2b3",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision",
+          "status": "cleaned",
+          "cleanedAfterRender": "14e8cae9-e770-4cf0-b34c-bd252a16cc01"
+        }
+      ],
+      "74fadc2f-09f3-4d02-a0ab-86e376fa1bbd": [
+        {
+          "id": "d2e42a1d-d825-4280-b880-2d431699f097",
+          "scope": "project",
+          "report": "C:\\Users\\Anisa Shaikh\\.gemini\\antigravity\\scratch\\aicte-sih-portal\\brag-output\\composition\\.hyperframes\\artifacts\\checks\\d2e42a1d-d825-4280-b880-2d431699f097.json",
+          "metadata": {
+            "ok": true,
+            "browserSkipped": false,
+            "options": {
+              "samples": 9,
+              "atTransitions": false,
+              "maxIssues": 80,
+              "collapseStatic": true,
+              "tolerance": 2,
+              "timeout": 10000,
+              "contrast": true,
+              "strict": false,
+              "snapshots": false,
+              "browserGpuMode": "auto"
+            }
+          },
+          "createdAt": 1793178590010,
+          "contentHash": "88ce05ac87048d786576cbdec8820e416ea19919bbc5a28fbbc8c69f3470c4dd",
+          "revision": "74fadc2f-09f3-4d02-a0ab-86e376fa1bbd",
+          "inputFingerprint": "e54713999b0829852a0648b886ec9f3af671b088e28832717e7334510a66d305",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "id": "dd932272-41b0-4fa2-8071-52f486864cf3",
+          "scope": "project",
+          "report": "C:\\Users\\Anisa Shaikh\\.gemini\\antigravity\\scratch\\aicte-sih-portal\\brag-output\\composition\\.hyperframes\\artifacts\\checks\\dd932272-41b0-4fa2-8071-52f486864cf3.json",
+          "metadata": {
+            "ok": true,
+            "browserSkipped": false,
+            "options": {
+              "samples": 9,
+              "atTransitions": false,
+              "maxIssues": 80,
+              "collapseStatic": true,
+              "tolerance": 2,
+              "timeout": 10000,
+              "contrast": true,
+              "strict": false,
+              "snapshots": false,
+              "browserGpuMode": "auto"
+            }
+          },
+          "createdAt": 1793178652964,
+          "contentHash": "88ce05ac87048d786576cbdec8820e416ea19919bbc5a28fbbc8c69f3470c4dd",
+          "revision": "74fadc2f-09f3-4d02-a0ab-86e376fa1bbd",
+          "inputFingerprint": "e54713999b0829852a0648b886ec9f3af671b088e28832717e7334510a66d305",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        }
       ]
     },
     "unversioned": [
@@ -278,13 +418,14 @@
   },
   "renders": {
     "latest": {
-      "id": "653ef9c7-2143-43c6-b807-6e92602c459e",
-      "completedAt": 1793177002229,
+      "id": "14e8cae9-e770-4cf0-b34c-bd252a16cc01",
+      "completedAt": 1793178795462,
       "output": "C:\\Users\\Anisa Shaikh\\.gemini\\antigravity\\scratch\\aicte-sih-portal\\brag-output\\brag.mp4",
       "status": "completed",
-      "revision": "f0851536-6351-44cc-9b6c-7502bd5fac56"
+      "revision": "74fadc2f-09f3-4d02-a0ab-86e376fa1bbd"
     },
     "retainedRevisions": [
+      "74fadc2f-09f3-4d02-a0ab-86e376fa1bbd",
       "f0851536-6351-44cc-9b6c-7502bd5fac56"
     ]
   },

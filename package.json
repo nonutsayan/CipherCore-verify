@@ -1,0 +1,31 @@
+{
+  "name": "ciphercore-verify",
+  "version": "1.0.0",
+  "description": "CipherCore Verify — AICTE SIH 2026 (Problem Statement SIH26261): AI-Powered Institutional Verification, Forensic Document Authentication & Regulatory Automation Engine",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "test": "node scripts/verify_live_pages.js",
+    "test:header": "node scripts/test_header_signout.js",
+    "sync": "python scripts/sync_all_mirrors.py",
+    "package": "python package_project.py"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nonutsayan/CipherCore-verify.git"
+  },
+  "keywords": [
+    "aicte",
+    "sih2026",
+    "smart-india-hackathon",
+    "zero-trust",
+    "regulatory-intelligence",
+    "blockchain",
+    "computer-vision",
+    "forensics",
+    "document-verification"
+  ],
+  "author": "CipherCore Team",
+  "license": "Apache-2.0"
+}
